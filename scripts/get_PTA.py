@@ -10,13 +10,18 @@ import sys
 from read_MODIS_02 import get_data
 #sys.argv[0] is always the script filepath
 
-def check_file_integrity(url, filename, real_file_size, fieldnames, save_path, directory, output_file):
-    #check that file downloaded and has some size and datafields are not corrupt
+def check_file_integrity(url, filename, real_file_size, fieldnames, save_path,\
+                         directory, output_file):
+    '''
+    Objective:
+        Check that file downloaded and has correct size and datafields are not
+        corrupt.
+    '''
 
     filename   = save_path + directory + filename
     statinfo   = os.stat(filename)
     downloaded_file_size  = statinfo.st_size
-    
+
     if url[23:25]=='02':
         if downloaded_file_size == real_file_size :
             try:
@@ -90,14 +95,14 @@ if __name__ == '__main__':
     save_path         = '../LA_PTA_MODIS_Data/'
     file_name_column = 'fileUrls from query MOD021KM--61 MOD03--61 MOD35_L2'\
                        '--61 2002-01-01..2019-10-15 x-124.4y39.8 x-112.8y30.7[5]'
-    #print(filenames_archive.keys()) 
-    
+    #print(filenames_archive.keys())
+
     #if range_or_list is 1, then we recieved a range
-    #if it is 0, we recieved a list of specific files to download    
-    range_or_list = sys.argv[1] 
-	
+    #if it is 0, we recieved a list of specific files to download
+    range_or_list = sys.argv[1]
+
     if range_or_list == '1':
-        #open a txt file to write output to 
+        #open a txt file to write output to
         output_file = open("get_PTA_stats_"+sys.argv[1]+"_"+sys.argv[2]+".txt","w")
         f_start, f_end = int(sys.argv[2]), int(sys.argv[3])
         filenames = filenames_archive[file_name_column][f_start:f_end]
@@ -106,9 +111,9 @@ if __name__ == '__main__':
         output_file = open("get_PTA_stats_corrupt_files.txt","w")
         bad_files  = pd.read_csv('corrupt_files.txt', header=None)
         bad_file_idx = bad_files.loc[:,0]
- 
+
         filenames  = filenames_archive[file_name_column][bad_file_idx]
-        file_sizes = filenames_archive['size'][bad_file_idx]    
+        file_sizes = filenames_archive['size'][bad_file_idx]
 
     fieldnames = ['Cloud_Mask', 'Quality_Assurance',\
                   'EV_1KM_RefSB', 'EV_250_Aggr1km_RefSB', 'EV_500_Aggr1km_RefSB',\
@@ -120,5 +125,5 @@ if __name__ == '__main__':
         filename, directory  = download_granule(url, url_base, save_path, output_file, True, idx)
         check_file_integrity(url, filename, file_size, fieldnames, save_path, directory, output_file)
         print(filename,'.', end="")
-    print('') 
-    output_file.close()  
+    print('')
+    output_file.close()

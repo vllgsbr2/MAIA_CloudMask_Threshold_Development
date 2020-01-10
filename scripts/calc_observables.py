@@ -1,7 +1,4 @@
 import numpy as np
-import sys
-from fetch_MCM_input_data import *
-import time
 from svi_dynamic_size_input import svi_calculation
 
 

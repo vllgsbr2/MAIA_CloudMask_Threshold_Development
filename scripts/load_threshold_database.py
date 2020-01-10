@@ -1,5 +1,10 @@
 import numpy as np
 import h5py
+import mpi4py.MPI as MPI
+from calc_observables import get_R, get_sun_glint_mask, get_whiteness_index,\
+get_NDVI, get_NDSI, get_visible_reflectance, get_NIR_reflectance,\
+get_spatial_variability_index, get_cirrus_Ref
+
 
 #all data is 1000x1000 pixels with a -999 fill value. Every pixel in the grid
 #corresponds to pixels in every other grid i.e. lat/lon/cm/redband at [0,0] belong
@@ -75,167 +80,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
 
     return observable_level_parameter
 
-def get_observables():
-    
-
-def get_test_determination(observable_level_parameter, observable_data,\
-       threshold_database, observable_name, fill_val_1, fill_val_2, fill_val_3):
-
-    """
-    Objective:
-        applies fill values to & finds the threshold needed at each pixel for a
-        given observable_data.
-
-    [Section 3.3.2.4]
-
-    Arguments:
-       observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
-       observable_data {2D narray} -- takes one observable at a time
-       threshold_database {6D narray} -- database for the specific observable
-       observable_name {string} -- VIS_Ref, NIR_Ref, WI, NDVI, NDSI, SVI, Cirrus
-       fill_val_1 {integer} -- defined in congifg file; not applied due to surface type
-       fill_val_2 {integer} -- defined in congifg file; low quality radiance
-       fill_val_3 {integer} -- defined in congifg file; no data
-
-    Returns:
-       2D narray -- observable_data with fill values applied
-       2D narray -- the threshold needed at each pixel for that observable
-
-    """
-    observable_data[observable_data == -998] = fill_val_2
-    observable_data[observable_data == -999] = fill_val_3
-
-    land_water_bins = observable_level_parameter[:,:,4]
-    snow_ice_bins   = observable_level_parameter[:,:,5]
-    sun_glint_bins  = observable_level_parameter[:,:,8]
-
-    #apply fill values according to input observable and surface type
-    if observable_name == 'VIS_Ref':
-        #where water or snow/ice occur this test is not applied
-        observable_data[((land_water_bins == 0) | (snow_ice_bins == 0)) &     \
-                        ((observable_data != fill_val_2) &                    \
-                         (observable_data != fill_val_3)) ] = fill_val_1
-
-    elif observable_name == 'NIR_Ref':
-        #where land/sunglint/snow_ice occur this test is not applied
-        observable_data[((sun_glint_bins  == 0)  | \
-                         (land_water_bins == 1)  | \
-                         (snow_ice_bins   == 0)) & \
-                        ((observable_data != fill_val_2) & \
-                         (observable_data != fill_val_3))]    = fill_val_1
-
-    elif observable_name == 'WI':
-        #where sunglint/snow_ice occur this test is not applied
-        observable_data[((sun_glint_bins == 0)           |  \
-                         (snow_ice_bins  == 0))          &  \
-                        ((observable_data != fill_val_2) &  \
-                         (observable_data != fill_val_3)) ]    = fill_val_1
-
-    elif observable_name == 'NDVI':
-        #where snow_ice occurs this test is not applied
-        observable_data[(snow_ice_bins == 0)             &  \
-                       ((observable_data != fill_val_2)  &  \
-                        (observable_data != fill_val_3)) ]    = fill_val_1
-
-    elif observable_name == 'NDSI':
-        #where snow_ice do not occur this test is not applied
-        observable_data[(snow_ice_bins == 1)             &  \
-                        ((observable_data != fill_val_2) &  \
-                         (observable_data != fill_val_3)) ]    = fill_val_1
-
-    else:
-        pass
-
-    #Now we need to get the threshold for each pixel for one observable;
-    #therefore, final return should be shape (X,Y) w/thresholds stored inside
-    #and the observable_data with fill values added
-    #these 2 will feed into the DTT methods
-
-    #observable_level_parameter contains bins to query threshold database
-    rows, cols = np.arange(shape[0]), np.arange(shape[1])
-
-    #combine water/sunglint/snow-ice mask/sfc_ID into one mask
-    #This way the threhsolds can be retrieved with less queries
-    def make_sceneID(observable_level_parameter,land_water_bins,\
-                     sun_glint_bins, snow_ice_bins):
-
-        """
-        helper function to combine water/sunglint/snow-ice mask/sfc_ID into
-        one mask. This way the threhsolds can be retrieved with less queries.
-
-        [Section N/A]
-
-        Arguments:
-            observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
-            land_water_bins {2D narray} -- land (1) water(0)
-            sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
-            snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
-
-        Returns:
-            2D narray -- scene ID. Values 0-28 inclusive are land types; values
-                         29, 30, 31 are water, water with sun glint, snow/ice
-                         respectively. Is the size of the granule. These integers
-                         serve as the indicies to select a threshold based off
-                         surface type.
-
-        """
-
-        #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
-        sfc_ID_bins = observable_level_parameter[:,:,6]
-        scene_type_identifier = sfc_ID_bins
-
-        scene_type_identifier[land_water_bins == 0]     = 30
-        scene_type_identifier[(sun_glint_bins == 1) & \
-                              (land_water_bins == 0)]   = 31
-        scene_type_identifier[snow_ice_bins == 0]       = 32
-
-        return scene_type_identifier
-
-    scene_type_identifier = make_sceneID(observable_level_parameter,land_water_bins,\
-                     sun_glint_bins, snow_ice_bins)
-
-    #because scene_type_identifier (sfc_ID) contains information on
-    #sunglint/snow_ice/water/land we use less dimensions to decribe the scene
-    T = [[threshold_database[observable_level_parameter[i,j,0],\
-                             observable_level_parameter[i,j,1],\
-                             observable_level_parameter[i,j,2],\
-                             observable_level_parameter[i,j,3],\
-                             scene_type_identifier[i,j]            ,\
-                             observable_level_parameter[i,j,7] ]\
-                             for i in rows] for j in cols]
-    return observable_data, T
-
-def make_sceneID(land_water_bins, sun_glint_bins, snow_ice_bins, sfc_ID):
-
-    """
-    helper function to combine water/sunglint/snow-ice mask/sfc_ID into
-    one mask. This way the threhsolds can be retrieved with less queries.
-
-    [Section N/A]
-
-    Arguments:
-        land_water_bins {2D narray} -- land (1) water(0)
-        sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
-        snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
-
-    Returns:
-        2D narray -- scene ID. Values 0-28 inclusive are land types; values
-                     29, 30, 31 are water, water with sun glint, snow/ice
-                     respectively. Is the size of the granule. These integers
-                     serve as the indicies to select a threshold based off
-                     surface type.
-
-    """
-
-    #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
-    scene_type_identifier = sfc_ID
-
-    scene_type_identifier[land_water_bins == 0]     = 29
-    scene_type_identifier[(sun_glint_bins == 1) & \
-                          (land_water_bins == 0)]   = 30
-    scene_type_identifier[snow_ice_bins == 0]       = 31
-
-    return scene_type_identifier
 
 #(cos_SZA, VZA, RAZ, Target Area, land_water, snowice, sfc_ID, DOY, sun_glint)
 #(cos_SZA, VZA, RAZ, Target Area, scene_ID, DOY)
@@ -600,23 +444,68 @@ def load_thresh_database(hf_file, idx, thresholds):
 
     hf_file['Thresholds'][idx[0], idx[1], idx[2], idx[3], idx[4], idx[5]] = \
                                                                     thresholds
+def new_thresh_file(hf_path):
+    hf    = h5py.File(hf_path, 'w')
 
+    #create structure in hdf file
+    group = hf.create_group('Thresholds')
 
+    #save empty thresholds to sub group
+    #(cos_SZA, VZA, RAZ, Target Area, scene_type_identifier, DOY)
+    #where test isnt applied fill value will be used
+    #(10,14,12,30,33,46) (1,1,1,1,1,1)
+    threshold_verifi = {'realistic': [0.03, 0.01, 0.15, 0.03, 0.15, 0.1, 0.2]}
+    file_type = 'realistic'
+
+    T_NDVI    = np.ones((10,14,12,30,33,46)) * threshold_verifi[file_type][0]
+    T_NDSI    = np.ones((10,14,12,30,33,46)) * threshold_verifi[file_type][1]
+    T_SVI     = np.ones((10,14,12,30,33,46)) * threshold_verifi[file_type][2]
+    T_WI      = np.ones((10,14,12,30,33,46)) * threshold_verifi[file_type][3]
+    T_Cirrus  = np.ones((10,14,12,30,33,46)) * threshold_verifi[file_type][4]
+    T_NIR_Ref = np.ones((10,14,12,30,33,46)) * threshold_verifi[file_type][5]
+    T_VIS_Ref = np.ones((10,14,12,30,33,46)) * threshold_verifi[file_type][6]
+
+    group.create_dataset('T_NDVI'   , data=T_NDVI   , dtype='f', compression='gzip')
+    group.create_dataset('T_NDSI'   , data=T_NDSI   , dtype='f', compression='gzip')
+    group.create_dataset('T_SVI'    , data=T_SVI    , dtype='f', compression='gzip')
+    group.create_dataset('T_WI'     , data=T_WI     , dtype='f', compression='gzip')
+    group.create_dataset('T_Cirrus' , data=T_Cirrus , dtype='f', compression='gzip')
+    group.create_dataset('T_NIR_Ref', data=T_NIR_Ref, dtype='f', compression='gzip')
+    group.create_dataset('T_VIS_Ref', data=T_VIS_Ref, dtype='f', compression='gzip')
+
+    #add attributes to subgroups to label the dimensions
+    labels      = ['cos_SZA', 'VZA', 'RAZ', 'Target_Area',\
+                    'surface_ID', 'DOY']
+    observables = ['T_NDVI', 'T_NDSI', 'T_SVI', 'T_WI', 'T_Cirrus', 'T_NIR_Ref',\
+                   'T_VIS_Ref']
+
+    for obs in observables:
+        for i, label in enumerate(labels):
+            hf['Thresholds/' + obs].dims[i].label = label
+
+    return hf
 
 if __name__ == '__main__':
 
-    save_path = './'
+    # #initialize mpi insatnce
+    # comm = MPI.COMM_WORLD
+    # rank = comm.Get_rank()
+    # size = comm.Get_size()
+
+    save_path = '../thresholds'
     hf_path   = save_path + 'LA_threshold_database.HDF5'
-    hf        = h5py.File(hf_path, 'w')
-    LA_database_path = ''
-    #create structure in hdf file to send into load_thresh_database
-    group = hf.create_group('Thresholds')
-    observable
-    observable_level_paramter
-    target_area
-    sfc_ID
+
+    try:
+        hf = new_thresh_file(hf_path)
+    except:
+        hf = h5py.File(hf_path, 'r+')
+
+    #calculate thresholds
+    LA_database_path = '' #this is where the 16 years of data is stored over LA
     thresholds, idx = calc_thresholds(observable, observable_level_paramter,\
                               target_area, sfc_ID, file_path = LA_database_path)
+                              
+    #load thresholds into hdf file
     load_thresh_database(hf, idx, thresholds)
 
     hf.close()
