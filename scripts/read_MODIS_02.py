@@ -82,7 +82,7 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=F
         data_corrected_total = np.concatenate((data_corrected_total, data_corrected), axis=0)
 
     #get original shape and return radiance/reflectance
-    if not scale_and_offset:
+    if not scale_factor:
         return data_corrected_total.reshape((num_bands, num_horizontal, num_vertical))
     else:
         scale_factor_rad, offset = get_scale_and_offset(data_field, True)
