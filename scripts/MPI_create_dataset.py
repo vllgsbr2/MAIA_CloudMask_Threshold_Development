@@ -84,10 +84,12 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     group                       = hf.create_group(group_name)
     subgroup_radiance           = group.create_group('radiance')
     subgroup_reflectance        = group.create_group('reflectance')
+    subgroup_scale_factors      = group.create_group('scale_factors')
     subgroup_geolocation        = group.create_group('geolocation')
     subgroup_sunView_geometry   = group.create_group('sunView_geometry')
     subgroup_cloud_mask         = group.create_group('cloud_mask')
     subgroup_cloud_mask_test    = group.create_group('cloud_mask_tests')
+
 
     nx, ny = np.shape(lat)
     rows = np.arange(nx)
@@ -133,6 +135,11 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
                   '12':4,
                   '26':12
                   }
+
+    #save scale factors
+    save_crop(subgroup_scale_factors, 'reflectance', scale_factor_ref)
+    save_crop(subgroup_scale_factors, 'radiance', scale_factor_rad)
+
 
     for band, index in band_index.items():
         if band=='1' or band=='2':
