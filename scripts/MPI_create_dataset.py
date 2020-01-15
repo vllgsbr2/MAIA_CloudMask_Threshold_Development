@@ -257,67 +257,108 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    if rank==0:
-        #choose PTA from keeling
-        PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
+    # if rank==0:
+    #     #choose PTA from keeling
+    #     PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
+    #
+    #     #grab files names for PTA
+    #     filename_MOD_02 = np.array(os.listdir(PTA_file_path + '/MOD_02'))
+    #     filename_MOD_03 = np.array(os.listdir(PTA_file_path + '/MOD_03'))
+    #     filename_MOD_35 = np.array(os.listdir(PTA_file_path + '/MOD_35'))
+    #
+    #     #sort files by time so we can access corresponding files without
+    #     #searching in for loop
+    #     filename_MOD_02 = np.sort(filename_MOD_02)
+    #     filename_MOD_03 = np.sort(filename_MOD_03)
+    #     filename_MOD_35 = np.sort(filename_MOD_35)
+    #
+    #     #grab time stamp (YYYYDDD.HHMM) to name each group after the granule
+    #     #it comes from
+    #     filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
+    #     filename_MOD_03_timeStamp = [x[7:19]  for x in filename_MOD_03]
+    #     filename_MOD_35_timeStamp = [x[10:22] for x in filename_MOD_35]
+    #
+    #     #add full path to file
+    #     filename_MOD_02 = [PTA_file_path + '/MOD_02/' + x for x in filename_MOD_02]
+    #     filename_MOD_03 = [PTA_file_path + '/MOD_03/' + x for x in filename_MOD_03]
+    #     filename_MOD_35 = [PTA_file_path + '/MOD_35/' + x for x in filename_MOD_35]
+    #
+    #     #initialize some constants outside of the loop
+    #     fieldname       = ['EV_250_RefSB', 'EV_250_Aggr1km_RefSB',\
+    #                        'EV_500_RefSB', 'EV_500_Aggr1km_RefSB',\
+    #                        'EV_1KM_RefSB']
+    #
+    #     file_MAIA  = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
+    #     file_MAIA  = h5py.File(file_MAIA, 'r')
+    #     target_lat = file_MAIA['lat'][()].astype(np.float64)
+    #     target_lon = file_MAIA['lon'][()].astype(np.float64)
+    #
+    #     #new indices to regrid, use that as numpy where if you will
+    #     nx, ny = (2030, 1354)
+    #     rows = np.arange(2030)
+    #     cols = np.arange(1354)
+    #     col_mesh, row_mesh = np.meshgrid(cols, rows)
 
-        #grab files names for PTA
-        filename_MOD_02 = np.array(os.listdir(PTA_file_path + '/MOD_02'))
-        filename_MOD_03 = np.array(os.listdir(PTA_file_path + '/MOD_03'))
-        filename_MOD_35 = np.array(os.listdir(PTA_file_path + '/MOD_35'))
+        # data = [col_mesh, row_mesh, target_lat, target_lon, fieldname,\
+        #         filename_MOD_02, filename_MOD_03, filename_MOD_35,\
+        #         filename_MOD_02_timeStamp, filename_MOD_03_timeStamp,\
+        #         filename_MOD_35_timeStamp]
 
-        #sort files by time so we can access corresponding files without
-        #searching in for loop
-        filename_MOD_02 = np.sort(filename_MOD_02)
-        filename_MOD_03 = np.sort(filename_MOD_03)
-        filename_MOD_35 = np.sort(filename_MOD_35)
-
-        #grab time stamp (YYYYDDD.HHMM) to name each group after the granule
-        #it comes from
-        filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
-        filename_MOD_03_timeStamp = [x[7:19]  for x in filename_MOD_03]
-        filename_MOD_35_timeStamp = [x[10:22] for x in filename_MOD_35]
-
-        #add full path to file
-        filename_MOD_02 = [PTA_file_path + '/MOD_02/' + x for x in filename_MOD_02]
-        filename_MOD_03 = [PTA_file_path + '/MOD_03/' + x for x in filename_MOD_03]
-        filename_MOD_35 = [PTA_file_path + '/MOD_35/' + x for x in filename_MOD_35]
-
-        #initialize some constants outside of the loop
-        fieldname       = ['EV_250_RefSB', 'EV_250_Aggr1km_RefSB',\
-                           'EV_500_RefSB', 'EV_500_Aggr1km_RefSB',\
-                           'EV_1KM_RefSB']
-
-        file_MAIA  = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
-        file_MAIA  = h5py.File(file_MAIA, 'r')
-        target_lat = file_MAIA['lat'][()].astype(np.float64)
-        target_lon = file_MAIA['lon'][()].astype(np.float64)
-
-        #new indices to regrid, use that as numpy where if you will
-        nx, ny = (2030, 1354)
-        rows = np.arange(2030)
-        cols = np.arange(1354)
-        col_mesh, row_mesh = np.meshgrid(cols, rows)
-
-        data = [col_mesh, row_mesh, target_lat, target_lon, fieldname,\
-                filename_MOD_02, filename_MOD_03, filename_MOD_35,\
-                filename_MOD_02_timeStamp, filename_MOD_03_timeStamp,\
-                filename_MOD_35_timeStamp]
-
-        print('rank 0 done with harvesting data')
-
-        for i in range(size):
-            comm.send(data, dest=i)
-        print('rank 0 done with sending data')
+        # print('rank 0 done with harvesting data')
+        #
+        # for i in range(size):
+        #     comm.send(data, dest=i)
+        # print('rank 0 done with sending data')
 
     for r in range(size):
 
         if rank==r:
             print('entering rank '+str(r))
-            col_mesh, row_mesh, target_lat, target_lon, fieldname,\
-            filename_MOD_02, filename_MOD_03, filename_MOD_35,\
-            filename_MOD_02_timeStamp, filename_MOD_03_timeStamp,\
-            filename_MOD_35_timeStamp = comm.recv(source=0)
+            # col_mesh, row_mesh, target_lat, target_lon, fieldname,\
+            # filename_MOD_02, filename_MOD_03, filename_MOD_35,\
+            # filename_MOD_02_timeStamp, filename_MOD_03_timeStamp,\
+            # filename_MOD_35_timeStamp = comm.recv(source=0)
+
+            #choose PTA from keeling
+            PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
+
+            #grab files names for PTA
+            filename_MOD_02 = np.array(os.listdir(PTA_file_path + '/MOD_02'))
+            filename_MOD_03 = np.array(os.listdir(PTA_file_path + '/MOD_03'))
+            filename_MOD_35 = np.array(os.listdir(PTA_file_path + '/MOD_35'))
+
+            #sort files by time so we can access corresponding files without
+            #searching in for loop
+            filename_MOD_02 = np.sort(filename_MOD_02)
+            filename_MOD_03 = np.sort(filename_MOD_03)
+            filename_MOD_35 = np.sort(filename_MOD_35)
+
+            #grab time stamp (YYYYDDD.HHMM) to name each group after the granule
+            #it comes from
+            filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
+            filename_MOD_03_timeStamp = [x[7:19]  for x in filename_MOD_03]
+            filename_MOD_35_timeStamp = [x[10:22] for x in filename_MOD_35]
+
+            #add full path to file
+            filename_MOD_02 = [PTA_file_path + '/MOD_02/' + x for x in filename_MOD_02]
+            filename_MOD_03 = [PTA_file_path + '/MOD_03/' + x for x in filename_MOD_03]
+            filename_MOD_35 = [PTA_file_path + '/MOD_35/' + x for x in filename_MOD_35]
+
+            #initialize some constants outside of the loop
+            fieldname       = ['EV_250_RefSB', 'EV_250_Aggr1km_RefSB',\
+                               'EV_500_RefSB', 'EV_500_Aggr1km_RefSB',\
+                               'EV_1KM_RefSB']
+
+            file_MAIA  = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
+            file_MAIA  = h5py.File(file_MAIA, 'r')
+            target_lat = file_MAIA['lat'][()].astype(np.float64)
+            target_lon = file_MAIA['lon'][()].astype(np.float64)
+
+            #new indices to regrid, use that as numpy where if you will
+            nx, ny = (2030, 1354)
+            rows = np.arange(2030)
+            cols = np.arange(1354)
+            col_mesh, row_mesh = np.meshgrid(cols, rows)
 
             #define start and end file for a particular rank
             #(size - 1) so last processesor can take the modulus
