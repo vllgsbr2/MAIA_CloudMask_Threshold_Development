@@ -107,6 +107,9 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     fill_val_idx = np.where((regrid_row_idx == fill_val) | \
                             (regrid_col_idx == fill_val)   )
 
+    regrid_row_idx[fill_val_idx] = regrid_row_idx[0,0]
+    regrid_col_idx[fill_val_idx] = regrid_col_idx[0,0]
+
     #import matplotlib.pyplot as plt
     #f, ax = plt.subplots(ncols=2)
     #ax[0].imshow(regrid_row_idx)
@@ -128,6 +131,7 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
 
     for band, index in band_index.items():
         if band=='1' or band=='2':
+            print(np.shape(radiance_250_Aggr1km[index]))
             crop_radiance = radiance_250_Aggr1km[index][regrid_row_idx, regrid_col_idx]
             crop_reflectance = reflectance_250_Aggr1km[index][regrid_row_idx, regrid_col_idx]
 
@@ -376,7 +380,7 @@ if __name__ == '__main__':
             #open file to write status of algorithm to
             hf_path = PTA_file_path + '/LA_PTA_database_mpi_start_'\
                                     + str(start) + '_end_' + str(end) + '.hdf5'
-            output_path = 'create_dataset_status_'\
+            output_path = './MPI_create_dataset_output/create_dataset_status_'\
                           + str(start) + '_end_' + str(end) + '.txt'
             try:
                 hf      = h5py.File(hf_path, 'w')
