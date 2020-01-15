@@ -10,6 +10,72 @@ get_spatial_variability_index, get_cirrus_Ref
 #corresponds to pixels in every other grid i.e. lat/lon/cm/redband at [0,0] belong
 #to the same data point
 
+def MOD021KM_read(mod02_file):
+
+    flds = ['EV_250_Aggr1km_RefSB', 'EV_500_Aggr1km_RefSB', 'EV_Band26']
+
+    h4f = SD(mod02_file)
+    rads = []
+    E_std_0 = []
+    for ifld in flds:
+        # Get scaled bands integers and their corresponding conversion coefficients
+        sds = h4f.select(ifld)
+        data_int = sds.get()
+
+        rad_scales = sds.attributes()['radiance_scales']
+        rad_offsets = sds.attributes()['radiance_offsets']
+        ref_scales = sds.attributes()['reflectance_scales']
+        ref_offsets = sds.attributes()['reflectance_offsets']
+
+        if len(data_int) > 10:
+            bad_rad_idx = np.where(np.array(data_int) > 32767)
+            temp  = np.array((data_int - rad_offsets) * rad_scales)
+            temp[bad_rad_idx] = -999
+            rads.append(temp)
+            E_std_0.append(np.pi*rad_scales/ref_scales)
+        else:
+            for iband in range(len(data_int)):
+                bad_rad_idx = np.where(np.array(data_int[iband]) > 32767)
+                temp  = np.array((data_int[iband] - rad_offsets[iband]) * rad_scales[iband])
+                temp[bad_rad_idx] = -999
+                rads.append(temp)
+                E_std_0.append(np.pi*rad_scales[iband]/ref_scales[iband])
+
+
+    return rads, E_std_0
+
+# def get_observables(radiance, SZA, VZA, SAA, VAA, d, E_std_0b):
+def get_observables(R, sunglint):
+
+    numrows, numcol = R[:,:,0].shape[0], R[:,:,0].shape[1]
+
+    R_band_4  = R[:,:,0]
+    R_band_5  = R[:,:,1]
+    R_band_6  = R[:,:,2]
+    R_band_9  = R[:,:,3]
+    R_band_12 = R[:,:,4]
+    R_band_13 = R[:,:,5]
+
+    sun_glint_mask            = sunglint
+
+    whiteness_index           = get_whiteness_index(R_band_6, R_band_5, R_band_4)
+    NDVI                      = get_NDVI(R_band_6, R_band_9)
+    NDSI                      = get_NDSI(R_band_5, R_band_12)
+    visible_reflectance       = get_visible_reflectance(R_band_6)
+    NIR_reflectance           = get_NIR_reflectance(R_band_9)
+    spatial_variability_index = get_spatial_variability_index(R_band_6, numrows, numcol)
+    cirrus_Ref                = get_cirrus_Ref(R_band_13)
+
+    return R                         ,\
+           sun_glint_mask            ,\
+           whiteness_index           ,\
+           NDVI                      ,\
+           NDSI                      ,\
+           visible_reflectanc        ,\
+           NIR_reflectanc            ,\
+           spatial_variability_index ,\
+           cirrus_Ref
+
 def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
           land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask):
 
@@ -289,7 +355,7 @@ def calc_threshold_test(observable, observable_level_paramter, target_area, sfc_
     return cloudy_count, clear_count, Threshold
 
 def calc_threshold(observable, observable_level_paramter, target_area, sfc_ID, \
- file_path = '/Users/vllgsbr2/Desktop/MODIS_Training/Data/toronto_PTA_Subsets.HDF5'):
+ file_path = '/Users/vllgsbr2/Desktop/MODIS_Training/Data/toronto_PTA_Subsets.HDF5', time_stamps):
     '''
     Objective:
         Calculate the threhsolds based on clear data points based on a particular
@@ -492,6 +558,7 @@ if __name__ == '__main__':
     # rank = comm.Get_rank()
     # size = comm.Get_size()
 
+    #create file host the thresholds
     save_path = '../thresholds'
     hf_path   = save_path + 'LA_threshold_database.HDF5'
 
@@ -502,9 +569,14 @@ if __name__ == '__main__':
 
     #calculate thresholds
     LA_database_path = '' #this is where the 16 years of data is stored over LA
+    LA_database = h5py.File(LA_database_path, 'r')
+    time_stamps = list(LA_database.keys())
+    #select only groups with time stamps between day 40 and 48
+    time_stamps = [x for x in time_stamps if int(x[5:8]) >40 and int(x[5:8]) <=48]
+
     thresholds, idx = calc_thresholds(observable, observable_level_paramter,\
-                              target_area, sfc_ID, file_path = LA_database_path)
-                              
+                              target_area, sfc_ID, file_path = LA_database_path, time_stamps)
+
     #load thresholds into hdf file
     load_thresh_database(hf, idx, thresholds)
 

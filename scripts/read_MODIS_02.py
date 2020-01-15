@@ -25,10 +25,10 @@ def get_data(filename, fieldname, SD_field_rawData):
         data = hdf_file.select(fieldname) #field
     else:
         data = hdf_file.select(fieldname).get() #raw data
-    
+
    # hdf_file.end()
     return data
- 
+
 def get_scale_and_offset(data_field, rad_or_ref):
     '''
     INPUT
@@ -52,12 +52,13 @@ def get_scale_and_offset(data_field, rad_or_ref):
 
     return scale_factor, offset
 
-def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref):
+def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=False):
     '''
     INPUT
           data_raw:   get_data(filename, fieldname, SD_field_rawData=2)
           data_field: get_data(filename, fieldname, SD_field_rawData=1)
           rad_or_ref: boolean - True if radiance, False if reflectance
+          scale_factor: boolean - return this as well if True
     RETURN
           radiance: numpy float array - shape=(number of bands, horizontal, vertical)
     '''
@@ -81,7 +82,13 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref):
         data_corrected_total = np.concatenate((data_corrected_total, data_corrected), axis=0)
 
     #get original shape and return radiance/reflectance
-    return data_corrected_total.reshape((num_bands, num_horizontal, num_vertical))
+    if not scale_and_offset:
+        return data_corrected_total.reshape((num_bands, num_horizontal, num_vertical))
+    else:
+        scale_factor_rad, offset = get_scale_and_offset(data_field, True)
+        scale_factor_ref, offset = get_scale_and_offset(data_field, False)
+        return data_corrected_total.reshape((num_bands, num_horizontal, num_vertical)),\
+               scale_factor_rad, scale_factor_ref
 
 def prepare_data(filename, fieldname, rad_or_ref):
     '''
