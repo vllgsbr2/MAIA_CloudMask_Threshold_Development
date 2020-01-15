@@ -35,7 +35,7 @@ def save_crop(subgroup, dataset_name, cropped_data):
         subgroup[dataset_name][:] = cropped_data
 
 def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, hf, \
-                    group_name, fieldname, target_lat, target_lon, col_mesh, row_mesh):
+                    group_name, fieldname, target_lat, target_lon):
     '''
     INPUT:
         filename_MOD_02 - str   - filepath to MOD02
@@ -51,14 +51,14 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     '''
 
     rad_or_ref              = True
-    radiance_250_Aggr1km    = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
-    radiance_500_Aggr1km    = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
-    radiance_1KM            = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
+    radiance_250_Aggr1km, scale_factor_rad, scale_factor_ref    = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
+    radiance_500_Aggr1km, scale_factor_rad, scale_factor_ref    = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
+    radiance_1KM, scale_factor_rad, scale_factor_ref            = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
 
     rad_or_ref              = False
-    reflectance_250_Aggr1km = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
-    reflectance_500_Aggr1km = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
-    reflectance_1KM         = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
+    reflectance_250_Aggr1km, scale_factor_rad, scale_factor_ref = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
+    reflectance_500_Aggr1km, scale_factor_rad, scale_factor_ref = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
+    reflectance_1KM, scale_factor_rad, scale_factor_ref         = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
 
     #calculate geolocation
     lat = get_lat(filename_MOD_03).astype(np.float64)
@@ -88,6 +88,11 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     subgroup_sunView_geometry   = group.create_group('sunView_geometry')
     subgroup_cloud_mask         = group.create_group('cloud_mask')
     subgroup_cloud_mask_test    = group.create_group('cloud_mask_tests')
+
+    nx, ny = np.shape(lat)
+    rows = np.arange(nx)
+    cols = np.arange(ny)
+    col_mesh, row_mesh = np.meshgrid(cols, rows)
 
     regrid_row_idx = regrid_MODIS_2_MAIA(np.copy(lat),\
                                          np.copy(lon),\
@@ -358,12 +363,6 @@ if __name__ == '__main__':
             target_lat = file_MAIA['lat'][()].astype(np.float64)
             target_lon = file_MAIA['lon'][()].astype(np.float64)
 
-            #new indices to regrid, use that as numpy where if you will
-            nx, ny = (2030, 1354)
-            rows = np.arange(2030)
-            cols = np.arange(1354)
-            col_mesh, row_mesh = np.meshgrid(cols, rows)
-
             #define start and end file for a particular rank
             #(size - 1) so last processesor can take the modulus
             end               = len(filename_MOD_02)
@@ -404,7 +403,7 @@ if __name__ == '__main__':
                 #MOD02 = home + 'MOD021KM.A2017246.1855.061.2017258202757.hdf'
                # try:
                 build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
-                                target_lat, target_lon, col_mesh, row_mesh)
+                                target_lat, target_lon)
 
                 output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
                # except Exception as e:

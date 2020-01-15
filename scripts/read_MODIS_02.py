@@ -52,7 +52,7 @@ def get_scale_and_offset(data_field, rad_or_ref):
 
     return scale_factor, offset
 
-def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=False):
+def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=True):
     '''
     INPUT
           data_raw:   get_data(filename, fieldname, SD_field_rawData=2)
@@ -100,9 +100,9 @@ def prepare_data(filename, fieldname, rad_or_ref):
     '''
     data_raw   = get_data(filename, fieldname, 2)
     data_field = get_data(filename, fieldname, 1)
-    rad_ref    = get_radiance_or_reflectance(data_raw, data_field, rad_or_ref)
+    rad_ref, scale_factor_rad, scale_factor_ref = get_radiance_or_reflectance(data_raw, data_field, rad_or_ref)
 
-    return rad_ref
+    return rad_ref, scale_factor_rad, scale_factor_ref
 
 def plt_RGB(filename, fieldnames_list, rad_or_ref, plot=True):
     '''
