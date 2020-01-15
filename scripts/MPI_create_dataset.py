@@ -259,7 +259,7 @@ if __name__ == '__main__':
 
     if rank==0:
         #choose PTA from keeling
-        PTA_file_path   = '/data/keeling/a/vllgsbr2/c/MAIA_Threshold_Dev/LA_PTA_MODIS_Data'
+        PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
 
         #grab files names for PTA
         filename_MOD_02 = np.array(os.listdir(PTA_file_path + '/MOD_02'))
@@ -288,7 +288,7 @@ if __name__ == '__main__':
                            'EV_500_RefSB', 'EV_500_Aggr1km_RefSB',\
                            'EV_1KM_RefSB']
 
-        file_MAIA  = '/data/keeling/a/vllgsbr2/c/LA_PTA_MAIA.hdf5'
+        file_MAIA  = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
         file_MAIA  = h5py.File(file_MAIA, 'r')
         target_lat = file_MAIA['lat'][()].astype(np.float64)
         target_lon = file_MAIA['lon'][()].astype(np.float64)
@@ -304,13 +304,16 @@ if __name__ == '__main__':
                 filename_MOD_02_timeStamp, filename_MOD_03_timeStamp,\
                 filename_MOD_35_timeStamp]
 
+        print('rank 0 done with harvesting data')
+
         for i in range(size):
             comm.send(data, dest=i)
-
+        print('rank 0 done with sending data')
 
     for r in range(size):
 
         if rank==r:
+            print('entering rank '+str(r))
             col_mesh, row_mesh, target_lat, target_lon, fieldname,\
             filename_MOD_02, filename_MOD_03, filename_MOD_35,\
             filename_MOD_02_timeStamp, filename_MOD_03_timeStamp,\
@@ -342,6 +345,7 @@ if __name__ == '__main__':
                 output = open(output_path, 'r+')
 
             i=1
+            print('entering for loop in rank '+str(r))
             for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
                                    in zip(filename_MOD_02[start:end]          ,\
                                           filename_MOD_03[start:end]          ,\
@@ -361,6 +365,6 @@ if __name__ == '__main__':
                 except Exception as e:
                     output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
                 i+=1
-
+            print('done with for loop in rank '+str(r))
             hf.close()
             output.close()
