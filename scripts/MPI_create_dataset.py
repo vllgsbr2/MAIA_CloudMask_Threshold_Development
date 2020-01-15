@@ -398,13 +398,13 @@ if __name__ == '__main__':
                 #home       = '/data/keeling/a/vllgsbr2/c/LA_test_case_data/'
                 #MOD03 = home + 'MOD03.A2017246.1855.061.2017257170030.hdf'
                 #MOD02 = home + 'MOD021KM.A2017246.1855.061.2017258202757.hdf'
-                try:
-                    build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
+            try:
+                build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
                                 target_lat, target_lon, col_mesh, row_mesh)
 
-                    output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
-                except Exception as e:
-                    output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
+                output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
+            except Exception as e:
+                output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
                 i+=1
             print('done with for loop in rank '+str(r))
             hf.close()
