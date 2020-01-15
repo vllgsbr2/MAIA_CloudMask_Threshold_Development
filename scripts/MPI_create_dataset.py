@@ -376,8 +376,8 @@ if __name__ == '__main__':
             #open file to write status of algorithm to
             hf_path = PTA_file_path + '/LA_PTA_database_mpi_start_'\
                                     + str(start) + '_end_' + str(end) + '.hdf5'
-            output_path = open('create_dataset_status_'\
-                          + str(start) + '_end_' + str(end) + '.txt', 'w')
+            output_path = 'create_dataset_status_'\
+                          + str(start) + '_end_' + str(end) + '.txt'
             try:
                 hf      = h5py.File(hf_path, 'w')
                 output = open(output_path, 'w')
