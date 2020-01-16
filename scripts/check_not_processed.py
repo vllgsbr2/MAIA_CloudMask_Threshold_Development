@@ -57,8 +57,8 @@ for i in time_stamps_downloaded:
         if i==j:
             check.write('{},{}\n'.format(i, 1)
             found = True
+            break
     if not found:
         check.write('{},{}\n'.format(i, 0))
-        found = False
 
 check.close()
