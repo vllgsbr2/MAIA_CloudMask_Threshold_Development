@@ -70,8 +70,8 @@ def get_solarAzimuth(filename):
     hdf_file.end()
 
     #correct values by scales/offsets
-    data, hdf_file = get_data(filename, fieldnames_list[2], SD_field_rawData, True)
     SD_field_rawData = 2 #0 SD, 1 field & 2 returns raw data
+    data, hdf_file = get_data(filename, fieldnames_list[2], SD_field_rawData, True)
     solar_azimuth['corrected_raw_data']  = data * solar_azimuth['scale_factor']
 
     hdf_file.end()
@@ -80,8 +80,8 @@ def get_solarAzimuth(filename):
 
 def get_sensorAzimuth(filename):
     #obtain field information to grab scales/offsets
-    data, hdf_file = get_data(filename, fieldnames_list[3], SD_field_rawData, True)
     SD_field_rawData = 1 #0 SD, 1 field & 2 returns raw data
+    data, hdf_file = get_data(filename, fieldnames_list[3], SD_field_rawData, True)
     sensor_azimuth['scale_factor'] = data.attributes()['scale_factor']
 
     hdf_file.end()
