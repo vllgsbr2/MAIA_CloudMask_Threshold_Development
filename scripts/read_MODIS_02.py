@@ -10,7 +10,7 @@ from pyhdf.SD import SD
 import pprint
 import matplotlib.pyplot as plt
 #plt.switch_backend('agg')
-def get_data(filename, fieldname, SD_field_rawData):
+def get_data(filename, fieldname, SD_field_rawData, return_hdf=False):
     '''
     INPUT
           filename:      string  - hdf file filepath
@@ -26,7 +26,10 @@ def get_data(filename, fieldname, SD_field_rawData):
     else:
         data = hdf_file.select(fieldname).get() #raw data
 
-   # hdf_file.end()
+    # hdf_file.end()
+    if return_hdf:
+        return data, hdf_file
+
     return data
 
 def get_scale_and_offset(data_field, rad_or_ref):
@@ -98,9 +101,12 @@ def prepare_data(filename, fieldname, rad_or_ref):
     RETURN
           return radiance or reflectance at all bands
     '''
-    data_raw   = get_data(filename, fieldname, 2)
-    data_field = get_data(filename, fieldname, 1)
+    data_raw, hdf_file1   = get_data(filename, fieldname, 2, True)
+    data_field, hdf_file2 = get_data(filename, fieldname, 1, True)
     rad_ref, scale_factor_rad, scale_factor_ref = get_radiance_or_reflectance(data_raw, data_field, rad_or_ref)
+
+    hdf_file1.end()
+    hdf_file2.end()
 
     return rad_ref, scale_factor_rad, scale_factor_ref
 
