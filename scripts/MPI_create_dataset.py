@@ -293,30 +293,53 @@ if __name__ == '__main__':
             hf_path = '{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}.hdf5'.format(PTA_file_path, start, end)
             output_path = './MPI_create_dataset_output/create_dataset_status_start_{:0>5d}_end_{:0>5d}_try2.txt'.format(start, end)
             try:
-                hf      = h5py.File(hf_path, 'w')
-                output = open(output_path, 'w')
+                with h5py.File(hf_path, 'w') as hf:
+                    output = open(output_path, 'w')
+
+                    i=1
+                    print('entering for loop in rank '+str(r))
+                    for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
+                                           in zip(filename_MOD_02[start:end]          ,\
+                                                  filename_MOD_03[start:end]          ,\
+                                                  filename_MOD_35[start:end]          ,\
+                                                  filename_MOD_02_timeStamp[start:end],\
+                                                  filename_MOD_03_timeStamp[start:end],\
+                                                  filename_MOD_35_timeStamp[start:end]):
+
+                        try:
+                            build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
+                                        target_lat, target_lon)
+
+                            output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
+                        except Exception as e:
+                             output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
+                        i+=1
+                    print('done with for loop in rank '+str(r))
+                    hf.close()
+                    output.close()
+
             except:
-                hf      = h5py.File(hf_path, 'r+')
-                output = open(output_path, 'r+')
+                with h5py.File(hf_path, 'r+') as hf:
+                    output = open(output_path, 'r+')
 
-            i=1
-            print('entering for loop in rank '+str(r))
-            for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
-                                   in zip(filename_MOD_02[start:end]          ,\
-                                          filename_MOD_03[start:end]          ,\
-                                          filename_MOD_35[start:end]          ,\
-                                          filename_MOD_02_timeStamp[start:end],\
-                                          filename_MOD_03_timeStamp[start:end],\
-                                          filename_MOD_35_timeStamp[start:end]):
+                    i=1
+                    print('entering for loop in rank '+str(r))
+                    for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
+                                           in zip(filename_MOD_02[start:end]          ,\
+                                                  filename_MOD_03[start:end]          ,\
+                                                  filename_MOD_35[start:end]          ,\
+                                                  filename_MOD_02_timeStamp[start:end],\
+                                                  filename_MOD_03_timeStamp[start:end],\
+                                                  filename_MOD_35_timeStamp[start:end]):
 
-                try:
-                    build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
-                                target_lat, target_lon)
+                        try:
+                            build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
+                                        target_lat, target_lon)
 
-                    output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
-                except Exception as e:
-                     output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
-                i+=1
-            print('done with for loop in rank '+str(r))
-            hf.close()
-            output.close()
+                            output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
+                        except Exception as e:
+                             output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
+                        i+=1
+                    print('done with for loop in rank '+str(r))
+                    hf.close()
+                    output.close()
