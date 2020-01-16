@@ -30,44 +30,68 @@ sensor_azimuth = {}
 def get_solarZenith(filename):
     #obtain field information to grab scales/offsets
     SD_field_rawData = 1 #0 SD, 1 field & 2 returns raw data
-    solar_zenith['scale_factor']   = get_data(filename, fieldnames_list[0], SD_field_rawData).attributes()['scale_factor']
+    data, hdf_file = get_data(filename, fieldnames_list[0], SD_field_rawData, True)
+    solar_zenith['scale_factor']   = data.attributes()['scale_factor']
+
+    hdf_file.end()
 
     #correct values by scales/offsets
     SD_field_rawData = 2 #0 SD, 1 field & 2 returns raw data
-    solar_zenith['corrected_raw_data']   = get_data(filename, fieldnames_list[0], SD_field_rawData) * solar_zenith['scale_factor']
+    data, hdf_file = get_data(filename, fieldnames_list[0], SD_field_rawData, True)
+    solar_zenith['corrected_raw_data']   = data * solar_zenith['scale_factor']
+
+    hdf_file.end()
 
     return solar_zenith['corrected_raw_data']
 
 def get_sensorZenith(filename):
     #obtain field information to grab scales/offsets
     SD_field_rawData = 1 #0 SD, 1 field & 2 returns raw data
-    sensor_zenith['scale_factor']  = get_data(filename, fieldnames_list[1], SD_field_rawData).attributes()['scale_factor']
+    data, hdf_file = get_data(filename, fieldnames_list[1], SD_field_rawData, True)
+    sensor_zenith['scale_factor']  = data.attributes()['scale_factor']
+
+    hdf_file.end()
 
     #correct values by scales/offsets
     SD_field_rawData = 2 #0 SD, 1 field & 2 returns raw data
-    sensor_zenith['corrected_raw_data']  = get_data(filename, fieldnames_list[1], SD_field_rawData) * sensor_zenith['scale_factor']
+    data, hdf_file = get_data(filename, fieldnames_list[1], SD_field_rawData, True)
+    sensor_zenith['corrected_raw_data']  = data * sensor_zenith['scale_factor']
+
+    hdf_file.end()
 
     return sensor_zenith['corrected_raw_data']
 
 def get_solarAzimuth(filename):
     #obtain field information to grab scales/offsets
     SD_field_rawData = 1 #0 SD, 1 field & 2 returns raw data
-    solar_azimuth['scale_factor']  = get_data(filename, fieldnames_list[2], SD_field_rawData).attributes()['scale_factor']
+    data, hdf_file = get_data(filename, fieldnames_list[2], SD_field_rawData, True)
+    solar_azimuth['scale_factor']  = data.attributes()['scale_factor']
+
+    hdf_file.end()
 
     #correct values by scales/offsets
+    data, hdf_file = get_data(filename, fieldnames_list[2], SD_field_rawData, True)
     SD_field_rawData = 2 #0 SD, 1 field & 2 returns raw data
-    solar_azimuth['corrected_raw_data']  = get_data(filename, fieldnames_list[2], SD_field_rawData) * solar_azimuth['scale_factor']
+    solar_azimuth['corrected_raw_data']  = data * solar_azimuth['scale_factor']
+
+    hdf_file.end()
 
     return solar_azimuth['corrected_raw_data']
 
 def get_sensorAzimuth(filename):
     #obtain field information to grab scales/offsets
+    data, hdf_file = get_data(filename, fieldnames_list[3], SD_field_rawData, True)
     SD_field_rawData = 1 #0 SD, 1 field & 2 returns raw data
-    sensor_azimuth['scale_factor'] = get_data(filename, fieldnames_list[3], SD_field_rawData).attributes()['scale_factor']
+    sensor_azimuth['scale_factor'] = data.attributes()['scale_factor']
+
+    hdf_file.end()
 
     #correct values by scales/offsets
     SD_field_rawData = 2 #0 SD, 1 field & 2 returns raw data
-    sensor_azimuth['corrected_raw_data'] = get_data(filename, fieldnames_list[3], SD_field_rawData) * sensor_azimuth['scale_factor']
+    data, hdf_file = get_data(filename, fieldnames_list[3], SD_field_rawData, True)
+    sensor_azimuth['corrected_raw_data'] = data * sensor_azimuth['scale_factor']
+
+    hdf_file.end()
 
     return sensor_azimuth['corrected_raw_data']
 
@@ -77,13 +101,17 @@ def get_relativeAzimuth(filename):
 
 def get_lat(filename):
     SD_field_rawData = 2
-    lat = get_data(filename, fieldnames_list[4], SD_field_rawData)
+    data, hdf_file = get_data(filename, fieldnames_list[4], SD_field_rawData, True)
+    lat = data
+    hdf_file.end()
 
     return lat
 
 def get_lon(filename):
     SD_field_rawData = 2
-    lon = get_data(filename, fieldnames_list[5], SD_field_rawData)
+    data, hdf_file = get_data(filename, fieldnames_list[5], SD_field_rawData, True)
+    lon = data
+    hdf_file.end()
 
     return lon
 
@@ -123,4 +151,3 @@ def get_lon(filename):
 # data = file.select('EV_500_Aggr1km_RefSB')
 # pprint.pprint(data.attributes()) #tells me scales, offsets and bands
 # pprint.pprint(file.datasets()) # shows data fields in file from SD('filename')
-
