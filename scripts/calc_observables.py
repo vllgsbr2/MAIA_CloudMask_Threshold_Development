@@ -288,20 +288,7 @@ if __name__ == '__main__':
             hf_database_path = database_files[r]
             with h5py.File(hf_database_path, 'r+') as hf_database:
 
-                #numrows, numcol = 1000, 1000
-
-                #split tasks evenly among all processors
-                end               = len(list(hf_database.keys()))
-                processes_per_cpu = end // (size-1)
-                start             = rank * processes_per_cpu
-
-                if rank < (size-1):
-                    end = (rank+1) * processes_per_cpu
-                elif rank==(size-1):
-                    processes_per_cpu_last = end % (size-1)
-                    end = (rank) * processes_per_cpu + processes_per_cpu_last
-
-                hf_database_keys = list(hf_database.keys())[start:end]
+                hf_database_keys = list(hf_database.keys())
 
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
