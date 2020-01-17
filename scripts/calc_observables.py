@@ -258,16 +258,34 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
+    # if rank==0:
+    #
+    #     #open database to read
+    #     PTA_file_path    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+    #     database_files   = os.listdir(PTA_file_path)
+    #     database_files   = [PTA_file_path + filename for filename in database_files]
+    #     database_files   = np.sort(database_files)
+    #
+    #     #record howmany time stamps in each database
+    #     #and calculate howmany processors can be used for each database
+    #     cpus_per_file           = (size-2) // len(database_files)
+    #     num_timestamps_per_file = np.array([len(list(h5py.File(f, 'r+').keys())) for f in database_files])
+    #     timestamps_per_cpu      = num_timestamps_per_file // (size-2)
+    #
+    #     data = timestamps_per_cpu, num_timestamps_per_file, cpus_per_file
+    #     for i in range(1,size):
+    #         comm.send(data=data, dest=i)
+
     for r in range(size):
 
-        if rank==0:
+        if rank==r:
 
             #open database to read
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_database_path = database_files[-1]
+            hf_database_path = database_files[r]
             with h5py.File(hf_database_path, 'r+') as hf_database:
 
                 #numrows, numcol = 1000, 1000
@@ -323,7 +341,7 @@ if __name__ == '__main__':
                             except:
                                 try:
                                     group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
-                                except:    
+                                except:
                                     hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
                 # except:
                 #     with h5py.File(hf_observables_path, 'r+') as hf_observables:
