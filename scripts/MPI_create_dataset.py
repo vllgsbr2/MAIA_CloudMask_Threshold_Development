@@ -290,7 +290,7 @@ if __name__ == '__main__':
 
             #create/open file
             #open file to write status of algorithm to
-            hf_path = '{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}.hdf5'.format(PTA_file_path, start, end)
+            hf_path = '{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}_try2.hdf5'.format(PTA_file_path, start, end)
             output_path = './MPI_create_dataset_output/create_dataset_status_start_{:0>5d}_end_{:0>5d}_try2.txt'.format(start, end)
             try:
                 with h5py.File(hf_path, 'w') as hf:
@@ -312,13 +312,15 @@ if __name__ == '__main__':
 
                             output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
                         except Exception as e:
+                             
                              output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
                         i+=1
                     print('done with for loop in rank '+str(r))
                     hf.close()
                     output.close()
 
-            except:
+            except Exception as e:
+                
                 with h5py.File(hf_path, 'r+') as hf:
                     output = open(output_path, 'r+')
 
@@ -332,13 +334,13 @@ if __name__ == '__main__':
                                                   filename_MOD_03_timeStamp[start:end],\
                                                   filename_MOD_35_timeStamp[start:end]):
 
-                        try:
-                            build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
+                        #try:
+                        build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
                                         target_lat, target_lon)
 
-                            output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
-                        except Exception as e:
-                             output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
+                          #  output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
+                        #except Exception as e:
+                         #    output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
                         i+=1
                     print('done with for loop in rank '+str(r))
                     hf.close()
