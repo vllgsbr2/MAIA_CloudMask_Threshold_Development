@@ -1,7 +1,6 @@
 import numpy as np
 from svi_dynamic_size_input import svi_calculation
 
-
 def get_R(radiance, SZA, d, E_std_0b):
     """
     convert radiances to Bi-Directional Reflectance Factor, BRF, referred to as 'R'
@@ -265,7 +264,7 @@ if __name__ == '__main__':
             hf_database_path = PTA_file_path + ''
             with h5py.File(hf_database_path, 'r+') as hf_database:
 
-                numrows, numcol = 1000, 1000
+                #numrows, numcol = 1000, 1000
 
                 #split tasks evenly among all processors
                 end               = len(list(hf_database.keys()))
@@ -278,15 +277,13 @@ if __name__ == '__main__':
                     processes_per_cpu_last = end % (size-1)
                     end = (rank) * processes_per_cpu + processes_per_cpu_last
 
-
                 hf_database_keys = list(hf_database.keys())[start:end]
 
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
                 #create/open hdf5 file to store observables
                 PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
-                hf_observables_path = PTA_file_path + '/LA_PTA_observables_start_'\
-                                       + str(start) + '_end_' + str(end) + '_.hdf5'
+                hf_observables_path = '{}/LA_PTA_observables_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
 
                 try:
                     with h5py.File(hf_observables_path, 'w') as hf_observables:
@@ -306,7 +303,7 @@ if __name__ == '__main__':
                             NDSI                      = get_NDSI(R_band_5, R_band_12)
                             visible_reflectance       = get_visible_reflectance(R_band_6)
                             NIR_reflectance           = get_NIR_reflectance(R_band_9)
-                            spatial_variability_index = get_spatial_variability_index(R_band_6, numrows, numcol)
+                            spatial_variability_index = get_spatial_variability_index(R_band_6)#, numrows, numcol)
                             cirrus_Ref                = get_cirrus_Ref(R_band_13)
 
                             data = np.dstack((whiteness_index, NDVI, NDSI,\
