@@ -321,7 +321,10 @@ if __name__ == '__main__':
                                 group = hf_observables.create_group(time_stamp)
                                 group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
                             except:
-                                hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
+                                try:
+                                    group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
+                                except:    
+                                    hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
                 # except:
                 #     with h5py.File(hf_observables_path, 'r+') as hf_observables:
                 #
