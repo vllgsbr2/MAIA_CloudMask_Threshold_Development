@@ -199,7 +199,7 @@ def get_NIR_reflectance(R_band_9):
     return R_band_9
 
 #spatial variability index
-def get_spatial_variability_index(R_band_6, numrows, numcols):
+def get_spatial_variability_index(R_band_6):#, numrows, numcols):
     """
     calculate spatial variability index (SVI)
 
@@ -250,6 +250,8 @@ if __name__ == '__main__':
     import h5py
     import mpi4py.MPI as MPI
     import tables
+    import os
+    import numpy as np
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -258,10 +260,14 @@ if __name__ == '__main__':
 
     for r in range(size):
 
-        if rank==r:
+        if rank==0:
 
             #open database to read
-            hf_database_path = PTA_file_path + ''
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            database_files = os.listdir(PTA_file_path)
+            database_files = [PTA_file_path + filename for filename in database_files]
+            database_files = np.sort(database_files)
+            hf_database_path = database_files[-1]
             with h5py.File(hf_database_path, 'r+') as hf_database:
 
                 #numrows, numcol = 1000, 1000
@@ -289,14 +295,14 @@ if __name__ == '__main__':
                     with h5py.File(hf_observables_path, 'w') as hf_observables:
                         for time_stamp in hf_database_keys:
 
-                            R_band_4  = hf_database[time_stamp + '/reflectance/band_3']
-                            R_band_5  = hf_database[time_stamp + '/reflectance/band_4']
-                            R_band_6  = hf_database[time_stamp + '/reflectance/band_1']
-                            R_band_9  = hf_database[time_stamp + '/reflectance/band_2']
-                            R_band_12 = hf_database[time_stamp + '/reflectance/band_6']
-                            R_band_13 = hf_database[time_stamp + '/reflectance/band_26']
+                            R_band_4  = hf_database[time_stamp + '/reflectance/band_3'][()]
+                            R_band_5  = hf_database[time_stamp + '/reflectance/band_4'][()]
+                            R_band_6  = hf_database[time_stamp + '/reflectance/band_1'][()]
+                            R_band_9  = hf_database[time_stamp + '/reflectance/band_2'][()]
+                            R_band_12 = hf_database[time_stamp + '/reflectance/band_6'][()]
+                            R_band_13 = hf_database[time_stamp + '/reflectance/band_26'][()]
 
-                            sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag']
+                            sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag'][()]
 
                             whiteness_index           = get_whiteness_index(R_band_6, R_band_5, R_band_4)
                             NDVI                      = get_NDVI(R_band_6, R_band_9)
@@ -315,20 +321,20 @@ if __name__ == '__main__':
                                     group = hf_observables.create_group(time_stamp)
                                     group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
                                 except:
-                                    hf_observables[time_stamp+'/observables[i]'][:] = data[:,:,i]
+                                    hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
                 except:
                     with h5py.File(hf_observables_path, 'r+') as hf_observables:
 
                         for time_stamp in hf_database_keys:
 
-                            R_band_4  = hf_database[time_stamp + '/reflectance/band_3']
-                            R_band_5  = hf_database[time_stamp + '/reflectance/band_4']
-                            R_band_6  = hf_database[time_stamp + '/reflectance/band_1']
-                            R_band_9  = hf_database[time_stamp + '/reflectance/band_2']
-                            R_band_12 = hf_database[time_stamp + '/reflectance/band_6']
-                            R_band_13 = hf_database[time_stamp + '/reflectance/band_26']
+                            R_band_4  = hf_database[time_stamp + '/reflectance/band_3'][()]
+                            R_band_5  = hf_database[time_stamp + '/reflectance/band_4'][()]
+                            R_band_6  = hf_database[time_stamp + '/reflectance/band_1'][()]
+                            R_band_9  = hf_database[time_stamp + '/reflectance/band_2'][()]
+                            R_band_12 = hf_database[time_stamp + '/reflectance/band_6'][()]
+                            R_band_13 = hf_database[time_stamp + '/reflectance/band_26'][()]
 
-                            sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag']
+                            sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag'][()]
 
                             whiteness_index           = get_whiteness_index(R_band_6, R_band_5, R_band_4)
                             NDVI                      = get_NDVI(R_band_6, R_band_9)
@@ -347,7 +353,11 @@ if __name__ == '__main__':
                                     group = hf_observables.create_group(time_stamp)
                                     group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
                                 except:
-                                    hf_observables[time_stamp+'/observables[i]'][:] = data[:,:,i]
+                                    try:
+                                        group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
+                                        hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
+                                    except:
+                                        hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
 
 
 
