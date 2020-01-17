@@ -13,6 +13,7 @@ import sys
 import os
 import time
 import pytaf
+from pyhdf.SD import SD
 
 #import matplotlib.pyplot as plt
 
@@ -72,14 +73,15 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
 
 
     #calculate cloudmask
-    data_SD           = get_data(filename_MOD_35, 'Cloud_Mask', 2)
+    data_SD, hdf_file = get_data(filename_MOD_35, 'Cloud_Mask', 2, True)
     data_SD_bit       = get_bits(data_SD, 0)
     data_decoded_bits = decode_byte_1(data_SD_bit)
 
     #calculate cloud mask tests
-    data_SD_cloud_mask = data_SD
+    data_SD_cloud_mask       = data_SD
     decoded_cloud_mask_tests = decode_tests(data_SD_cloud_mask, filename_MOD_35)
 
+    hdf_file.end()
     #ceate structure in hdf file
     group                       = hf.create_group(group_name)
     subgroup_radiance           = group.create_group('radiance')
@@ -290,7 +292,7 @@ if __name__ == '__main__':
 
             #create/open file
             #open file to write status of algorithm to
-            hf_path = '{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}.hdf5'.format(PTA_file_path, start, end)
+            hf_path = '{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}_try2.hdf5'.format(PTA_file_path, start, end)
             output_path = './MPI_create_dataset_output/create_dataset_status_start_{:0>5d}_end_{:0>5d}_try2.txt'.format(start, end)
             try:
                 with h5py.File(hf_path, 'w') as hf:
