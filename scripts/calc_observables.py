@@ -1,5 +1,5 @@
 import numpy as np
-from svi_dynamic_size_input import svi_calculation
+from svi_calculation import svi_calculation
 
 def get_R(radiance, SZA, d, E_std_0b):
     """
@@ -335,7 +335,7 @@ if __name__ == '__main__':
                             NDSI                      = get_NDSI(R_band_5, R_band_12)
                             visible_reflectance       = get_visible_reflectance(R_band_6)
                             NIR_reflectance           = get_NIR_reflectance(R_band_9)
-                            spatial_variability_index = get_spatial_variability_index(R_band_6, numrows, numcol)
+                            spatial_variability_index = get_spatial_variability_index(R_band_6)#, numrows, numcol)
                             cirrus_Ref                = get_cirrus_Ref(R_band_13)
 
                             data = np.dstack((whiteness_index, NDVI, NDSI,\
