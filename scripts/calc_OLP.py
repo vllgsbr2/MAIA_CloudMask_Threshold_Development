@@ -76,7 +76,7 @@ if __name__ == '__main__':
     import mpi4py.MPI as MPI
     import tables
     from netCDF4 import Dataset
-
+    import os
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
             #create/open hdf5 file to store observables
             hf_observables_path = '{}LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
-
+            print('Rank {} reporting for duty on {}'.format(rank,hf_observables_path))
             hf_database_keys = list(hf_database.keys())
             observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
@@ -120,10 +120,10 @@ if __name__ == '__main__':
 
                     with Dataset('./SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
                         sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
-
+                    print('data harvested hahahahaha by me rank {}!!'.format(rank))
                     OLP = get_observable_level_parameter(SZA, VZA, SAA,\
                           VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM)
-
+                    print('OLP recived sir. Rank {}'.format(rank))
                     try:
                         group = hf_OLP.create_group(time_stamp)
                         group.create_dataset('observable_level_paramter', data=OLP, compression='gzip')
@@ -133,3 +133,4 @@ if __name__ == '__main__':
                             hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
                         except:
                             hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
+                    print('OLP destroyed. Rank {} did it to em'.format(rank))
