@@ -75,6 +75,8 @@ if __name__ == '__main__':
     import h5py
     import mpi4py.MPI as MPI
     import tables
+    from netCDF4 import Dataset
+
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -84,78 +86,50 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
             #open database to read
-            hf_database_path = PTA_file_path + ''
-            hf_LA_PTA_MAIA_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
-            with h5py.File(hf_database_path, 'r') as hf_database, h5py.File(hf_LA_PTA_MAIA_path, 'r') as hf_LA_PTA_MAIA:
-                #split tasks evenly among all processors
-                end               = len(list(hf_database.keys()))
-                processes_per_cpu = end // (size-1)
-                start             = rank * processes_per_cpu
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            database_files = os.listdir(PTA_file_path)
+            database_files = [PTA_file_path + filename for filename in database_files]
+            database_files = np.sort(database_files)
+            hf_database_path = database_files[r]
 
-                if rank < (size-1):
-                    end = (rank+1) * processes_per_cpu
-                elif rank==(size-1):
-                    processes_per_cpu_last = end % (size-1)
-                    end = (rank) * processes_per_cpu + processes_per_cpu_last
+            len_pta       = len(PTA_file_path)
+            start, end    = hf_database_path[len_pta + 26:len_pta +31], hf_database_path[len_pta+36:len_pta+41]
 
+            #create/open hdf5 file to store observables
+            hf_observables_path = '{}LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
 
-                hf_database_keys = list(hf_database.keys())[start:end]
+            hf_database_keys = list(hf_database.keys())
+            observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
-                try:
-                    with h5py.File(hf_OLP_path, 'w') as hf_OLP:
-                        for time_stamp in hf_database_keys:
+            with h5py.File(hf_OLP_path, 'w') as hf_OLP:
 
-                            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
-                            hf_OLP_path   = '{}/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path)
+                for time_stamp in hf_database_keys:
 
-                            SZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith']
-                            VZA = hf_database[time_stamp+'/sunView_geometry/solarZenith']
-                            VAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth']
-                            SAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth']
-                            TA  = 1 #will change depending where database is stored
-                            LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag']
-                            SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag']
-                            DOY = time_stamp[4:7]
-                            SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag']
+                    PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
+                    hf_OLP_path   = '{}/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path)
 
-                            from netCDF4 import Dataset
-                            with Dataset('./SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
-                                sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
+                    SZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith']
+                    VZA = hf_database[time_stamp+'/sunView_geometry/solarZenith']
+                    VAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth']
+                    SAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth']
+                    TA  = 1 #will change depending where database is stored
+                    LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag']
+                    SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag']
+                    DOY = time_stamp[4:7]
+                    SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag']
 
-                            OLP = get_observable_level_parameter(SZA, VZA, SAA,\
-                                  VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM)
+                    with Dataset('./SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
+                        sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
 
-                            try:
-                                group = hf_OLP.create_group(time_stamp)
-                                group.create_dataset('observable_level_paramter', data=OLP, compression='gzip')
-                            except:
-                                hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
-                except:
-                    with h5py.File(hf_OLP_path, 'w') as hf_OLP:
-                        for time_stamp in hf_database_keys:
+                    OLP = get_observable_level_parameter(SZA, VZA, SAA,\
+                          VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM)
 
-                            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
-                            hf_OLP_path   = '{}/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path)
-
-                            SZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith']
-                            VZA = hf_database[time_stamp+'/sunView_geometry/solarZenith']
-                            VAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth']
-                            SAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth']
-                            TA  = 1 #will change depending where database is stored
-                            LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag']
-                            SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag']
-                            DOY = time_stamp[4:7]
-                            SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag']
-
-                            from netCDF4 import Dataset
-                            with Dataset('./SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
-                                sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
-
-                            OLP = get_observable_level_parameter(SZA, VZA, SAA,\
-                                  VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM)
-
-                            try:
-                                group = hf_OLP.create_group(time_stamp)
-                                group.create_dataset('observable_level_paramter', data=OLP, compression='gzip')
-                            except:
-                                hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
+                    try:
+                        group = hf_OLP.create_group(time_stamp)
+                        group.create_dataset('observable_level_paramter', data=OLP, compression='gzip')
+                    except:
+                        try:
+                            group.create_dataset('observable_level_paramter', data=OLP, compression='gzip')
+                            hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
+                        except:
+                            hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
