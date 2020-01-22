@@ -63,55 +63,55 @@ def group_data(OLP, obs, CM, time_stamp):
     #now for any OLP combo, make a group and save the data points into it
     for i in range(len(new_OLP)):
         for j in range(len(new_OLP[0])):
-            if 
-            print('in loop ({},{})'.format(i,j))
-            temp_OLP = new_OLP[i,j,:].astype(dtype=np.int)
-            group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
-                    .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
-                            temp_OLP[3], temp_OLP[4], temp_OLP[5])
+            if obs[i,j,0] !=-999:
+                print('in loop ({},{})'.format(i,j))
+                temp_OLP = new_OLP[i,j,:].astype(dtype=np.int)
+                group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
+                        .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
+                                temp_OLP[3], temp_OLP[4], temp_OLP[5])
 
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            filename = '{}grouped_data_{}.hdf5'.format(home, group)
+                home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+                filename = '{}grouped_data_{}.hdf5'.format(home, group)
 
-            try:#this is to write a new file and add data point
-                with h5py.File(filename, 'w') as hf_grouped_data:
-                    data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
-                                                 .format(time_stamp, i, j))
-
-                    data_pnt_group.create_dataset('cloud_mask', data=CM        , compression='gzip')
-                    data_pnt_group.create_dataset('WI'        , data=obs[:,:,0], compression='gzip')
-                    data_pnt_group.create_dataset('NDVI'      , data=obs[:,:,1], compression='gzip')
-                    data_pnt_group.create_dataset('NDSI'      , data=obs[:,:,2], compression='gzip')
-                    data_pnt_group.create_dataset('visRef'    , data=obs[:,:,3], compression='gzip')
-                    data_pnt_group.create_dataset('nirRef'    , data=obs[:,:,4], compression='gzip')
-                    data_pnt_group.create_dataset('SVI'       , data=obs[:,:,5], compression='gzip')
-                    data_pnt_group.create_dataset('cirrus'    , data=obs[:,:,6], compression='gzip')
-            except:
-                try:#this is to add a data point to an existing file
-                    with h5py.File(filename, 'r+') as hf_grouped_data:
+                try:#this is to write a new file and add data point
+                    with h5py.File(filename, 'w') as hf_grouped_data:
                         data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
                                                      .format(time_stamp, i, j))
 
-                        data_pnt_group.create_dataset('cloud_mask', data=CM        , compression='gzip')
-                        data_pnt_group.create_dataset('WI'        , data=obs[:,:,0], compression='gzip')
-                        data_pnt_group.create_dataset('NDVI'      , data=obs[:,:,1], compression='gzip')
-                        data_pnt_group.create_dataset('NDSI'      , data=obs[:,:,2], compression='gzip')
-                        data_pnt_group.create_dataset('visRef'    , data=obs[:,:,3], compression='gzip')
-                        data_pnt_group.create_dataset('nirRef'    , data=obs[:,:,4], compression='gzip')
-                        data_pnt_group.create_dataset('SVI'       , data=obs[:,:,5], compression='gzip')
-                        data_pnt_group.create_dataset('cirrus'    , data=obs[:,:,6], compression='gzip')
-                except: #this is to overwrite the data point in an existing file
-                    with h5py.File(filename, 'r+') as hf_grouped_data:
-                        data_pnt_name = 'data_point_time_stamp_{}_i_{}_j_{}'\
-                                        .format(time_stamp, i, j)
-                        hf_grouped_data['{}/cloud_mask'.format(data_pnt_name) ][:] = CM
-                        hf_grouped_data['{}/WI'.format(data_pnt_name) ][:]         = obs[:,:,0]
-                        hf_grouped_data['{}/NDVI'.format(data_pnt_name) ][:]       = obs[:,:,1]
-                        hf_grouped_data['{}/NDSI'.format(data_pnt_name) ][:]       = obs[:,:,2]
-                        hf_grouped_data['{}/visRef'.format(data_pnt_name) ][:]     = obs[:,:,3]
-                        hf_grouped_data['{}/nirRef'.format(data_pnt_name) ][:]     = obs[:,:,4]
-                        hf_grouped_data['{}/SVI'.format(data_pnt_name) ][:]        = obs[:,:,5]
-                        hf_grouped_data['{}/cirrus'.format(data_pnt_name) ][:]     = obs[:,:,6]
+                        data_pnt_group.create_dataset('cloud_mask', data=CM        )
+                        data_pnt_group.create_dataset('WI'        , data=obs[i,j,0])
+                        data_pnt_group.create_dataset('NDVI'      , data=obs[i,j,1])
+                        data_pnt_group.create_dataset('NDSI'      , data=obs[i,j,2])
+                        data_pnt_group.create_dataset('visRef'    , data=obs[i,j,3])
+                        data_pnt_group.create_dataset('nirRef'    , data=obs[i,j,4])
+                        data_pnt_group.create_dataset('SVI'       , data=obs[i,j,5])
+                        data_pnt_group.create_dataset('cirrus'    , data=obs[i,j,6])
+                except:
+                    try:#this is to add a data point to an existing file
+                        with h5py.File(filename, 'r+') as hf_grouped_data:
+                            data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
+                                                         .format(time_stamp, i, j))
+
+                            data_pnt_group.create_dataset('cloud_mask', data=CM        )
+                            data_pnt_group.create_dataset('WI'        , data=obs[i,j,0])
+                            data_pnt_group.create_dataset('NDVI'      , data=obs[i,j,1])
+                            data_pnt_group.create_dataset('NDSI'      , data=obs[i,j,2])
+                            data_pnt_group.create_dataset('visRef'    , data=obs[i,j,3])
+                            data_pnt_group.create_dataset('nirRef'    , data=obs[i,j,4])
+                            data_pnt_group.create_dataset('SVI'       , data=obs[i,j,5])
+                            data_pnt_group.create_dataset('cirrus'    , data=obs[i,j,6])
+                    except: #this is to overwrite the data point in an existing file
+                        with h5py.File(filename, 'r+') as hf_grouped_data:
+                            data_pnt_name = 'data_point_time_stamp_{}_i_{}_j_{}'\
+                                            .format(time_stamp, i, j)
+                            hf_grouped_data['{}/cloud_mask'.format(data_pnt_name) ][:] = CM
+                            hf_grouped_data['{}/WI'.format(data_pnt_name) ][:]         = obs[i,j,0]
+                            hf_grouped_data['{}/NDVI'.format(data_pnt_name) ][:]       = obs[i,j,1]
+                            hf_grouped_data['{}/NDSI'.format(data_pnt_name) ][:]       = obs[i,j,2]
+                            hf_grouped_data['{}/visRef'.format(data_pnt_name) ][:]     = obs[i,j,3]
+                            hf_grouped_data['{}/nirRef'.format(data_pnt_name) ][:]     = obs[i,j,4]
+                            hf_grouped_data['{}/SVI'.format(data_pnt_name) ][:]        = obs[i,j,5]
+                            hf_grouped_data['{}/cirrus'.format(data_pnt_name) ][:]     = obs[i,j,6]
 
 
 if __name__ == '__main__':
