@@ -63,8 +63,10 @@ def group_data(OLP, obs, CM, time_stamp):
     #now for any OLP combo, make a group and save the data points into it
     for i in range(len(new_OLP)):
         for j in range(len(new_OLP[0])):
-            temp_OLP = new_OLP[i,j,:]
-            group = 'cosSZA_{}_VZA_{}_RAZ_{}_TA_{}_DOY_{}_sceneID_{}'\
+            if 
+            print('in loop ({},{})'.format(i,j))
+            temp_OLP = new_OLP[i,j,:].astype(dtype=np.int)
+            group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
                     .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
                             temp_OLP[3], temp_OLP[4], temp_OLP[5])
 
@@ -112,7 +114,7 @@ def group_data(OLP, obs, CM, time_stamp):
                         hf_grouped_data['{}/cirrus'.format(data_pnt_name) ][:]     = obs[:,:,6]
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
 
     import numpy as np
     import h5py
@@ -134,33 +136,38 @@ if __name__ = '__main__':
             database_files = np.sort(database_files)
             hf_database_path = database_files[r]
 
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/observables_database'
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/observables_database/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_observables_path = database_files[r]
 
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/OLP_database'
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/OLP_database/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_OLP_path    = database_files[r]
 
             observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
-
+            print('Rank {} reporting for duty'.format(r))
             #get data for input into grouping function
             with h5py.File(hf_observables_path, 'r') as hf_observables,\
                  h5py.File(hf_database_path   , 'r') as hf_database,\
                  h5py.File(hf_OLP_path        , 'r') as hf_OLP:
 
+                hf_database_keys = list(hf_database.keys())
+
                 for time_stamp in hf_database_keys:
                     # lat = hf_database[time_stamp + '/geolocation/lat'][()]
                     # lon = hf_database[time_stamp + '/geolocation/lon'][()]
                     CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
-                    OLP = hf_OLP[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
+                    OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
 
-                    obs = np.empty((1000,1000,7))
+                    obs_data = np.empty((1000,1000,7), dtype=np.float)
                     for i, obs in enumerate(observables):
-                        obs[:,:,i] = hf_observables[time_stamp + '/' + obs][()]
-
-                    group_data(OLP, obs, CM, time_stamp)
+                        data_path = '{}/{}'.format(time_stamp, obs)
+                        #print(data_path, i, type(hf_observables[data_path][()][0,0]))#type(obs[:,:,i]))
+                        obs_data[:,:,i] = hf_observables[data_path][()]
+                    print('Rank {} has processed data'.format(r))
+                    group_data(OLP, obs_data, CM, time_stamp)
+                    print('Rank {} has grouped granule {}'.format(r, time_stamp))
