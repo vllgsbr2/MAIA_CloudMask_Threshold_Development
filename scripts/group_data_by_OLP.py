@@ -63,7 +63,7 @@ def group_data(OLP, obs, CM, time_stamp):
     #now for any OLP combo, make a group and save the data points into it
     for i in range(len(new_OLP)):
         for j in range(len(new_OLP[0])):
-            if obs[i,j,0] !=-999:
+            if obs[i,j,0] >= 0.0:#negative fill values imply missing data so dont process it
                 print('in loop ({},{})'.format(i,j))
                 temp_OLP = new_OLP[i,j,:].astype(dtype=np.int)
                 group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
@@ -78,7 +78,7 @@ def group_data(OLP, obs, CM, time_stamp):
                         data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
                                                      .format(time_stamp, i, j))
 
-                        data_pnt_group.create_dataset('cloud_mask', data=CM        )
+                        data_pnt_group.create_dataset('cloud_mask', data=CM[i,j]   )
                         data_pnt_group.create_dataset('WI'        , data=obs[i,j,0])
                         data_pnt_group.create_dataset('NDVI'      , data=obs[i,j,1])
                         data_pnt_group.create_dataset('NDSI'      , data=obs[i,j,2])
@@ -92,7 +92,7 @@ def group_data(OLP, obs, CM, time_stamp):
                             data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
                                                          .format(time_stamp, i, j))
 
-                            data_pnt_group.create_dataset('cloud_mask', data=CM        )
+                            data_pnt_group.create_dataset('cloud_mask', data=CM[i,j]   )
                             data_pnt_group.create_dataset('WI'        , data=obs[i,j,0])
                             data_pnt_group.create_dataset('NDVI'      , data=obs[i,j,1])
                             data_pnt_group.create_dataset('NDSI'      , data=obs[i,j,2])
@@ -104,7 +104,7 @@ def group_data(OLP, obs, CM, time_stamp):
                         with h5py.File(filename, 'r+') as hf_grouped_data:
                             data_pnt_name = 'data_point_time_stamp_{}_i_{}_j_{}'\
                                             .format(time_stamp, i, j)
-                            hf_grouped_data['{}/cloud_mask'.format(data_pnt_name) ][:] = CM
+                            hf_grouped_data['{}/cloud_mask'.format(data_pnt_name) ][:] = CM[i,j]
                             hf_grouped_data['{}/WI'.format(data_pnt_name) ][:]         = obs[i,j,0]
                             hf_grouped_data['{}/NDVI'.format(data_pnt_name) ][:]       = obs[i,j,1]
                             hf_grouped_data['{}/NDSI'.format(data_pnt_name) ][:]       = obs[i,j,2]
