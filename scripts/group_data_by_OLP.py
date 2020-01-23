@@ -63,7 +63,7 @@ def group_data(OLP, obs, CM, time_stamp):
     #now for any OLP combo, make a group and save the data points into it
     for i in range(len(new_OLP)):
         for j in range(len(new_OLP[0])):
-            if obs[i,j,0] >= 0.0:#negative fill values imply missing data so dont process it
+            if obs[i,j,0] >= 0.0 and obs[i,j,7]==5:#negative fill values imply missing data so dont process it
                 print('in loop ({},{})'.format(i,j))
                 temp_OLP = new_OLP[i,j,:].astype(dtype=np.int)
                 group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
@@ -77,41 +77,60 @@ def group_data(OLP, obs, CM, time_stamp):
                     with h5py.File(filename, 'w') as hf_grouped_data:
                         data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
                                                      .format(time_stamp, i, j))
+                        data = np.array([CM[i,j]   ,\
+                                         obs[i,j,0],\
+                                         obs[i,j,1],\
+                                         obs[i,j,2],\
+                                         obs[i,j,3],\
+                                         obs[i,j,4],\
+                                         obs[i,j,5],\
+                                         obs[i,j,6] ])
 
-                        data_pnt_group.create_dataset('cloud_mask', data=CM[i,j]   )
-                        data_pnt_group.create_dataset('WI'        , data=obs[i,j,0])
-                        data_pnt_group.create_dataset('NDVI'      , data=obs[i,j,1])
-                        data_pnt_group.create_dataset('NDSI'      , data=obs[i,j,2])
-                        data_pnt_group.create_dataset('visRef'    , data=obs[i,j,3])
-                        data_pnt_group.create_dataset('nirRef'    , data=obs[i,j,4])
-                        data_pnt_group.create_dataset('SVI'       , data=obs[i,j,5])
-                        data_pnt_group.create_dataset('cirrus'    , data=obs[i,j,6])
+                        data_pnt_group.create_dataset('label_and_obs', data=data)
+
+                        #label the data
+                        dim_names = ['CM', 'WI', 'NDVI', 'NDSI', 'visRef',\
+                                     'nir_Ref', 'SVI', 'cirrus']
+                        for i, name in enumerate(dim_names):
+                            data_pnt_group.dims[i].label = name
+
                 except:
                     try:#this is to add a data point to an existing file
                         with h5py.File(filename, 'r+') as hf_grouped_data:
                             data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
                                                          .format(time_stamp, i, j))
 
-                            data_pnt_group.create_dataset('cloud_mask', data=CM[i,j]   )
-                            data_pnt_group.create_dataset('WI'        , data=obs[i,j,0])
-                            data_pnt_group.create_dataset('NDVI'      , data=obs[i,j,1])
-                            data_pnt_group.create_dataset('NDSI'      , data=obs[i,j,2])
-                            data_pnt_group.create_dataset('visRef'    , data=obs[i,j,3])
-                            data_pnt_group.create_dataset('nirRef'    , data=obs[i,j,4])
-                            data_pnt_group.create_dataset('SVI'       , data=obs[i,j,5])
-                            data_pnt_group.create_dataset('cirrus'    , data=obs[i,j,6])
+                            data = np.array([CM[i,j]   ,\
+                                             obs[i,j,0],\
+                                             obs[i,j,1],\
+                                             obs[i,j,2],\
+                                             obs[i,j,3],\
+                                             obs[i,j,4],\
+                                             obs[i,j,5],\
+                                             obs[i,j,6] ])
+                            #label the data
+                            data_pnt_group.create_dataset('label_and_obs', data=data)
+
+                            dim_names = ['CM', 'WI', 'NDVI', 'NDSI', 'visRef',\
+                                         'nir_Ref', 'SVI', 'cirrus']
+                            for i, name in enumerate(dim_names):
+                                data_pnt_group.dims[i].label = name
+
                     except: #this is to overwrite the data point in an existing file
                         with h5py.File(filename, 'r+') as hf_grouped_data:
                             data_pnt_name = 'data_point_time_stamp_{}_i_{}_j_{}'\
                                             .format(time_stamp, i, j)
-                            hf_grouped_data['{}/cloud_mask'.format(data_pnt_name) ][:] = CM[i,j]
-                            hf_grouped_data['{}/WI'.format(data_pnt_name) ][:]         = obs[i,j,0]
-                            hf_grouped_data['{}/NDVI'.format(data_pnt_name) ][:]       = obs[i,j,1]
-                            hf_grouped_data['{}/NDSI'.format(data_pnt_name) ][:]       = obs[i,j,2]
-                            hf_grouped_data['{}/visRef'.format(data_pnt_name) ][:]     = obs[i,j,3]
-                            hf_grouped_data['{}/nirRef'.format(data_pnt_name) ][:]     = obs[i,j,4]
-                            hf_grouped_data['{}/SVI'.format(data_pnt_name) ][:]        = obs[i,j,5]
-                            hf_grouped_data['{}/cirrus'.format(data_pnt_name) ][:]     = obs[i,j,6]
+
+                            data = np.array([CM[i,j]   ,\
+                                             obs[i,j,0],\
+                                             obs[i,j,1],\
+                                             obs[i,j,2],\
+                                             obs[i,j,3],\
+                                             obs[i,j,4],\
+                                             obs[i,j,5],\
+                                             obs[i,j,6] ])
+
+                            hf_grouped_data['{}/label_and_obs'.format(data_pnt_name) ][:] = data
 
 
 if __name__ == '__main__':
@@ -129,6 +148,7 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
+
             #define paths for the three databases
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
             database_files = os.listdir(PTA_file_path)
@@ -156,6 +176,13 @@ if __name__ == '__main__':
                  h5py.File(hf_OLP_path        , 'r') as hf_OLP:
 
                 hf_database_keys = list(hf_database.keys())
+
+                #split the work in half per file
+                half = len(hf_database_keys)//2
+                if r%2==0:
+                    hf_database_keys = hf_database_keys[:half]
+                else:
+                    hf_database_keys = hf_database_keys[half:]
 
                 for time_stamp in hf_database_keys:
                     # lat = hf_database[time_stamp + '/geolocation/lat'][()]
