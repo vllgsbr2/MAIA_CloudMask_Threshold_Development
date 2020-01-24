@@ -65,7 +65,7 @@ def group_data(OLP, obs, CM, time_stamp):
         for j in range(len(new_OLP[0])):
             #negative fill values imply missing data so dont process it
             #also only process DOY bin 05
-            if obs[i,j,0] >= 0.0 and obs[i,j,7]==5:
+            if obs[i,j,0] >= 0.0 and OLP[i,j,7]==5:
                 print('in loop ({},{})'.format(i,j))
                 temp_OLP = new_OLP[i,j,:].astype(dtype=np.int)
                 group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
