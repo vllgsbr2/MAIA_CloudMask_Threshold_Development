@@ -63,7 +63,9 @@ def group_data(OLP, obs, CM, time_stamp):
     #now for any OLP combo, make a group and save the data points into it
     for i in range(len(new_OLP)):
         for j in range(len(new_OLP[0])):
-            if obs[i,j,0] >= 0.0 and obs[i,j,7]==5:#negative fill values imply missing data so dont process it
+            #negative fill values imply missing data so dont process it
+            #also only process DOY bin 05
+            if obs[i,j,0] >= 0.0 and obs[i,j,7]==5:
                 print('in loop ({},{})'.format(i,j))
                 temp_OLP = new_OLP[i,j,:].astype(dtype=np.int)
                 group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
@@ -148,28 +150,33 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
+            if r%2!=0:
+                file_select = r-1
+            else:
+                file_select = r
 
             #define paths for the three databases
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_database_path = database_files[r]
+            hf_database_path = database_files[file_select]
 
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/observables_database/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_observables_path = database_files[r]
+            hf_observables_path = database_files[file_select]
 
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/OLP_database/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_OLP_path    = database_files[r]
+            hf_OLP_path    = database_files[file_select]
 
             observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
             print('Rank {} reporting for duty'.format(r))
+
             #get data for input into grouping function
             with h5py.File(hf_observables_path, 'r') as hf_observables,\
                  h5py.File(hf_database_path   , 'r') as hf_database,\
