@@ -46,7 +46,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_cos_SZA = np.digitize(cos_SZA, bin_cos_SZA, right=True)
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
-    binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
+    binned_DOY     = np.digitize(DOY    , bin_DOY, right=False)
     sfc_ID         = sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
 
     #these datafields' raw values serve as the bins, so no modification needed:
