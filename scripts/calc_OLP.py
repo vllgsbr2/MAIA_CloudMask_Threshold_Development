@@ -29,7 +29,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
 
     #This is used todetermine if the test should be applied over a particular
     #surface type in the get_test_determination function
-
+    shape = np.shape(SZA)
     #define relative azimuth angle, RAZ, and cos(SZA)
     RAZ = VAA - SAA
     RAZ[RAZ<0] = RAZ[RAZ<0]*-1
@@ -47,7 +47,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
-    sfc_ID         = sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
+    sfc_ID         = sfc_ID #sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
 
     #these datafields' raw values serve as the bins, so no modification needed:
     #Target_Area, land_water_mask, snow_ice_mask, sun_glint_mask, sfc_ID
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
             #open database to read
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
@@ -98,29 +98,30 @@ if __name__ == '__main__':
                 start, end    = hf_database_path[len_pta + 26:len_pta +31], hf_database_path[len_pta+36:len_pta+41]
 
                 #create/open hdf5 file to store observables
-                hf_observables_path = '{}LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
-                print('Rank {} reporting for duty on {}'.format(rank,hf_observables_path))
+                PTA_file_path_OLP = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+                hf_OLP_path = '{}OLP_database_60_cores/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path_OLP, start, end)
+                print('Rank {} reporting for duty on {}'.format(rank,hf_OLP_path[:-51]))
                 hf_database_keys = list(hf_database.keys())
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
-
+                #print(1)
                 with h5py.File(hf_OLP_path, 'w') as hf_OLP:
-
+                    #print(2)
                     for time_stamp in hf_database_keys:
-
+                       # print(3)
                         PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
-                        hf_OLP_path   = '{}/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path)
+                        hf_OLP_path   = '{}/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
 
-                        SZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith']
-                        VZA = hf_database[time_stamp+'/sunView_geometry/solarZenith']
-                        VAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth']
-                        SAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth']
+                        SZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith'][()]
+                        VZA = hf_database[time_stamp+'/sunView_geometry/solarZenith'][()]
+                        VAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth'][()]
+                        SAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth'][()]
                         TA  = 1 #will change depending where database is stored
-                        LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag']
-                        SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag']
+                        LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
+                        SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
                         DOY = time_stamp[4:7]
-                        SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag']
+                        SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
 
-                        with Dataset('./SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
+                        with Dataset(PTA_file_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
                             sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
                         print('data harvested hahahahaha by me rank {}!!'.format(rank))
                         OLP = get_observable_level_parameter(SZA, VZA, SAA,\
