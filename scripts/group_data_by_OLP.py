@@ -25,6 +25,9 @@ def make_sceneID(observable_level_parameter):
         sfc_ID_bins = observable_level_parameter[:,:,6]
         scene_type_identifier = sfc_ID_bins
 
+        #water = 30
+        #sunglint over water = 31
+        #snow = 32
         scene_type_identifier[ land_water_bins == 0]    = 30
         scene_type_identifier[(sun_glint_bins  == 1) & \
                               (land_water_bins == 0) ]  = 31
@@ -59,20 +62,22 @@ def group_data(OLP, obs, CM, time_stamp):
     new_OLP[:,:,:4] = OLP[:,:,:4] #cosSZA, VZA, RAZ, TA
     new_OLP[:,:,4]  = OLP[:,:,-2] #DOY
     new_OLP[:,:,5]  = scene_ID    #scene_ID
+    new_OLP = new_OLP.astype(dtype=np.int)
+
+    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+    dim_names = ['CM', 'WI', 'NDVI', 'NDSI', 'visRef',\
+                 'nir_Ref', 'SVI', 'cirrus']
 
     #now for any OLP combo, make a group and save the data points into it
-    for i in range(len(new_OLP)):
-        for j in range(len(new_OLP[0])):
+    for i in range(new_OLP.shape[0]):
+        for j in range(new_OLP.shape[1]):
             #negative fill values imply missing data so dont process it
-            #also only process DOY bin 05
-            if obs[i,j,0] >= 0.0 and OLP[i,j,7]==5:
-                print('in loop ({},{})'.format(i,j))
-                temp_OLP = new_OLP[i,j,:].astype(dtype=np.int)
+            if obs[i,j,0] >= 0.0:
+                temp_OLP = new_OLP[i,j,:]
                 group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
                         .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
                                 temp_OLP[3], temp_OLP[4], temp_OLP[5])
 
-                home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
                 filename = '{}grouped_data_{}.hdf5'.format(home, group)
 
                 try:#this is to write a new file and add data point
@@ -91,8 +96,6 @@ def group_data(OLP, obs, CM, time_stamp):
                         data_pnt_group.create_dataset('label_and_obs', data=data)
 
                         #label the data
-                        dim_names = ['CM', 'WI', 'NDVI', 'NDSI', 'visRef',\
-                                     'nir_Ref', 'SVI', 'cirrus']
                         for i, name in enumerate(dim_names):
                             data_pnt_group.dims[i].label = name
 
@@ -113,8 +116,6 @@ def group_data(OLP, obs, CM, time_stamp):
                             #label the data
                             data_pnt_group.create_dataset('label_and_obs', data=data)
 
-                            dim_names = ['CM', 'WI', 'NDVI', 'NDSI', 'visRef',\
-                                         'nir_Ref', 'SVI', 'cirrus']
                             for i, name in enumerate(dim_names):
                                 data_pnt_group.dims[i].label = name
 
@@ -150,10 +151,10 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
-            if r%2!=0:
-                file_select = r-1
-            else:
-                file_select = r
+            # if r%2!=0:
+            #     file_select = r-1
+            # else:
+            #     file_select = r
 
             #define paths for the three databases
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
@@ -175,7 +176,7 @@ if __name__ == '__main__':
             hf_OLP_path    = database_files[file_select]
 
             observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
-            print('Rank {} reporting for duty'.format(r))
+            #print('Rank {} reporting for duty'.format(r))
 
             #get data for input into grouping function
             with h5py.File(hf_observables_path, 'r') as hf_observables,\
@@ -183,17 +184,18 @@ if __name__ == '__main__':
                  h5py.File(hf_OLP_path        , 'r') as hf_OLP:
 
                 hf_database_keys = list(hf_database.keys())
+                #grab only DOY bin 5 since I dont have sfc ID yet for other days
+                hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=40 and int(x[4:7])<48]
 
-                #split the work in half per file
-                half = len(hf_database_keys)//2
-                if r%2==0:
-                    hf_database_keys = hf_database_keys[:half]
-                else:
-                    hf_database_keys = hf_database_keys[half:]
+                # #split the work in half per file
+                # half = len(hf_database_keys)//2
+                # if r%2==0:
+                #     hf_database_keys = hf_database_keys[:half]
+                # else:
+                #     hf_database_keys = hf_database_keys[half:]
 
                 for time_stamp in hf_database_keys:
-                    # lat = hf_database[time_stamp + '/geolocation/lat'][()]
-                    # lon = hf_database[time_stamp + '/geolocation/lon'][()]
+
                     CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
                     OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
 
@@ -202,6 +204,6 @@ if __name__ == '__main__':
                         data_path = '{}/{}'.format(time_stamp, obs)
                         #print(data_path, i, type(hf_observables[data_path][()][0,0]))#type(obs[:,:,i]))
                         obs_data[:,:,i] = hf_observables[data_path][()]
-                    print('Rank {} has processed data'.format(r))
+                    #print('Rank {} has processed data'.format(r))
                     group_data(OLP, obs_data, CM, time_stamp)
-                    print('Rank {} has grouped granule {}'.format(r, time_stamp))
+                    #print('Rank {} has grouped granule {}'.format(r, time_stamp))

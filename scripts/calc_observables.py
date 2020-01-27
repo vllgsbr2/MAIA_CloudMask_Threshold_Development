@@ -258,28 +258,8 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    # if rank==0:
-    #
-    #     #open database to read
-    #     PTA_file_path    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-    #     database_files   = os.listdir(PTA_file_path)
-    #     database_files   = [PTA_file_path + filename for filename in database_files]
-    #     database_files   = np.sort(database_files)
-    #
-    #     #record howmany time stamps in each database
-    #     #and calculate howmany processors can be used for each database
-    #     cpus_per_file           = (size-2) // len(database_files)
-    #     num_timestamps_per_file = np.array([len(list(h5py.File(f, 'r+').keys())) for f in database_files])
-    #     timestamps_per_cpu      = num_timestamps_per_file // (size-2)
-    #
-    #     data = timestamps_per_cpu, num_timestamps_per_file, cpus_per_file
-    #     for i in range(1,size):
-    #         comm.send(data=data, dest=i)
-
     for r in range(size):
-
         if rank==r:
-        
 
             #open database to read
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
@@ -288,31 +268,32 @@ if __name__ == '__main__':
             database_files = np.sort(database_files)
             if r < len(database_files):
                 hf_database_path = database_files[r]
-                start, end = hf_database_path[26:31], hf_database_path[36:41]
-                print(start, end)
-                with h5py.File(hf_database_path, 'r+') as hf_database:
+                # start, end = hf_database_path[26:31], hf_database_path[36:41]
+                # print(start, end)
+                with h5py.File(hf_database_path, 'r') as hf_database:
 
                     hf_database_keys = list(hf_database.keys())
-
                     observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
                     #create/open hdf5 file to store observables
                     PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database'
                     lenpta = len(PTA_file_path)
                     start, end = hf_database_path[lenpta + 26:lenpta +31], hf_database_path[lenpta+36:lenpta+41]
-                    print(start, end)
+                    #print(start, end)
                     hf_observables_path = '{}/LA_PTA_observables_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
 
-                # try:
                     with h5py.File(hf_observables_path, 'w') as hf_observables:
                         for time_stamp in hf_database_keys:
 
-                            R_band_4  = hf_database[time_stamp + '/reflectance/band_3'][()]
-                            R_band_5  = hf_database[time_stamp + '/reflectance/band_4'][()]
-                            R_band_6  = hf_database[time_stamp + '/reflectance/band_1'][()]
-                            R_band_9  = hf_database[time_stamp + '/reflectance/band_2'][()]
-                            R_band_12 = hf_database[time_stamp + '/reflectance/band_6'][()]
-                            R_band_13 = hf_database[time_stamp + '/reflectance/band_26'][()]
+                            SZA     = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
+                            cos_SZA = np.cos(np.deg2rad(SZA))
+
+                            R_band_4  = hf_database[time_stamp + '/reflectance/band_3' ][()] / cos_SZA
+                            R_band_5  = hf_database[time_stamp + '/reflectance/band_4' ][()] / cos_SZA
+                            R_band_6  = hf_database[time_stamp + '/reflectance/band_1' ][()] / cos_SZA
+                            R_band_9  = hf_database[time_stamp + '/reflectance/band_2' ][()] / cos_SZA
+                            R_band_12 = hf_database[time_stamp + '/reflectance/band_6' ][()] / cos_SZA
+                            R_band_13 = hf_database[time_stamp + '/reflectance/band_26'][()] / cos_SZA
 
                             sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag'][()]
 
@@ -337,43 +318,6 @@ if __name__ == '__main__':
                                         group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
                                     except:
                                         hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
-                # except:
-                #     with h5py.File(hf_observables_path, 'r+') as hf_observables:
-                #
-                #         for time_stamp in hf_database_keys:
-                #
-                #             R_band_4  = hf_database[time_stamp + '/reflectance/band_3'][()]
-                #             R_band_5  = hf_database[time_stamp + '/reflectance/band_4'][()]
-                #             R_band_6  = hf_database[time_stamp + '/reflectance/band_1'][()]
-                #             R_band_9  = hf_database[time_stamp + '/reflectance/band_2'][()]
-                #             R_band_12 = hf_database[time_stamp + '/reflectance/band_6'][()]
-                #             R_band_13 = hf_database[time_stamp + '/reflectance/band_26'][()]
-                #
-                #             sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag'][()]
-                #
-                #             whiteness_index           = get_whiteness_index(R_band_6, R_band_5, R_band_4)
-                #             NDVI                      = get_NDVI(R_band_6, R_band_9)
-                #             NDSI                      = get_NDSI(R_band_5, R_band_12)
-                #             visible_reflectance       = get_visible_reflectance(R_band_6)
-                #             NIR_reflectance           = get_NIR_reflectance(R_band_9)
-                #             spatial_variability_index = get_spatial_variability_index(R_band_6)#, numrows, numcol)
-                #             cirrus_Ref                = get_cirrus_Ref(R_band_13)
-                #
-                #             data = np.dstack((whiteness_index, NDVI, NDSI,\
-                #                               visible_reflectance, NIR_reflectance,\
-                #                               spatial_variability_index, cirrus_Ref))
-                #
-                #             for i in range(7):
-                #                 try:
-                #                     group = hf_observables.create_group(time_stamp)
-                #                     group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
-                #                 except:
-                #                     try:
-                #                         group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
-                #                         hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
-                #                     except:
-                #                         hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
-
 
 
 
