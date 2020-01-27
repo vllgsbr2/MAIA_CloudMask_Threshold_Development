@@ -64,7 +64,7 @@ def group_data(OLP, obs, CM, time_stamp):
     new_OLP[:,:,5]  = scene_ID    #scene_ID
     new_OLP = new_OLP.astype(dtype=np.int)
 
-    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/group_DOY_05_60_cores/'
     dim_names = ['CM', 'WI', 'NDVI', 'NDSI', 'visRef',\
                  'nir_Ref', 'SVI', 'cirrus']
 
@@ -157,23 +157,23 @@ if __name__ == '__main__':
             #     file_select = r
 
             #define paths for the three databases
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_database_path = database_files[file_select]
+            hf_database_path = database_files[r]
 
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/observables_database/'
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/observables_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_observables_path = database_files[file_select]
+            hf_observables_path = database_files[r]
 
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/OLP_database/'
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/OLP_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_OLP_path    = database_files[file_select]
+            hf_OLP_path    = database_files[r]
 
             observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
             #print('Rank {} reporting for duty'.format(r))

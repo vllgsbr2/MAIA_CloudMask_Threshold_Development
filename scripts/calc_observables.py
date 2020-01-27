@@ -262,7 +262,7 @@ if __name__ == '__main__':
         if rank==r:
 
             #open database to read
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
@@ -276,11 +276,11 @@ if __name__ == '__main__':
                     observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
                     #create/open hdf5 file to store observables
-                    PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database'
+                    PTA_file_path_obs   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database'
                     lenpta = len(PTA_file_path)
                     start, end = hf_database_path[lenpta + 26:lenpta +31], hf_database_path[lenpta+36:lenpta+41]
                     #print(start, end)
-                    hf_observables_path = '{}/LA_PTA_observables_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
+                    hf_observables_path = '{}/LA_PTA_observables_start_{}_end_{}_.hdf5'.format(PTA_file_path_obs, start, end)
 
                     with h5py.File(hf_observables_path, 'w') as hf_observables:
                         for time_stamp in hf_database_keys:
