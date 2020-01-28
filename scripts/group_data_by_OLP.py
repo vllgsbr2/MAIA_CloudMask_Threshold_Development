@@ -80,7 +80,7 @@ def group_data(OLP, obs, CM, time_stamp):
 
             filename = '{}grouped_data_{}.hdf5'.format(home, group)
 
-            try:#this is to write a new file and add data point
+            if not os.path.isfile(filename):#try:#this is to write a new file and add data point
                 with h5py.File(filename, 'w') as hf_grouped_data:
                     data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
                                                  .format(time_stamp, i, j))
@@ -99,7 +99,7 @@ def group_data(OLP, obs, CM, time_stamp):
                     for i, name in enumerate(dim_names):
                         data_pnt_group.dims[i].label = name
 
-            except:
+            else:#except:
                 try:#this is to add a data point to an existing file
                     with h5py.File(filename, 'r+') as hf_grouped_data:
                         data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
