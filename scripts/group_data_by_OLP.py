@@ -65,8 +65,6 @@ def group_data(OLP, obs, CM, time_stamp):
     new_OLP = new_OLP.astype(dtype=np.int)
 
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/group_DOY_05_60_cores/'
-    dim_names = ['CM', 'WI', 'NDVI', 'NDSI', 'visRef',\
-                 'nir_Ref', 'SVI', 'cirrus']
 
     #now for any OLP combo, make a group and save the data points into it
     for i in range(new_OLP.shape[0]):
@@ -96,8 +94,8 @@ def group_data(OLP, obs, CM, time_stamp):
                     data_pnt_group.create_dataset('label_and_obs', data=data)
 
                     #label the data
-                    for i, name in enumerate(dim_names):
-                        data_pnt_group.dims[i].label = name
+                    #for i, name in enumerate(dim_names):
+                    data_pnt_group.attrs['keys for values'] = 'CM, WI, NDVI, NDSI, visRef, nir_Ref, SVI, cirrus'
 
             else:#except:
                 try:#this is to add a data point to an existing file
@@ -116,8 +114,8 @@ def group_data(OLP, obs, CM, time_stamp):
                         #label the data
                         data_pnt_group.create_dataset('label_and_obs', data=data)
 
-                        for i, name in enumerate(dim_names):
-                            data_pnt_group.dims[i].label = name
+                       # for i, name in enumerate(dim_names):
+                        data_pnt_group.attrs['keys for values'] = 'CM, WI, NDVI, NDSI, visRef, nir_Ref, SVI, cirrus'
 
                 except: #this is to overwrite the data point in an existing file
                     with h5py.File(filename, 'r+') as hf_grouped_data:
