@@ -1,3 +1,6 @@
+import numpy as np
+import h5py
+
 def calc_thresh(group_file):
     '''
     Objective:
@@ -10,30 +13,34 @@ def calc_thresh(group_file):
     Return:
         void
     '''
+    print(group_file)
     #remember to change Ref to BRF
     #^ unfortunately have to redo observable files and then the grouped files
-
+    print('entering calc thresh')
     with h5py.File(group_file, 'r') as hf_group:
         hf_keys    = list(hf_group.keys())
+        print(hf_keys)
         num_points = len(hf_keys)
         cloud_mask = np.zeros((num_points))
 
         observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
         obs = np.empty((num_points, 7))
-        Thresholds = np.zeros((num_points, 7))
+        thresholds = np.zeros((num_points, 7))
 
         for i, data_point in enumerate(hf_keys):
-            data = hf_group[data_point + 'label_and_obs'][()]
+            print(list(hf_group[data_point].keys()))
+            dataset_path  = '{}/label_and_obs'.format(data_point)
+            data = hf_group[dataset_path][()]
 
             cloud_mask[i] = int(data[0])
             obs[i]        = data[1:]
-
+        print(cloud_mask)
         for i in range(7):
             clear_idx = np.where(cloud_mask != 0)
             clear_obs = obs[clear_idx,:]
 
             thresholds[:,i] = np.percentile(clear_obs[:,i], 1)
-
+        print('data_retrieved')
         thresh_name = 'threshold_{}'.format(group_file[13:])
 
         try:
@@ -46,7 +53,7 @@ def calc_thresh(group_file):
                 dataset.dims[i].label = name
         except:
             hf_group['thresholds'][:] = thresholds
-
+        print('data written')
 
 if __name__ == '__main__':
 
@@ -64,7 +71,7 @@ if __name__ == '__main__':
         if rank==r:
 
             #define paths for the three databases
-            PTA_file_path    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/grouped_data'
+            PTA_file_path    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/group_DOY_05_60_cores/'
             database_files   = os.listdir(PTA_file_path)
             database_files   = [PTA_file_path + filename for filename in database_files]
             database_files   = np.sort(database_files)
