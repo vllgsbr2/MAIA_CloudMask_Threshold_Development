@@ -72,18 +72,58 @@ def group_data(OLP, obs, CM, time_stamp):
     for i in range(new_OLP.shape[0]):
         for j in range(new_OLP.shape[1]):
             #negative fill values imply missing data so dont process it
-            if obs[i,j,0] >= 0.0:
-                temp_OLP = new_OLP[i,j,:]
-                group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
-                        .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
-                                temp_OLP[3], temp_OLP[4], temp_OLP[5])
+            # if obs[i,j,0] >= 0.0:
+            temp_OLP = new_OLP[i,j,:]
+            group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
+                    .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
+                            temp_OLP[3], temp_OLP[4], temp_OLP[5])
 
-                filename = '{}grouped_data_{}.hdf5'.format(home, group)
+            filename = '{}grouped_data_{}.hdf5'.format(home, group)
 
-                try:#this is to write a new file and add data point
-                    with h5py.File(filename, 'w') as hf_grouped_data:
+            try:#this is to write a new file and add data point
+                with h5py.File(filename, 'w') as hf_grouped_data:
+                    data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
+                                                 .format(time_stamp, i, j))
+                    data = np.array([CM[i,j]   ,\
+                                     obs[i,j,0],\
+                                     obs[i,j,1],\
+                                     obs[i,j,2],\
+                                     obs[i,j,3],\
+                                     obs[i,j,4],\
+                                     obs[i,j,5],\
+                                     obs[i,j,6] ])
+
+                    data_pnt_group.create_dataset('label_and_obs', data=data)
+
+                    #label the data
+                    for i, name in enumerate(dim_names):
+                        data_pnt_group.dims[i].label = name
+
+            except:
+                try:#this is to add a data point to an existing file
+                    with h5py.File(filename, 'r+') as hf_grouped_data:
                         data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
                                                      .format(time_stamp, i, j))
+
+                        data = np.array([CM[i,j]   ,\
+                                         obs[i,j,0],\
+                                         obs[i,j,1],\
+                                         obs[i,j,2],\
+                                         obs[i,j,3],\
+                                         obs[i,j,4],\
+                                         obs[i,j,5],\
+                                         obs[i,j,6] ])
+                        #label the data
+                        data_pnt_group.create_dataset('label_and_obs', data=data)
+
+                        for i, name in enumerate(dim_names):
+                            data_pnt_group.dims[i].label = name
+
+                except: #this is to overwrite the data point in an existing file
+                    with h5py.File(filename, 'r+') as hf_grouped_data:
+                        data_pnt_name = 'data_point_time_stamp_{}_i_{}_j_{}'\
+                                        .format(time_stamp, i, j)
+
                         data = np.array([CM[i,j]   ,\
                                          obs[i,j,0],\
                                          obs[i,j,1],\
@@ -93,47 +133,7 @@ def group_data(OLP, obs, CM, time_stamp):
                                          obs[i,j,5],\
                                          obs[i,j,6] ])
 
-                        data_pnt_group.create_dataset('label_and_obs', data=data)
-
-                        #label the data
-                        for i, name in enumerate(dim_names):
-                            data_pnt_group.dims[i].label = name
-
-                except:
-                    try:#this is to add a data point to an existing file
-                        with h5py.File(filename, 'r+') as hf_grouped_data:
-                            data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
-                                                         .format(time_stamp, i, j))
-
-                            data = np.array([CM[i,j]   ,\
-                                             obs[i,j,0],\
-                                             obs[i,j,1],\
-                                             obs[i,j,2],\
-                                             obs[i,j,3],\
-                                             obs[i,j,4],\
-                                             obs[i,j,5],\
-                                             obs[i,j,6] ])
-                            #label the data
-                            data_pnt_group.create_dataset('label_and_obs', data=data)
-
-                            for i, name in enumerate(dim_names):
-                                data_pnt_group.dims[i].label = name
-
-                    except: #this is to overwrite the data point in an existing file
-                        with h5py.File(filename, 'r+') as hf_grouped_data:
-                            data_pnt_name = 'data_point_time_stamp_{}_i_{}_j_{}'\
-                                            .format(time_stamp, i, j)
-
-                            data = np.array([CM[i,j]   ,\
-                                             obs[i,j,0],\
-                                             obs[i,j,1],\
-                                             obs[i,j,2],\
-                                             obs[i,j,3],\
-                                             obs[i,j,4],\
-                                             obs[i,j,5],\
-                                             obs[i,j,6] ])
-
-                            hf_grouped_data['{}/label_and_obs'.format(data_pnt_name) ][:] = data
+                        hf_grouped_data['{}/label_and_obs'.format(data_pnt_name) ][:] = data
 
 
 if __name__ == '__main__':
