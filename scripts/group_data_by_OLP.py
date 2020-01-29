@@ -64,74 +64,68 @@ def group_data(OLP, obs, CM, time_stamp):
     new_OLP[:,:,5]  = scene_ID    #scene_ID
     new_OLP = new_OLP.astype(dtype=np.int)
 
+    #flatten arrays
+    new_OLP = new_OLP.reshape(1000**2, 6)
+    obs     = obs.reshape(1000**2, 7)
+    CM      = CM.reshape(1000**2)
+
+    #remove empty data points
+    #where whiteness is negative (which is not possible)
+    full_idx = np.where(obs[:,0] >= 0.0) # obs -> (1, 1e6-x)
+
+    new_OLP = new_OLP[full_idx[0], :]
+    obs     = obs[full_idx[0], :]
+    CM      = CM[full_idx[0]]
+
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/group_DOY_05_60_cores/'
 
     #now for any OLP combo, make a group and save the data points into it
-    for i in range(new_OLP.shape[0]):
-        for j in range(new_OLP.shape[1]):
-            #negative fill values imply missing data so dont process it
-            # if obs[i,j,0] >= 0.0:
-            temp_OLP = new_OLP[i,j,:]
-            group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
-                    .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
-                            temp_OLP[3], temp_OLP[4], temp_OLP[5])
+    for i in range(CM.shape[0]):
+        #negative fill values imply missing data so dont process it
+        # if obs[i,j,0] >= 0.0:
+        temp_OLP = new_OLP[i,:]
+        group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
+                .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
+                        temp_OLP[3], temp_OLP[4], temp_OLP[5])
 
-            filename = '{}grouped_data_{}.hdf5'.format(home, group)
+        filename = '{}grouped_data_{}.hdf5'.format(home, group)
 
-            if not os.path.isfile(filename):#try:#this is to write a new file and add data point
-                with h5py.File(filename, 'w') as hf_grouped_data:
-                    data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
-                                                 .format(time_stamp, i, j))
-                    data = np.array([CM[i,j]   ,\
-                                     obs[i,j,0],\
-                                     obs[i,j,1],\
-                                     obs[i,j,2],\
-                                     obs[i,j,3],\
-                                     obs[i,j,4],\
-                                     obs[i,j,5],\
-                                     obs[i,j,6] ])
+        data = np.array([CM[i]   ,\
+                         obs[i,0],\
+                         obs[i,1],\
+                         obs[i,2],\
+                         obs[i,3],\
+                         obs[i,4],\
+                         obs[i,5],\
+                         obs[i,6] ])
 
-                    data_pnt_group.create_dataset('label_and_obs', data=data)
+        if not os.path.isfile(filename):#try:#this is to write a new file and add data point
+            with h5py.File(filename, 'w') as hf_grouped_data:
+                data_pnt_group = hf_grouped_data.create_group('time_stamp_{}_i_{}'\
+                                             .format(time_stamp, i))
+
+                data_pnt_group.create_dataset('label_and_obs', data=data)
+
+                #label the data
+                data_pnt_group.attrs['keys for values'] = 'CM, WI, NDVI, NDSI, visRef, nir_Ref, SVI, cirrus'
+
+        else:#except:
+            try:#this is to add a data point to an existing file
+                with h5py.File(filename, 'r+') as hf_grouped_data:
+                    data_pnt_group = hf_grouped_data.create_group('time_stamp_{}_i_{}'\
+                                                 .format(time_stamp, i))
 
                     #label the data
-                    #for i, name in enumerate(dim_names):
+                    data_pnt_group.create_dataset('label_and_obs', data=data)
+
                     data_pnt_group.attrs['keys for values'] = 'CM, WI, NDVI, NDSI, visRef, nir_Ref, SVI, cirrus'
 
-            else:#except:
-                try:#this is to add a data point to an existing file
-                    with h5py.File(filename, 'r+') as hf_grouped_data:
-                        data_pnt_group = hf_grouped_data.create_group('data_point_time_stamp_{}_i_{}_j_{}'\
-                                                     .format(time_stamp, i, j))
+            except: #this is to overwrite the data point in an existing file
+                with h5py.File(filename, 'r+') as hf_grouped_data:
+                    data_pnt_name = 'time_stamp_{}_i_{}'\
+                                    .format(time_stamp, i)
 
-                        data = np.array([CM[i,j]   ,\
-                                         obs[i,j,0],\
-                                         obs[i,j,1],\
-                                         obs[i,j,2],\
-                                         obs[i,j,3],\
-                                         obs[i,j,4],\
-                                         obs[i,j,5],\
-                                         obs[i,j,6] ])
-                        #label the data
-                        data_pnt_group.create_dataset('label_and_obs', data=data)
-
-                       # for i, name in enumerate(dim_names):
-                        data_pnt_group.attrs['keys for values'] = 'CM, WI, NDVI, NDSI, visRef, nir_Ref, SVI, cirrus'
-
-                except: #this is to overwrite the data point in an existing file
-                    with h5py.File(filename, 'r+') as hf_grouped_data:
-                        data_pnt_name = 'data_point_time_stamp_{}_i_{}_j_{}'\
-                                        .format(time_stamp, i, j)
-
-                        data = np.array([CM[i,j]   ,\
-                                         obs[i,j,0],\
-                                         obs[i,j,1],\
-                                         obs[i,j,2],\
-                                         obs[i,j,3],\
-                                         obs[i,j,4],\
-                                         obs[i,j,5],\
-                                         obs[i,j,6] ])
-
-                        hf_grouped_data['{}/label_and_obs'.format(data_pnt_name) ][:] = data
+                    hf_grouped_data['{}/label_and_obs'.format(data_pnt_name) ][:] = data
 
 
 if __name__ == '__main__':
@@ -154,27 +148,28 @@ if __name__ == '__main__':
             # else:
             #     file_select = r
 
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+
             #define paths for the three databases
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
+            PTA_file_path = home + 'LA_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_database_path = database_files[r]
 
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/observables_database_60_cores/'
+            PTA_file_path = home + 'observables_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_observables_path = database_files[r]
 
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/OLP_database_60_cores/'
+            PTA_file_path = home + 'OLP_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_OLP_path    = database_files[r]
 
             observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
-            #print('Rank {} reporting for duty'.format(r))
 
             #get data for input into grouping function
             with h5py.File(hf_observables_path, 'r') as hf_observables,\
@@ -182,7 +177,7 @@ if __name__ == '__main__':
                  h5py.File(hf_OLP_path        , 'r') as hf_OLP:
 
                 hf_database_keys = list(hf_database.keys())
-                #grab only DOY bin 5 since I dont have sfc ID yet for other days
+                #grab only DOY bin 6 since I dont have sfc ID yet for other days
                 hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
 
                 # #split the work in half per file
@@ -200,8 +195,5 @@ if __name__ == '__main__':
                     obs_data = np.empty((1000,1000,7), dtype=np.float)
                     for i, obs in enumerate(observables):
                         data_path = '{}/{}'.format(time_stamp, obs)
-                        #print(data_path, i, type(hf_observables[data_path][()][0,0]))#type(obs[:,:,i]))
                         obs_data[:,:,i] = hf_observables[data_path][()]
-                    #print('Rank {} has processed data'.format(r))
                     group_data(OLP, obs_data, CM, time_stamp)
-                    #print('Rank {} has grouped granule {}'.format(r, time_stamp))
