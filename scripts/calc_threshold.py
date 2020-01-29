@@ -14,10 +14,8 @@ def calc_thresh(group_file):
         void
     '''
     print(group_file)
-    #remember to change Ref to BRF
-    #^ unfortunately have to redo observable files and then the grouped files
     print('entering calc thresh')
-    with h5py.File(group_file, 'r') as hf_group:
+    with h5py.File(group_file, 'r+') as hf_group:
         hf_keys    = list(hf_group.keys())
         print(hf_keys)
         num_points = len(hf_keys)
@@ -47,10 +45,8 @@ def calc_thresh(group_file):
             dataset = hf_group.create_dataset('thresholds', data=thresholds)
 
             #label the data
-            dim_names = ['WI', 'NDVI', 'NDSI', 'visRef',\
-                         'nir_Ref', 'SVI', 'cirrus']
-            for i, name in enumerate(dim_names):
-                dataset.dims[i].label = name
+            dataset.attrs['threshold labels'] = 'WI, NDVI, NDSI, visRef,\
+                               nir_Ref, SVI, cirrus'
         except:
             hf_group['thresholds'][:] = thresholds
         print('data written')
