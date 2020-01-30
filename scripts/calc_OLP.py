@@ -51,7 +51,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     sfc_ID         = sfc_ID #sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
 
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=False)
-    sfc_ID         = sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
+    sfc_ID         = sfc_ID#[:,:,binned_DOY] #just choose the day for sfc_ID map
 
     #these datafields' raw values serve as the bins, so no modification needed:
     #Target_Area, land_water_mask, snow_ice_mask, sun_glint_mask, sfc_ID

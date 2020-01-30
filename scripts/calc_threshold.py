@@ -13,35 +13,37 @@ def calc_thresh(group_file):
     Return:
         void
     '''
-    print(group_file)
-    print('entering calc thresh')
+    #print(group_file)
+
     with h5py.File(group_file, 'r+') as hf_group:
         hf_keys    = list(hf_group.keys())
-        print(hf_keys)
         num_points = len(hf_keys)
         cloud_mask = np.zeros((num_points))
 
         observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
         obs = np.empty((num_points, 7))
-        thresholds = np.zeros((num_points, 7))
+        thresholds = np.zeros((7))
 
         for i, data_point in enumerate(hf_keys):
-            print(list(hf_group[data_point].keys()))
             dataset_path  = '{}/label_and_obs'.format(data_point)
-            data = hf_group[dataset_path][()]
+            try:
+                data = hf_group[dataset_path][()]
+                cloud_mask[i] = int(data[0])
+                obs[i,:]      = data[1:]
+            except:
+                cloud_mask[i] = np.nan#int(data[0])
+                obs[i,:]      = np.nan#data[1:]
 
-            cloud_mask[i] = int(data[0])
-            obs[i]        = data[1:]
-        print(cloud_mask)
         for i in range(7):
             clear_idx = np.where(cloud_mask != 0)
-            clear_obs = obs[clear_idx,:]
+            clear_obs = obs[clear_idx[0],:]
 
-            thresholds[:,i] = np.percentile(clear_obs[:,i], 1)
-        print('data_retrieved')
+            thresholds[i] = np.nanpercentile(clear_obs[:,i], 1)
+        #print('data_retrieved')
         thresh_name = 'threshold_{}'.format(group_file[13:])
 
         try:
+            #del hf_group['thresholds']
             dataset = hf_group.create_dataset('thresholds', data=thresholds)
 
             #label the data
@@ -49,7 +51,8 @@ def calc_thresh(group_file):
                                nir_Ref, SVI, cirrus'
         except:
             hf_group['thresholds'][:] = thresholds
-        print('data written')
+
+        print(group_file)
 
 if __name__ == '__main__':
 

@@ -143,10 +143,10 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
-            # if r%2!=0:
-            #     file_select = r-1
-            # else:
-            #     file_select = r
+            if r%2!=0:
+                file_select = r-1
+            else:
+                file_select = r
 
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
 
@@ -155,19 +155,19 @@ if __name__ == '__main__':
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_database_path = database_files[r]
+            hf_database_path = database_files[file_select]
 
             PTA_file_path = home + 'observables_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_observables_path = database_files[r]
+            hf_observables_path = database_files[file_select]
 
             PTA_file_path = home + 'OLP_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
-            hf_OLP_path    = database_files[r]
+            hf_OLP_path    = database_files[file_select]
 
             observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
@@ -180,12 +180,12 @@ if __name__ == '__main__':
                 #grab only DOY bin 6 since I dont have sfc ID yet for other days
                 hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
 
-                # #split the work in half per file
-                # half = len(hf_database_keys)//2
-                # if r%2==0:
-                #     hf_database_keys = hf_database_keys[:half]
-                # else:
-                #     hf_database_keys = hf_database_keys[half:]
+                #split the work in half per file
+                half = len(hf_database_keys)//2
+                if r%2==0:
+                    hf_database_keys = hf_database_keys[:half]
+                else:
+                    hf_database_keys = hf_database_keys[half:]
 
                 for time_stamp in hf_database_keys:
 
