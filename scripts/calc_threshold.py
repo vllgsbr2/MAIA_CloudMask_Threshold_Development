@@ -13,7 +13,6 @@ def calc_thresh(group_file):
     Return:
         void
     '''
-    #print(group_file)
 
     with h5py.File(group_file, 'r+') as hf_group:
         hf_keys    = list(hf_group.keys())
@@ -39,8 +38,8 @@ def calc_thresh(group_file):
             clear_obs = obs[clear_idx[0],:]
 
             thresholds[i] = np.nanpercentile(clear_obs[:,i], 1)
-        #print('data_retrieved')
-        thresh_name = 'threshold_{}'.format(group_file[13:])
+
+        #thresh_name = 'threshold_{}'.format(group_file[13:])
 
         try:
             #del hf_group['thresholds']
@@ -70,7 +69,8 @@ if __name__ == '__main__':
         if rank==r:
 
             #define paths for the three databases
-            PTA_file_path    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/group_DOY_05_60_cores/'
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            PTA_file_path    = home + 'group_DOY_05_60_cores/'
             database_files   = os.listdir(PTA_file_path)
             database_files   = [PTA_file_path + filename for filename in database_files]
             database_files   = np.sort(database_files)
