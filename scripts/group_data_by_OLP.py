@@ -35,7 +35,7 @@ def make_sceneID(observable_level_parameter):
 
         return scene_type_identifier
 
-def group_data(OLP, obs, CM, time_stamp):
+def group_data(OLP, obs, CM, hf_group):
     """
     Objective:
         Group data by observable_level_paramter (OLP), such that all data in same
@@ -88,7 +88,7 @@ def group_data(OLP, obs, CM, time_stamp):
         group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
                 .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
                         temp_OLP[3], temp_OLP[4], temp_OLP[5])
-       
+
         filename = '{}grouped_data_{}.hdf5'.format(home, group)
 
         data = np.array([CM[i]   ,\
@@ -99,32 +99,21 @@ def group_data(OLP, obs, CM, time_stamp):
                          obs[i,4],\
                          obs[i,5],\
                          obs[i,6] ])
-        
-        #add key with empty list, then populate it. 
+
+        #add key with empty list, then populate it.
         thresh_dict.setdefualt(group, [])
         thresh_dict[group].append(data)
 
-    for key, val in thresh_dict.items():        
-        if not os.path.isfile(filename):#try:#this is to write a new file and add data point
-            with h5py.File(filename, 'w') as hf_grouped_data:
-                hf_grouped_data.create_dataset('time_stamp_{}_i_{}'.format(time_stamp, i), data=np.array(val))
+    for key, val in thresh_dict.items():
+        try:
+            hf_group.create_dataset(key, data=np.array(val), maxshape=(None,8))
 
-                #label the data
-                #data_pnt_group.attrs['keys for values'] = 'CM, WI, NDVI, NDSI, visRef, nir_Ref, SVI, cirrus'
+        except:
+            group_shape = hf_group[key].shape[0]
+            hf_group[key].resize(group_shape + np.array(val).shape[0], axis=0)
+            hf_group[key][group_shape:, :] = np.array(val)
 
-        else:
-            with h5py.File(filename, 'r+') as hf_grouped_data:
-                try:#this is to add a data point to an existing file
-                    hf_grouped_data.create_dataset('time_stamp_{}_i_{}'.format(time_stamp, i), data=data)
 
-                    #label the data
-                    #data_pnt_group.attrs['keys for values'] = 'CM, WI, NDVI, NDSI, visRef, nir_Ref, SVI, cirrus'
-
-                except: #this is to overwrite the data point in an existing file
-
-                    hf_grouped_data['time_stamp_{}_i_{}'.format(time_stamp, i)][:] = data
-        
-        
 if __name__ == '__main__':
 
     import numpy as np
@@ -185,15 +174,20 @@ if __name__ == '__main__':
                 else:
                     hf_database_keys = hf_database_keys[half:]
 
-                for time_stamp in hf_database_keys:
 
-                    CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
-                    OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
+                #open file to write thresholds to
+                hf_group_path = home + 'grouped_data.hdf5'
+                with h5py.File(hf_group_path, 'w')  as hf_group:
 
-                    obs_data = np.empty((1000,1000,7), dtype=np.float)
-                    for i, obs in enumerate(observables):
-                        data_path = '{}/{}'.format(time_stamp, obs)
-                        obs_data[:,:,i] = hf_observables[data_path][()]
-                    group_data(OLP, obs_data, CM, time_stamp)
+                    for time_stamp in hf_database_keys:
 
-                    output.write('{}{}'.format(time_stamp, '\n'))
+                        CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
+                        OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
+
+                        obs_data = np.empty((1000,1000,7), dtype=np.float)
+                        for i, obs in enumerate(observables):
+                            data_path = '{}/{}'.format(time_stamp, obs)
+                            obs_data[:,:,i] = hf_observables[data_path][()]
+                        group_data(OLP, obs_data, CM, hf_group)
+
+                        output.write('{}{}'.format(time_stamp, '\n'))
