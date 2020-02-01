@@ -2,7 +2,8 @@ def confusion_matrix(threshold_path):
 
     with h5py.File(threshold_path, 'r+') as hf_thresh:
 
-        hf_keys    = list(hf_group.keys())
+        hf_keys    = list(hf_thresh.keys())
+        hf_keys    = [x for x in hf_keys if x[:2] == 'ti']
         num_points = len(hf_keys)
 
         #grab obs, CM, and thresholds
@@ -12,7 +13,7 @@ def confusion_matrix(threshold_path):
         for i, data_point in enumerate(hf_keys):
             dataset_path  = '{}/label_and_obs'.format(data_point)
 
-            data = hf_group[dataset_path][()]
+            data = hf_thresh[dataset_path][()]
             cloud_mask[i] = int(data[0])
             obs[i,:]      = data[1:]
 
@@ -20,12 +21,12 @@ def confusion_matrix(threshold_path):
         thresholds = hf_thresh['thresholds'][()]
 
         #see if any obs trigger cloudy
-        for i in range(num_points)
+        for i in range(num_points):
             cloudy_idx = np.where(obs[i,:] >= thresholds)
             clear_idx  = np.where(obs[i,:] <  thresholds)
 
         #compare with CM
-
+        CM = cloud_mask
         #both return cloudy
         true  = np.where(CM == thresholds[cloudy_idx]).sum()
         #both return clear
@@ -52,6 +53,7 @@ if __name__ == '__main__':
     import mpi4py.MPI as MPI
     import tables
     import os
+    import numpy as np
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -63,7 +65,7 @@ if __name__ == '__main__':
 
             #define paths for the three databases
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            PTA_file_path    = home + 'group_DOY_05_60_cores/'
+            PTA_file_path    = home + 'test_thresholds/'
             database_files   = os.listdir(PTA_file_path)
             database_files   = [PTA_file_path + filename for filename in database_files]
             database_files   = np.sort(database_files)

@@ -101,17 +101,17 @@ def group_data(OLP, obs, CM, hf_group):
                          obs[i,6] ])
 
         #add key with empty list, then populate it.
-        thresh_dict.setdefualt(group, [])
+        thresh_dict.setdefault(group, [])
         thresh_dict[group].append(data)
 
-    for key, val in thresh_dict.items():
-        try:
-            hf_group.create_dataset(key, data=np.array(val), maxshape=(None,8))
+    #for key, val in thresh_dict.items():
+     #   try:
+      #      hf_group.create_dataset(key, data=np.array(val), maxshape=(None,8))
 
-        except:
-            group_shape = hf_group[key].shape[0]
-            hf_group[key].resize(group_shape + np.array(val).shape[0], axis=0)
-            hf_group[key][group_shape:, :] = np.array(val)
+       # except:
+        #    group_shape = hf_group[key].shape[0]
+         #   hf_group[key].resize(group_shape + np.array(val).shape[0], axis=0)
+          #  hf_group[key][group_shape:, :] = np.array(val)
 
 
 if __name__ == '__main__':
@@ -161,7 +161,7 @@ if __name__ == '__main__':
             with h5py.File(hf_observables_path       , 'r')  as hf_observables,\
                  h5py.File(hf_database_path          , 'r')  as hf_database   ,\
                  h5py.File(hf_OLP_path               , 'r')  as hf_OLP        ,\
-                 open(home + 'grouped_file_count.csv', 'r+') as output:
+                 open(home + 'grouped_file_count.csv', 'w') as output:
 
                 hf_database_keys = list(hf_database.keys())
                 #grab only DOY bin 6 since I dont have sfc ID yet for other days
@@ -177,17 +177,31 @@ if __name__ == '__main__':
 
                 #open file to write thresholds to
                 hf_group_path = home + 'grouped_data.hdf5'
-                with h5py.File(hf_group_path, 'w')  as hf_group:
+                try:#if os.path.isfile(hf_group_path):
+                    with h5py.File(hf_group_path, 'w-')  as hf_group:
+                        for time_stamp in hf_database_keys:
 
-                    for time_stamp in hf_database_keys:
+                            CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
+                            OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
 
-                        CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
-                        OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
+                            obs_data = np.empty((1000,1000,7), dtype=np.float)
+                            for i, obs in enumerate(observables):
+                                data_path = '{}/{}'.format(time_stamp, obs)
+                                obs_data[:,:,i] = hf_observables[data_path][()]
+                            group_data(OLP, obs_data, CM, hf_group)
 
-                        obs_data = np.empty((1000,1000,7), dtype=np.float)
-                        for i, obs in enumerate(observables):
-                            data_path = '{}/{}'.format(time_stamp, obs)
-                            obs_data[:,:,i] = hf_observables[data_path][()]
-                        group_data(OLP, obs_data, CM, hf_group)
+                            output.write('{}{}'.format(time_stamp, '\n'))
+                except: #else:
+                    with h5py.File(hf_group_path, 'r+')  as hf_group:
+                        for time_stamp in hf_database_keys:
 
-                        output.write('{}{}'.format(time_stamp, '\n'))
+                            CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
+                            OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
+
+                            obs_data = np.empty((1000,1000,7), dtype=np.float)
+                            for i, obs in enumerate(observables):
+                                data_path = '{}/{}'.format(time_stamp, obs)
+                                obs_data[:,:,i] = hf_observables[data_path][()]
+                            group_data(OLP, obs_data, CM, hf_group)
+
+                            output.write('{}{}'.format(time_stamp, '\n'))
