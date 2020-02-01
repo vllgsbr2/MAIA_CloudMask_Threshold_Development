@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
             #define paths for the three databases
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            PTA_file_path    = home + 'group_DOY_05_60_cores/'
+            PTA_file_path    = home + 'test_thresholds/'
             database_files   = os.listdir(PTA_file_path)
             database_files   = [PTA_file_path + filename for filename in database_files]
             database_files   = np.sort(database_files)
