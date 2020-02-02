@@ -20,21 +20,41 @@ def confusion_matrix(threshold_path):
 
         thresholds = hf_thresh['thresholds'][()]
 
+        #calculate distance to threshold for NDxI 
+        DTT_NDxI = np.zeros((num_points, 2)) 
+        for i in range(1,3):
+            NDxI          = obs[:,i]
+            T             = thresholds[i]
+            DTT_NDxI[:,i-1] = (T - np.abs(NDxI)) / T
+    
         #see if any obs trigger cloudy
-        for i in range(num_points):
-            cloudy_idx = np.where(obs[i,:] >= thresholds)
-            clear_idx  = np.where(obs[i,:] <  thresholds)
+        #assume clear (i.e. 1), cloudy is 0
+        cloud_mask_MAIA = np.ones((num_points))
 
-        #compare with CM
-        CM = cloud_mask
+        for i in range(num_points):
+            for j in range(7):
+                if j==23:
+                    pass
+                elif j>=3 and np.any(thresholds[3:] >= obs[i,3:]):
+                    cloud_mask_MAIA[i] = 0 
+                elif (j==1 or j==2) and (DTT_NDxI[i,0] >= 0 or DTT_NDxI[i,1] >= 0):#this is since we used DTT for NDxI
+                    pass#cloud_mask_MAIA[i] = 0
+                elif np.any(thresholds[0] <= obs[i,0]):#this is for whiteness since 0 is whiter than 1
+                    cloud_mask_MAIA[i] = 0
+                else:
+                    pass
+
+        #compare with CM; cloudy==0, clear==1
+        MOD_CM = cloud_mask
+        MAIA_CM = cloud_mask_MAIA
         #both return cloudy
-        true  = np.where(CM == thresholds[cloudy_idx]).sum()
+        true  = np.where(    (MAIA_CM == 0) & (MOD_CM == 0))[0].sum()
         #both return clear
-        false = np.where(CM == thresholds[clear_idx ]).sum()
+        false = np.where(    (MAIA_CM == 1) & (MOD_CM != 0))[0].sum()
         #MOD cloudy MAIA clear
-        false_pos = np.where(CM != thresholds[cloudy_idx]).sum()
+        false_neg = np.where((MAIA_CM == 1) & (MOD_CM == 0))[0].sum()
         #MOD clear MAIA cloudy
-        false_neg = np.where(CM != thresholds[clear_idx ]).sum()
+        false_pos = np.where((MAIA_CM == 0) & (MOD_CM != 0))[0].sum()
 
         #make result into confusion matrix
         conf_mat = np.array([true, false, false_pos, false_neg])
@@ -46,7 +66,9 @@ def confusion_matrix(threshold_path):
                                        MOD_cloud_MAIA_clear, MOD_clear_MAIA_cloudy']
         except:
             hf_thresh['confusion_matrix'][:] = conf_mat
-
+        
+        #print(threshold_path[-65:-5])
+        print((conf_mat[0]+conf_mat[1])/conf_mat.sum())
 if __name__ == '__main__':
 
     import h5py
