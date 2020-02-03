@@ -33,14 +33,20 @@ def calc_thresh(group_file):
                 cloud_mask[i] = np.nan#int(data[0])
                 obs[i,:]      = np.nan#data[1:]
 
+        clear_idx = np.where(cloud_mask != 0)
+        clear_obs = obs[clear_idx[0],:]
+
+        cloudy_idx = np.where(cloud_mask != 0)
+        cloudy_obs = obs[cloudy_idx[0],1:3] #[1:3] since we only need for NDxI
+
         for i in range(7):
-            clear_idx = np.where(cloud_mask != 0)
-            clear_obs = obs[clear_idx[0],:]
-
-            thresholds[i] = np.nanpercentile(clear_obs[:,i], 1)
-
-        #thresh_name = 'threshold_{}'.format(group_file[13:])
-
+            if i==0:#WI
+                thresholds[i] = np.nanpercentile(clear_obs[:,i], 1)
+            elif i==1 or i==2:#NDxI
+                thresholds[i] = np.hist(cloudy_obs[:,i], bins=50, range=(-1,1))[0].max()#np.nanpercentile(cloudy_obs[:,i], 99)
+            else:#VIS/NIR/SVI/Cirrus
+                thresholds[i] = np.nanpercentile(clear_obs[:,i], 99)
+                
         try:
             #del hf_group['thresholds']
             dataset = hf_group.create_dataset('thresholds', data=thresholds)
