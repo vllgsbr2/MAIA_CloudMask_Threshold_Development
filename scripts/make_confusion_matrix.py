@@ -3,7 +3,7 @@ def confusion_matrix(threshold_path):
     with h5py.File(threshold_path, 'r+') as hf_thresh:
 
         hf_keys    = list(hf_thresh.keys())
- 
+
         n=111 # sza, vza, raz, scene_id
         print(threshold_path[n+7:n+9])
         OLP =[int(threshold_path[n+7:n+9])  ,\
@@ -28,41 +28,49 @@ def confusion_matrix(threshold_path):
 
         thresholds = hf_thresh['thresholds'][()]
 
-        #calculate distance to threshold for NDxI 
-        DTT_NDxI = np.zeros((num_points, 2)) 
+        #calculate distance to threshold for NDxI
+        DTT_NDxI = np.zeros((num_points, 2))
         for i in range(1,3):
             NDxI          = obs[:,i]
             T             = thresholds[i]
-            T[T==0] = np.nan
+            #put 0.001 instead of zero to avoid errors
+            T[T==0] = 1e-3
             DTT_NDxI[:,i-1] = (T - np.abs(NDxI)) / T
-    
+
         #see if any obs trigger cloudy
         #assume clear (i.e. 1), cloudy is 0
         cloud_mask_MAIA = np.ones((num_points))
 
         for i in range(num_points):
+            #[WI_0, NDVI_1, NDSI_2, VIS_3, NIR_4, SVI_5, Cirrus_6]
+            #water = 30 / sunglint over water = 31/ snow =32 / land = 0-11
             for j in range(7):
-                if j==5 and obs[i,5] >= 0.0  and thresholds[5] >= obs[i,5]:
+                #this is for whiteness since 0 is whiter than 1 and not applied over snow/ice or sunglint
+                if j==0 and thresholds[0] <= obs[i,0] and (OLP[-1]!=31 and OLP[-1]!=32):
                     cloud_mask_MAIA[i] = 0
-                if j>=3 and np.any(thresholds[3:] >= obs[i,3:]):
-                    if j==3 and OLP[-1]<=11:
-                        cloud_mask_MAIA[i] = 0
-                    elif j==4 and OLP[-1]==30:
-                        cloud_mask_MAIA[i] = 0
-                    else:
-                        cloud_mask_MAIA[i] = 0 
-                if (j==1 or j==2) and (DTT_NDxI[i,0] >= 0 or DTT_NDxI[i,1] >= 0):#this is since we used DTT for NDxI
-                    if j==1 and OLP[-1]!=32:#NDVI everything but snow
-                        cloud_mask_MAIA[i] = 0
-                    elif j==2 and OLP[-1]==32:#NDSI only over snow
-                        cloud_mask_MAIA[i] = 0
-                    else:  
-                        pass
+                #DTT for NDxI. Must exceed 0
+                #NDVI everything but snow
+                elif j==1 and OLP[-1]!=32 and DTT_NDxI[i,0] >= 0:
+                    cloud_mask_MAIA[i] = 0
+                #NDSI only over snow
+                elif j==2 and OLP[-1]==32 and DTT_NDxI[i,1] >= 0:
+                    cloud_mask_MAIA[i] = 0
+                #VIS, NIR, Cirrus. Must exceed thresh
+                #VIS applied only over land
+                elif j==3 and OLP[-1]<=11 and thresholds[3] >= obs[i,3]:
+                    cloud_mask_MAIA[i] = 0
+                #NIR only applied over water (no sunglint)
+                elif j==4 and OLP[-1]==30 and thresholds[4] >= obs[i,4]:
+                    cloud_mask_MAIA[i] = 0
+                #SVI applied over all surfaces when over 0. Must exceed thresh
+                elif j==5 and obs[i,5] >= 0.0  and thresholds[5] >= obs[i,5]:
+                    cloud_mask_MAIA[i] = 0
+                #j==5 is SVI. So this is j==6 for cirrus applied everywhere
+                elif j==6 thresholds[6] >= obs[i,6]:
+                    cloud_mask_MAIA[i] = 0
+                else:
+                    pass
 
-                if np.any(thresholds[0] <= obs[i,0]) and (OLP[-1]!=31 and OLP[-1]!=32):#this is for whiteness since 0 is whiter than 1 and not applied over snow/ice or sunglint
-                    cloud_mask_MAIA[i] = 0
-                #else:
-                 #   pass
 
         #compare with CM; cloudy==0, clear==1
         MOD_CM = cloud_mask
@@ -86,7 +94,7 @@ def confusion_matrix(threshold_path):
                                        MOD_cloud_MAIA_clear, MOD_clear_MAIA_cloudy']
         except:
             hf_thresh['confusion_matrix'][:] = conf_mat
-        
+
         #print(threshold_path[-65:-5])
         print((conf_mat[0]+conf_mat[1])/conf_mat.sum())
 if __name__ == '__main__':

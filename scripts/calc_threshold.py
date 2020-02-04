@@ -40,16 +40,18 @@ def calc_thresh(group_file):
         cloudy_obs = obs[cloudy_idx[0],1:3] #[1:3] since we only need for NDxI
 
         for i in range(7):
-            if i==0:#WI
+            #WI
+            if i==0:
                 thresholds[i] = np.nanpercentile(clear_obs[:,i], 1)
-            elif i==1 or i==2:#NDxI
-                hist, bin_edges = np.histogram(cloudy_obs[:,i-1], bins=50, range=(-1,1))
-                thresholds[i] = bin_edges[:-1][hist == hist.max()][0] #np.nanpercentile(cloudy_obs[:,i], 99)
-            else:#VIS/NIR/SVI/Cirrus
+            #NDxI
+            #pick max from cloudy hist
+            elif i==1 or i==2:
+                thresholds[i] = np.hist(cloudy_obs[:,i], bins=50, range=(-1,1))[0].max()
+            #VIS/NIR/SVI/Cirrus
+            else:
                 thresholds[i] = np.nanpercentile(clear_obs[:,i], 99)
-                
+
         try:
-            #del hf_group['thresholds']
             dataset = hf_group.create_dataset('thresholds', data=thresholds)
 
             #label the data
@@ -77,7 +79,7 @@ if __name__ == '__main__':
 
             #define paths for the three databases
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            PTA_file_path    = home + 'test_thresholds/'#'group_DOY_05_60_cores/'
+            PTA_file_path    = home + 'group_DOY_05_60_cores/'
             database_files   = os.listdir(PTA_file_path)
             database_files   = [PTA_file_path + filename for filename in database_files]
             database_files   = np.sort(database_files)
