@@ -3,6 +3,14 @@ def confusion_matrix(threshold_path):
     with h5py.File(threshold_path, 'r+') as hf_thresh:
 
         hf_keys    = list(hf_thresh.keys())
+ 
+        n=111 # sza, vza, raz, scene_id
+        print(threshold_path[n+7:n+9])
+        OLP =[int(threshold_path[n+7:n+9])  ,\
+              int(threshold_path[n+14:n+16]),\
+              int(threshold_path[n+21:n+23]),\
+              int(threshold_path[n+45:n+47]) ]
+
         hf_keys    = [x for x in hf_keys if x[:2] == 'ti']
         num_points = len(hf_keys)
 
@@ -25,6 +33,7 @@ def confusion_matrix(threshold_path):
         for i in range(1,3):
             NDxI          = obs[:,i]
             T             = thresholds[i]
+            T[T==0] = np.nan
             DTT_NDxI[:,i-1] = (T - np.abs(NDxI)) / T
     
         #see if any obs trigger cloudy
@@ -33,16 +42,27 @@ def confusion_matrix(threshold_path):
 
         for i in range(num_points):
             for j in range(7):
-                if j==23:
-                    pass
-                elif j>=3 and np.any(thresholds[3:] >= obs[i,3:]):
-                    cloud_mask_MAIA[i] = 0 
-                elif (j==1 or j==2) and (DTT_NDxI[i,0] >= 0 or DTT_NDxI[i,1] >= 0):#this is since we used DTT for NDxI
-                    pass#cloud_mask_MAIA[i] = 0
-                elif np.any(thresholds[0] <= obs[i,0]):#this is for whiteness since 0 is whiter than 1
+                if j==5 and obs[i,5] >= 0.0  and thresholds[5] >= obs[i,5]:
                     cloud_mask_MAIA[i] = 0
-                else:
-                    pass
+                if j>=3 and np.any(thresholds[3:] >= obs[i,3:]):
+                    if j==3 and OLP[-1]<=11:
+                        cloud_mask_MAIA[i] = 0
+                    elif j==4 and OLP[-1]==30:
+                        cloud_mask_MAIA[i] = 0
+                    else:
+                        cloud_mask_MAIA[i] = 0 
+                if (j==1 or j==2) and (DTT_NDxI[i,0] >= 0 or DTT_NDxI[i,1] >= 0):#this is since we used DTT for NDxI
+                    if j==1 and OLP[-1]!=32:#NDVI everything but snow
+                        cloud_mask_MAIA[i] = 0
+                    elif j==2 and OLP[-1]==32:#NDSI only over snow
+                        cloud_mask_MAIA[i] = 0
+                    else:  
+                        pass
+
+                if np.any(thresholds[0] <= obs[i,0]) and (OLP[-1]!=31 and OLP[-1]!=32):#this is for whiteness since 0 is whiter than 1 and not applied over snow/ice or sunglint
+                    cloud_mask_MAIA[i] = 0
+                #else:
+                 #   pass
 
         #compare with CM; cloudy==0, clear==1
         MOD_CM = cloud_mask
