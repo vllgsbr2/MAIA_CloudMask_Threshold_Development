@@ -1,5 +1,49 @@
 import numpy as np
 
+def add_sceneID(observable_level_parameter):
+
+        """
+        helper function to combine water/sunglint/snow-ice mask/sfc_ID into
+        one mask. This way the threhsolds can be retrieved with less queries.
+        [Section N/A]
+        Arguments:
+            observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
+        Returns:
+            2D narray -- scene ID. Values 0-28 inclusive are land types; values
+                         29, 30, 31 are water, water with sun glint, snow/ice
+                         respectively. Is the size of the granule. These integers
+                         serve as the indicies to select a threshold based off
+                         surface type.
+        """
+        # land_water_bins {2D narray} -- land (1) water(0)
+        # sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
+        # snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
+
+        #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
+        land_water_bins = OLP[:,:, 4]
+        sun_glint_bins  = OLP[:,:,-1]
+        snow_ice_bins   = OLP[:,:, 5]
+
+        sfc_ID_bins = observable_level_parameter[:,:,6]
+        scene_type_identifier = sfc_ID_bins
+
+        #water = 12
+        #sunglint over water = 13
+        #snow = 14
+        scene_type_identifier[ land_water_bins == 0]    = 12
+        scene_type_identifier[(sun_glint_bins  == 1) & \
+                              (land_water_bins == 0) ]  = 13
+        scene_type_identifier[ snow_ice_bins   == 0]    = 14
+
+        OLP = np.zeros((1000,1000,6))
+        OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
+        OLP[:,:,4]  = scene_type_identifier             #scene_ID
+        OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
+
+
+
+        return OLP
+
 def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
           land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask):
 
@@ -26,8 +70,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                      the threshold database for every observable level parameter.
                      The 1st and 2cnd axes are the size of the MAIA granule.
     """
-
-    #This is used todetermine if the test should be applied over a particular
+    #This is used to determine if the test should be applied over a particular
     #surface type in the get_test_determination function
     shape = np.shape(SZA)
     #define relative azimuth angle, RAZ, and cos(SZA)
@@ -72,6 +115,12 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
 
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
 
+    observable_level_parameter = add_sceneID(observable_level_parameter)
+
+    #find where there is missing data, use SZA as proxy, and give fill val
+    missing_idx = np.where(SZA==-999)
+    observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
+
     return observable_level_parameter
 
 if __name__ == '__main__':
@@ -96,7 +145,8 @@ if __name__ == '__main__':
             database_files = np.sort(database_files)
             hf_database_path = database_files[r]
 
-            with h5py.File(hf_database_path, 'r') as hf_database:
+            with h5py.File(hf_database_path, 'r') as hf_database,\
+                 Dataset(PTA_file_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
 
                 len_pta       = len(PTA_file_path)
                 start, end    = hf_database_path[len_pta + 26:len_pta +31], hf_database_path[len_pta+36:len_pta+41]
@@ -104,14 +154,16 @@ if __name__ == '__main__':
                 #create/open hdf5 file to store observables
                 PTA_file_path_OLP = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
                 hf_OLP_path = '{}OLP_database_60_cores/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path_OLP, start, end)
-                print('Rank {} reporting for duty on {}'.format(rank,hf_OLP_path[:-51]))
+
                 hf_database_keys = list(hf_database.keys())
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
-                #print(1)
+
+                sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
+
                 with h5py.File(hf_OLP_path, 'w') as hf_OLP:
-                    #print(2)
+
                     for time_stamp in hf_database_keys:
-                       # print(3)
+
                         PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
                         hf_OLP_path   = '{}/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
 
@@ -125,12 +177,9 @@ if __name__ == '__main__':
                         DOY = time_stamp[4:7]
                         SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
 
-                        with Dataset(PTA_file_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
-                            sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
-                        print('data harvested hahahahaha by me rank {}!!'.format(rank))
                         OLP = get_observable_level_parameter(SZA, VZA, SAA,\
                               VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM)
-                        print('OLP recived sir. Rank {}'.format(rank))
+
                         try:
                             group = hf_OLP.create_group(time_stamp)
                             group.create_dataset('observable_level_paramter', data=OLP, compression='gzip')
@@ -140,4 +189,3 @@ if __name__ == '__main__':
                                 hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
                             except:
                                 hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
-                        print('OLP destroyed. Rank {} did it to em'.format(rank))

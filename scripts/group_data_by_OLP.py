@@ -1,39 +1,39 @@
-def make_sceneID(observable_level_parameter):
-
-        """
-        helper function to combine water/sunglint/snow-ice mask/sfc_ID into
-        one mask. This way the threhsolds can be retrieved with less queries.
-        [Section N/A]
-        Arguments:
-            observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
-        Returns:
-            2D narray -- scene ID. Values 0-28 inclusive are land types; values
-                         29, 30, 31 are water, water with sun glint, snow/ice
-                         respectively. Is the size of the granule. These integers
-                         serve as the indicies to select a threshold based off
-                         surface type.
-        """
-        # land_water_bins {2D narray} -- land (1) water(0)
-        # sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
-        # snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
-
-        #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
-        land_water_bins = OLP[:,:, 4]
-        sun_glint_bins  = OLP[:,:,-1]
-        snow_ice_bins   = OLP[:,:, 5]
-
-        sfc_ID_bins = observable_level_parameter[:,:,6]
-        scene_type_identifier = sfc_ID_bins
-
-        #water = 30
-        #sunglint over water = 31
-        #snow = 32
-        scene_type_identifier[ land_water_bins == 0]    = 30
-        scene_type_identifier[(sun_glint_bins  == 1) & \
-                              (land_water_bins == 0) ]  = 31
-        scene_type_identifier[ snow_ice_bins   == 0]    = 32
-
-        return scene_type_identifier
+# def make_sceneID(observable_level_parameter):
+#
+#         """
+#         helper function to combine water/sunglint/snow-ice mask/sfc_ID into
+#         one mask. This way the threhsolds can be retrieved with less queries.
+#         [Section N/A]
+#         Arguments:
+#             observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
+#         Returns:
+#             2D narray -- scene ID. Values 0-28 inclusive are land types; values
+#                          29, 30, 31 are water, water with sun glint, snow/ice
+#                          respectively. Is the size of the granule. These integers
+#                          serve as the indicies to select a threshold based off
+#                          surface type.
+#         """
+#         # land_water_bins {2D narray} -- land (1) water(0)
+#         # sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
+#         # snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
+#
+#         #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
+#         land_water_bins = OLP[:,:, 4]
+#         sun_glint_bins  = OLP[:,:,-1]
+#         snow_ice_bins   = OLP[:,:, 5]
+#
+#         sfc_ID_bins = observable_level_parameter[:,:,6]
+#         scene_type_identifier = sfc_ID_bins
+#
+#         #water = 30
+#         #sunglint over water = 31
+#         #snow = 32
+#         scene_type_identifier[ land_water_bins == 0]    = 30
+#         scene_type_identifier[(sun_glint_bins  == 1) & \
+#                               (land_water_bins == 0) ]  = 31
+#         scene_type_identifier[ snow_ice_bins   == 0]    = 32
+#
+#         return scene_type_identifier
 
 def group_data(OLP, obs, CM, hf_group):
     """
@@ -55,27 +55,28 @@ def group_data(OLP, obs, CM, hf_group):
     #                                         binned_DOY     ,\
     #                                         sun_glint_mask))
 
-    #first make the scene ID and then use it to consolidate the OLP
-    scene_ID = make_sceneID(OLP)
-
-    new_OLP = np.zeros((1000,1000,6))
-    new_OLP[:,:,:4] = OLP[:,:,:4] #cosSZA, VZA, RAZ, TA
-    new_OLP[:,:,4]  = OLP[:,:,-2] #DOY
-    new_OLP[:,:,5]  = scene_ID    #scene_ID
-    new_OLP = new_OLP.astype(dtype=np.int)
+    # #first make the scene ID and then use it to consolidate the OLP
+    # scene_ID = make_sceneID(OLP)
+    #
+    # new_OLP = np.zeros((1000,1000,6))
+    # new_OLP[:,:,:4] = OLP[:,:,:4] #cosSZA, VZA, RAZ, TA
+    # new_OLP[:,:,4]  = OLP[:,:,-2] #DOY
+    # new_OLP[:,:,5]  = scene_ID    #scene_ID
+    # new_OLP = new_OLP.astype(dtype=np.int)
 
     #flatten arrays
-    new_OLP = new_OLP.reshape(1000**2, 6)
-    obs     = obs.reshape(1000**2, 7)
-    CM      = CM.reshape(1000**2)
+    #new_OLP = new_OLP.reshape(1000**2, 6)
+    OLP = new_OLP.reshape(1000**2, 6)
+    obs = obs.reshape(1000**2, 7)
+    CM  = CM.reshape(1000**2)
 
     #remove empty data points
     #where whiteness is negative (which is not possible)
     full_idx = np.where(obs[:,0] >= 0.0) # obs -> (1, 1e6-x)
 
-    new_OLP = new_OLP[full_idx[0], :]
-    obs     = obs[full_idx[0], :]
-    CM      = CM[full_idx[0]]
+    OLP = OLP[full_idx[0], :]
+    obs = obs[full_idx[0], :]
+    CM  = CM[full_idx[0]]
 
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/group_DOY_05_60_cores/'
 
@@ -83,13 +84,18 @@ def group_data(OLP, obs, CM, hf_group):
 
     #now for any OLP combo, make a group and save the data points into it
     for i in range(CM.shape[0]):
-
-        temp_OLP = new_OLP[i,:]
-        group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_DOY_{:02d}_sceneID_{:02d}'\
+        #0 cosSZA
+        #1 VZA
+        #2 RAZ
+        #3 TA
+        #4 Scene_ID
+        #5 DOY
+        temp_OLP = OLP[i,:]
+        group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_sceneID_{:02d}_DOY_{:02d}'\
                 .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
-                        temp_OLP[3], temp_OLP[4], temp_OLP[5])
+                        1, temp_OLP[4], temp_OLP[5])
 
-        filename = '{}grouped_data_{}.hdf5'.format(home, group)
+        # filename = '{}grouped_data_{}.hdf5'.format(home, group)
 
         data = np.array([CM[i]   ,\
                          obs[i,0],\
@@ -104,14 +110,14 @@ def group_data(OLP, obs, CM, hf_group):
         thresh_dict.setdefault(group, [])
         thresh_dict[group].append(data)
 
-    #for key, val in thresh_dict.items():
-     #   try:
-      #      hf_group.create_dataset(key, data=np.array(val), maxshape=(None,8))
+    for key, val in thresh_dict.items():
+        try:
+            hf_group.create_dataset(key, data=np.array(val), maxshape=(None,8))
 
-       # except:
-        #    group_shape = hf_group[key].shape[0]
-         #   hf_group[key].resize(group_shape + np.array(val).shape[0], axis=0)
-          #  hf_group[key][group_shape:, :] = np.array(val)
+        except:
+            group_shape = hf_group[key].shape[0]
+            hf_group[key].resize(group_shape + np.array(val).shape[0], axis=0)
+            hf_group[key][group_shape:, :] = np.array(val)
 
 
 if __name__ == '__main__':
@@ -158,9 +164,9 @@ if __name__ == '__main__':
             observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
             #get data for input into grouping function
-            with h5py.File(hf_observables_path       , 'r')  as hf_observables,\
-                 h5py.File(hf_database_path          , 'r')  as hf_database   ,\
-                 h5py.File(hf_OLP_path               , 'r')  as hf_OLP        ,\
+            with h5py.File(hf_observables_path       , 'r') as hf_observables,\
+                 h5py.File(hf_database_path          , 'r') as hf_database   ,\
+                 h5py.File(hf_OLP_path               , 'r') as hf_OLP        ,\
                  open(home + 'grouped_file_count.csv', 'w') as output:
 
                 hf_database_keys = list(hf_database.keys())
@@ -174,9 +180,8 @@ if __name__ == '__main__':
                 else:
                     hf_database_keys = hf_database_keys[half:]
 
-
-                #open file to write thresholds to
-                hf_group_path = home + 'grouped_data.hdf5'
+                #open file to write groups to
+                hf_group_path = home + 'grouped_data_{}.hdf5'.format(rank)
                 try:#if os.path.isfile(hf_group_path):
                     with h5py.File(hf_group_path, 'w-')  as hf_group:
                         for time_stamp in hf_database_keys:
