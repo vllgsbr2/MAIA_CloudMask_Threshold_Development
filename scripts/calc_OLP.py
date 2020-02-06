@@ -113,13 +113,15 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
-    observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
+
 
     observable_level_parameter = add_sceneID(observable_level_parameter)
 
     #find where there is missing data, use SZA as proxy, and give fill val
     missing_idx = np.where(SZA==-999)
     observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
+
+    observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
 
     return observable_level_parameter
 
