@@ -20,9 +20,9 @@ def add_sceneID(observable_level_parameter):
         # snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
 
         #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
-        land_water_bins = OLP[:,:, 4]
-        sun_glint_bins  = OLP[:,:,-1]
-        snow_ice_bins   = OLP[:,:, 5]
+        land_water_bins = observable_level_parameter[:,:, 4]
+        sun_glint_bins  = observable_level_parameter[:,:,-1]
+        snow_ice_bins   = observable_level_parameter[:,:, 5]
 
         sfc_ID_bins = observable_level_parameter[:,:,6]
         scene_type_identifier = sfc_ID_bins
@@ -140,13 +140,14 @@ if __name__ == '__main__':
         if rank==r:
             #open database to read
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
+            sfc_ID_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_database_path = database_files[r]
 
             with h5py.File(hf_database_path, 'r') as hf_database,\
-                 Dataset(PTA_file_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
+                Dataset(sfc_ID_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
 
                 len_pta       = len(PTA_file_path)
                 start, end    = hf_database_path[len_pta + 26:len_pta +31], hf_database_path[len_pta+36:len_pta+41]
