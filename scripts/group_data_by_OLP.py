@@ -66,7 +66,7 @@ def group_data(OLP, obs, CM, hf_group):
 
     #flatten arrays
     #new_OLP = new_OLP.reshape(1000**2, 6)
-    OLP = new_OLP.reshape(1000**2, 6)
+    OLP = OLP.reshape(1000**2, 6)
     obs = obs.reshape(1000**2, 7)
     CM  = CM.reshape(1000**2)
 
@@ -79,7 +79,6 @@ def group_data(OLP, obs, CM, hf_group):
     CM  = CM[full_idx[0]]
 
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/group_DOY_05_60_cores/'
-
     thresh_dict = {}
 
     #now for any OLP combo, make a group and save the data points into it
@@ -119,7 +118,7 @@ def group_data(OLP, obs, CM, hf_group):
             hf_group[key].resize(group_shape + np.array(val).shape[0], axis=0)
             hf_group[key][group_shape:, :] = np.array(val)
 
-
+    print('hi')
 if __name__ == '__main__':
 
     import numpy as np
@@ -135,10 +134,12 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
-            if r%2!=0:
-                file_select = r-1
-            else:
-                file_select = r
+            file_select = np.repeat(np.arange(60), 2)
+            file_select = file_select[r] 
+            #if r%2!=0:
+            #    file_select = r-1
+            #else:
+            #    file_select = r
 
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
 
@@ -181,9 +182,9 @@ if __name__ == '__main__':
                     hf_database_keys = hf_database_keys[half:]
 
                 #open file to write groups to
-                hf_group_path = home + 'grouped_data_{}.hdf5'.format(rank)
+                hf_group_path = home + 'group_DOY_05_60_cores/grouped_data_{}.hdf5'.format(rank)
                 try:#if os.path.isfile(hf_group_path):
-                    with h5py.File(hf_group_path, 'w-')  as hf_group:
+                    with h5py.File(hf_group_path, 'w')  as hf_group:
                         for time_stamp in hf_database_keys:
 
                             CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
