@@ -46,7 +46,7 @@ def calc_thresh(group_file):
             #NDxI
             #pick max from cloudy hist
             elif i==1 or i==2:
-                thresholds[i] = np.hist(cloudy_obs[:,i], bins=50, range=(-1,1))[0].max()
+                thresholds[i] = np.histogram(cloudy_obs[:,i-1], bins=50, range=(-1,1))[0].max()
             #VIS/NIR/SVI/Cirrus
             else:
                 thresholds[i] = np.nanpercentile(clear_obs[:,i], 99)
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
             #define paths for the three databases
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            PTA_file_path    = home + 'group_DOY_05_60_cores/'
+            PTA_file_path    = home + 'test_thresholds/'
             database_files   = os.listdir(PTA_file_path)
             database_files   = [PTA_file_path + filename for filename in database_files]
             database_files   = np.sort(database_files)
