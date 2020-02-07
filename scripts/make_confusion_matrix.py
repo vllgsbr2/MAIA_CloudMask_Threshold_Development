@@ -5,7 +5,7 @@ def confusion_matrix(threshold_path):
         hf_keys    = list(hf_thresh.keys())
 
         n=111 # sza, vza, raz, scene_id
-        print(threshold_path[n+7:n+9])
+        #print(threshold_path[n+7:n+9])
         OLP =[int(threshold_path[n+7:n+9])  ,\
               int(threshold_path[n+14:n+16]),\
               int(threshold_path[n+21:n+23]),\
@@ -34,7 +34,8 @@ def confusion_matrix(threshold_path):
             NDxI          = obs[:,i]
             T             = thresholds[i]
             #put 0.001 instead of zero to avoid errors
-            T[T==0] = 1e-3
+            if T==0:
+                T = 1e-3
             DTT_NDxI[:,i-1] = (T - np.abs(NDxI)) / T
 
         #see if any obs trigger cloudy
@@ -66,7 +67,7 @@ def confusion_matrix(threshold_path):
                 elif j==5 and obs[i,5] >= 0.0  and thresholds[5] >= obs[i,5]:
                     cloud_mask_MAIA[i] = 0
                 #j==5 is SVI. So this is j==6 for cirrus applied everywhere
-                elif j==6 thresholds[6] >= obs[i,6]:
+                elif j==6 and thresholds[6] >= obs[i,6]:
                     cloud_mask_MAIA[i] = 0
                 else:
                     pass
@@ -96,7 +97,7 @@ def confusion_matrix(threshold_path):
             hf_thresh['confusion_matrix'][:] = conf_mat
 
         #print(threshold_path[-65:-5])
-        print((conf_mat[0]+conf_mat[1])/conf_mat.sum())
+        print('{},{},{},{}'.format((conf_mat[0]+conf_mat[1])/conf_mat.sum(), conf_mat[0], conf_mat[1], conf_mat.sum()))
 if __name__ == '__main__':
 
     import h5py
