@@ -135,7 +135,7 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
             file_select = np.repeat(np.arange(60), 2)
-            file_select = file_select[r] 
+            file_select = file_select[r]
             #if r%2!=0:
             #    file_select = r-1
             #else:
@@ -168,7 +168,7 @@ if __name__ == '__main__':
             with h5py.File(hf_observables_path       , 'r') as hf_observables,\
                  h5py.File(hf_database_path          , 'r') as hf_database   ,\
                  h5py.File(hf_OLP_path               , 'r') as hf_OLP        ,\
-                 open(home + 'grouped_file_count.csv', 'w') as output:
+                 open(home + 'grouped_file_count_{}.csv'.format(rank), 'w') as output:
 
                 hf_database_keys = list(hf_database.keys())
                 #grab only DOY bin 6 since I dont have sfc ID yet for other days
