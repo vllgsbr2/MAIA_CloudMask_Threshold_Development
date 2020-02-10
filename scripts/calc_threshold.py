@@ -152,19 +152,19 @@ def calc_thresh(group_file):
     Return:
         void
     '''
-
+    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
     with h5py.File(group_file, 'r+') as hf_group,\
-         h5py.File('somewhere/thresholds.hdf5', 'w') as hf_thresh:
+         h5py.File(home + '/thresholds.hdf5', 'w') as hf_thresh:
 
         hf_keys    = list(hf_group.keys())
         num_points = len(hf_keys)
 
-        for bin in hf_keys:
+        for count, bin in enumerate(hf_keys):
             #observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
             thresholds = np.zeros((7))
 
-            cloud_mask = hf_group[bin][0].astype(dtype=np.int)
-            obs        = hf_group[bin][1:]
+            cloud_mask = hf_group[bin][:,0].astype(dtype=np.int)
+            obs        = hf_group[bin][:,1:]
 
 
             clear_idx = np.where(cloud_mask != 0)
@@ -180,7 +180,8 @@ def calc_thresh(group_file):
                 #NDxI
                 #pick max from cloudy hist
                 elif i==1 or i==2:
-                    thresholds[i] = np.hist(cloudy_obs[:,i], bins=50, range=(-1,1))[0].max()
+                    hist, bin_edges = np.histogram(cloudy_obs[:,i-1], bins=128, range=(-1,1)) 
+                    thresholds[i]   = bin_edges[1:][hist==hist.max()].min() 
                 #VIS/NIR/SVI/Cirrus
                 else:
                     thresholds[i] = np.nanpercentile(clear_obs[:,i], 99)
@@ -194,7 +195,7 @@ def calc_thresh(group_file):
             except:
                 hf_thresh[bin][:] = thresholds
 
-            print(bin)
+            print(count, thresholds)
 
 if __name__ == '__main__':
 
