@@ -17,11 +17,11 @@ def calc_thresh(group_file):
     '''
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
     with h5py.File(group_file, 'r+') as hf_group,\
-         h5py.File(home + '/thresholds.hdf5', 'w') as hf_thresh:
+         h5py.File(home + '/thresholds_MCM.hdf5', 'w') as hf_thresh:
 
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
-        TA_group  = hf_thresh.create_group(bin_ID[24:29])
-        DOY_group = TA_group.create_group(bin_ID[-6:])
+        TA_group  = hf_thresh.create_group('01')#bin_ID[24:29])
+        DOY_group = TA_group.create_group('06')#bin_ID[-6:])
 
         hf_keys    = list(hf_group.keys())
         num_points = len(hf_keys)
@@ -68,7 +68,7 @@ def calc_thresh(group_file):
                 path = '{}/{}/{}'.format(bin_ID[24:29], bin_ID[-6:], bin_ID[:23]+bin_ID[-18:-7])
                 hf_thresh[path][:] = thresholds
 
-            #print(count, thresholds)
+            print(count, thresholds)
 
 if __name__ == '__main__':
 
