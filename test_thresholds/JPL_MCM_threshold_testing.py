@@ -74,10 +74,13 @@ def get_R(radiance, SZA, d, E_std_0b):
 
     #condition to not step on fill values when converting to BRF(R)
     valid_rad_idx = np.where(radiance >= 0.0)
-    radiance[valid_rad_idx] = ((np.pi * radiance * d**2)\
-                          / (np.cos(np.deg2rad(SZA)) * E_std_0b))[valid_rad_idx]
-    #just assign R to the memory of radiance to highlight conversion
-    R = radiance
+    # radiance[valid_rad_idx] = ((np.pi * radiance * d**2)\
+    #                       / (np.cos(np.deg2rad(SZA)) * E_std_0b))[valid_rad_idx]
+    # #just assign R to the memory of radiance to highlight conversion
+    # R = radiance
+
+    #pretend radiance is reflectance cause that is what I'll pass in for now
+    radiance[valid_rad_idx] = radiance[valid_rad_idx] / (np.cos(np.deg2rad(SZA))[valid_rad_idx])
     return R
 
 #calculate sun-glint flag*******************************************************
@@ -380,7 +383,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
 # -127 -> no data
 
 def get_test_determination(observable_level_parameter, observable_data,\
-       threshold_database, observable_name, fill_val_1, fill_val_2, fill_val_3):
+       threshold_path, observable_name, fill_val_1, fill_val_2, fill_val_3):
 
     """
     applies fill values to & finds the threshold needed at each pixel for
@@ -391,7 +394,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
     Arguments:
        observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
        observable_data {2D narray} -- takes one observable at a time
-       threshold_database {6D narray} -- database for the specific observable
+       threshold_path {string} -- file path to thresholds
        observable_name {string} -- VIS_Ref, NIR_Ref, WI, NDVI, NDSI, SVI, Cirrus
        fill_val_1 {integer} -- defined in congifg file; not applied due to surface type
        fill_val_2 {integer} -- defined in congifg file; low quality radiance
@@ -502,17 +505,19 @@ def get_test_determination(observable_level_parameter, observable_data,\
     OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
     #pick threshold for each pixel in 1000x1000 grid
-    with h5py.File('thresholds_MCM.hdf5', 'r') as hf_thresholds:
+    with h5py.File(threshold_path+'/thresholds_MCM.hdf5', 'r') as hf_thresholds:
         OLP = OLP.reshape((1000**2, 6))
         #DOY and TA is same for all pixels in granule
         path = '{:02d}/{:02d}/'.format(OLP[0,3], OLP[0,5])
-        thresholds = np.zeros((1000**2, 7))
+        thresholds = np.zeros((1000**2))
+        obs_names = {'WI':0, 'NDVI':1, 'NDSI':2, 'visRef':3, 'nirRef':4, 'SVI':5, 'cirrus':6}
         for i, olp in enumerate(OLP):
             path = '{}/cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_sceneID_{:02d}'.\
                     format(path, olp[0], olp[1], olp[2], olp[3])
-            thresholds[i,:] = hf_thresholds[path]
+                    
+            thresholds[i] = hf_thresholds[path][obs_names[observable_name]]
 
-    thresholds = thresholds.reshape((1000,1000,7))
+    thresholds = thresholds.reshape((1000,1000))
 
     return observable_data, thresholds
 
