@@ -1,6 +1,53 @@
 import numpy as np
+def get_sun_glint_mask(observable_level_parameter, solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
+                       sun_glint_exclusion_angle):
+    """
+    Calculate sun-glint flag.
 
-def add_sceneID(observable_level_parameter):
+    [Section 3.3.2.3]
+    Sun-glint water pixels are set to 0;
+    non-sun-glint water pixels and land pixels are set to 1.
+
+    Arguments:
+        solarZenith {2D narray} -- Solar zenith angle in degree
+        sensorZenith {2D narray} -- MAIA zenith angle in degree
+        solarAzimuth {2D narray} -- Solar azimuth angle in degree
+        sensorAzimuth {2D narray} -- MAIA azimuth angle in degree
+        sun_glint_exclusion_angle {float} -- maximum scattering angle (degree) for sun-glint
+        land_water_mask {2D binary narray} -- specify the pixel is water (0) or land (1)
+
+    Returns:
+        2D binary narray -- sunglint mask over granule same shape as solarZenith
+    """
+
+    solarZenith               = np.deg2rad(solarZenith)
+    sensorZenith              = np.deg2rad(sensorZenith)
+    solarAzimuth              = np.deg2rad(solarAzimuth)
+    sensorAzimuth             = np.deg2rad(sensorAzimuth)
+    sun_glint_exclusion_angle = np.deg2rad(sun_glint_exclusion_angle)
+
+    cos_theta_r = np.sin(sensorZenith) * np.sin(solarZenith) \
+                * np.cos(sensorAzimuth - solarAzimuth - np.pi) + np.cos(sensorZenith) \
+                * np.cos(solarZenith)
+    theta_r = np.arccos(cos_theta_r)
+
+    sun_glint_idx = np.where((theta_r >= 0) & \
+                             (theta_r <= sun_glint_exclusion_angle))
+    no_sun_glint_idx = np.where(~((theta_r >= 0) & \
+                                  (theta_r <= sun_glint_exclusion_angle)))
+    theta_r[sun_glint_idx]    = 0
+    theta_r[no_sun_glint_idx] = 1
+    #turn off glint calculated over land
+    land_water_mask = observable_level_parameter[:,:,4]
+    theta_r[land_water_mask == 1] = 1
+
+    sun_glint_mask = theta_r
+
+    return sun_glint_mask
+
+
+def add_sceneID(observable_level_parameter, solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
+                       sun_glint_exclusion_angle):
 
         """
         helper function to combine water/sunglint/snow-ice mask/sfc_ID into
@@ -31,7 +78,7 @@ def add_sceneID(observable_level_parameter):
         #sunglint over water = 13
         #snow = 14
         scene_type_identifier[ land_water_bins == 0]    = 12
-        scene_type_identifier[(sun_glint_bins  == 1) & \
+        scene_type_identifier[(sun_glint_bins  == 0) & \
                               (land_water_bins == 0) ]  = 13
         scene_type_identifier[ snow_ice_bins   == 0]    = 14
 
@@ -45,7 +92,7 @@ def add_sceneID(observable_level_parameter):
         return OLP
 
 def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
-          land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask):
+          land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask, time_stamp):
 
     """
     Objective:
@@ -90,7 +137,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
 
-    binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
+    #binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
     sfc_ID         = sfc_ID #sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
 
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=False)
@@ -115,13 +162,21 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
 
 
 
-    observable_level_parameter = add_sceneID(observable_level_parameter)
+    observable_level_parameter = add_sceneID(observable_level_parameter, SZA, VZA, SAA, VAA, 40)
 
     #find where there is missing data, use SZA as proxy, and give fill val
     missing_idx = np.where(SZA==-999)
     observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
 
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
+    import matplotlib.pyplot as plt
+    from matplotlib import cm
+    cmap = cm.get_cmap('jet', 15)
+    obs_names = ['WI','NDVI','NDSI','VIS','NIR','SVI','Cirrus']
+    home = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+    for i in range(6):
+        im = plt.imshow(observable_level_parameter[:,:,i], cmap=cmap)
+        plt.savefig('{}/OLP_images/{}_{}.png'.format(home, time_stamp, obs_names[i]), dpi=200)
 
     return observable_level_parameter
 
@@ -181,7 +236,7 @@ if __name__ == '__main__':
                         SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
 
                         OLP = get_observable_level_parameter(SZA, VZA, SAA,\
-                              VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM)
+                              VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM, time_stamp)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)

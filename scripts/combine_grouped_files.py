@@ -30,12 +30,12 @@ def group_bins(home, group_dir, common_file):
                 data = hf_group_[key][()]
                 group_dict.setdefault(key, [])
                 group_dict[key].append(data)
-                #print(data)
+                print(key)
     with h5py.File(home + common_file, 'w') as hf_group:
         for key, val in group_dict.items():
             for arr in val:
                 try:
-                    print(type(key))
+    #                print(type(key))
                     hf_group.create_dataset(key, data=np.array(arr), maxshape=(None,8))
 
                 except:

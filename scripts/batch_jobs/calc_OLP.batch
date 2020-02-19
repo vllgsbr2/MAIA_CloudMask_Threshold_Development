@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name='OLP!'
+#SBATCH -p sesempi
+#SBATCH --time=01:00:00
+#SBATCH --mem-per-cpu=4gb
+#SBATCH -n 60
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=END
+#SBATCH --mail-user=vllgsbr2@illinois.edu
+#SBATCH --error='calc_OLP.err'
+
+cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/  
+mpirun -n 60 python calc_OLP.py
