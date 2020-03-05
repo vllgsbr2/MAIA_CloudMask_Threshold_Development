@@ -276,7 +276,7 @@ if __name__ == '__main__':
                     observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
                     #create/open hdf5 file to store observables
-                    PTA_file_path_obs   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database'
+                    PTA_file_path_obs   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/observables_database_60_cores'
                     lenpta = len(PTA_file_path)
                     start, end = hf_database_path[lenpta + 26:lenpta +31], hf_database_path[lenpta+36:lenpta+41]
                     #print(start, end)
@@ -286,14 +286,25 @@ if __name__ == '__main__':
                         for time_stamp in hf_database_keys:
 
                             SZA     = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
-                            cos_SZA = np.cos(np.deg2rad(SZA))
 
-                            R_band_4  = hf_database[time_stamp + '/reflectance/band_3' ][()] / cos_SZA
-                            R_band_5  = hf_database[time_stamp + '/reflectance/band_4' ][()] / cos_SZA
-                            R_band_6  = hf_database[time_stamp + '/reflectance/band_1' ][()] / cos_SZA
-                            R_band_9  = hf_database[time_stamp + '/reflectance/band_2' ][()] / cos_SZA
-                            R_band_12 = hf_database[time_stamp + '/reflectance/band_6' ][()] / cos_SZA
-                            R_band_13 = hf_database[time_stamp + '/reflectance/band_26'][()] / cos_SZA
+                            rad_band_4  = hf_database[time_stamp + '/radiance/band_3' ][()]
+                            rad_band_5  = hf_database[time_stamp + '/radiance/band_4' ][()]
+                            rad_band_6  = hf_database[time_stamp + '/radiance/band_1' ][()]
+                            rad_band_9  = hf_database[time_stamp + '/radiance/band_2' ][()]
+                            rad_band_12 = hf_database[time_stamp + '/radiance/band_6' ][()]
+                            rad_band_13 = hf_database[time_stamp + '/radiance/band_26'][()]
+
+                            #in order MAIA  bands 6,9,4,5,12,13
+                            #in order MODIS bands 1,2,3,4,6 ,26 
+                            E_std_0b = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
+                            d        = 1 #hf_database[time_stamp + '/earth_sun_distance'][()]                            
+
+                            R_band_4  = get_R(rad_band_4, SZA, d, E_std_0b[2])
+                            R_band_5  = get_R(rad_band_5, SZA, d, E_std_0b[3])
+                            R_band_6  = get_R(rad_band_6, SZA, d, E_std_0b[0])
+                            R_band_9  = get_R(rad_band_9, SZA, d, E_std_0b[1])
+                            R_band_12 = get_R(rad_band_12, SZA, d, E_std_0b[4])
+                            R_band_13 = get_R(rad_band_13, SZA, d, E_std_0b[5])
 
                             sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag'][()]
 
@@ -319,34 +330,3 @@ if __name__ == '__main__':
                                     except:
                                         hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                #

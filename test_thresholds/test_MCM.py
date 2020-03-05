@@ -1,12 +1,13 @@
-from JPL_MCM import MCM_wrapper
+from JPL_MCM_threshold_testing import MCM_wrapper
 from MCM_output import make_output
 import matplotlib.pyplot as plt
-
-test_data_JPL_path = 'test_JPL_MODIS_data_.HDF5'
+from matplotlib import cm
+test_data_JPL_path = './test_JPL_MODIS_data.HDF5'
+#test_data_JPL_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/JPL_data_all_timestamps/test_JPL_data_2007055.1745.HDF5'
 Target_Area_X      = 1
-threshold_filepath = '/Users/vllgsbr2/Desktop/keeling_test_files/thresholds_MCM.hdf5'
-sfc_ID_filepath    = '/Users/vllgsbr2/Desktop/SurfaceID_LA_048.nc'
-config_filepath    = '/Users/vllgsbr2/Desktop/MAIA_JPL_code/ancillary_UIUC_data/config.csv'
+threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/thresholds_MCM_efficient.hdf5'
+sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/SurfaceID_LA_048.nc'
+config_filepath    = './config.csv'
 
 #run MCM
 Sun_glint_exclusion_angle,\
@@ -68,70 +69,88 @@ l,w, = 20,8
 
 #final cloud mask
 #f1 = plt.figure(figsize=(20,10))
-f1, ax1 = plt.subplots(ncols=2, figsize=(l,w))#, sharex=)
+f1, ax1 = plt.subplots(ncols=2, figsize=(l,w), sharex=True, sharey=True)
 
 ax1[0].imshow(final_cloud_mask, cmap='Greys')
-#ax1[0].set_title('final MAIA CLoud Mask')
+ax1[0].set_title('final MAIA CLoud Mask')
 
 ax1[0].set_xticks([])
 ax1[0].set_yticks([])
 
-#import RGB
-# from cartopy import config
-# import cartopy.crs as ccrs
-import sys
-sys.path.insert(0,'../../misc_code')
 from rgb_enhancement import *
-home = '/Users/vllgsbr2/Desktop/LA_PTA_2017_12_16_1805/2017_09_03_1855/'
-MOD021KM_path = home + 'MOD021KM.A2017246.1855.061.2017258202757.hdf'
-MOD03_path    = home + 'MOD03.A2017246.1855.061.2017257170030.hdf'
 
-filename_MOD_02 = MOD021KM_path
-filename_MOD_03 =MOD03_path
-path = ''
-RGB = get_BRF_RGB(filename_MOD_02, filename_MOD_03, path)
-RGB = get_enhanced_RGB(RGB)
-i1, i2 = 530, 1530
-j1, j2 = 177, 1177
-ax1[1].imshow(RGB[i1:i2, j1:j2])
+RGB = np.flip(BRFs[:,:,:3], 2)
+RGB[RGB==-999] = np.nan
+#RGB = get_enhanced_RGB(RGB)
+
+ax1[1].imshow(RGB)
 ax1[1].set_xticks([])
 ax1[1].set_yticks([])
-
+ax1[1].set_title('BRF RGB')
 
 #observables
-f0, ax0 = plt.subplots(ncols=4, nrows=2, figsize=(l,w))
-im = ax0[0,0].imshow(WI, cmap=cmap, vmin=vmin, vmax=vmax)
-ax0[0,1].imshow(NDVI, cmap=cmap, vmin=vmin, vmax=vmax)
-ax0[0,2].imshow(NDSI, cmap=cmap, vmin=vmin, vmax=vmax)
-ax0[0,3].imshow(VIS_Ref, cmap=cmap, vmin=vmin, vmax=vmax)
-ax0[1,0].imshow(NIR_Ref, cmap=cmap, vmin=vmin, vmax=vmax)
-ax0[1,1].imshow(SVI*2, cmap=cmap, vmin=vmin, vmax=vmax)
-ax0[1,2].imshow(Cirrus, cmap=cmap, vmin=vmin, vmax=vmax)
+f0, ax0 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
+cmap='bone'
+im0 = ax0[0,0].imshow(WI, cmap=cmap+'_r', vmin=0, vmax=WI.max())
+im1 = ax0[0,1].imshow(NDVI, cmap=cmap, vmin=-0.6, vmax=0.6)
+im2 = ax0[0,2].imshow(NDSI, cmap=cmap, vmin=0.5, vmax=1)
+im3 = ax0[0,3].imshow(VIS_Ref, cmap=cmap, vmin=0, vmax=VIS_Ref.max())
+im4 = ax0[1,0].imshow(NIR_Ref, cmap=cmap, vmin=0, vmax=NIR_Ref.max())
+im5 = ax0[1,1].imshow(SVI, cmap=cmap, vmin=0, vmax=SVI.max())
+im6 = ax0[1,2].imshow(Cirrus, cmap=cmap, vmin=0, vmax=1)
 
-ax0[1,3].imshow(RGB[i1:i2, j1:j2])
+ax0[1,3].imshow(RGB)
+
+im0.cmap.set_under('r')
+im1.cmap.set_under('r')
+im2.cmap.set_under('r')
+im3.cmap.set_under('r')
+im4.cmap.set_under('r')
+im5.cmap.set_under('r')
+im6.cmap.set_under('r')
+
+cbar0 = f0.colorbar(im0, ax=ax0[0,0],fraction=0.046, pad=0.04, ticks = np.arange(0,WI.max()+0.2,0.2))
+cbar1 = f0.colorbar(im1, ax=ax0[0,1],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.25,0.25))
+cbar2 = f0.colorbar(im2, ax=ax0[0,2],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.1,0.1))
+cbar3 = f0.colorbar(im3, ax=ax0[0,3],fraction=0.046, pad=0.04, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
+cbar4 = f0.colorbar(im4, ax=ax0[1,0],fraction=0.046, pad=0.04, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
+cbar5 = f0.colorbar(im5, ax=ax0[1,1],fraction=0.046, pad=0.04, ticks = np.arange(0,SVI.max()+0.1,0.05))
+cbar6 = f0.colorbar(im6, ax=ax0[1,2],fraction=0.046, pad=0.04, ticks = np.arange(0,1.2,0.2))
+
+font_size = 10 # Adjust as appropriate.
+cbar0.ax.tick_params(labelsize=font_size)
+cbar1.ax.tick_params(labelsize=font_size)
+cbar2.ax.tick_params(labelsize=font_size)
+cbar3.ax.tick_params(labelsize=font_size)
+cbar4.ax.tick_params(labelsize=font_size)
+cbar5.ax.tick_params(labelsize=font_size)
+cbar6.ax.tick_params(labelsize=font_size)
 
 ax0[0,0].set_title('WI')
 ax0[0,1].set_title('NDVI')
 ax0[0,2].set_title('NDSI')
 ax0[0,3].set_title('VIS_Ref')
 ax0[1,0].set_title('NIR_Ref')
-ax0[1,1].set_title('SVI x2 scaling')
+ax0[1,1].set_title('SVI')
 ax0[1,2].set_title('Cirrus')
 ax0[1,3].set_title('BRF RGB')
-
-
-cb_ax = f0.add_axes([0.93, 0.1, 0.02, 0.8])
-cbar = f0.colorbar(im, cax=cb_ax)
 
 for a in ax0.flat:
     a.set_xticks([])
     a.set_yticks([])
 
+
+
+
 #DTT
-vmin = -127
+vmin = -101
 vmax = 101
 
-f, ax = plt.subplots(ncols=4, nrows=2, figsize=(l,w))
+cmap = cm.get_cmap('bwr')
+#cmap.set_bad(color='black')
+cmap.set_under('black')
+
+f, ax = plt.subplots(ncols=4, nrows=2, figsize=(l,w), sharex=True, sharey=True)
 im = ax[0,0].imshow(DTT_WI, cmap=cmap, vmin=vmin, vmax=vmax)
 ax[0,1].imshow(DTT_NDVI, cmap=cmap, vmin=vmin, vmax=vmax)
 ax[0,2].imshow(DTT_NDSI, cmap=cmap, vmin=vmin, vmax=vmax)
@@ -140,7 +159,7 @@ ax[1,0].imshow(DTT_NIR_Ref, cmap=cmap, vmin=vmin, vmax=vmax)
 ax[1,1].imshow(DTT_SVI, cmap=cmap, vmin=vmin, vmax=vmax)
 ax[1,2].imshow(DTT_Cirrus, cmap=cmap, vmin=vmin, vmax=vmax)
 
-ax[1,3].imshow(RGB[i1:i2, j1:j2])
+ax[1,3].imshow(RGB)
 
 ax[0,0].set_title('DTT_WI')
 ax[0,1].set_title('DTT_NDVI')

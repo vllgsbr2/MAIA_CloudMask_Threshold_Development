@@ -169,14 +169,14 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
 
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
-    import matplotlib.pyplot as plt
-    from matplotlib import cm
-    cmap = cm.get_cmap('jet', 15)
-    obs_names = ['WI','NDVI','NDSI','VIS','NIR','SVI','Cirrus']
-    home = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
-    for i in range(6):
-        im = plt.imshow(observable_level_parameter[:,:,i], cmap=cmap)
-        plt.savefig('{}/OLP_images/{}_{}.png'.format(home, time_stamp, obs_names[i]), dpi=200)
+    #import matplotlib.pyplot as plt
+    #from matplotlib import cm
+    #cmap = cm.get_cmap('jet', 15)
+    #obs_names = ['WI','NDVI','NDSI','VIS','NIR','SVI','Cirrus']
+    #home = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+    #for i in range(6):
+    #    im = plt.imshow(observable_level_parameter[:,:,i], cmap=cmap)
+    #    plt.savefig('{}/OLP_images/{}_{}.png'.format(home, time_stamp, obs_names[i]), dpi=200)
 
     return observable_level_parameter
 
@@ -225,11 +225,11 @@ if __name__ == '__main__':
                         PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
                         hf_OLP_path   = '{}/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
 
-                        SZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith'][()]
-                        VZA = hf_database[time_stamp+'/sunView_geometry/solarZenith'][()]
-                        VAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth'][()]
-                        SAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth'][()]
-                        TA  = 1 #will change depending where database is stored
+                        SZA = hf_database[time_stamp+'/sunView_geometry/solarZenith'][()]
+                        VZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith'][()]
+                        VAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth'][()]
+                        SAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth'][()]
+                        TA  = 0 #will change depending where database is stored
                         LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
                         DOY = time_stamp[4:7]

@@ -7,7 +7,7 @@ as radiance or reflectance
 import numpy as np
 from pyhdf.SD import SD
 #import h5py
-import pprint
+#import pprint
 import matplotlib.pyplot as plt
 #plt.switch_backend('agg')
 def get_data(filename, fieldname, SD_field_rawData, return_hdf=False):
@@ -147,22 +147,35 @@ def plt_RGB(filename, fieldnames_list, rad_or_ref, plot=True):
     else:
         return image_RGB
 
-# ##example plot
-# filename   = '/u/sciteam/villegas/MAIA_Threshold_Development/test_data/MOD021KM.A2017118.1715.061.2017314055816.hdf'
-# fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
-# rad_or_ref = True #True for radiance, False for reflectance
-# plt_RGB(filename, fieldnames_list, rad_or_ref)
-# print(get_data(filename, fieldnames_list[0], 2))
+if __name__ == '__main__':
+    pass
+    # ##example plot
+    # filename   = '/u/sciteam/villegas/MAIA_Threshold_Development/test_data/MOD021KM.A2017118.1715.061.2017314055816.hdf'
+    # fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
+    # rad_or_ref = True #True for radiance, False for reflectance
+    # plt_RGB(filename, fieldnames_list, rad_or_ref)
+    # print(get_data(filename, fieldnames_list[0], 2))
 
-#plot images from LA database to check the data
-fieldnames_list = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
-rad_or_ref      = False
-home            = '/data/keeling/a/vllgsbr2/c/MAIA_Threshold_Dev/LA_PTA_MODIS_Data/'
-filename        = home + 'LA_PTA_database_forRealDisTime.hdf5'
-#plt_RGB(filename, fieldnames_list, rad_or_ref)
+    #plot images from LA database to check the data
+    #fieldnames_list = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB', 'EV_Band26', 'EV_1KM_RefSB']
+    #rad_or_ref      = False
+    #home            = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/MOD_02/'
+    #filename        = home + 'MOD021KM.A2002051.1820.061.2017180020820.hdf'
+    #ref_band_26, scale_factor_rad, scale_factor_ref = prepare_data(filename, fieldnames_list[3], rad_or_ref)
+    #plt.imshow(ref_band_26[14,:,:], cmap='Greys_r', vmax=.3)
+    #plt.show()
+    #plt_RGB(filename, fieldnames_list, rad_or_ref)
+    #path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/test_JPL_MODIS_data_.HDF5'
+    #import h5py
+    #JPL_file = h5py.File(path, 'r')
 
-# #debugging tools
-#file = SD('/Users/vllgsbr2/Desktop/MODIS_Training/Data/MOD021KM.A2017245.1635.061.2017258193451.hdf')
-#data = file.select('EV_1KM_Emissive')
-#pprint.pprint(data.attributes()) #tells me scales, offsets and bands
-#pprint.pprint(file.datasets()) # shows data fields in file from SD('filename')
+    #retrieve radiances
+    #rad_band_4  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_13']
+    #plt.imshow(rad_band_4, cmap='Greys_r')
+
+    #plt.show()
+    # #debugging tools
+    #file = SD('/Users/vllgsbr2/Desktop/MODIS_Training/Data/MOD021KM.A2017245.1635.061.2017258193451.hdf')
+    #data = file.select('EV_1KM_Emissive')
+    #pprint.pprint(data.attributes()) #tells me scales, offsets and bands
+    #pprint.pprint(file.datasets()) shows data fields in file from SD('filename')

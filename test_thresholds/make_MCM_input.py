@@ -103,16 +103,16 @@ def MOD35_read(mod35_file):
 
 def make_JPL_data_from_MODIS(out_path):#MOD021KM_path, MOD03_path, MOD35_path, out_path):
 
-    time_stamp = '2002047.1845'
-    home       = '/Users/vllgsbr2/Desktop/keeling_test_files/'
-    with h5py.File(home + 'LA_database.hdf5', 'r') as hf_database:
-        rad_b4       = hf_database[time_stamp + '/reflectance/band_3'][()]
-        rad_b5       = hf_database[time_stamp + '/reflectance/band_4'][()]
-        rad_b6       = hf_database[time_stamp + '/reflectance/band_1'][()]
-        rad_b9       = hf_database[time_stamp + '/reflectance/band_2'][()]
-        rad_b12      = hf_database[time_stamp + '/reflectance/band_6'][()]
-        rad_b13      = hf_database[time_stamp + '/reflectance/band_26'][()]
-        E_std_0      = np.ones(6)
+    time_stamp = '2002051.1820'
+    home       = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
+    with h5py.File(home + 'LA_PTA_database_mpi_start_00000_end_00331_try2.hdf5', 'r') as hf_database:
+        rad_b4       = hf_database[time_stamp + '/radiance/band_3'][()]
+        rad_b5       = hf_database[time_stamp + '/radiance/band_4'][()]
+        rad_b6       = hf_database[time_stamp + '/radiance/band_1'][()]
+        rad_b9       = hf_database[time_stamp + '/radiance/band_2'][()]
+        rad_b12      = hf_database[time_stamp + '/radiance/band_6'][()]
+        rad_b13      = hf_database[time_stamp + '/radiance/band_26'][()]
+        E_std_0      = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
         lat          = hf_database[time_stamp + '/geolocation/lat'][()]
         lon          = hf_database[time_stamp + '/geolocation/lon'][()]
         sza          = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
@@ -120,7 +120,7 @@ def make_JPL_data_from_MODIS(out_path):#MOD021KM_path, MOD03_path, MOD35_path, o
         saa          = hf_database[time_stamp + '/sunView_geometry/solarAzimuth'][()]
         vaa          = hf_database[time_stamp + '/sunView_geometry/sensorAzimuth'][()]
         modcm        = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
-        snowice_mask = hf_database[time_stamp + '/cloud_mask/Snow_Ice_Background_Flag'][()]
+        snow_ice_mask = hf_database[time_stamp + '/cloud_mask/Snow_Ice_Background_Flag'][()]
         water_mask   = hf_database[time_stamp + '/cloud_mask/Land_Water_Flag'][()]
 
     #create hdf5 file
@@ -162,7 +162,7 @@ def make_JPL_data_from_MODIS(out_path):#MOD021KM_path, MOD03_path, MOD35_path, o
     RDQI_b9  = np.zeros(shape)
     RDQI_b12 = np.zeros(shape)
     RDQI_b13 = np.zeros(shape)
-
+    
     SZA = sza#[i1:i2, j1:j2] / 100.
     VZA = vza#[i1:i2, j1:j2] / 100.
     SAA = saa#[i1:i2, j1:j2] / 100.
@@ -172,9 +172,9 @@ def make_JPL_data_from_MODIS(out_path):#MOD021KM_path, MOD03_path, MOD35_path, o
 
     E_std0b = E_std_0
 
-    DOY = 6
+    DOY = int(time_stamp[4:7])
 
-    TA = 1
+    TA = 1 
 
     # #0 for snow_ice, 1 for non
     # #should be consistant with MOD35 definition
@@ -186,7 +186,7 @@ def make_JPL_data_from_MODIS(out_path):#MOD021KM_path, MOD03_path, MOD35_path, o
     # np.place(snow_ice_mask, snow_ice_mask==2, 1)
 
     #0 for water and 1 for land
-    water_mask[water_mask > 2] = 1
+    water_mask[water_mask >= 2] = 1
     water_mask[water_mask !=1] = 0
 
     land_water_mask = water_mask#[i1:i2, j1:j2]
@@ -211,7 +211,7 @@ def make_JPL_data_from_MODIS(out_path):#MOD021KM_path, MOD03_path, MOD35_path, o
     ARP_RDQI.create_dataset('RDQI_band_9' , data=RDQI_b9 , dtype='i4')
     ARP_RDQI.create_dataset('RDQI_band_12', data=RDQI_b12, dtype='i4')
     ARP_RDQI.create_dataset('RDQI_band_13', data=RDQI_b13, dtype='i4')
-
+    
     ARP_SVG.create_dataset('solar_zenith_angle'   , data=SZA, dtype='f')
     ARP_SVG.create_dataset('viewing_zenith_angle' , data=VZA, dtype='f')
     ARP_SVG.create_dataset('solar_azimuth_angle'  , data=SAA, dtype='f')
@@ -234,5 +234,14 @@ def make_JPL_data_from_MODIS(out_path):#MOD021KM_path, MOD03_path, MOD35_path, o
 
 if __name__ == '__main__':
     #this makes the JPL data file to read into the MCM
-    out_path      = './test_JPL_MODIS_data_.HDF5'
+    out_path      = './test_JPL_MODIS_data.HDF5'
     make_JPL_data_from_MODIS(out_path)
+
+
+
+
+
+
+
+
+

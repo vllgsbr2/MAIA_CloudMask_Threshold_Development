@@ -13,7 +13,7 @@ import numpy as np
 import sys
 from fetch_MCM_input_data import *
 import time
-from svi_dynamic_size_input import svi_calculation
+from svi_calculation import svi_calculation#svi_dynamic_size_input import svi_calculation
 
 
 #define arbitrary shape for granule/orbit to process
@@ -41,7 +41,8 @@ def mark_bad_radiance(radiance, RDQI, Max_RDQI):
     """
 
     radiance[(RDQI > Max_RDQI) & (RDQI < 3)] = -998
-    #radiance[radiance < 0] = -998
+    #delete meaningless negative radiance without stepping on -999 fill val
+    radiance[(radiance < 0) & (radiance > -998)] = -998
     radiance[RDQI == 3] = -999
 
     return radiance
@@ -74,13 +75,15 @@ def get_R(radiance, SZA, d, E_std_0b):
 
     #condition to not step on fill values when converting to BRF(R)
     valid_rad_idx = np.where(radiance >= 0.0)
-    # radiance[valid_rad_idx] = ((np.pi * radiance * d**2)\
-    #                       / (np.cos(np.deg2rad(SZA)) * E_std_0b))[valid_rad_idx]
-    # #just assign R to the memory of radiance to highlight conversion
-    # R = radiance
+    radiance[valid_rad_idx] = ((np.pi * radiance * d**2)\
+                           / (np.cos(np.deg2rad(SZA)) * E_std_0b))[valid_rad_idx]
+    #just assign R to the memory of radiance to highlight conversion
+    R = radiance
 
     #pretend radiance is reflectance cause that is what I'll pass in for now
-    radiance[valid_rad_idx] = radiance[valid_rad_idx] / (np.cos(np.deg2rad(SZA))[valid_rad_idx])
+    #radiance[valid_rad_idx] = radiance[valid_rad_idx] / (np.cos(np.deg2rad(SZA))[valid_rad_idx])
+    #R = radiance
+
     return R
 
 #calculate sun-glint flag*******************************************************
@@ -113,7 +116,7 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
     sun_glint_exclusion_angle = np.deg2rad(sun_glint_exclusion_angle)
 
     cos_theta_r = np.sin(sensorZenith) * np.sin(solarZenith) \
-                * np.cos(sensorAzimuth - solarAzimuth - np.pi) + np.cos(sensorZenith) \
+                * np.cos(sensorAzimuth - solarAzimuth - np.pi ) + np.cos(sensorZenith) \
                 * np.cos(solarZenith)
     theta_r = np.arccos(cos_theta_r)
 
@@ -127,7 +130,13 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
     theta_r[land_water_mask == 1] = 1
 
     sun_glint_mask = theta_r
-
+    #import matplotlib.pyplot as plt
+    #from matplotlib import cm
+    #cmap = cm.get_cmap('PiYG', 15) 
+    #plt.figure(5)
+    #plt.imshow(sensorZenith,cmap=cmap)
+    #plt.colorbar()
+    #plt.show()
     return sun_glint_mask
 
 #calculate observables**********************************************************
@@ -324,7 +333,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                      the threshold database for every observable level parameter.
                      The 1st and 2cnd axies are the size of the MAIA granule.
     """
-
+    
     #This is used todetermine if the test should be applied over a particular
     #surface type in the get_test_determination function
 
@@ -365,7 +374,16 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
+    missing_idx = np.where(SZA==-999)
+    observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
+
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
+    #import matplotlib.pyplot as plt
+    #from matplotlib import cm
+    #cmap = cm.get_cmap('PiYG', 15)
+    #plt.figure(4)
+    #plt.imshow(binned_VZA,cmap=cmap)
+    #plt.colorbar()
 
     return observable_level_parameter
 
@@ -381,6 +399,42 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
 # -125 -> not applied due to surface type
 # -126 -> low quality radiance
 # -127 -> no data
+
+def make_sceneID(observable_level_parameter,land_water_bins,\
+                     sun_glint_bins, snow_ice_bins):
+
+        """
+        helper function to combine water/sunglint/snow-ice mask/sfc_ID into
+        one mask. This way the threhsolds can be retrieved with less queries.
+
+        [Section N/A]
+
+        Arguments:
+            observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
+            land_water_bins {2D narray} -- land (1) water(0)
+            sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
+            snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
+
+        Returns:
+            2D narray -- scene ID. Values 0-28 inclusive are land types; values
+                         29, 30, 31 are water, water with sun glint, snow/ice
+                         respectively. Is the size of the granule. These integers
+                         serve as the indicies to select a threshold based off
+                         surface type.
+
+        """
+
+        #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
+        sfc_ID_bins = observable_level_parameter[:,:,6]
+        scene_type_identifier = sfc_ID_bins
+
+        scene_type_identifier[land_water_bins == 0]     = 12
+        scene_type_identifier[(sun_glint_bins == 0) & \
+                              (land_water_bins == 0)]   = 13
+        scene_type_identifier[snow_ice_bins == 0]       = 14
+
+        return scene_type_identifier
+
 
 def get_test_determination(observable_level_parameter, observable_data,\
        threshold_path, observable_name, fill_val_1, fill_val_2, fill_val_3):
@@ -445,7 +499,6 @@ def get_test_determination(observable_level_parameter, observable_data,\
         observable_data[(snow_ice_bins == 1)             &  \
                         ((observable_data != fill_val_2) &  \
                          (observable_data != fill_val_3)) ]    = fill_val_1
-
     else:
         pass
 
@@ -459,41 +512,6 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     #combine water/sunglint/snow-ice mask/sfc_ID into one mask
     #This way the threhsolds can be retrieved with less queries
-    def make_sceneID(observable_level_parameter,land_water_bins,\
-                     sun_glint_bins, snow_ice_bins):
-
-        """
-        helper function to combine water/sunglint/snow-ice mask/sfc_ID into
-        one mask. This way the threhsolds can be retrieved with less queries.
-
-        [Section N/A]
-
-        Arguments:
-            observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
-            land_water_bins {2D narray} -- land (1) water(0)
-            sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
-            snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
-
-        Returns:
-            2D narray -- scene ID. Values 0-28 inclusive are land types; values
-                         29, 30, 31 are water, water with sun glint, snow/ice
-                         respectively. Is the size of the granule. These integers
-                         serve as the indicies to select a threshold based off
-                         surface type.
-
-        """
-
-        #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
-        sfc_ID_bins = observable_level_parameter[:,:,6]
-        scene_type_identifier = sfc_ID_bins
-
-        scene_type_identifier[land_water_bins == 0]     = 12
-        scene_type_identifier[(sun_glint_bins == 1) & \
-                              (land_water_bins == 0)]   = 13
-        scene_type_identifier[snow_ice_bins == 0]       = 14
-
-        return scene_type_identifier
-
     scene_type_identifier = make_sceneID(observable_level_parameter,land_water_bins,\
                      sun_glint_bins, snow_ice_bins)
 
@@ -505,21 +523,39 @@ def get_test_determination(observable_level_parameter, observable_data,\
     OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
     #pick threshold for each pixel in 1000x1000 grid
-    with h5py.File(threshold_path+'/thresholds_MCM.hdf5', 'r') as hf_thresholds:
-        OLP = OLP.reshape((1000**2, 6))
+    with h5py.File(threshold_path+'thresholds_MCM_efficient.hdf5', 'r') as hf_thresholds:
+        OLP = OLP.reshape((1000**2, 6)).astype(dtype=np.int)
         #DOY and TA is same for all pixels in granule
-        path = '{:02d}/{:02d}/'.format(OLP[0,3], OLP[0,5])
-        thresholds = np.zeros((1000**2))
-        obs_names = {'WI':0, 'NDVI':1, 'NDSI':2, 'visRef':3, 'nirRef':4, 'SVI':5, 'cirrus':6}
-        for i, olp in enumerate(OLP):
-            path = '{}/cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_sceneID_{:02d}'.\
-                    format(path, olp[0], olp[1], olp[2], olp[3])
-                    
-            thresholds[i] = hf_thresholds[path][obs_names[observable_name]]
+        if not(np.all(OLP[:,3] == -999)) and not(np.all(OLP[:,5] == -999)):
+            #not -999 index; use to define target area and day of year for the granule
+            not_fillVal_idx = np.where(OLP[:,3]!=-999)
+            TA = OLP[not_fillVal_idx[0], 3][0]
+            DOY = OLP[not_fillVal_idx[0], 5][0]
 
-    thresholds = thresholds.reshape((1000,1000))
+            #put 0 index where is equal to -999
+            #then we will go back and mask the retireved thresholds here as -999
+            fillVal_idx = np.where(OLP==-999)
+            OLP[fillVal_idx] = 0
 
-    return observable_data, thresholds
+        #if OLP[0,3]!=-999 or OLP[0,5]!=-999:
+            #TA, DOY = OLP[0,3], OLP[0,5]
+            path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
+            print(path)
+
+            database = hf_thresholds[path][()]
+            thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
+            #thresholds =[database[olp[0], olp[1], olp[2], olp[4]] if np.all(olp!=-999) else -999 for olp in OLP]
+            #thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP]
+
+            thresholds[fillVal_idx[0]] = -999
+            
+            thresholds = np.array(thresholds).reshape((1000,1000))
+            #print(thresholds)
+
+
+            return observable_data, thresholds
+
+        return observable_data, np.ones((1000,1000))*-999
 
 #calculate distance to threshold************************************************
 #keep fill values unchanged
@@ -562,6 +598,9 @@ def get_DTT_Ref_Test(T, Ref, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     #put lower bound on DTT where observable is valid (fill vals all negative)
     DTT[(DTT < Min_valid_DTT) & (Ref > max_fill_val)] = Min_valid_DTT
 
+    #where T is -999 we should give a no retreival fill value (fill_val_3 = -127)
+    DTT[T==-999] = fill_val_3
+
     return DTT
 
 def get_DTT_NDxI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
@@ -596,6 +635,9 @@ def get_DTT_NDxI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
     #put lower bound on DTT where observable is valid (fill vals all negative)
     DTT[(DTT < Min_valid_DTT) & (NDxI > max_fill_val)] = Min_valid_DTT
+
+    #where T is -999 we should give a no retreival fill value (fill_val_3 = -127)
+    DTT[T==-999] = fill_val_3
 
     return DTT
 
@@ -632,6 +674,9 @@ def get_DTT_White_Test(T, WI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
     #put lower bound on DTT where observable is valid (fill vals all negative)
     DTT[(DTT < Min_valid_DTT) & (WI > max_fill_val)] = Min_valid_DTT
+
+    #where T is -999 we should give a no retreival fill value (fill_val_3 = -127)
+    DTT[T==-999] = fill_val_3
 
     return DTT
 
@@ -789,7 +834,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
 
     start_time = time.time()
-    print('started: ' , 0)
+    #print('started: ' , 0)
 
     #get JPL provided data******************************************************
     rad_band_4, rad_band_5, rad_band_6, rad_band_9, rad_band_12, rad_band_13,\
@@ -832,10 +877,12 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     rad_band_13 = mark_bad_radiance(rad_band_13[:], RDQI_band_13[:], Max_RDQI)
 
     #get R**********************************************************************
-    R_band_4  = get_R(rad_band_4[:],  SZA[:], d, E_std_0b[0])
-    R_band_5  = get_R(rad_band_5[:],  SZA[:], d, E_std_0b[1])
-    R_band_6  = get_R(rad_band_6[:],  SZA[:], d, E_std_0b[2])
-    R_band_9  = get_R(rad_band_9[:],  SZA[:], d, E_std_0b[3])
+    #in order MAIA  bands 6,9,4,5,12,13
+    #in order MODIS bands 1,2,3,4,6 ,26
+    R_band_4  = get_R(rad_band_4[:],  SZA[:], d, E_std_0b[2])
+    R_band_5  = get_R(rad_band_5[:],  SZA[:], d, E_std_0b[3])
+    R_band_6  = get_R(rad_band_6[:],  SZA[:], d, E_std_0b[0])
+    R_band_9  = get_R(rad_band_9[:],  SZA[:], d, E_std_0b[1])
     R_band_12 = get_R(rad_band_12[:], SZA[:], d, E_std_0b[4])
     R_band_13 = get_R(rad_band_13[:], SZA[:], d, E_std_0b[5])
 
@@ -860,7 +907,11 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     NIR_Ref = get_NIR_reflectance(R_band_9)
     Cirrus  = get_cirrus_Ref(R_band_13)
     SVI     = get_spatial_variability_index(R_band_6, shape[0], shape[1])
-
+    
+    #SVI_Sfc_ID = get_spatial_variability_index(sfc_ID, shape[0], shape[1])
+    #SVI = SVI - SVI_Sfc_ID
+    #SVI[SVI<0] = 0
+    #Cirrus[Cirrus>2] = -998
     #get observable level parameter*********************************************
     observable_level_parameter = get_observable_level_parameter(SZA[:],\
                 VZA[:], SAA[:], VAA[:], Target_Area,land_water_mask[:],\
@@ -896,15 +947,42 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     observable_data = np.empty(np.shape(observables))
     T = np.empty(np.shape(observables))
     for i in range(len(observable_names)):
-        threshold_observable_i = threhsold_database[observable_names[i]][:]
+        #threshold_observable_i = threhsold_database[observable_names[i]][:]
+        threshold_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+
 
         observable_data[:,:,i], T[:,:,i] = \
         get_test_determination(observable_level_parameter,\
         observables[:,:,i],\
-        threshold_observable_i,\
+        threshold_path,\
         observable_names[i],\
         fill_val_1, fill_val_2, fill_val_3)
-
+    #Thresholds
+    #l,w, = 20,8
+    #import matplotlib.pyplot as plt
+    #import matplotlib.cm as cm
+    #f2, ax2 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
+    #cmap= cm.get_cmap('jet')
+    #vmin_T, vmax_T = T.min(), T.max()
+    #T[observables == np.nan] = -999
+    #im = ax2[0,0].imshow(T[:,:,0], cmap=cmap, vmin=T[:,:,0].min(), vmax=T[:,:,0].max())
+    #im.cmap.set_under('k')
+    #ax2[0,1].imshow(T[:,:,1], cmap=cmap, vmin=T[:,:,1].min(), vmax=T[:,:,1].max())
+    #ax2[0,2].imshow(T[:,:,2], cmap=cmap, vmin=T[:,:,2].min(), vmax=T[:,:,2].max())
+    #ax2[0,3].imshow(T[:,:,3], cmap=cmap, vmin=T[:,:,3].min(), vmax=T[:,:,3].max())
+    #ax2[1,0].imshow(T[:,:,4], cmap=cmap, vmin=T[:,:,4].min(), vmax=T[:,:,4].max())
+    #ax2[1,1].imshow(T[:,:,5], cmap=cmap, vmin=T[:,:,5].min(), vmax=0.2)
+    #ax2[1,2].imshow(T[:,:,6], cmap=cmap, vmin=T[:,:,6].min(), vmax=T[:,:,6].max())
+    #ax2[0,0].set_title('Thresholds_WI')
+    #ax2[0,1].set_title('Thresholds_NDVI')
+    #ax2[0,2].set_title('Thresholds_NDSI')
+    #ax2[0,3].set_title('Thresholds_VIS_Ref')
+    #ax2[1,0].set_title('Thresholds_NIR_Ref')
+    #ax2[1,1].set_title('Thresholds_SVI')
+    #ax2[1,2].set_title('Thresholds_Cirrus')
+    #cb_ax2 = f2.add_axes([0.93, 0.1, 0.02, 0.8])
+    #cbar = f2.colorbar(im, cax=cb_ax2)
+    #plt.show()
     #get DTT********************************************************************
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
@@ -941,7 +1019,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     #I reformat the values as such since the code handles each observable
     #independently, even if two observables belong to the same test
     activation_values = np.array([activation_values[0],\
-                                  activation_values[1],\
+                                  activation_values[1]+500,\
                                   activation_values[1],\
                                   activation_values[2],\
                                   activation_values[2],\
@@ -953,8 +1031,8 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     print('finished: ' , time.time() - start_time)
 
-
-    scene_type_identifier = sfc_ID
+    scene_type_identifier = make_sceneID(observable_level_parameter,observable_level_parameter[:,:,4],\
+                     observable_level_parameter[:,:,8], observable_level_parameter[:,:,5])
 
     return Sun_glint_exclusion_angle,\
            Max_RDQI,\

@@ -1,0 +1,1788 @@
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in get_test_determination
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 540, in <listcomp>
+    thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP] 
+IndexError: index -999 is out of bounds for axis 0 with size 10
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py:618: RuntimeWarning: divide by zero encountered in true_divide
+  DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+Traceback (most recent call last):
+  File "produce_all_MCM.py", line 52, in <module>
+    sfc_ID_filepath, config_filepath)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 932, in MCM_wrapper
+    fill_val_1, fill_val_2, fill_val_3)
+  File "/data/gdi/c/vllgsbr2/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/JPL_MCM_threshold_testing.py", line 544, in get_test_determination
+    return observable_data, thresholds
+UnboundLocalError: local variable 'thresholds' referenced before assignment
+--------------------------------------------------------------------------
+mpirun noticed that the job aborted, but has no info as to the process
+that caused that situation.
+--------------------------------------------------------------------------

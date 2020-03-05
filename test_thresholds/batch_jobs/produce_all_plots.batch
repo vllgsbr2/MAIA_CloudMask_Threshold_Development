@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name='MCM_figures'
+#SBATCH -p sesempi
+#SBATCH --time=00:06:00
+#SBATCH --mem-per-cpu=4gb
+#SBATCH -n 200
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=END
+#SBATCH --mail-user=vllgsbr2@illinois.edu
+#SBATCH --error='slurm_produce_all_plots.err'
+
+cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/
+mpirun -n 200 python produce_all_plots.py

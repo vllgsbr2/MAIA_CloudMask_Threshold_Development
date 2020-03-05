@@ -18,14 +18,14 @@ def group_data(OLP, obs, CM, hf_group):
     #                                         binned_DOY     ,\
     #                                         sun_glint_mask))
 
-    import matplotlib.pyplot as plt
-    from matplotlib import cm
-    OLP = OLP.astype(dtype='float')
-    OLP[OLP[:,:,1] == -999] = np.nan
-    plt.imshow(OLP[:,:,1], cmap = cm.get_cmap('PiYG', 15) )
-    plt.colorbar()
-    plt.show()
-    OLP = OLP.astype(dtype=np.int)
+    #import matplotlib.pyplot as plt
+    #from matplotlib import cm
+    #OLP = OLP.astype(dtype='float')
+    #OLP[OLP[:,:,1] == -999] = np.nan
+    #plt.imshow(OLP[:,:,1], cmap = cm.get_cmap('PiYG', 15) )
+    #plt.colorbar()
+    #plt.show()
+    #OLP = OLP.astype(dtype=np.int)
     #flatten arrays
     #new_OLP = new_OLP.reshape(1000**2, 6)
     OLP = OLP.reshape(1000**2, 6)
@@ -33,12 +33,12 @@ def group_data(OLP, obs, CM, hf_group):
     CM  = CM.reshape(1000**2)
 
     #remove empty data points
-    #where whiteness is negative (which is not possible)
+    #where cos(SZA) is negative (which is not possible)
     full_idx = np.where(OLP[:,0] !=-999) # obs -> (1, 1e6-x)
 
-    #OLP = OLP[full_idx[0], :]
-    #obs = obs[full_idx[0], :]
-    #CM  = CM[full_idx[0]]
+    OLP = OLP[full_idx[0], :]
+    obs = obs[full_idx[0], :]
+    CM  = CM[full_idx[0]]
 
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/group_DOY_05_60_cores/'
     thresh_dict = {}

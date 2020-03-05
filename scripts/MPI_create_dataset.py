@@ -52,15 +52,53 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     '''
 
     rad_or_ref              = True
-    radiance_250_Aggr1km, scale_factor_rad, scale_factor_ref    = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
-    radiance_500_Aggr1km, scale_factor_rad, scale_factor_ref    = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
-    radiance_1KM, scale_factor_rad, scale_factor_ref            = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
+    radiance_250_Aggr1km, scale_factor_rad_250m, scale_factor_ref_250m    = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
+    radiance_500_Aggr1km, scale_factor_rad_500m, scale_factor_ref_500m    = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
+    radiance_1KM, scale_factor_rad_1km, scale_factor_ref_1km              = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
 
     rad_or_ref              = False
-    reflectance_250_Aggr1km, scale_factor_rad, scale_factor_ref = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
-    reflectance_500_Aggr1km, scale_factor_rad, scale_factor_ref = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
-    reflectance_1KM, scale_factor_rad, scale_factor_ref         = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
+    reflectance_250_Aggr1km, scale_factor_rad_250m, scale_factor_ref_250m = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
+    reflectance_500_Aggr1km, scale_factor_rad_500m, scale_factor_ref_500m = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
+    reflectance_1KM, scale_factor_rad_1km, scale_factor_ref_1km           = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
 
+    #grab scale factors for MODIS bands 3,4,1,2,6,26 (MAIA bands 4,5,6,9,12,13)
+    band_index = {'1':0,
+                  '2':1,
+                  '3':0,
+                  '4':1,
+                  '6':3,
+                  '26':14
+                  }
+
+    scale_factor_ref_500m_final = []
+    scale_factor_rad_500m_final = []
+    scale_factor_ref_1km_final  = []
+    scale_factor_rad_1km_final  = []
+
+    for band, index in band_index.items():
+        band = int(band)
+
+        if band == 3 or band == 4 or band ==6:
+            scale_factor_ref_500m_final.append(scale_factor_ref_500m[index])
+            scale_factor_rad_500m_final.append(scale_factor_rad_500m[index])
+        elif band == 26:
+            scale_factor_ref_1km_final.append(scale_factor_ref_1km[index])
+            scale_factor_rad_1km_final.append(scale_factor_rad_1km[index])
+        else:
+            pass
+    scale_factor_ref_500m_final = np.array(scale_factor_ref_500m_final)
+    scale_factor_rad_500m_final = np.array(scale_factor_rad_500m_final)
+    scale_factor_ref_1km_final  = np.array(scale_factor_ref_1km_final)
+    scale_factor_rad_1km_final  = np.array(scale_factor_rad_1km_final)
+
+    #in order MAIA  bands 6,9,4,5,12,13
+    #in order MODIS bands 1,2,3,4,6 ,26
+    scale_factor_rad = np.concatenate((scale_factor_rad_250m, scale_factor_rad_500m_final, scale_factor_rad_1km_final), axis=0)
+    scale_factor_ref = np.concatenate((scale_factor_ref_250m, scale_factor_ref_500m_final, scale_factor_ref_1km_final), axis=0)
+
+    #calculate band weighted solar irradiance using scale factors above
+    E_std_0 = np.pi * scale_factor_rad / scale_factor_ref
+    
     #calculate geolocation
     lat = get_lat(filename_MOD_03).astype(np.float64)
     lon = get_lon(filename_MOD_03).astype(np.float64)
@@ -82,6 +120,7 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     decoded_cloud_mask_tests = decode_tests(data_SD_cloud_mask, filename_MOD_35)
 
     hdf_file.end()
+    
     #ceate structure in hdf file
     group                       = hf.create_group(group_name)
     subgroup_radiance           = group.create_group('radiance')
@@ -121,21 +160,10 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
 
     #crop and save the datasets*************************************************
 
+    #save band weighted solar irradiance
+    save_crop(group, 'band_weighted_solar_irradiance', E_std_0)
+
     #reflectance and radiance
-    band_index = {'1':0,
-                  '2':1,
-                  '3':0,
-                  '4':1,
-                  '6':3,
-                  '8':0,
-                  '12':4,
-                  '26':12
-                  }
-
-    #save scale factors
-    save_crop(subgroup_scale_factors, 'reflectance', scale_factor_ref)
-    save_crop(subgroup_scale_factors, 'radiance', scale_factor_rad)
-
 
     for band, index in band_index.items():
         if band=='1' or band=='2':
@@ -292,58 +320,35 @@ if __name__ == '__main__':
 
             #create/open file
             #open file to write status of algorithm to
-            hf_path = '{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}_try2.hdf5'.format(PTA_file_path, start, end)
+            database_loc = 'try2_database/LA_database_60_cores'
+            hf_path = '{}/{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}_try2.hdf5'.format(PTA_file_path, database_loc, start, end)
             output_path = './MPI_create_dataset_output/create_dataset_status_start_{:0>5d}_end_{:0>5d}_try2.txt'.format(start, end)
-            try:
-                with h5py.File(hf_path, 'w') as hf:
-                    output = open(output_path, 'w')
 
-                    i=1
-                    print('entering for loop in rank '+str(r))
-                    for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
-                                           in zip(filename_MOD_02[start:end]          ,\
-                                                  filename_MOD_03[start:end]          ,\
-                                                  filename_MOD_35[start:end]          ,\
-                                                  filename_MOD_02_timeStamp[start:end],\
-                                                  filename_MOD_03_timeStamp[start:end],\
-                                                  filename_MOD_35_timeStamp[start:end]):
+            with h5py.File(hf_path, 'w') as hf:
+                output = open(output_path, 'w')
 
+                i=1
+                print('entering for loop in rank '+str(r))
+                for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
+                                       in zip(filename_MOD_02[start:end]          ,\
+                                              filename_MOD_03[start:end]          ,\
+                                              filename_MOD_35[start:end]          ,\
+                                              filename_MOD_02_timeStamp[start:end],\
+                                              filename_MOD_03_timeStamp[start:end],\
+                                              filename_MOD_35_timeStamp[start:end]):
+
+                    if int(time_MOD02[4:7]) >=48 and int(time_MOD02[4:7]) <= 55:
                         try:
                             build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
                                         target_lat, target_lon)
 
                             output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
                         except Exception as e:
-                             
-                             output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
-                        i+=1
-                    print('done with for loop in rank '+str(r))
-                    hf.close()
-                    output.close()
 
-            except Exception as e:
-                
-                with h5py.File(hf_path, 'r+') as hf:
-                    output = open(output_path, 'r+')
+                            output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
+                        print(i)
+                    i+=1
+                print('done with for loop in rank '+str(r))
+                hf.close()
+                output.close()
 
-                    i=1
-                    print('entering for loop in rank '+str(r))
-                    for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
-                                           in zip(filename_MOD_02[start:end]          ,\
-                                                  filename_MOD_03[start:end]          ,\
-                                                  filename_MOD_35[start:end]          ,\
-                                                  filename_MOD_02_timeStamp[start:end],\
-                                                  filename_MOD_03_timeStamp[start:end],\
-                                                  filename_MOD_35_timeStamp[start:end]):
-
-                        #try:
-                        build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
-                                        target_lat, target_lon)
-
-                          #  output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
-                        #except Exception as e:
-                         #    output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
-                        i+=1
-                    print('done with for loop in rank '+str(r))
-                    hf.close()
-                    output.close()

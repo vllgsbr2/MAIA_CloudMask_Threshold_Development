@@ -1,5 +1,6 @@
 import numpy as np
 import h5py
+from scipy.stats import cumfreq
 
 def calc_thresh(group_file):
     '''
@@ -37,13 +38,13 @@ def calc_thresh(group_file):
 
             cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
             obs        = hf_group[bin_ID][:,1:]
-            print(cloud_mask)
+            #print(cloud_mask)
             clear_idx = np.where(cloud_mask != 0)
             clear_obs = obs[clear_idx[0],:]
             #print(clear_idx[0].shape)
             cloudy_idx = np.where(cloud_mask == 0)
             cloudy_obs = obs[cloudy_idx[0],1:3] #[1:3] since we only need for NDxI
-            print(cloudy_idx[0].shape)
+            #print(cloudy_idx[0].shape)
             for i in range(7):
                 thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
@@ -57,7 +58,8 @@ def calc_thresh(group_file):
                 #pick max from cloudy hist
                 elif i==1 or i==2:
                     hist, bin_edges = np.histogram(cloudy_obs[:,i-1], bins=128, range=(-1,1))
-                    
+                    if i==2:
+                        print(hist.sum()) 
                     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                     bin_edges[1:][hist==hist.max()].min()
                 #VIS/NIR/SVI/Cirrus
@@ -67,7 +69,7 @@ def calc_thresh(group_file):
                 
                 if np.isnan(hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]):
                     thresh_nan = True   
-                    print('{} | threshold: {:1.4f} | clear_obs: {} cloudy_obs: {}'.format(bin_ID, hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]], clear_obs, cloudy_obs))
+                    #print('{} | threshold: {:1.4f} | clear_obs: {} cloudy_obs: {}'.format(bin_ID, hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]], clear_obs, cloudy_obs))
 
 if __name__ == '__main__':
 

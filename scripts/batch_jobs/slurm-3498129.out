@@ -1,0 +1,593 @@
+entering rank 34
+entering rank 28
+entering rank 33
+entering rank 32
+entering rank 30
+entering rank 31
+entering rank 29
+entering rank 55
+entering rank 51
+entering rank 49
+entering rank 52
+entering rank 53
+entering rank 7
+entering rank 8
+entering rank 13
+entering rank 11
+entering rank 10
+entering rank 50
+entering rank 12
+entering rank 54
+entering rank 9
+entering rank 58
+entering rank 57
+entering rank 59
+entering rank 56
+entering rank 20
+entering rank 14
+entering rank 16
+entering rank 21
+entering rank 23
+entering rank 26
+entering rank 17
+entering rank 18
+entering rank 15
+entering rank 24
+entering rank 27
+entering rank 19
+entering rank 22
+entering rank 38
+entering rank 36
+entering rank 39
+entering rank 40
+entering rank 35
+entering rank 37
+entering rank 41
+entering rank 1
+entering rank 3
+entering rank 25
+entering rank 5
+entering rank 0
+entering rank 6
+entering rank 2
+entering rank 4
+entering rank 47
+entering rank 48
+entering rank 44
+entering rank 45
+entering rank 46
+entering for loop in rank 33
+entering for loop in rank 34
+done with for loop in rank 34
+entering rank 43
+entering rank 42
+entering for loop in rank 32
+done with for loop in rank 32
+entering for loop in rank 29
+done with for loop in rank 29
+entering for loop in rank 28
+done with for loop in rank 28
+entering for loop in rank 30
+entering for loop in rank 31
+done with for loop in rank 31
+entering for loop in rank 55
+done with for loop in rank 55
+entering for loop in rank 49
+done with for loop in rank 49
+entering for loop in rank 53
+entering for loop in rank 52
+done with for loop in rank 52
+entering for loop in rank 51
+done with for loop in rank 51
+entering for loop in rank 54
+done with for loop in rank 54
+entering for loop in rank 50
+entering for loop in rank 10
+entering for loop in rank 8
+done with for loop in rank 8
+entering for loop in rank 12
+done with for loop in rank 12
+entering for loop in rank 7
+done with for loop in rank 7
+entering for loop in rank 11
+done with for loop in rank 11
+entering for loop in rank 9
+done with for loop in rank 9
+entering for loop in rank 13
+entering for loop in rank 3
+entering for loop in rank 39
+done with for loop in rank 39
+entering for loop in rank 6
+entering for loop in rank 1
+done with for loop in rank 1
+entering for loop in rank 37
+entering for loop in rank 2
+done with for loop in rank 37
+done with for loop in rank 2
+entering for loop in rank 41
+done with for loop in rank 41
+entering for loop in rank 4
+done with for loop in rank 4
+entering for loop in rank 35
+done with for loop in rank 35
+entering for loop in rank 5
+done with for loop in rank 5
+entering for loop in rank 38
+done with for loop in rank 38
+entering for loop in rank 40
+entering for loop in rank 0
+entering for loop in rank 59
+done with for loop in rank 59
+entering for loop in rank 36
+entering for loop in rank 57
+done with for loop in rank 57
+entering for loop in rank 56
+entering for loop in rank 58
+done with for loop in rank 58
+entering for loop in rank 22
+entering for loop in rank 25
+done with for loop in rank 25
+entering for loop in rank 23
+done with for loop in rank 22
+entering for loop in rank 21
+entering for loop in rank 26
+entering for loop in rank 24
+done with for loop in rank 24
+entering for loop in rank 27
+done with for loop in rank 21
+entering for loop in rank 18
+done with for loop in rank 18
+entering for loop in rank 16
+entering for loop in rank 15
+done with for loop in rank 15
+entering for loop in rank 14
+entering for loop in rank 17
+done with for loop in rank 17
+entering for loop in rank 20
+done with for loop in rank 14
+done with for loop in rank 27
+entering for loop in rank 19
+done with for loop in rank 19
+entering for loop in rank 48
+entering for loop in rank 44
+done with for loop in rank 44
+done with for loop in rank 48
+entering for loop in rank 43
+entering for loop in rank 46
+entering for loop in rank 45
+done with for loop in rank 45
+entering for loop in rank 42
+done with for loop in rank 42
+entering for loop in rank 47
+done with for loop in rank 47
+133
+56
+176
+141
+27
+232
+253
+280
+254
+10
+233
+138
+281
+22
+142
+57
+28
+163
+164
+143
+139
+58
+29
+263
+306
+165
+301
+282
+177
+226
+143
+140
+30
+255
+59
+264
+69
+234
+307
+134
+144
+302
+283
+done with for loop in rank 46
+227
+144
+256
+70
+265
+23
+11
+308
+135
+178
+235
+303
+166
+266
+24
+12
+71
+304
+309
+25
+13
+72
+228
+145
+145
+179
+136
+26
+14
+267
+60
+180
+229
+146
+31
+236
+257
+137
+141
+310
+230
+147
+237
+258
+167
+138
+305
+181
+146
+73
+32
+61
+311
+238
+27
+259
+15
+168
+182
+147
+268
+306
+33
+74
+62
+312
+28
+260
+16
+142
+148
+169
+34
+63
+143
+149
+35
+269
+64
+170
+144
+307
+270
+148
+231
+239
+171
+139
+261
+75
+145
+308
+149
+232
+36
+65
+271
+240
+140
+172
+150
+76
+29
+309
+183
+313
+17
+233
+150
+37
+66
+141
+262
+77
+151
+30
+184
+18
+314
+185
+31
+234
+19
+151
+142
+32
+241
+20
+263
+315
+242
+186
+316
+146
+152
+235
+264
+143
+310
+78
+243
+147
+152
+38
+187
+67
+144
+272
+153
+236
+173
+244
+265
+317
+153
+39
+148
+311
+79
+273
+68
+33
+188
+21
+174
+40
+154
+318
+69
+149
+34
+175
+22
+274
+155
+312
+80
+275
+313
+70
+145
+154
+41
+237
+150
+81
+189
+176
+151
+314
+276
+245
+82
+35
+266
+155
+238
+23
+177
+315
+146
+42
+246
+83
+267
+239
+156
+71
+36
+319
+156
+147
+24
+190
+277
+247
+268
+37
+240
+157
+320
+25
+148
+191
+157
+158
+241
+321
+149
+43
+72
+192
+248
+269
+322
+193
+152
+158
+178
+44
+73
+270
+249
+153
+179
+316
+45
+278
+159
+84
+150
+154
+250
+180
+26
+74
+38
+271
+159
+317
+242
+323
+279
+160
+85
+151
+155
+318
+160
+243
+194
+324
+39
+27
+86
+280
+156
+319
+281
+87
+272
+40
+181
+28
+251
+320
+41
+46
+29
+161
+88
+244
+152
+182
+75
+282
+157
+321
+47
+195
+162
+325
+153
+245
+161
+89
+252
+76
+283
+42
+30
+158
+273
+48
+196
+163
+154
+246
+162
+253
+43
+31
+274
+326
+197
+164
+247
+327
+done with for loop in rank 6
+254
+198
+275
+183
+77
+49
+163
+255
+276
+184
+322
+155
+164
+78
+50
+90
+159
+199
+185
+done with for loop in rank 13
+165
+79
+done with for loop in rank 50
+248
+51
+done with for loop in rank 30
+160
+done with for loop in rank 43
+284
+165
+done with for loop in rank 0
+323
+156
+done with for loop in rank 33
+256
+done with for loop in rank 36
+285
+done with for loop in rank 26
+277
+324
+done with for loop in rank 56
+91
+44
+32
+278
+done with for loop in rank 16
+92
+done with for loop in rank 10
+200
+done with for loop in rank 53
+166
+done with for loop in rank 23
+249
+done with for loop in rank 3
+45
+done with for loop in rank 20
+33
+done with for loop in rank 40
