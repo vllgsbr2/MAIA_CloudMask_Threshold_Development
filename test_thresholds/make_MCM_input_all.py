@@ -23,22 +23,26 @@ def make_JPL_data_from_MODIS():
                     rad_b9       = hf_database[time_stamp + '/radiance/band_2'][()]
                     rad_b12      = hf_database[time_stamp + '/radiance/band_6'][()]
                     rad_b13      = hf_database[time_stamp + '/radiance/band_26'][()]
-                    E_std_0      = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
+                    E_std0b      = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
                     lat          = hf_database[time_stamp + '/geolocation/lat'][()]
                     lon          = hf_database[time_stamp + '/geolocation/lon'][()]
-                    sza          = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
-                    vza          = hf_database[time_stamp + '/sunView_geometry/sensorZenith'][()]
-                    saa          = hf_database[time_stamp + '/sunView_geometry/solarAzimuth'][()]
-                    vaa          = hf_database[time_stamp + '/sunView_geometry/sensorAzimuth'][()]
+                    SZA          = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
+                    VZA          = hf_database[time_stamp + '/sunView_geometry/sensorZenith'][()]
+                    SAA          = hf_database[time_stamp + '/sunView_geometry/solarAzimuth'][()]
+                    VAA          = hf_database[time_stamp + '/sunView_geometry/sensorAzimuth'][()]
                     modcm        = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
                     snow_ice_mask = hf_database[time_stamp + '/cloud_mask/Snow_Ice_Background_Flag'][()]
                     water_mask   = hf_database[time_stamp + '/cloud_mask/Land_Water_Flag'][()]
+                    earth_sun_distance = hf_database[time_stamp + '/earth_sun_distance'][()]
 
                     #create hdf5 file
-                    hf = h5py.File('test_JPL_data_{}.HDF5'.format(time_stamp), 'w')
+                    hf = h5py.File(output_path + '/test_JPL_data_{}.HDF5'.format(time_stamp), 'w')
 
                     #define arbitrary shape for granule/orbit
                     shape = (1000,1000)
+                    
+                    #add cloud mask for later purposes
+                    hf.create_dataset('MOD35_cloud_mask', data=modcm, compression='gzip')
 
                     #create structure in hdf file
                     ARP                = hf.create_group('Anicillary_Radiometric_Product')
@@ -49,6 +53,7 @@ def make_JPL_data_from_MODIS():
                     ARP_E_std0b        = ARP.create_group('Band_Weighted_Solar_Irradiance_at_1AU')
                     ARP_DOY            = ARP.create_group('Day_of_year')
                     ARP_TA             = ARP.create_group('Target_Area')
+                    ARP_ESD            = ARP.create_group('Earth_Sun_Distance')
 
                     AGP     = hf.create_group('Anicillary_Geometric_Product')
                     AGP_LWM = AGP.create_group('Land_Water_Mask')
@@ -61,21 +66,12 @@ def make_JPL_data_from_MODIS():
                     RDQI_b12 = np.zeros(shape)
                     RDQI_b13 = np.zeros(shape)
 
-                    RDQI_b4[rad_b4==-999]   = 3 
+                    RDQI_b4[rad_b4==-999]   = 3
                     RDQI_b5[rad_b5==-999]   = 3
                     RDQI_b6[rad_b6==-999]   = 3
                     RDQI_b9[rad_b9==-999]   = 3
                     RDQI_b12[rad_b12==-999] = 3
                     RDQI_b13[rad_b13==-999] = 3
-
-                    SZA = sza
-                    VZA = vza
-                    SAA = saa
-                    VAA = vaa
-
-                    earth_sun_dist = 1
-
-                    E_std0b = E_std_0
 
                     DOY = int(time_stamp[4:7])
 
@@ -88,26 +84,26 @@ def make_JPL_data_from_MODIS():
                     land_water_mask = water_mask
 
                     #assign data to groups
-                    ARP_rad.create_dataset('rad_band_4' , data=rad_b4 , dtype='f')
-                    ARP_rad.create_dataset('rad_band_5' , data=rad_b5 , dtype='f')
-                    ARP_rad.create_dataset('rad_band_6' , data=rad_b6 , dtype='f')
-                    ARP_rad.create_dataset('rad_band_9' , data=rad_b9 , dtype='f')
-                    ARP_rad.create_dataset('rad_band_12', data=rad_b12, dtype='f')
-                    ARP_rad.create_dataset('rad_band_13', data=rad_b13, dtype='f')
+                    ARP_rad.create_dataset('rad_band_4' , data=rad_b4 , dtype='f', compression='gzip')
+                    ARP_rad.create_dataset('rad_band_5' , data=rad_b5 , dtype='f', compression='gzip')
+                    ARP_rad.create_dataset('rad_band_6' , data=rad_b6 , dtype='f', compression='gzip')
+                    ARP_rad.create_dataset('rad_band_9' , data=rad_b9 , dtype='f', compression='gzip')
+                    ARP_rad.create_dataset('rad_band_12', data=rad_b12, dtype='f', compression='gzip')
+                    ARP_rad.create_dataset('rad_band_13', data=rad_b13, dtype='f', compression='gzip')
 
-                    ARP_RDQI.create_dataset('RDQI_band_4' , data=RDQI_b4 , dtype='i4')
-                    ARP_RDQI.create_dataset('RDQI_band_5' , data=RDQI_b5 , dtype='i4')
-                    ARP_RDQI.create_dataset('RDQI_band_6' , data=RDQI_b6 , dtype='i4')
-                    ARP_RDQI.create_dataset('RDQI_band_9' , data=RDQI_b9 , dtype='i4')
-                    ARP_RDQI.create_dataset('RDQI_band_12', data=RDQI_b12, dtype='i4')
-                    ARP_RDQI.create_dataset('RDQI_band_13', data=RDQI_b13, dtype='i4')
+                    ARP_RDQI.create_dataset('RDQI_band_4' , data=RDQI_b4 , dtype='i4', compression='gzip')
+                    ARP_RDQI.create_dataset('RDQI_band_5' , data=RDQI_b5 , dtype='i4', compression='gzip')
+                    ARP_RDQI.create_dataset('RDQI_band_6' , data=RDQI_b6 , dtype='i4', compression='gzip')
+                    ARP_RDQI.create_dataset('RDQI_band_9' , data=RDQI_b9 , dtype='i4',  compression='gzip')
+                    ARP_RDQI.create_dataset('RDQI_band_12', data=RDQI_b12, dtype='i4', compression='gzip')
+                    ARP_RDQI.create_dataset('RDQI_band_13', data=RDQI_b13, dtype='i4', compression='gzip')
 
-                    ARP_SVG.create_dataset('solar_zenith_angle'   , data=SZA, dtype='f')
-                    ARP_SVG.create_dataset('viewing_zenith_angle' , data=VZA, dtype='f')
-                    ARP_SVG.create_dataset('solar_azimuth_angle'  , data=SAA, dtype='f')
-                    ARP_SVG.create_dataset('viewing_azimuth_angle', data=VAA, dtype='f')
+                    ARP_SVG.create_dataset('solar_zenith_angle'   , data=SZA, dtype='f', compression='gzip')
+                    ARP_SVG.create_dataset('viewing_zenith_angle' , data=VZA, dtype='f', compression='gzip')
+                    ARP_SVG.create_dataset('solar_azimuth_angle'  , data=SAA, dtype='f', compression='gzip')
+                    ARP_SVG.create_dataset('viewing_azimuth_angle', data=VAA, dtype='f', compression='gzip')
 
-                    ARP_earth_sun_dist.create_dataset('earth_sun_dist_in_AU', data=earth_sun_dist)
+                    ARP_ESD.create_dataset('earth_sun_dist_in_AU', data=earth_sun_distance)
 
                     ARP_E_std0b.create_dataset('Band_Weighted_Solar_Irradiance_at_1AU', data=E_std0b, dtype='f')
 
@@ -121,7 +117,6 @@ def make_JPL_data_from_MODIS():
                     hf.close()
 
                     print(time_stamp)
-
 
 if __name__ == '__main__':
     #this makes the JPL data file to read into the MCM

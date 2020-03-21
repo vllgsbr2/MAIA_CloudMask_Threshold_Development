@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "make_confusion_matrix.py", line 144, in group_confusion_matrix
+    dataset = hf_group.create_dataset('{}/confusion_matrix'.format(bin_ID), data=conf_mat)
+  File "/data/keeling/a/vllgsbr2/anaconda3/lib/python3.7/site-packages/h5py/_hl/group.py", line 119, in create_dataset
+    self[name] = dset
+  File "/data/keeling/a/vllgsbr2/anaconda3/lib/python3.7/site-packages/h5py/_hl/group.py", line 287, in __setitem__
+    h5o.link(obj.id, self.id, name, lcpl=lcpl, lapl=self._lapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5o.pyx", line 202, in h5py.h5o.link
+RuntimeError: Unable to create link (message type not found)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "make_confusion_matrix.py", line 173, in <module>
+    group_confusion_matrix(hf_group, hf_thresh)
+  File "make_confusion_matrix.py", line 148, in group_confusion_matrix
+    hf_group['{}/confusion_matrix'.format(bin_ID)][:] = conf_mat
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "/data/keeling/a/vllgsbr2/anaconda3/lib/python3.7/site-packages/h5py/_hl/group.py", line 177, in __getitem__
+    oid = h5o.open(self.id, self._e(name), lapl=self._lapl)
+  File "h5py/_objects.pyx", line 54, in h5py._objects.with_phil.wrapper
+  File "h5py/_objects.pyx", line 55, in h5py._objects.with_phil.wrapper
+  File "h5py/h5o.pyx", line 190, in h5py.h5o.open
+KeyError: 'Unable to open object (message type not found)'

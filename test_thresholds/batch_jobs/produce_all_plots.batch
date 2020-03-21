@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name='MCM_figures'
-#SBATCH -p sesempi
+#SBATCH -p sesebig
 #SBATCH --time=00:06:00
 #SBATCH --mem-per-cpu=4gb
 #SBATCH -n 200

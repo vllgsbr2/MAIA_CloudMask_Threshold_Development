@@ -297,7 +297,7 @@ if __name__ == '__main__':
                             #in order MAIA  bands 6,9,4,5,12,13
                             #in order MODIS bands 1,2,3,4,6 ,26 
                             E_std_0b = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
-                            d        = 1 #hf_database[time_stamp + '/earth_sun_distance'][()]                            
+                            d        = hf_database[time_stamp + '/earth_sun_distance'][()]                            
 
                             R_band_4  = get_R(rad_band_4, SZA, d, E_std_0b[2])
                             R_band_5  = get_R(rad_band_5, SZA, d, E_std_0b[3])

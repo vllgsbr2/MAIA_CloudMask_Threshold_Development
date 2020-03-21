@@ -2,8 +2,10 @@ from JPL_MCM_threshold_testing import MCM_wrapper
 from MCM_output import make_output
 import matplotlib.pyplot as plt
 from matplotlib import cm
-test_data_JPL_path = './test_JPL_MODIS_data.HDF5'
-#test_data_JPL_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/JPL_data_all_timestamps/test_JPL_data_2007055.1745.HDF5'
+import matplotlib
+matplotlib.use('Agg')
+#test_data_JPL_path = './test_JPL_MODIS_data.HDF5'
+test_data_JPL_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/JPL_data_all_timestamps/test_JPL_data_2002051.1820.HDF5'
 Target_Area_X      = 1
 threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/thresholds_MCM_efficient.hdf5'
 sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/SurfaceID_LA_048.nc'

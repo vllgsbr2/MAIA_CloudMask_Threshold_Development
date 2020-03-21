@@ -11,13 +11,6 @@ MOD03: geolocation data
 
 from read_MODIS_02 import * #includes matplotlib and numpy
 
-# #used by get functions(filename can be modified by choose_file function)
-# geo_files       = {'high_lat'     :'/Users/vllgsbr2/Desktop/MODIS_Training/Data/high_latitude/MOD03.A2018248.0450.061.2018248114733.hdf',
-#                    'toronto'      :'/Users/vllgsbr2/Desktop/MODIS_Training/Data/toronto_09_05_18/MOD03.A2018248.1630.061.2018248230625.hdf',
-#                    'maracaibo'    :'/Users/vllgsbr2/Desktop/MODIS_Training/Data/venezuela_08_21_18/MOD03.A2018233.1545.061.2018233214936.hdf',
-#                    'twhs'         :'/Users/vllgsbr2/Desktop/MODIS_Training/Data/03032015TWHS/MOD03.A2015062.1645.061.2017319034323.hdf'}
-# filename   = geo_files['high_lat']
-
 fieldnames_list  = ['SolarZenith', 'SensorZenith', 'SolarAzimuth',\
                     'SensorAzimuth', 'Latitude', 'Longitude']
 
@@ -115,39 +108,55 @@ def get_lon(filename):
 
     return lon
 
+def get_LandSeaMask(filename):
+
+    SD_field_rawData = 2
+    land_sea_mask, hdf_file = get_data(filename, 'Land/SeaMask', SD_field_rawData, True)
+    hdf_file.end()
+
+    return land_sea_mask
 
 
-# #plot
-# fig, axes = plt.subplots(ncols=3)
-# cmap = 'jet'
-#
-# plot_1 = axes[0].imshow(get_solarZenith(filename_MOD_03), cmap = cmap)
-# axes[0].set_title('Solar Zenith Angle\n[degrees]')
-#
-# plot_2 = axes[1].imshow(get_sensorZenith(filename_MOD_03), cmap = cmap)
-# axes[1].set_title('Sensor Zenith Angle\n[degrees]')
-#
-# plot_3 = axes[2].imshow(get_relativeAzimuth(filename_MOD_03), cmap = cmap, vmin=-260, vmax=-210)
-# axes[2].set_title('Relative Azimuthal Angle\n[degrees]')
-#
-# fig.colorbar(plot_1, ax=axes[0])
-# fig.colorbar(plot_2, ax=axes[1])
-# fig.colorbar(plot_3, ax=axes[2])
-#
-# fig1, axes1 = plt.subplots(ncols=2)
-#
-# plot_11  = axes1[0].imshow(get_lon(), cmap = cmap)
-# axes1[0].set_title('Longitude\n[degrees]')
-# plot_22 = axes1[1].imshow(get_lat(), cmap = cmap)
-# axes1[1].set_title('Latitude\n[degrees]')
-#
-# fig1.colorbar(plot_1, ax=axes1[0])
-# fig1.colorbar(plot_2, ax=axes1[1])
-#
-# plt.show()
+if __name__ == '__main__':
+    pass
+    # #plot
+    # fig, axes = plt.subplots(ncols=3)
+    # cmap = 'jet'
+    #
+    # plot_1 = axes[0].imshow(get_solarZenith(filename_MOD_03), cmap = cmap)
+    # axes[0].set_title('Solar Zenith Angle\n[degrees]')
+    #
+    # plot_2 = axes[1].imshow(get_sensorZenith(filename_MOD_03), cmap = cmap)
+    # axes[1].set_title('Sensor Zenith Angle\n[degrees]')
+    #
+    # plot_3 = axes[2].imshow(get_relativeAzimuth(filename_MOD_03), cmap = cmap, vmin=-260, vmax=-210)
+    # axes[2].set_title('Relative Azimuthal Angle\n[degrees]')
+    #
+    # fig.colorbar(plot_1, ax=axes[0])
+    # fig.colorbar(plot_2, ax=axes[1])
+    # fig.colorbar(plot_3, ax=axes[2])
+    #
+    # fig1, axes1 = plt.subplots(ncols=2)
+    #
+    # plot_11  = axes1[0].imshow(get_lon(), cmap = cmap)
+    # axes1[0].set_title('Longitude\n[degrees]')
+    # plot_22 = axes1[1].imshow(get_lat(), cmap = cmap)
+    # axes1[1].set_title('Latitude\n[degrees]')
+    #
+    # fig1.colorbar(plot_1, ax=axes1[0])
+    # fig1.colorbar(plot_2, ax=axes1[1])
+    #
+    # plt.show()
 
-# #debugging tools
-# file = SD('/Users/vllgsbr2/Desktop/MODIS_Training/Data/03032015TWHS/MOD03.A2015062.1645.061.2017319034323.hdf')
-# data = file.select('EV_500_Aggr1km_RefSB')
-# pprint.pprint(data.attributes()) #tells me scales, offsets and bands
-# pprint.pprint(file.datasets()) # shows data fields in file from SD('filename')
+    # #debugging tools
+    # file = SD('/Users/vllgsbr2/Desktop/MODIS_Training/Data/03032015TWHS/MOD03.A2015062.1645.061.2017319034323.hdf')
+    # data = file.select('EV_500_Aggr1km_RefSB')
+    # pprint.pprint(data.attributes()) #tells me scales, offsets and bands
+    # pprint.pprint(file.datasets()) # shows data fields in file from SD('filename')
+
+    # #debugging tools
+    # file = SD('/Users/vllgsbr2/Desktop/MODIS_Training/Data/03032015TWHS/MOD03.A2015062.1645.061.2017319034323.hdf')
+    # data = file.select('EV_500_Aggr1km_RefSB')
+    # pprint.pprint(data.attributes()) #tells me scales, offsets and bands
+    # pprint.pprint(file.datasets()) # shows data fields in file from SD('filename')
+

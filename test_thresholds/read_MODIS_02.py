@@ -9,6 +9,14 @@ from pyhdf.SD import SD
 import pprint
 import matplotlib.pyplot as plt
 #plt.switch_backend('agg')
+
+def get_earth_sun_dist(filename_MOD_02):
+    file_ = SD(filename_MOD_02)
+    earthsundist = getattr(file_, 'Earth-Sun Distance')
+    file_.end()
+
+    return earthsundist
+
 def get_data(filename, fieldname, SD_field_rawData):
     '''
     INPUT

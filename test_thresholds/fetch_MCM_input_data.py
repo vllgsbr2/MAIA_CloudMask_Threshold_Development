@@ -32,7 +32,7 @@ def get_JPL_data(test_data_JPL_path):
     VAA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/viewing_azimuth_angle']
 
     #retrieve current earth sun distance 'd' in AU; is d in AU just E0?
-    d = JPL_file.get('Anicillary_Radiometric_Product/Earth_Sun_distance/earth_sun_dist_in_AU')[()]
+    d = JPL_file['Anicillary_Radiometric_Product/Earth_Sun_Distance/earth_sun_dist_in_AU'][()]
 
     #retrieve standard band weighted solar irradiance at 1AU 'E_std_0b'
     #[w/m**2/um]

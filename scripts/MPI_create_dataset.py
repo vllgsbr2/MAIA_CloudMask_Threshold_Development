@@ -17,7 +17,7 @@ from pyhdf.SD import SD
 
 #import matplotlib.pyplot as plt
 
-def save_crop(subgroup, dataset_name, cropped_data):
+def save_crop(subgroup, dataset_name, cropped_data, compress=True):
     '''
     INPUT:
           cropped data from regrid_MODIS_2_MAIA
@@ -30,8 +30,11 @@ def save_crop(subgroup, dataset_name, cropped_data):
           order to have good memory management
     '''
     try:
-        #add dataset to 'group'
-        subgroup.create_dataset(dataset_name, data=cropped_data, compression="gzip")
+        if compress:
+            #add dataset to 'group'
+            subgroup.create_dataset(dataset_name, data=cropped_data, compression="gzip")
+        else:
+            subgroup.create_dataset(dataset_name, data=cropped_data)
     except:
         subgroup[dataset_name][:] = cropped_data
 
@@ -98,7 +101,7 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
 
     #calculate band weighted solar irradiance using scale factors above
     E_std_0 = np.pi * scale_factor_rad / scale_factor_ref
-    
+
     #calculate geolocation
     lat = get_lat(filename_MOD_03).astype(np.float64)
     lon = get_lon(filename_MOD_03).astype(np.float64)
@@ -109,7 +112,6 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     solarAzimuth  = get_solarAzimuth(filename_MOD_03)
     sensorAzimuth = get_sensorAzimuth(filename_MOD_03)
 
-
     #calculate cloudmask
     data_SD, hdf_file = get_data(filename_MOD_35, 'Cloud_Mask', 2, True)
     data_SD_bit       = get_bits(data_SD, 0)
@@ -119,17 +121,23 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     data_SD_cloud_mask       = data_SD
     decoded_cloud_mask_tests = decode_tests(data_SD_cloud_mask, filename_MOD_35)
 
+    #grab earth sun distance
+    earth_sun_dist = get_earth_sun_dist(filename_MOD_02)
+
+    #get MOD03 surface types
+    MOD03_LandSeaMask = get_LandSeaMask(filename_MOD_03)
+
     hdf_file.end()
-    
+
     #ceate structure in hdf file
     group                       = hf.create_group(group_name)
     subgroup_radiance           = group.create_group('radiance')
-    subgroup_reflectance        = group.create_group('reflectance')
+    #subgroup_reflectance        = group.create_group('reflectance')
     subgroup_scale_factors      = group.create_group('scale_factors')
     subgroup_geolocation        = group.create_group('geolocation')
     subgroup_sunView_geometry   = group.create_group('sunView_geometry')
     subgroup_cloud_mask         = group.create_group('cloud_mask')
-    subgroup_cloud_mask_test    = group.create_group('cloud_mask_tests')
+    #subgroup_cloud_mask_test    = group.create_group('cloud_mask_tests')
 
 
     nx, ny = np.shape(lat)
@@ -163,36 +171,39 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     #save band weighted solar irradiance
     save_crop(group, 'band_weighted_solar_irradiance', E_std_0)
 
+    #save earth sun distance
+    save_crop(group, 'earth_sun_distance', earth_sun_dist, compress=False)
+
     #reflectance and radiance
 
     for band, index in band_index.items():
         if band=='1' or band=='2':
             crop_radiance = radiance_250_Aggr1km[index][regrid_row_idx, regrid_col_idx]
-            crop_reflectance = reflectance_250_Aggr1km[index][regrid_row_idx, regrid_col_idx]
+            #crop_reflectance = reflectance_250_Aggr1km[index][regrid_row_idx, regrid_col_idx]
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
-            crop_reflectance[fill_val_idx] = fill_val
+            #crop_reflectance[fill_val_idx] = fill_val
 
         elif band=='3' or band=='4' or band=='6':
             crop_radiance = radiance_500_Aggr1km[index][regrid_row_idx, regrid_col_idx]
-            crop_reflectance = reflectance_500_Aggr1km[index][regrid_row_idx, regrid_col_idx]
+            #crop_reflectance = reflectance_500_Aggr1km[index][regrid_row_idx, regrid_col_idx]
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
-            crop_reflectance[fill_val_idx] = fill_val
+            #crop_reflectance[fill_val_idx] = fill_val
 
         else:
             crop_radiance = radiance_1KM[index][regrid_row_idx, regrid_col_idx]
-            crop_reflectance = reflectance_1KM[index][regrid_row_idx, regrid_col_idx]
+            #crop_reflectance = reflectance_1KM[index][regrid_row_idx, regrid_col_idx]
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
-            crop_reflectance[fill_val_idx] = fill_val
+            #crop_reflectance[fill_val_idx] = fill_val
 
         #group_name is granule, radiance is subgroup, band_1 is dataset, then the data
         save_crop(subgroup_radiance, 'band_{}'.format(band), crop_radiance)
-        save_crop(subgroup_reflectance, 'band_{}'.format(band), crop_reflectance)
+        #save_crop(subgroup_reflectance, 'band_{}'.format(band), crop_reflectance)
 
     #*******************************************************************************
     #Sun view geometry
@@ -239,22 +250,29 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
         save_crop(subgroup_cloud_mask, cm_key, crop_cm)
 
     #*******************************************************************************
+    #add in MOD03 surface types
+    crop_MOD03_LandSeaMask = MOD03_LandSeaMask[regrid_row_idx, regrid_col_idx]
+    #put in main group since it is not compatible in a sub group
+    save_crop(group, 'MOD03_LandSeaMask', crop_MOD03_LandSeaMask)
+
+    #*******************************************************************************
+
     #cloud mask tests
     #cm test vals set to 9 are bad data
-    cloud_mask_tests = {'High_Cloud_Flag_1380nm':decoded_cloud_mask_tests[0],\
-                        'Cloud_Flag_Visible_Ratio':decoded_cloud_mask_tests[2],\
-                        'Near_IR_Reflectance':decoded_cloud_mask_tests[3],\
-                        'Cloud_Flag_Spatial_Variability':decoded_cloud_mask_tests[4],\
-                        'Cloud_Flag_Visible_Reflectance':decoded_cloud_mask_tests[1]\
-                        }
-    for cm_test_key, cm_test_val in cloud_mask_tests.items():
-        cm_test_val  = cm_test_val.astype(np.float64)
-        crop_cm_test = cm_test_val[regrid_row_idx, regrid_col_idx]
+    #cloud_mask_tests = {'High_Cloud_Flag_1380nm':decoded_cloud_mask_tests[0],\
+    #                    'Cloud_Flag_Visible_Ratio':decoded_cloud_mask_tests[2],\
+    #                    'Near_IR_Reflectance':decoded_cloud_mask_tests[3],\
+    #                    'Cloud_Flag_Spatial_Variability':decoded_cloud_mask_tests[4],\
+    #                    'Cloud_Flag_Visible_Reflectance':decoded_cloud_mask_tests[1]\
+    #                    }
+    #for cm_test_key, cm_test_val in cloud_mask_tests.items():
+    #    cm_test_val  = cm_test_val.astype(np.float64)
+    #    crop_cm_test = cm_test_val[regrid_row_idx, regrid_col_idx]
 
-        #Apply fill values
-        crop_cm_test[fill_val_idx] = fill_val
+    #    #Apply fill values
+    #    crop_cm_test[fill_val_idx] = fill_val
 
-        save_crop(subgroup_cloud_mask_test, cm_test_key, crop_cm_test)
+    #    save_crop(subgroup_cloud_mask_test, cm_test_key, crop_cm_test)
 
 if __name__ == '__main__':
     import mpi4py.MPI as MPI
@@ -338,14 +356,14 @@ if __name__ == '__main__':
                                               filename_MOD_35_timeStamp[start:end]):
 
                     if int(time_MOD02[4:7]) >=48 and int(time_MOD02[4:7]) <= 55:
-                        try:
-                            build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
+                        #try:
+                        build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
                                         target_lat, target_lon)
 
-                            output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
-                        except Exception as e:
+                        #    output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
+                        #except Exception as e:
 
-                            output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
+                        #    output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, '\n'))
                         print(i)
                     i+=1
                 print('done with for loop in rank '+str(r))
