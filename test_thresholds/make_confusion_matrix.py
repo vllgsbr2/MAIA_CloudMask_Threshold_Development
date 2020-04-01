@@ -63,7 +63,7 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path):
                     hf_scene_level_conf_matx['confusion_matrix_table_{}'.format(time_stamp)][:] = conf_mat_table
                     hf_scene_level_conf_matx['confusion_matrix_mask_{}'.format(time_stamp)][:]  = conf_matx_mask
 
-def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx):
+def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types):
     '''
     need to grab bin to make olp from grouped data
     grab threshold for that bin; remember TA -> DOY -> (cos(SZA), VZA, RAZ, Scene_ID)
@@ -75,6 +75,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx):
     hf_group_keys = list(hf_group.keys())
     num_groups = len(hf_group_keys)
     accuracy = np.zeros((num_groups))
+
     #read bin ID (OLP)
     n = 0
     OLP = np.zeros((num_groups, 4))
@@ -88,14 +89,25 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx):
 
     #read in thresholds
     obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
-    thresholds = np.empty((7,10,14,12,15))
+    thresholds = np.empty((7,10,14,12,19))
     for i, obs_ in enumerate(obs_names):
         path = 'TA_bin_01/DOY_bin_06/{}'.format(obs_)
         thresholds[i] = hf_thresh[path][()]
 
+    #define surface types by bin number
+    #remember it's 0 indexed
+    sun_glint                  = num_land_sfc_types + 0
+    snow                       = num_land_sfc_types + 1
+    shallow_ocean              = num_land_sfc_types + 2
+    ocean_lake_coast           = num_land_sfc_types + 3
+    shallow_inland_water       = num_land_sfc_types + 4
+    seasonal_inland_water      = num_land_sfc_types + 5
+    deep_inland_water          = num_land_sfc_types + 6
+    moderate_continental_ocean = num_land_sfc_types + 7
+    deep_ocean                 = num_land_sfc_types + 8
+
     #iterate by group
     for i, bin_ID in enumerate(hf_group_keys):
-
         #number of data points in current group/bin_ID
         num_points = hf_group[bin_ID].shape[0]
 
@@ -108,7 +120,6 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx):
         DTT_NDxI = np.zeros((num_points, 2))
         for j in range(1,3):
             NDxI = obs[:,j]
-            #print(j, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3])
             T    = thresholds[j, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3]]
             #put 0.001 instead of zero to avoid divide by zero error
             if T==0:
@@ -126,21 +137,21 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx):
         for j in range(7):
             for k in range(num_points):
                 #this is for whiteness since 0 is whiter than 1 and not applied over snow/ice or sunglint
-                if j==0 and thresh_temp[j] >= obs[k,0] and (olp_temp[3]!=13 and olp_temp[3]!=14):
+                if j==0 and thresh_temp[j] >= obs[k,0] and (olp_temp[3]!=snow and olp_temp[3]!=sun_glint):
                     cloud_mask_MAIA[k] = 0
                 #DTT for NDxI. Must exceed 0
                 #NDVI everything but snow
-                elif j==1 and olp_temp[3]!=14 and DTT_NDxI[k,0] >= 0:
+                elif j==1 and olp_temp[3]!=snow and DTT_NDxI[k,0] >= 0:
                     cloud_mask_MAIA[k] = 0
                 #NDSI only over snow
-                elif j==2 and olp_temp[3]==14 and DTT_NDxI[k,1] >= 0:
+                elif j==2 and olp_temp[3]==snow and DTT_NDxI[k,1] >= 0:
                     cloud_mask_MAIA[k] = 0
                 #VIS, NIR, Cirrus. Must exceed thresh
                 #VIS applied only over land
-                elif j==3 and olp_temp[3]<=11 and thresh_temp[j] <= obs[k,3]:
+                elif j==3 and olp_temp[3]< num_land_sfc_types and thresh_temp[j] <= obs[k,3]:
                     cloud_mask_MAIA[k] = 0
                 #NIR only applied over water (no sunglint)
-                elif j==4 and olp_temp[3]==12 and thresh_temp[j] <= obs[k,4]:
+                elif j==4 and olp_temp[3]>= shallow_ocean and thresh_temp[j] <= obs[k,4]:
                     cloud_mask_MAIA[k] = 0
                 #SVI applied over all surfaces when over 0. Must exceed thresh
                 elif j==5 and obs[k,5] >= 0.0  and thresh_temp[j] <= obs[k,5]:
@@ -196,11 +207,12 @@ if __name__ == '__main__':
     thresh_path  = home + 'thresholds_MCM_efficient.hdf5'
 
     # #bin confusion matrix
+    # num_land_sfc_types = 12
     # with h5py.File(grouped_path, 'r') as hf_group,\
     #      h5py.File(thresh_path, 'r') as hf_thresh,\
     #      h5py.File(home+'conf_matx.HDF5', 'w') as hf_confmatx:
     #
-    #     group_confusion_matrix(hf_group, hf_thresh, hf_confmatx)
+    #     group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types)
 
     #scene confusion matrix
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
@@ -228,4 +240,3 @@ if __name__ == '__main__':
 
 
         #
-

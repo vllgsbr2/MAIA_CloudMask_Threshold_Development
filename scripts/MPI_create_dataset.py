@@ -369,4 +369,3 @@ if __name__ == '__main__':
                 print('done with for loop in rank '+str(r))
                 hf.close()
                 output.close()
-

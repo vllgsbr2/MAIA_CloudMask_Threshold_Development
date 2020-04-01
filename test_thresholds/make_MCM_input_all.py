@@ -17,30 +17,31 @@ def make_JPL_data_from_MODIS():
 
             if len(keys) > 0:
                 for time_stamp in keys:
-                    rad_b4       = hf_database[time_stamp + '/radiance/band_3'][()]
-                    rad_b5       = hf_database[time_stamp + '/radiance/band_4'][()]
-                    rad_b6       = hf_database[time_stamp + '/radiance/band_1'][()]
-                    rad_b9       = hf_database[time_stamp + '/radiance/band_2'][()]
-                    rad_b12      = hf_database[time_stamp + '/radiance/band_6'][()]
-                    rad_b13      = hf_database[time_stamp + '/radiance/band_26'][()]
-                    E_std0b      = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
-                    lat          = hf_database[time_stamp + '/geolocation/lat'][()]
-                    lon          = hf_database[time_stamp + '/geolocation/lon'][()]
-                    SZA          = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
-                    VZA          = hf_database[time_stamp + '/sunView_geometry/sensorZenith'][()]
-                    SAA          = hf_database[time_stamp + '/sunView_geometry/solarAzimuth'][()]
-                    VAA          = hf_database[time_stamp + '/sunView_geometry/sensorAzimuth'][()]
-                    modcm        = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
-                    snow_ice_mask = hf_database[time_stamp + '/cloud_mask/Snow_Ice_Background_Flag'][()]
-                    water_mask   = hf_database[time_stamp + '/cloud_mask/Land_Water_Flag'][()]
+                    rad_b4             = hf_database[time_stamp + '/radiance/band_3'][()]
+                    rad_b5             = hf_database[time_stamp + '/radiance/band_4'][()]
+                    rad_b6             = hf_database[time_stamp + '/radiance/band_1'][()]
+                    rad_b9             = hf_database[time_stamp + '/radiance/band_2'][()]
+                    rad_b12            = hf_database[time_stamp + '/radiance/band_6'][()]
+                    rad_b13            = hf_database[time_stamp + '/radiance/band_26'][()]
+                    E_std0b            = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
+                    lat                = hf_database[time_stamp + '/geolocation/lat'][()]
+                    lon                = hf_database[time_stamp + '/geolocation/lon'][()]
+                    SZA                = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
+                    VZA                = hf_database[time_stamp + '/sunView_geometry/sensorZenith'][()]
+                    SAA                = hf_database[time_stamp + '/sunView_geometry/solarAzimuth'][()]
+                    VAA                = hf_database[time_stamp + '/sunView_geometry/sensorAzimuth'][()]
+                    modcm              = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
+                    snow_ice_mask      = hf_database[time_stamp + '/cloud_mask/Snow_Ice_Background_Flag'][()]
+                    water_mask         = hf_database[time_stamp + '/cloud_mask/Land_Water_Flag'][()]
                     earth_sun_distance = hf_database[time_stamp + '/earth_sun_distance'][()]
+                    MOD03_LandSeaMask     = hf_database[time_stamp + '/MOD03_LandSeaMask'][()]
 
                     #create hdf5 file
                     hf = h5py.File(output_path + '/test_JPL_data_{}.HDF5'.format(time_stamp), 'w')
 
                     #define arbitrary shape for granule/orbit
                     shape = (1000,1000)
-                    
+
                     #add cloud mask for later purposes
                     hf.create_dataset('MOD35_cloud_mask', data=modcm, compression='gzip')
 
@@ -54,6 +55,7 @@ def make_JPL_data_from_MODIS():
                     ARP_DOY            = ARP.create_group('Day_of_year')
                     ARP_TA             = ARP.create_group('Target_Area')
                     ARP_ESD            = ARP.create_group('Earth_Sun_Distance')
+                    ARP_LSM            = ARP.create_group('MOD03_LandSeaMask')
 
                     AGP     = hf.create_group('Anicillary_Geometric_Product')
                     AGP_LWM = AGP.create_group('Land_Water_Mask')
@@ -111,6 +113,8 @@ def make_JPL_data_from_MODIS():
 
                     ARP_TA.create_dataset('Target_Area', data=TA)
 
+                    ARP_LSM.create_dataset('MOD03_LandSeaMask', data=MOD03_LandSeaMask)
+
                     AGP_LWM.create_dataset('Land_Water_Mask', data=land_water_mask, dtype='i4', compression='gzip')
                     AGP_SIM.create_dataset('Snow_Ice_Mask', data=snow_ice_mask, dtype='i4', compression='gzip')
 
@@ -121,4 +125,3 @@ def make_JPL_data_from_MODIS():
 if __name__ == '__main__':
     #this makes the JPL data file to read into the MCM
     make_JPL_data_from_MODIS()
-

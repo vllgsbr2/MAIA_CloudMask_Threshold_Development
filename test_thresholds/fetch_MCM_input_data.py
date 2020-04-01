@@ -61,6 +61,8 @@ def get_JPL_data(test_data_JPL_path):
 
     Target_Area = JPL_file.get('Anicillary_Radiometric_Product/Target_Area/Target_Area')[()]
 
+    MOD03_SFCTYPES = JPL_file.get('Anicillary_Radiometric_Product/MOD03_LandSeaMask/MOD03_LandSeaMask')[()]
+
     # JPL_file.close()
 
     return rad_band_4, rad_band_5, rad_band_6, rad_band_9, rad_band_12, rad_band_13,\
@@ -70,7 +72,8 @@ def get_JPL_data(test_data_JPL_path):
            E_std_0,\
            snow_ice_mask, land_water_mask,\
            DOY,\
-           Target_Area
+           Target_Area,\
+           MOD03_SFCTYPES
 
 
 #retrieve UIUC ancillary datasets**************************************
@@ -137,4 +140,3 @@ def get_UIUC_data(Target_Area_X, threshold_filepath, sfc_ID_filepath, config_fil
            fill_val_3,\
            Min_num_of_activated_tests,\
            activation_values
-

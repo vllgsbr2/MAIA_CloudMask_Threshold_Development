@@ -132,7 +132,7 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
     sun_glint_mask = theta_r
     #import matplotlib.pyplot as plt
     #from matplotlib import cm
-    #cmap = cm.get_cmap('PiYG', 15) 
+    #cmap = cm.get_cmap('PiYG', 15)
     #plt.figure(5)
     #plt.imshow(sensorZenith,cmap=cmap)
     #plt.colorbar()
@@ -308,14 +308,14 @@ def get_cirrus_Ref(R_band_13):
 
 #calculate bins of each pixel to query the threshold database*******************
 
-def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
-          land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask):
+def get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, Target_Area,\
+          land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask,\
+          num_land_sfc_types):#, MOD03_sfctypes):
 
     """
-    calculate bins of each pixel to query the threshold database
-
+    Objective:
+        calculate bins of each pixel to query the threshold database
     [Section 3.3.2.2]
-
     Arguments:
         SZA {2D narray} -- solar zenith angle in degrees
         VZA {2D narray} -- viewing (MAIA) zenith angle in degrees
@@ -327,16 +327,14 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
         sfc_ID {3D narray} -- surface ID anicillary dataset for target area
         DOY {integer} -- day of year in julian calendar
         sun_glint_mask {2D narray} -- no glint (1) sunglint (0)
-
     Returns:
         3D narray -- 3rd axis contains 9 integers that act as indicies to query
                      the threshold database for every observable level parameter.
-                     The 1st and 2cnd axies are the size of the MAIA granule.
+                     The 1st and 2cnd axes are the size of the MAIA granule.
     """
-    
-    #This is used todetermine if the test should be applied over a particular
+    #This is used to determine if the test should be applied over a particular
     #surface type in the get_test_determination function
-
+    shape = np.shape(SZA)
     #define relative azimuth angle, RAZ, and cos(SZA)
     RAZ = VAA - SAA
     RAZ[RAZ<0] = RAZ[RAZ<0]*-1
@@ -353,9 +351,12 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_cos_SZA = np.digitize(cos_SZA, bin_cos_SZA, right=True)
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
+
+    #binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
+    sfc_ID         = sfc_ID #sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
+
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=False)
-    #only have one day rn
-    #sfc_ID         = sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
+    sfc_ID         = sfc_ID#[:,:,binned_DOY] #just choose the day for sfc_ID map
 
     #these datafields' raw values serve as the bins, so no modification needed:
     #Target_Area, land_water_mask, snow_ice_mask, sun_glint_mask, sfc_ID
@@ -374,19 +375,18 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
+
+
+    # observable_level_parameter = add_sceneID_MOD03_SFCTYPES(observable_level_parameter,\
+    #                                          num_land_sfc_types, MOD03_sfctypes)
+
+    #find where there is missing data, use SZA as proxy, and give fill val
     missing_idx = np.where(SZA==-999)
     observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
 
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
-    #import matplotlib.pyplot as plt
-    #from matplotlib import cm
-    #cmap = cm.get_cmap('PiYG', 15)
-    #plt.figure(4)
-    #plt.imshow(binned_VZA,cmap=cmap)
-    #plt.colorbar()
 
     return observable_level_parameter
-
 #apply fill values to observables***********************************************
 #section 3.3.2.4 in ATBD
 #Using the observable level parameter (threshold bins)
@@ -400,51 +400,69 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
 # -126 -> low quality radiance
 # -127 -> no data
 
-def make_sceneID(observable_level_parameter,land_water_bins,\
-                     sun_glint_bins, snow_ice_bins):
+def add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes):
 
         """
         helper function to combine water/sunglint/snow-ice mask/sfc_ID into
         one mask. This way the threhsolds can be retrieved with less queries.
-
         [Section N/A]
-
         Arguments:
-            observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
-            land_water_bins {2D narray} -- land (1) water(0)
-            sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
-            snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
-
+            observable_level_parameter {3D int narray} -- return from func get_observable_level_parameter()
+            num_land_sfc_types {int} -- number of land surface types from max BRF clusters
+            MOD03_sfctypes {2D int narray} -- 0-7 water (1 land type) surface types from MOD03 MODIS TERRA product
         Returns:
             2D narray -- scene ID. Values 0-28 inclusive are land types; values
                          29, 30, 31 are water, water with sun glint, snow/ice
                          respectively. Is the size of the granule. These integers
                          serve as the indicies to select a threshold based off
                          surface type.
-
         """
+        # land_water_bins {2D narray} -- land (1) water(0)
+        # sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
+        # snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
 
         #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
+        land_water_bins = observable_level_parameter[:,:, 4]
+        sun_glint_bins  = observable_level_parameter[:,:,-1]
+        snow_ice_bins   = observable_level_parameter[:,:, 5]
+
         sfc_ID_bins = observable_level_parameter[:,:,6]
         scene_type_identifier = sfc_ID_bins
 
-        scene_type_identifier[land_water_bins == 0]     = 12
-        scene_type_identifier[(sun_glint_bins == 0) & \
-                              (land_water_bins == 0)]   = 13
-        scene_type_identifier[snow_ice_bins == 0]       = 14
+        #sunglint over water = num_land_sfc_types+2
+        #snow = num_land_sfc_types+3
+
+        scene_type_identifier[(sun_glint_bins  == 0) & \
+                              (MOD03_sfctypes != 1) ]  = num_land_sfc_types + 0
+        scene_type_identifier[ snow_ice_bins   == 0]   = num_land_sfc_types + 1
+
+        #MOD03_sfctypes
+        #0-shallow ocean
+        #1-land
+        #2-ocean/lake coast
+        #3-shallow inland water
+        #4-seasonal inland water
+        #5-deep inland water
+        #6-moderate continental ocean
+        #7-deep ocean
+        scene_type_identifier[MOD03_sfctypes==0] = num_land_sfc_types + 2
+        scene_type_identifier[MOD03_sfctypes==2] = num_land_sfc_types + 3
+        scene_type_identifier[MOD03_sfctypes==3] = num_land_sfc_types + 4
+        scene_type_identifier[MOD03_sfctypes==4] = num_land_sfc_types + 5
+        scene_type_identifier[MOD03_sfctypes==5] = num_land_sfc_types + 6
+        scene_type_identifier[MOD03_sfctypes==6] = num_land_sfc_types + 7
+        scene_type_identifier[MOD03_sfctypes==7] = num_land_sfc_types + 8
 
         return scene_type_identifier
 
-
 def get_test_determination(observable_level_parameter, observable_data,\
-       threshold_path, observable_name, fill_val_1, fill_val_2, fill_val_3):
+       threshold_path, observable_name, fill_val_1, fill_val_2, fill_val_3,\
+       num_land_sfc_types, MOD03_sfctypes):
 
     """
     applies fill values to & finds the threshold needed at each pixel for
     for a given observable_data.
-
     [Section 3.3.2.4]
-
     Arguments:
        observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
        observable_data {2D narray} -- takes one observable at a time
@@ -453,54 +471,99 @@ def get_test_determination(observable_level_parameter, observable_data,\
        fill_val_1 {integer} -- defined in congifg file; not applied due to surface type
        fill_val_2 {integer} -- defined in congifg file; low quality radiance
        fill_val_3 {integer} -- defined in congifg file; no data
-
     Returns:
        2D narray -- observable_data with fill values applied
        2D narray -- the threshold needed at each pixel for that observable
-
     """
     observable_data[observable_data == -998] = fill_val_2
     observable_data[observable_data == -999] = fill_val_3
 
-    land_water_bins = observable_level_parameter[:,:,4]
-    snow_ice_bins   = observable_level_parameter[:,:,5]
-    sun_glint_bins  = observable_level_parameter[:,:,8]
+    sun_glint                  = num_land_sfc_types + 0
+    snow                       = num_land_sfc_types + 1
+    shallow_ocean              = num_land_sfc_types + 2
+    ocean_lake_coast           = num_land_sfc_types + 3
+    shallow_inland_water       = num_land_sfc_types + 4
+    seasonal_inland_water      = num_land_sfc_types + 5
+    deep_inland_water          = num_land_sfc_types + 6
+    moderate_continental_ocean = num_land_sfc_types + 7
+    deep_ocean                 = num_land_sfc_types + 8
 
     #apply fill values according to input observable and surface type
     if observable_name == 'VIS_Ref':
         #where water or snow/ice occur this test is not applied
-        observable_data[((land_water_bins == 0) | (snow_ice_bins == 0)) &     \
-                        ((observable_data != fill_val_2) &                    \
-                         (observable_data != fill_val_3)) ] = fill_val_1
+        observable_data[((scene_type_identifier <= num_land_sfc_types)) & \
+                        ((observable_data != fill_val_2)                & \
+                         (observable_data != fill_val_3)) ]  = fill_val_1
 
     elif observable_name == 'NIR_Ref':
         #where land/sunglint/snow_ice occur this test is not applied
-        observable_data[((sun_glint_bins  == 0)  | \
-                         (land_water_bins == 1)  | \
-                         (snow_ice_bins   == 0)) & \
-                        ((observable_data != fill_val_2) & \
-                         (observable_data != fill_val_3))]    = fill_val_1
+        observable_data[(scene_type_identifier >= shallow_ocean ) & \
+                        ((observable_data != fill_val_2)          & \
+                         (observable_data != fill_val_3))]   = fill_val_1
 
     elif observable_name == 'WI':
         #where sunglint/snow_ice occur this test is not applied
-        observable_data[((sun_glint_bins == 0)           |  \
-                         (snow_ice_bins  == 0))          &  \
-                        ((observable_data != fill_val_2) &  \
-                         (observable_data != fill_val_3)) ]    = fill_val_1
+        observable_data[((scene_type_identifier != sun_glint)  & \
+                         (scene_type_identifier != snow     )) & \
+                        ((observable_data != fill_val_2     )  & \
+                         (observable_data != fill_val_3     )) ] = fill_val_1
 
     elif observable_name == 'NDVI':
         #where snow_ice occurs this test is not applied
-        observable_data[(snow_ice_bins == 0)             &  \
+        observable_data[(scene_type_identifier != snow)  &  \
                        ((observable_data != fill_val_2)  &  \
-                        (observable_data != fill_val_3)) ]    = fill_val_1
+                        (observable_data != fill_val_3)) ]  = fill_val_1
 
     elif observable_name == 'NDSI':
         #where snow_ice do not occur this test is not applied
-        observable_data[(snow_ice_bins == 1)             &  \
-                        ((observable_data != fill_val_2) &  \
-                         (observable_data != fill_val_3)) ]    = fill_val_1
+        observable_data[(scene_type_identifier == snow)   &  \
+                        ((observable_data != fill_val_2)  &  \
+                         (observable_data != fill_val_3)) ]  = fill_val_1
     else:
         pass
+
+    # observable_data[observable_data == -998] = fill_val_2
+    # observable_data[observable_data == -999] = fill_val_3
+    #
+    # land_water_bins = observable_level_parameter[:,:,4]
+    # snow_ice_bins   = observable_level_parameter[:,:,5]
+    # sun_glint_bins  = observable_level_parameter[:,:,8]
+    #
+    # #apply fill values according to input observable and surface type
+    # if observable_name == 'VIS_Ref':
+    #     #where water or snow/ice occur this test is not applied
+    #     observable_data[((land_water_bins == 0) | (snow_ice_bins == 0)) &     \
+    #                     ((observable_data != fill_val_2) &                    \
+    #                      (observable_data != fill_val_3)) ] = fill_val_1
+    #
+    # elif observable_name == 'NIR_Ref':
+    #     #where land/sunglint/snow_ice occur this test is not applied
+    #     observable_data[((sun_glint_bins  == 0)  | \
+    #                      (land_water_bins == 1)  | \
+    #                      (snow_ice_bins   == 0)) & \
+    #                     ((observable_data != fill_val_2) & \
+    #                      (observable_data != fill_val_3))]    = fill_val_1
+    #
+    # elif observable_name == 'WI':
+    #     #where sunglint/snow_ice occur this test is not applied
+    #     observable_data[((sun_glint_bins == 0)           |  \
+    #                      (snow_ice_bins  == 0))          &  \
+    #                     ((observable_data != fill_val_2) &  \
+    #                      (observable_data != fill_val_3)) ]    = fill_val_1
+    #
+    # elif observable_name == 'NDVI':
+    #     #where snow_ice occurs this test is not applied
+    #     observable_data[(snow_ice_bins == 0)             &  \
+    #                    ((observable_data != fill_val_2)  &  \
+    #                     (observable_data != fill_val_3)) ]    = fill_val_1
+    #
+    # elif observable_name == 'NDSI':
+    #     #where snow_ice do not occur this test is not applied
+    #     observable_data[(snow_ice_bins == 1)             &  \
+    #                     ((observable_data != fill_val_2) &  \
+    #                      (observable_data != fill_val_3)) ]    = fill_val_1
+    # else:
+    #     pass
 
     #Now we need to get the threshold for each pixel for one observable;
     #therefore, final return should be shape (X,Y) w/thresholds stored inside
@@ -512,8 +575,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     #combine water/sunglint/snow-ice mask/sfc_ID into one mask
     #This way the threhsolds can be retrieved with less queries
-    scene_type_identifier = make_sceneID(observable_level_parameter,land_water_bins,\
-                     sun_glint_bins, snow_ice_bins)
+    scene_type_identifier = add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes)
 
     #because scene_type_identifier (sfc_ID) contains information on
     #sunglint/snow_ice/water/land we use less dimensions to decribe the scene
@@ -521,6 +583,8 @@ def get_test_determination(observable_level_parameter, observable_data,\
     OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
     OLP[:,:,4]  = scene_type_identifier             #scene_ID
     OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
+
+    #OLP = add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes)
 
     #pick threshold for each pixel in 1000x1000 grid
     with h5py.File(threshold_path+'thresholds_MCM_efficient.hdf5', 'r') as hf_thresholds:
@@ -537,21 +601,16 @@ def get_test_determination(observable_level_parameter, observable_data,\
             fillVal_idx = np.where(OLP==-999)
             OLP[fillVal_idx] = 0
 
-        #if OLP[0,3]!=-999 or OLP[0,5]!=-999:
-            #TA, DOY = OLP[0,3], OLP[0,5]
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
             print(path)
 
             database = hf_thresholds[path][()]
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
-            #thresholds =[database[olp[0], olp[1], olp[2], olp[4]] if np.all(olp!=-999) else -999 for olp in OLP]
-            #thresholds =[database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP]
 
             thresholds[fillVal_idx[0]] = -999
-            
+
             thresholds = np.array(thresholds).reshape((1000,1000))
             #print(thresholds)
-
 
             return observable_data, thresholds
 
@@ -844,7 +903,8 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     E_std_0b,\
     snow_ice_mask, land_water_mask,\
     DOY,\
-    Target_Area = get_JPL_data(test_data_JPL_path)
+    Target_Area,\
+    MOD03_sfctypes = get_JPL_data(test_data_JPL_path)
 
     #get UIUC provided data*****************************************************
     T_NDVI,\
@@ -907,15 +967,19 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     NIR_Ref = get_NIR_reflectance(R_band_9)
     Cirrus  = get_cirrus_Ref(R_band_13)
     SVI     = get_spatial_variability_index(R_band_6, shape[0], shape[1])
-    
+
     #SVI_Sfc_ID = get_spatial_variability_index(sfc_ID, shape[0], shape[1])
     #SVI = SVI - SVI_Sfc_ID
     #SVI[SVI<0] = 0
     #Cirrus[Cirrus>2] = -998
     #get observable level parameter*********************************************
-    observable_level_parameter = get_observable_level_parameter(SZA[:],\
+    observable_level_parameter = get_observable_level_parameter_MOD03_SFCTYPES(SZA[:],\
                 VZA[:], SAA[:], VAA[:], Target_Area,land_water_mask[:],\
-                    snow_ice_mask[:], sfc_ID[:], DOY, sun_glint_mask[:])
+                    snow_ice_mask[:], sfc_ID[:], DOY, sun_glint_mask[:], num_land_sfc_types)
+
+                    # (SZA, VZA, SAA, VAA, Target_Area,\
+                    #           land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask, time_stamp,\
+                    #           num_land_sfc_types)
 
     #return parameters in MCM_wrapper function
     bins =           [SZA[:]            ,\
@@ -1041,8 +1105,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     print('finished: ' , time.time() - start_time)
 
-    scene_type_identifier = make_sceneID(observable_level_parameter,observable_level_parameter[:,:,4],\
-                     observable_level_parameter[:,:,8], observable_level_parameter[:,:,5])
+    scene_type_identifier = add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes)
 
     return Sun_glint_exclusion_angle,\
            Max_RDQI,\

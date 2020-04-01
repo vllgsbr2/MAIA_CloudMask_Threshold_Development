@@ -18,16 +18,6 @@ def group_data(OLP, obs, CM, hf_group):
     #                                         binned_DOY     ,\
     #                                         sun_glint_mask))
 
-    #import matplotlib.pyplot as plt
-    #from matplotlib import cm
-    #OLP = OLP.astype(dtype='float')
-    #OLP[OLP[:,:,1] == -999] = np.nan
-    #plt.imshow(OLP[:,:,1], cmap = cm.get_cmap('PiYG', 15) )
-    #plt.colorbar()
-    #plt.show()
-    #OLP = OLP.astype(dtype=np.int)
-    #flatten arrays
-    #new_OLP = new_OLP.reshape(1000**2, 6)
     OLP = OLP.reshape(1000**2, 6)
     obs = obs.reshape(1000**2, 7)
     CM  = CM.reshape(1000**2)
@@ -59,8 +49,6 @@ def group_data(OLP, obs, CM, hf_group):
                 .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
                         1, temp_OLP[4], temp_OLP[5])
 
-        # filename = '{}grouped_data_{}.hdf5'.format(home, group)
-
         data = np.array([CM[i]   ,\
                          obs[i,0],\
                          obs[i,1],\
@@ -79,7 +67,7 @@ def group_data(OLP, obs, CM, hf_group):
             hf_group.create_dataset(key, data=np.array(val), maxshape=(None,8))
             num_groups += 1
         except:
-                  
+
             group_shape = hf_group[key].shape[0]
             hf_group[key].resize(group_shape + np.array(val).shape[0], axis=0)
             hf_group[key][group_shape:, :] = np.array(val)
@@ -100,12 +88,7 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
-            #file_select = np.repeat(np.arange(60), 2)
-            file_select = r#file_select[r]
-            #if r%2!=0:
-            #    file_select = r-1
-            #else:
-            #    file_select = r
+            file_select = r
 
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
 
@@ -140,16 +123,9 @@ if __name__ == '__main__':
                 #grab only DOY bin 6 since I dont have sfc ID yet for other days
                 hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
 
-                #split the work in half per file
-                #half = len(hf_database_keys)//2
-                #if r%2==0:
-                #    hf_database_keys = hf_database_keys[:half]
-                #else:
-                #    hf_database_keys = hf_database_keys[half:]
-
                 #open file to write groups to
                 hf_group_path = home + 'group_DOY_05_60_cores/grouped_data_{}.hdf5'.format(rank)
-                try:#if os.path.isfile(hf_group_path):
+                try:
                     with h5py.File(hf_group_path, 'w')  as hf_group:
                         for time_stamp in hf_database_keys:
 
@@ -163,7 +139,7 @@ if __name__ == '__main__':
                             group_data(OLP, obs_data, CM, hf_group)
 
                             output.write('{}{}'.format(time_stamp, '\n'))
-                except: #else:
+                except:
                     with h5py.File(hf_group_path, 'r+')  as hf_group:
                         for time_stamp in hf_database_keys:
 

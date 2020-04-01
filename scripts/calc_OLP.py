@@ -46,15 +46,16 @@ def get_sun_glint_mask(observable_level_parameter, solarZenith, sensorZenith, so
     return sun_glint_mask
 
 
-def add_sceneID(observable_level_parameter, solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
-                       sun_glint_exclusion_angle):
+def add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes):
 
         """
         helper function to combine water/sunglint/snow-ice mask/sfc_ID into
         one mask. This way the threhsolds can be retrieved with less queries.
         [Section N/A]
         Arguments:
-            observable_level_parameter {3D narray} -- return from func get_observable_level_parameter()
+            observable_level_parameter {3D int narray} -- return from func get_observable_level_parameter()
+            num_land_sfc_types {int} -- number of land surface types from max BRF clusters
+            MOD03_sfctypes {2D int narray} -- 0-7 water (1 land type) surface types from MOD03 MODIS TERRA product
         Returns:
             2D narray -- scene ID. Values 0-28 inclusive are land types; values
                          29, 30, 31 are water, water with sun glint, snow/ice
@@ -74,13 +75,31 @@ def add_sceneID(observable_level_parameter, solarZenith, sensorZenith, solarAzim
         sfc_ID_bins = observable_level_parameter[:,:,6]
         scene_type_identifier = sfc_ID_bins
 
-        #water = 12
-        #sunglint over water = 13
-        #snow = 14
-        scene_type_identifier[ land_water_bins == 0]    = 12
+        #sunglint over water = num_land_sfc_types+2
+        #snow = num_land_sfc_types+3
+
         scene_type_identifier[(sun_glint_bins  == 0) & \
-                              (land_water_bins == 0) ]  = 13
-        scene_type_identifier[ snow_ice_bins   == 0]    = 14
+                              (MOD03_sfctypes != 1) ]  = num_land_sfc_types + 1
+        scene_type_identifier[ snow_ice_bins   == 0]   = num_land_sfc_types + 2
+
+        #MOD03_sfctypes
+        #0-shallow ocean
+        #1-land
+        #2-ocean/lake coast
+        #3-shallow inland water
+        #4-seasonal inland water
+        #5-deep inland water
+        #6-moderate continental ocean
+        #7-deep ocean
+        scene_type_identifier[MOD03_sfctypes==0] = num_land_sfc_types + 3
+        scene_type_identifier[MOD03_sfctypes==2] = num_land_sfc_types + 4
+        scene_type_identifier[MOD03_sfctypes==3] = num_land_sfc_types + 5
+        scene_type_identifier[MOD03_sfctypes==4] = num_land_sfc_types + 6
+        scene_type_identifier[MOD03_sfctypes==5] = num_land_sfc_types + 7
+        scene_type_identifier[MOD03_sfctypes==6] = num_land_sfc_types + 8
+        scene_type_identifier[MOD03_sfctypes==7] = num_land_sfc_types + 9
+
+
 
         OLP = np.zeros((1000,1000,6))
         OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
@@ -91,15 +110,14 @@ def add_sceneID(observable_level_parameter, solarZenith, sensorZenith, solarAzim
 
         return OLP
 
-def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
-          land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask, time_stamp):
+def get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, Target_Area,\
+          land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask, time_stamp,\
+          num_land_sfc_types, MOD03_sfctypes):
 
     """
     Objective:
         calculate bins of each pixel to query the threshold database
-
     [Section 3.3.2.2]
-
     Arguments:
         SZA {2D narray} -- solar zenith angle in degrees
         VZA {2D narray} -- viewing (MAIA) zenith angle in degrees
@@ -111,7 +129,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
         sfc_ID {3D narray} -- surface ID anicillary dataset for target area
         DOY {integer} -- day of year in julian calendar
         sun_glint_mask {2D narray} -- no glint (1) sunglint (0)
-
     Returns:
         3D narray -- 3rd axis contains 9 integers that act as indicies to query
                      the threshold database for every observable level parameter.
@@ -137,9 +154,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
 
-    #binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
-    sfc_ID         = sfc_ID #sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
-
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=False)
     sfc_ID         = sfc_ID#[:,:,binned_DOY] #just choose the day for sfc_ID map
 
@@ -160,23 +174,14 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
-
-
-    observable_level_parameter = add_sceneID(observable_level_parameter, SZA, VZA, SAA, VAA, 40)
+    observable_level_parameter = add_sceneID_MOD03_SFCTYPES(observable_level_parameter,\
+                                             num_land_sfc_types, MOD03_sfctypes)
 
     #find where there is missing data, use SZA as proxy, and give fill val
     missing_idx = np.where(SZA==-999)
     observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
 
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
-    #import matplotlib.pyplot as plt
-    #from matplotlib import cm
-    #cmap = cm.get_cmap('jet', 15)
-    #obs_names = ['WI','NDVI','NDSI','VIS','NIR','SVI','Cirrus']
-    #home = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
-    #for i in range(6):
-    #    im = plt.imshow(observable_level_parameter[:,:,i], cmap=cmap)
-    #    plt.savefig('{}/OLP_images/{}_{}.png'.format(home, time_stamp, obs_names[i]), dpi=200)
 
     return observable_level_parameter
 
