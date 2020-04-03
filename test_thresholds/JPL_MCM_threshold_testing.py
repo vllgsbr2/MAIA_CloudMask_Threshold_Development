@@ -478,6 +478,9 @@ def get_test_determination(observable_level_parameter, observable_data,\
     observable_data[observable_data == -998] = fill_val_2
     observable_data[observable_data == -999] = fill_val_3
 
+    scene_type_identifier = add_sceneID_MOD03_SFCTYPES(observable_level_parameter,\
+                                                       num_land_sfc_types, MOD03_sfctypes)
+
     sun_glint                  = num_land_sfc_types + 0
     snow                       = num_land_sfc_types + 1
     shallow_ocean              = num_land_sfc_types + 2
@@ -491,32 +494,32 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #apply fill values according to input observable and surface type
     if observable_name == 'VIS_Ref':
         #where water or snow/ice occur this test is not applied
-        observable_data[((scene_type_identifier <= num_land_sfc_types)) & \
+        observable_data[((scene_type_identifier >= num_land_sfc_types)) & \
                         ((observable_data != fill_val_2)                & \
                          (observable_data != fill_val_3)) ]  = fill_val_1
 
     elif observable_name == 'NIR_Ref':
         #where land/sunglint/snow_ice occur this test is not applied
-        observable_data[(scene_type_identifier >= shallow_ocean ) & \
+        observable_data[((scene_type_identifier < num_land_sfc_types) | (scene_type_identifier == sun_glint) | (scene_type_identifier == snow)) & \
                         ((observable_data != fill_val_2)          & \
                          (observable_data != fill_val_3))]   = fill_val_1
 
     elif observable_name == 'WI':
         #where sunglint/snow_ice occur this test is not applied
-        observable_data[((scene_type_identifier != sun_glint)  & \
-                         (scene_type_identifier != snow     )) & \
+        observable_data[((scene_type_identifier == sun_glint)  | \
+                         (scene_type_identifier == snow     )) & \
                         ((observable_data != fill_val_2     )  & \
                          (observable_data != fill_val_3     )) ] = fill_val_1
 
-    elif observable_name == 'NDVI':
+    elif observable_name == 'NDVI': #this test hurts my friccin heaaaaaaaaaaaaaaaaaaaaaaaad
         #where snow_ice occurs this test is not applied
-        observable_data[(scene_type_identifier != snow)  &  \
+        observable_data[((scene_type_identifier == snow) | (scene_type_identifier == ocean_lake_coast)) &  \
                        ((observable_data != fill_val_2)  &  \
                         (observable_data != fill_val_3)) ]  = fill_val_1
 
     elif observable_name == 'NDSI':
         #where snow_ice do not occur this test is not applied
-        observable_data[(scene_type_identifier == snow)   &  \
+        observable_data[(scene_type_identifier != snow)   &  \
                         ((observable_data != fill_val_2)  &  \
                          (observable_data != fill_val_3)) ]  = fill_val_1
     else:
@@ -575,7 +578,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     #combine water/sunglint/snow-ice mask/sfc_ID into one mask
     #This way the threhsolds can be retrieved with less queries
-    scene_type_identifier = add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes)
+    #scene_type_identifier = add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes)
 
     #because scene_type_identifier (sfc_ID) contains information on
     #sunglint/snow_ice/water/land we use less dimensions to decribe the scene
@@ -973,6 +976,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     #SVI[SVI<0] = 0
     #Cirrus[Cirrus>2] = -998
     #get observable level parameter*********************************************
+    num_land_sfc_types = 12 #read in from special config file
     observable_level_parameter = get_observable_level_parameter_MOD03_SFCTYPES(SZA[:],\
                 VZA[:], SAA[:], VAA[:], Target_Area,land_water_mask[:],\
                     snow_ice_mask[:], sfc_ID[:], DOY, sun_glint_mask[:], num_land_sfc_types)
@@ -1020,43 +1024,43 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
         observables[:,:,i],\
         threshold_path,\
         observable_names[i],\
-        fill_val_1, fill_val_2, fill_val_3)
-    #Thresholds
-    l,w, = 20,8
-    import matplotlib.pyplot as plt
-    import matplotlib.cm as cm
-    f2, ax2 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
-    cmap    = cm.get_cmap('jet')
-    #T[observables == np.nan] = -999
-    im0 = ax2[0,0].imshow(T[:,:,0], cmap=cmap, vmin=T[:,:,0].min(), vmax=T[:,:,0].max())
-    im1 = ax2[0,1].imshow(T[:,:,1], cmap=cmap, vmin=T[:,:,1].min(), vmax=T[:,:,1].max())
-    im2 = ax2[0,2].imshow(T[:,:,2], cmap=cmap, vmin=T[:,:,2].min(), vmax=T[:,:,2].max())
-    im3 = ax2[0,3].imshow(T[:,:,3], cmap=cmap, vmin=T[:,:,3].min(), vmax=T[:,:,3].max())
-    im4 = ax2[1,0].imshow(T[:,:,4], cmap=cmap, vmin=T[:,:,4].min(), vmax=T[:,:,4].max())
-    im5 = ax2[1,1].imshow(T[:,:,5], cmap=cmap, vmin=T[:,:,5].min(), vmax=0.2)
-    im6 = ax2[1,2].imshow(T[:,:,6], cmap=cmap, vmin=T[:,:,6].min(), vmax=T[:,:,6].max())
-    im0.cmap.set_under('k')
-    im1.cmap.set_under('k')
-    im2.cmap.set_under('k')
-    im3.cmap.set_under('k')
-    im4.cmap.set_under('k')
-    im5.cmap.set_under('k')
-    im6.cmap.set_under('k')
-    ax2[0,0].set_title('Thresholds_WI')
-    ax2[0,1].set_title('Thresholds_NDVI')
-    ax2[0,2].set_title('Thresholds_NDSI')
-    ax2[0,3].set_title('Thresholds_VIS_Ref')
-    ax2[1,0].set_title('Thresholds_NIR_Ref')
-    ax2[1,1].set_title('Thresholds_SVI')
-    ax2[1,2].set_title('Thresholds_Cirrus')
-    cbar0 = f2.colorbar(im0, ax=ax2[0,0],fraction=0.046, pad=0.04, ticks = np.arange(0,WI.max()+0.2,0.2))
-    cbar1 = f2.colorbar(im1, ax=ax2[0,1],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.25,0.25))
-    cbar2 = f2.colorbar(im2, ax=ax2[0,2],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.1,0.1))
-    cbar3 = f2.colorbar(im3, ax=ax2[0,3],fraction=0.046, pad=0.04, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
-    cbar4 = f2.colorbar(im4, ax=ax2[1,0],fraction=0.046, pad=0.04, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
-    cbar5 = f2.colorbar(im5, ax=ax2[1,1],fraction=0.046, pad=0.04, ticks = np.arange(0,SVI.max()+0.1,0.05))
-    cbar6 = f2.colorbar(im6, ax=ax2[1,2],fraction=0.046, pad=0.04, ticks = np.arange(0,1.2,0.2))
-    plt.show()
+        fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types, MOD03_sfctypes)
+#    #Thresholds
+#    l,w, = 20,8
+#    import matplotlib.pyplot as plt
+#    import matplotlib.cm as cm
+#    f2, ax2 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
+#    cmap    = cm.get_cmap('jet')
+#    #T[observables == np.nan] = -999
+#    im0 = ax2[0,0].imshow(T[:,:,0], cmap=cmap, vmin=T[:,:,0].min(), vmax=T[:,:,0].max())
+#    im1 = ax2[0,1].imshow(T[:,:,1], cmap=cmap, vmin=T[:,:,1].min(), vmax=T[:,:,1].max())
+#    im2 = ax2[0,2].imshow(T[:,:,2], cmap=cmap, vmin=T[:,:,2].min(), vmax=T[:,:,2].max())
+#    im3 = ax2[0,3].imshow(T[:,:,3], cmap=cmap, vmin=T[:,:,3].min(), vmax=T[:,:,3].max())
+#    im4 = ax2[1,0].imshow(T[:,:,4], cmap=cmap, vmin=T[:,:,4].min(), vmax=T[:,:,4].max())
+#    im5 = ax2[1,1].imshow(T[:,:,5], cmap=cmap, vmin=T[:,:,5].min(), vmax=0.2)
+#    im6 = ax2[1,2].imshow(T[:,:,6], cmap=cmap, vmin=T[:,:,6].min(), vmax=T[:,:,6].max())
+#    im0.cmap.set_under('k')
+#    im1.cmap.set_under('k')
+#    im2.cmap.set_under('k')
+#    im3.cmap.set_under('k')
+#    im4.cmap.set_under('k')
+#    im5.cmap.set_under('k')
+#    im6.cmap.set_under('k')
+#    ax2[0,0].set_title('Thresholds_WI')
+#    ax2[0,1].set_title('Thresholds_NDVI')
+#    ax2[0,2].set_title('Thresholds_NDSI')
+#    ax2[0,3].set_title('Thresholds_VIS_Ref')
+#    ax2[1,0].set_title('Thresholds_NIR_Ref')
+#    ax2[1,1].set_title('Thresholds_SVI')
+#    ax2[1,2].set_title('Thresholds_Cirrus')
+#    cbar0 = f2.colorbar(im0, ax=ax2[0,0],fraction=0.046, pad=0.04, ticks = np.arange(0,WI.max()+0.2,0.2))
+#    cbar1 = f2.colorbar(im1, ax=ax2[0,1],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.25,0.25))
+#    cbar2 = f2.colorbar(im2, ax=ax2[0,2],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.1,0.1))
+#    cbar3 = f2.colorbar(im3, ax=ax2[0,3],fraction=0.046, pad=0.04, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
+#    cbar4 = f2.colorbar(im4, ax=ax2[1,0],fraction=0.046, pad=0.04, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
+#    cbar5 = f2.colorbar(im5, ax=ax2[1,1],fraction=0.046, pad=0.04, ticks = np.arange(0,SVI.max()+0.1,0.05))
+#    cbar6 = f2.colorbar(im6, ax=ax2[1,2],fraction=0.046, pad=0.04, ticks = np.arange(0,1.2,0.2))
+#    plt.show()
     #get DTT********************************************************************
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)

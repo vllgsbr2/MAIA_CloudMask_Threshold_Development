@@ -24,7 +24,7 @@ def calc_thresh(group_file):
         TA_group  = hf_thresh.create_group('TA_bin_01')#bin_ID[24:29])
         DOY_group = TA_group.create_group('DOY_bin_06')#bin_ID[-6:])
 
-        master_thresholds = np.ones((10*14*12*15)).reshape((10,14,12,15))*-999
+        master_thresholds = np.ones((10*14*12*21)).reshape((10,14,12,21))*-999
         obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
         for obs in obs_names:
             DOY_group.create_dataset(obs, data=master_thresholds)
