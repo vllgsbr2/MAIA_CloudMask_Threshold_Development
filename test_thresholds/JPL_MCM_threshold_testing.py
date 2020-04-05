@@ -491,39 +491,51 @@ def get_test_determination(observable_level_parameter, observable_data,\
     moderate_continental_ocean = num_land_sfc_types + 7
     deep_ocean                 = num_land_sfc_types + 8
 
-    #apply fill values according to input observable and surface type
-    if observable_name == 'VIS_Ref':
-        #where water or snow/ice occur this test is not applied
-        observable_data[((scene_type_identifier >= num_land_sfc_types)) & \
-                        ((observable_data != fill_val_2)                & \
-                         (observable_data != fill_val_3)) ]  = fill_val_1
+    sceneID_test_configuration = np.load('./sceneID_configuration.npz')['x']#(7,21) - (tests, sceneIDs) 0 dont apply; 1 apply
+    which_test = {'VIS_Ref':0, 'NIR_Ref':1, 'WI':2, 'NDVI':3,\
+                  'NDSI':4, 'SVI':5, 'Cirrus':6}
+    which_test = which_test[observable_name]
 
-    elif observable_name == 'NIR_Ref':
-        #where land/sunglint/snow_ice occur this test is not applied
-        observable_data[((scene_type_identifier < num_land_sfc_types) | (scene_type_identifier == sun_glint) | (scene_type_identifier == snow)) & \
-                        ((observable_data != fill_val_2)          & \
-                         (observable_data != fill_val_3))]   = fill_val_1
+    for current_scene_type, on_off in enumerate(sceneID_test_configuration[which_test,:]):#contains on/off sceneID config for this test
+        if on_off == 0: #so if the test is not appplied (0) turn it off with fill val 1
+            observable_data[(scene_type_identifier == current_scene_type) & \
+                            ((observable_data != fill_val_2)                & \
+                            (observable_data != fill_val_3)) ]  = fill_val_1
 
-    elif observable_name == 'WI':
-        #where sunglint/snow_ice occur this test is not applied
-        observable_data[((scene_type_identifier == sun_glint)  | \
-                         (scene_type_identifier == snow     )) & \
-                        ((observable_data != fill_val_2     )  & \
-                         (observable_data != fill_val_3     )) ] = fill_val_1
 
-    elif observable_name == 'NDVI': #this test hurts my friccin heaaaaaaaaaaaaaaaaaaaaaaaad
-        #where snow_ice occurs this test is not applied
-        observable_data[((scene_type_identifier == snow) | (scene_type_identifier == ocean_lake_coast)) &  \
-                       ((observable_data != fill_val_2)  &  \
-                        (observable_data != fill_val_3)) ]  = fill_val_1
-
-    elif observable_name == 'NDSI':
-        #where snow_ice do not occur this test is not applied
-        observable_data[(scene_type_identifier != snow)   &  \
-                        ((observable_data != fill_val_2)  &  \
-                         (observable_data != fill_val_3)) ]  = fill_val_1
-    else:
-        pass
+    # #apply fill values according to input observable and surface type
+    # if observable_name == 'VIS_Ref':
+    #     #where water or snow/ice occur this test is not applied
+    #     observable_data[((scene_type_identifier >= num_land_sfc_types)) & \
+    #                     ((observable_data != fill_val_2)                & \
+    #                      (observable_data != fill_val_3)) ]  = fill_val_1
+    #
+    # elif observable_name == 'NIR_Ref':
+    #     #where land/sunglint/snow_ice occur this test is not applied
+    #     observable_data[((scene_type_identifier < num_land_sfc_types) | (scene_type_identifier == sun_glint) | (scene_type_identifier == snow)) & \
+    #                     ((observable_data != fill_val_2)          & \
+    #                      (observable_data != fill_val_3))]   = fill_val_1
+    #
+    # elif observable_name == 'WI':
+    #     #where sunglint/snow_ice occur this test is not applied
+    #     observable_data[((scene_type_identifier == sun_glint)  | \
+    #                      (scene_type_identifier == snow     )) & \
+    #                     ((observable_data != fill_val_2     )  & \
+    #                      (observable_data != fill_val_3     )) ] = fill_val_1
+    #
+    # elif observable_name == 'NDVI': #this test hurts my friccin heaaaaaaaaaaaaaaaaaaaaaaaad
+    #     #where snow_ice occurs this test is not applied
+    #     observable_data[((scene_type_identifier == snow) | (scene_type_identifier == ocean_lake_coast)) &  \
+    #                    ((observable_data != fill_val_2)  &  \
+    #                     (observable_data != fill_val_3)) ]  = fill_val_1
+    #
+    # elif observable_name == 'NDSI':
+    #     #where snow_ice do not occur this test is not applied
+    #     observable_data[(scene_type_identifier != snow)   &  \
+    #                     ((observable_data != fill_val_2)  &  \
+    #                      (observable_data != fill_val_3)) ]  = fill_val_1
+    # else:
+    #     pass
 
     # observable_data[observable_data == -998] = fill_val_2
     # observable_data[observable_data == -999] = fill_val_3
