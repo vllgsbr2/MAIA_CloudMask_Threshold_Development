@@ -1,50 +1,4 @@
 import numpy as np
-def get_sun_glint_mask(observable_level_parameter, solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
-                       sun_glint_exclusion_angle):
-    """
-    Calculate sun-glint flag.
-
-    [Section 3.3.2.3]
-    Sun-glint water pixels are set to 0;
-    non-sun-glint water pixels and land pixels are set to 1.
-
-    Arguments:
-        solarZenith {2D narray} -- Solar zenith angle in degree
-        sensorZenith {2D narray} -- MAIA zenith angle in degree
-        solarAzimuth {2D narray} -- Solar azimuth angle in degree
-        sensorAzimuth {2D narray} -- MAIA azimuth angle in degree
-        sun_glint_exclusion_angle {float} -- maximum scattering angle (degree) for sun-glint
-        land_water_mask {2D binary narray} -- specify the pixel is water (0) or land (1)
-
-    Returns:
-        2D binary narray -- sunglint mask over granule same shape as solarZenith
-    """
-
-    solarZenith               = np.deg2rad(solarZenith)
-    sensorZenith              = np.deg2rad(sensorZenith)
-    solarAzimuth              = np.deg2rad(solarAzimuth)
-    sensorAzimuth             = np.deg2rad(sensorAzimuth)
-    sun_glint_exclusion_angle = np.deg2rad(sun_glint_exclusion_angle)
-
-    cos_theta_r = np.sin(sensorZenith) * np.sin(solarZenith) \
-                * np.cos(sensorAzimuth - solarAzimuth - np.pi) + np.cos(sensorZenith) \
-                * np.cos(solarZenith)
-    theta_r = np.arccos(cos_theta_r)
-
-    sun_glint_idx = np.where((theta_r >= 0) & \
-                             (theta_r <= sun_glint_exclusion_angle))
-    no_sun_glint_idx = np.where(~((theta_r >= 0) & \
-                                  (theta_r <= sun_glint_exclusion_angle)))
-    theta_r[sun_glint_idx]    = 0
-    theta_r[no_sun_glint_idx] = 1
-    #turn off glint calculated over land
-    land_water_mask = observable_level_parameter[:,:,4]
-    theta_r[land_water_mask == 1] = 1
-
-    sun_glint_mask = theta_r
-
-    return sun_glint_mask
-
 
 def add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes):
 
@@ -75,13 +29,6 @@ def add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, M
         sfc_ID_bins = observable_level_parameter[:,:,6]
         scene_type_identifier = sfc_ID_bins
 
-        #sunglint over water = num_land_sfc_types+2
-        #snow = num_land_sfc_types+3
-
-        scene_type_identifier[(sun_glint_bins  == 0) & \
-                              (MOD03_sfctypes != 1) ]  = num_land_sfc_types + 0
-        scene_type_identifier[ snow_ice_bins   == 0]   = num_land_sfc_types + 1
-
         #MOD03_sfctypes
         #0-shallow ocean
         #1-land
@@ -99,7 +46,9 @@ def add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, M
         scene_type_identifier[MOD03_sfctypes==6] = num_land_sfc_types + 7
         scene_type_identifier[MOD03_sfctypes==7] = num_land_sfc_types + 8
 
-
+        scene_type_identifier[(sun_glint_bins  == 0) & \
+                              (MOD03_sfctypes != 1) ]  = num_land_sfc_types + 0
+        scene_type_identifier[ snow_ice_bins   == 0]   = num_land_sfc_types + 1
 
         OLP = np.zeros((1000,1000,6))
         OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
@@ -111,7 +60,7 @@ def add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, M
         return OLP
 
 def get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, Target_Area,\
-          land_water_mask, snow_ice_mask, sfc_ID, DOY, sun_glint_mask, time_stamp,\
+          land_water_mask, snow_ice_mask, DOY, sun_glint_mask, time_stamp,\
           num_land_sfc_types, MOD03_sfctypes):
 
     """
@@ -146,16 +95,22 @@ def get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, Target_Are
     #bin each input, then dstack them. return this result
     #define bins for each input
     bin_cos_SZA = np.arange(0.1, 1.1 , 0.1)
-    bin_VZA     = np.arange(5. , 75. , 5.) #start at 5.0 to 0-index bin left of 5.0
-    bin_RAZ     = np.arange(15., 195., 15.)
-    bin_DOY     = np.arange(8. , 376., 8.0)
+    bin_VZA     = np.arange(5 , 75 , 5) #start at 5.0 to 0-index bin left of 5.0
+    bin_RAZ     = np.arange(15, 195, 15)
+    bin_DOY     = np.arange(8 , 376, 8)
 
     binned_cos_SZA = np.digitize(cos_SZA, bin_cos_SZA, right=True)
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
 
-    binned_DOY     = np.digitize(DOY    , bin_DOY, right=False)
-    sfc_ID         = sfc_ID#[:,:,binned_DOY] #just choose the day for sfc_ID map
+    binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
+    DOY_end = (binned_DOY+1)*8
+    if DOY_end > 360:
+        DOY_sfcID = 360
+    else:
+        DOY_sfcID = DOY_end
+    sfc_ID_path = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_sfcID)
+    sfc_ID = Dataset(sfc_ID_path, 'r').variables['surface_ID'][:,:]
 
     #these datafields' raw values serve as the bins, so no modification needed:
     #Target_Area, land_water_mask, snow_ice_mask, sun_glint_mask, sfc_ID
@@ -201,15 +156,14 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
             #open database to read
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
-            sfc_ID_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            PTA_file_path = home + 'LA_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_database_path = database_files[r]
 
-            with h5py.File(hf_database_path, 'r') as hf_database,\
-                Dataset(sfc_ID_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
+            with h5py.File(hf_database_path, 'r') as hf_database:
 
                 len_pta       = len(PTA_file_path)
                 start, end    = hf_database_path[len_pta + 26:len_pta +31], hf_database_path[len_pta+36:len_pta+41]
@@ -220,8 +174,6 @@ if __name__ == '__main__':
 
                 hf_database_keys = list(hf_database.keys())
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
-
-                sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
 
                 with h5py.File(hf_OLP_path, 'w') as hf_OLP:
 
@@ -245,7 +197,7 @@ if __name__ == '__main__':
                         #OLP = get_observable_level_parameter(SZA, VZA, SAA,\
                         #      VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM, time_stamp)
                         OLP = get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, TA,\
-                                            LWM, SIM, sfc_ID_LAday48, DOY, SGM, time_stamp,\
+                                            LWM, SIM, DOY, SGM, time_stamp,\
                                             num_land_sfc_types, MOD03_sfctypes)
 
                         try:

@@ -80,6 +80,7 @@ if __name__ == '__main__':
     import mpi4py.MPI as MPI
     import tables
     import os
+    import sys
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -92,6 +93,10 @@ if __name__ == '__main__':
 
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
 
+            DOY_bin = int(sys.argv[1])
+            DOY_end = (DOY_bin+1)*8
+            DOY_start = DOY_end - 7
+ 
             #define paths for the three databases
             PTA_file_path = home + 'LA_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
@@ -116,15 +121,13 @@ if __name__ == '__main__':
             #get data for input into grouping function
             with h5py.File(hf_observables_path       , 'r') as hf_observables,\
                  h5py.File(hf_database_path          , 'r') as hf_database   ,\
-                 h5py.File(hf_OLP_path               , 'r') as hf_OLP        ,\
-                 open(home + 'grouped_file_count_{}.csv'.format(rank), 'w') as output:
-
+                 h5py.File(hf_OLP_path               , 'r') as hf_OLP        :
                 hf_database_keys = list(hf_database.keys())
                 #grab only DOY bin 6 since I dont have sfc ID yet for other days
-                hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
-
+                #hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
+                hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
                 #open file to write groups to
-                hf_group_path = home + 'group_DOY_05_60_cores/grouped_data_{}.hdf5'.format(rank)
+                hf_group_path = home + 'group_DOY_05_60_cores/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
                 try:
                     with h5py.File(hf_group_path, 'w')  as hf_group:
                         for time_stamp in hf_database_keys:
@@ -138,7 +141,6 @@ if __name__ == '__main__':
                                 obs_data[:,:,i] = hf_observables[data_path][()]
                             group_data(OLP, obs_data, CM, hf_group)
 
-                            output.write('{}{}'.format(time_stamp, '\n'))
                 except:
                     with h5py.File(hf_group_path, 'r+')  as hf_group:
                         for time_stamp in hf_database_keys:
@@ -152,4 +154,3 @@ if __name__ == '__main__':
                                 obs_data[:,:,i] = hf_observables[data_path][()]
                             group_data(OLP, obs_data, CM, hf_group)
 
-                            output.write('{}{}'.format(time_stamp, '\n'))
