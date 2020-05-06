@@ -602,7 +602,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #OLP = add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes)
 
     #pick threshold for each pixel in 1000x1000 grid
-    with h5py.File(threshold_path+'thresholds_MCM_efficient.hdf5', 'r') as hf_thresholds:
+    with h5py.File(threshold_path, 'r') as hf_thresholds:
         OLP = OLP.reshape((1000**2, 6)).astype(dtype=np.int)
         #DOY and TA is same for all pixels in granule
         if not(np.all(OLP[:,3] == -999)) and not(np.all(OLP[:,5] == -999)):
@@ -1028,13 +1028,13 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     T = np.empty(np.shape(observables))
     for i in range(len(observable_names)):
         #threshold_observable_i = threhsold_database[observable_names[i]][:]
-        threshold_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+        #threshold_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
 
 
         observable_data[:,:,i], T[:,:,i] = \
         get_test_determination(observable_level_parameter,\
         observables[:,:,i],\
-        threshold_path,\
+        threshold_filepath,\
         observable_names[i],\
         fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types, MOD03_sfctypes)
 #    #Thresholds

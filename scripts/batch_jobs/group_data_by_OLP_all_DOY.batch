@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --job-name='grouped'
+#SBATCH -p sesempi
+#SBATCH --time=01:10:00
+#SBATCH --mem-per-cpu=4gb
+#SBATCH -n 46
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=END
+#SBATCH --mail-user=vllgsbr2@illinois.edu
+#SBATCH --error='slurm_group.err'
+
+cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
+for i in {0..45}  
+do
+    echo $i
+    mpirun -n 46 python group_data_by_OLP.py $i
+done

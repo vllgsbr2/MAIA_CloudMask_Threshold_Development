@@ -1,2 +1,0 @@
-make_confusion_matrix.py:58: RuntimeWarning: invalid value encountered in long_scalars
-  print(time_stamp, conf_mat_table[:2].sum()/conf_mat_table.sum())
