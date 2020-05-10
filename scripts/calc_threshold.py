@@ -16,13 +16,16 @@ def calc_thresh(group_file):
     Return:
         void
     '''
+    DOY_bin = r
+    DOY_end = (DOY_bin+1)*8
+    DOY_start = DOY_end - 7
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
     with h5py.File(group_file, 'r+') as hf_group,\
-         h5py.File(home + '/thresholds_MCM_efficient.hdf5', 'w') as hf_thresh:
-
+         h5py.File(home + 'thresholds_all_DOY' + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
+        
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
         TA_group  = hf_thresh.create_group('TA_bin_01')#bin_ID[24:29])
-        DOY_group = TA_group.create_group('DOY_bin_06')#bin_ID[-6:])
+        DOY_group = TA_group.create_group('DOY_bin_{:02d}'.format(DOY_bin))#bin_ID[-6:])
 
         master_thresholds = np.ones((10*14*12*21)).reshape((10,14,12,21))*-999
         obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
@@ -48,7 +51,7 @@ def calc_thresh(group_file):
             for i in range(7):
                 thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
-                path = '{}/{}/{}'.format('TA_bin_01', 'DOY_bin_06', obs_names[i])
+                path = '{}/{}/{}'.format('TA_bin_01', 'DOY_bin_{:02d}'.format(DOY_bin), obs_names[i])
                 
                 #WI
                 if i==0:
@@ -69,18 +72,28 @@ def calc_thresh(group_file):
                 
                 if np.isnan(hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]):
                     thresh_nan = True   
-                    #print('{} | threshold: {:1.4f} | clear_obs: {} cloudy_obs: {}'.format(bin_ID, hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]], clear_obs, cloudy_obs))
+                    print('{} | threshold: {:1.4f} | clear_obs: {} cloudy_obs: {}'.format(bin_ID, hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]], clear_obs, cloudy_obs))
 
 if __name__ == '__main__':
 
     import h5py
     import tables
     import os
+    import mpi4py.MPI as MPI
+    import sys
     tables.file._open_files.close_all()
 
-    #define paths for the database
-    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-    grouped_file_path    = home + 'grouped_obs_and_CM.hdf5'
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
 
-    calc_thresh(grouped_file_path)
+    for r in range(size):
+        if rank==r:
+
+
+            #define paths for the database
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            grouped_file_path = os.listdir(home + 'grouped_obs_and_CMs')
+            grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
+            calc_thresh(grouped_file_path)
 

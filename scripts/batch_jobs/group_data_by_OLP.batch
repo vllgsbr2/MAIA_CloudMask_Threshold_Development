@@ -9,7 +9,8 @@
 #SBATCH --mail-user=vllgsbr2@illinois.edu
 #SBATCH --error='slurm_group.err'
 
-cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/ 
+cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
+conda activate base_netcdf4 
 for i in {0..45}
 do  
     echo $i
