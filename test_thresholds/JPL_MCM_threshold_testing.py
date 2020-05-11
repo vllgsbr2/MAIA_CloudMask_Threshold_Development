@@ -523,7 +523,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
     OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
     #pick threshold for each pixel in 1000x1000 grid
-    with h5py.File(threshold_path+'thresholds_MCM_efficient.hdf5', 'r') as hf_thresholds:
+    with h5py.File(threshold_path+'/test_thresholds/thresholds_NO_MOD03_SFCTYPES.hdf5', 'r') as hf_thresholds:
         OLP = OLP.reshape((1000**2, 6)).astype(dtype=np.int)
         #DOY and TA is same for all pixels in granule
         if not(np.all(OLP[:,3] == -999)) and not(np.all(OLP[:,5] == -999)):

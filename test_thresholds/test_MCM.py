@@ -7,7 +7,7 @@ matplotlib.use('Agg')
 #test_data_JPL_path = './test_JPL_MODIS_data.HDF5'
 test_data_JPL_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/JPL_data_all_timestamps/test_JPL_data_2002051.1820.HDF5'
 Target_Area_X      = 1
-threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/thresholds_MCM_efficient.hdf5'
+threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/test_thresholds/thresholds_NO_MOD03_SFCTYPES.hdf5'
 sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/SurfaceID_LA_048.nc'
 config_filepath    = './config.csv'
 
