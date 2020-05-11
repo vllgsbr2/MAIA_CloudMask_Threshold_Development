@@ -200,27 +200,35 @@ if __name__ == '__main__':
     import os
     import numpy as np
     tables.file._open_files.close_all()
+    import mpi4py.MPI as MPI
 
-    #define paths for the three databases
-    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-    grouped_path = home + 'grouped_obs_and_CM.hdf5'
-    thresh_path  = home + 'thresholds_MCM_efficient.hdf5'
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
 
-    # #bin confusion matrix
-    # num_land_sfc_types = 12
-    # with h5py.File(grouped_path, 'r') as hf_group,\
-    #      h5py.File(thresh_path, 'r') as hf_thresh,\
-    #      h5py.File(home+'conf_matx.HDF5', 'w') as hf_confmatx:
-    #
-    #     group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types)
+    for r in range(size):
+        if rank==r:
 
-    #scene confusion matrix
-    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-    #ok i think i will reprocess MCM_Output with the MOD35 CM
-    MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
-    MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
-    MCM_Output_path = home
-    scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path)
+            #define paths for the three databases
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            grouped_path = home + 'grouped_obs_and_CM.hdf5'
+            thresh_path  = home + 'thresholds_MCM_efficient.hdf5'
+
+            # #bin confusion matrix
+            # num_land_sfc_types = 12
+            # with h5py.File(grouped_path, 'r') as hf_group,\
+            #      h5py.File(thresh_path, 'r') as hf_thresh,\
+            #      h5py.File(home+'conf_matx.HDF5', 'w') as hf_confmatx:
+            #
+            #     group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types)
+
+            #scene confusion matrix
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            #ok i think i will reprocess MCM_Output with the MOD35 CM
+            MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
+            MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
+            MCM_Output_path = home
+            scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path)
 
 
 

@@ -2,6 +2,7 @@ from JPL_MCM_threshold_testing import MCM_wrapper
 from MCM_output import make_output
 import mpi4py.MPI as MPI
 import os
+import numpy as np
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -9,7 +10,8 @@ size = comm.Get_size()
 
 for r in range(size):
     if rank==r:
-        data_home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/JPL_data_all_timestamps/'
+        home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+        data_home = home + 'JPL_data_all_timestamps/'
         test_data_JPL_paths = os.listdir(data_home)
         test_data_JPL_paths = [data_home + x for x in test_data_JPL_paths]
 
@@ -29,10 +31,17 @@ for r in range(size):
         for test_data_JPL_path in test_data_JPL_paths:
             time_stamp         = test_data_JPL_path[106+14:106+26]
             Target_Area_X      = 1
-            threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/thresholds_MCM_efficient.hdf5'
-            sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/SurfaceID_LA_048.nc'
             config_filepath    = './config.csv'
-
+           
+            DOY       = int(time_stamp[4:7])
+            DOY_bins  = np.arange(8,376,8)
+            DOY_bin   = np.digitize(DOY, DOY_bins, right=True)
+            DOY_end   = (DOY_bin+1)*8
+            DOY_start = DOY_end - 7
+            print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin)) 
+            threshold_filepath = home + '/thresholds_all_DOY/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
+            sfc_ID_filepath    = home + '/LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_end)
+            
             #run MCM
             Sun_glint_exclusion_angle,\
             Max_RDQI,\
