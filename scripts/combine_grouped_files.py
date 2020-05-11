@@ -15,10 +15,10 @@ def group_bins(home, group_dir, common_file, DOY_bin):
 
     #first list all files in directory
     path = home + group_dir
-    grouped_files  = os.listdir(path)
+    grouped_files  = np.sort(os.listdir(path))
     database_files = [path +'/'+ filename for filename in grouped_files]
     database_file = database_files[DOY_bin]
-
+    print(database_file, DOY_bin)
     #look through each file and find unique bin IDs. Add data to dictiionary
     #After looking through the entire data set, write to one common file
 

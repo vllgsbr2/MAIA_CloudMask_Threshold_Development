@@ -1,6 +1,5 @@
 import numpy as np
 import h5py
-from scipy.stats import cumfreq
 
 def calc_thresh(group_file):
     '''
@@ -46,10 +45,10 @@ def calc_thresh(group_file):
             clear_obs = obs[clear_idx[0],:]
             #print(clear_idx[0].shape)
             cloudy_idx = np.where(cloud_mask == 0)
-            cloudy_obs = obs[cloudy_idx[0],1:3] #[1:3] since we only need for NDxI
+            cloudy_obs = obs[cloudy_idx[0],:] #[1:3] since we only need for NDxI
             #print(cloudy_idx[0].shape)
             for i in range(7):
-                thresh_nan = False
+                #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = '{}/{}/{}'.format('TA_bin_01', 'DOY_bin_{:02d}'.format(DOY_bin), obs_names[i])
                 
@@ -57,22 +56,34 @@ def calc_thresh(group_file):
                 if i==0:
                     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
                     np.nanpercentile(clear_obs[:,i], 1)
+                    #choose least white cloudy pixel as threshold if no clear obs
+                    if clear_obs[:,i].shape[0] == 0:
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
+                        cloudy_obs[:, 0].max() 
                 #NDxI
                 #pick max from cloudy hist
                 elif i==1 or i==2:
-                    hist, bin_edges = np.histogram(cloudy_obs[:,i-1], bins=128, range=(-1,1))
-                    if i==2:
-                        print(hist.sum()) 
+                    hist, bin_edges = np.histogram(cloudy_obs[:,i], bins=128, range=(-1,1))
                     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                     bin_edges[1:][hist==hist.max()].min()
+                    #set default value of 1e-3 if no cloudy obs available
+                    if cloudy_obs[:,i].shape[0] == 0:    
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3 
                 #VIS/NIR/SVI/Cirrus
                 else:
                     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                     np.nanpercentile(clear_obs[:,i], 99)
+    
+                    if clear_obs[:,i].shape[0] == 0:
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
+                        cloudy_obs[:, i].min()
                 
-                if np.isnan(hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]):
-                    thresh_nan = True   
-                    print('{} | threshold: {:1.4f} | clear_obs: {} cloudy_obs: {}'.format(bin_ID, hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]], clear_obs, cloudy_obs))
+                #if np.isnan(hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]):
+                #    thresh_nan = True
+                    #if there isn't enough clear or cloudy obs, assign value to make threshold true
+                    #if no clear, and need clear, assign threshold as least brightest cloudy
+                    #if no cloudy, and need cloudy, assign thresholds as 1e-3 (NDxI)   
+                   # print('{} | threshold: {:1.4f} | clear_obs: {} cloudy_obs: {}'.format(bin_ID, hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]], clear_obs, cloudy_obs))
 
 if __name__ == '__main__':
 
@@ -90,10 +101,11 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
 
-
             #define paths for the database
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
             grouped_file_path = os.listdir(home + 'grouped_obs_and_CMs')
+            grouped_file_path = np.sort(grouped_file_path)
             grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
+            print(grouped_file_path)
             calc_thresh(grouped_file_path)
 
