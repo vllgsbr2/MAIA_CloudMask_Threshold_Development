@@ -9,6 +9,7 @@ test_data_JPL_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_M
 Target_Area_X      = 1
 threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/test_thresholds/thresholds_NO_MOD03_SFCTYPES.hdf5'
 sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/SurfaceID_LA_048.nc'
+sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_surface_types/surfaceID_LA_056.nc'
 config_filepath    = './config.csv'
 
 #run MCM
