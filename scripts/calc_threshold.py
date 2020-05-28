@@ -21,12 +21,14 @@ def calc_thresh(group_file):
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
     with h5py.File(group_file, 'r+') as hf_group,\
          h5py.File(home + 'thresholds_all_DOY' + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
-        
+
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
         TA_group  = hf_thresh.create_group('TA_bin_01')#bin_ID[24:29])
         DOY_group = TA_group.create_group('DOY_bin_{:02d}'.format(DOY_bin))#bin_ID[-6:])
 
-        master_thresholds = np.ones((10*14*12*21)).reshape((10,14,12,21))*-999
+        num_sfc_types = 15
+
+        master_thresholds = np.ones((10*14*12*num_sfc_types)).reshape((10,14,12,num_sfc_types))*-999
         obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
         for obs in obs_names:
             DOY_group.create_dataset(obs, data=master_thresholds)
@@ -51,7 +53,7 @@ def calc_thresh(group_file):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = '{}/{}/{}'.format('TA_bin_01', 'DOY_bin_{:02d}'.format(DOY_bin), obs_names[i])
-                
+
                 #WI
                 if i==0:
                     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
@@ -59,7 +61,7 @@ def calc_thresh(group_file):
                     #choose least white cloudy pixel as threshold if no clear obs
                     if clear_obs[:,i].shape[0] == 0:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
-                        cloudy_obs[:, 0].max() 
+                        cloudy_obs[:, 0].max()
                 #NDxI
                 #pick max from cloudy hist
                 elif i==1 or i==2:
@@ -67,22 +69,22 @@ def calc_thresh(group_file):
                     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                     bin_edges[1:][hist==hist.max()].min()
                     #set default value of 1e-3 if no cloudy obs available
-                    if cloudy_obs[:,i].shape[0] == 0:    
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3 
+                    if cloudy_obs[:,i].shape[0] == 0:
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
                 #VIS/NIR/SVI/Cirrus
                 else:
                     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                     np.nanpercentile(clear_obs[:,i], 99)
-    
+
                     if clear_obs[:,i].shape[0] == 0:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                         cloudy_obs[:, i].min()
-                
+
                 #if np.isnan(hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]):
                 #    thresh_nan = True
                     #if there isn't enough clear or cloudy obs, assign value to make threshold true
                     #if no clear, and need clear, assign threshold as least brightest cloudy
-                    #if no cloudy, and need cloudy, assign thresholds as 1e-3 (NDxI)   
+                    #if no cloudy, and need cloudy, assign thresholds as 1e-3 (NDxI)
                    # print('{} | threshold: {:1.4f} | clear_obs: {} cloudy_obs: {}'.format(bin_ID, hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]], clear_obs, cloudy_obs))
 
 if __name__ == '__main__':
@@ -108,4 +110,3 @@ if __name__ == '__main__':
             grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
             print(grouped_file_path)
             calc_thresh(grouped_file_path)
-

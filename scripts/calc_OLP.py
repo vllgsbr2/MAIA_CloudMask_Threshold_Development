@@ -1,6 +1,6 @@
 import numpy as np
 
-def add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, MOD03_sfctypes):
+def add_sceneID(observable_level_parameter):
 
         """
         helper function to combine water/sunglint/snow-ice mask/sfc_ID into
@@ -29,39 +29,23 @@ def add_sceneID_MOD03_SFCTYPES(observable_level_parameter, num_land_sfc_types, M
         sfc_ID_bins = observable_level_parameter[:,:,6]
         scene_type_identifier = sfc_ID_bins
 
-        #MOD03_sfctypes
-        #0-shallow ocean
-        #1-land
-        #2-ocean/lake coast
-        #3-shallow inland water
-        #4-seasonal inland water
-        #5-deep inland water
-        #6-moderate continental ocean
-        #7-deep ocean
-        scene_type_identifier[MOD03_sfctypes==0] = num_land_sfc_types + 2
-        scene_type_identifier[MOD03_sfctypes==2] = num_land_sfc_types + 3
-        scene_type_identifier[MOD03_sfctypes==3] = num_land_sfc_types + 4
-        scene_type_identifier[MOD03_sfctypes==4] = num_land_sfc_types + 5
-        scene_type_identifier[MOD03_sfctypes==5] = num_land_sfc_types + 6
-        scene_type_identifier[MOD03_sfctypes==6] = num_land_sfc_types + 7
-        scene_type_identifier[MOD03_sfctypes==7] = num_land_sfc_types + 8
-
+        #water = 12
+        #sunglint over water = 13
+        #snow = 14
+        scene_type_identifier[ land_water_bins == 0]    = 12
         scene_type_identifier[(sun_glint_bins  == 0) & \
-                              (MOD03_sfctypes != 1) ]  = num_land_sfc_types + 0
-        scene_type_identifier[ snow_ice_bins   == 0]   = num_land_sfc_types + 1
+                              (land_water_bins == 0) ]  = 13
+        scene_type_identifier[ snow_ice_bins   == 0]    = 14
 
         OLP = np.zeros((1000,1000,6))
         OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
         OLP[:,:,4]  = scene_type_identifier             #scene_ID
         OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
-
-
         return OLP
 
 def get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, Target_Area,\
-          land_water_mask, snow_ice_mask, DOY, sun_glint_mask, time_stamp,\
-          num_land_sfc_types, MOD03_sfctypes):
+          land_water_mask, snow_ice_mask, DOY, sun_glint_mask, time_stamp):
 
     """
     Objective:
@@ -129,8 +113,7 @@ def get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, Target_Are
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
-    observable_level_parameter = add_sceneID_MOD03_SFCTYPES(observable_level_parameter,\
-                                             num_land_sfc_types, MOD03_sfctypes)
+    observable_level_parameter = add_sceneID(observable_level_parameter)
 
     #find where there is missing data, use SZA as proxy, and give fill val
     missing_idx = np.where(SZA==-999)
@@ -191,14 +174,13 @@ if __name__ == '__main__':
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
                         DOY = time_stamp[4:7]
                         SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
-                        num_land_sfc_types = 12 #read from config file later                        
-                        MOD03_sfctypes     = hf_database[time_stamp+'/MOD03_LandSeaMask'][()]
+                        #num_land_sfc_types = 12 #read from config file later
+                        #MOD03_sfctypes     = hf_database[time_stamp+'/MOD03_LandSeaMask'][()]
 
                         #OLP = get_observable_level_parameter(SZA, VZA, SAA,\
                         #      VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM, time_stamp)
-                        OLP = get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, TA,\
-                                            LWM, SIM, DOY, SGM, time_stamp,\
-                                            num_land_sfc_types, MOD03_sfctypes)
+                        OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA, TA,\
+                                            LWM, SIM, DOY, SGM, time_stamp)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)

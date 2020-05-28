@@ -96,15 +96,9 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types)
 
     #define surface types by bin number
     #remember it's 0 indexed
-    sun_glint                  = num_land_sfc_types + 0
-    snow                       = num_land_sfc_types + 1
-    shallow_ocean              = num_land_sfc_types + 2
-    ocean_lake_coast           = num_land_sfc_types + 3
-    shallow_inland_water       = num_land_sfc_types + 4
-    seasonal_inland_water      = num_land_sfc_types + 5
-    deep_inland_water          = num_land_sfc_types + 6
-    moderate_continental_ocean = num_land_sfc_types + 7
-    deep_ocean                 = num_land_sfc_types + 8
+    water     = 12
+    sun_glint = 13
+    snow      = 14
 
     #iterate by group
     for i, bin_ID in enumerate(hf_group_keys):
@@ -141,22 +135,22 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types)
                     cloud_mask_MAIA[k] = 0
                 #DTT for NDxI. Must exceed 0
                 #NDVI everything but snow
-                elif j==1 and olp_temp[3]!=snow and DTT_NDxI[k,0] >= 0:
+                elif j==1 and olp_temp[3] != snow and DTT_NDxI[k,0] >= 0:
                     cloud_mask_MAIA[k] = 0
                 #NDSI only over snow
-                elif j==2 and olp_temp[3]==snow and DTT_NDxI[k,1] >= 0:
+                elif j==2 and olp_temp[3] ==snow and DTT_NDxI[k,1] >= 0:
                     cloud_mask_MAIA[k] = 0
                 #VIS, NIR, Cirrus. Must exceed thresh
                 #VIS applied only over land
-                elif j==3 and olp_temp[3]< num_land_sfc_types and thresh_temp[j] <= obs[k,3]:
+                elif j==3 and olp_temp[3] < water and thresh_temp[j] <= obs[k,3]:
                     cloud_mask_MAIA[k] = 0
                 #NIR only applied over water (no sunglint)
-                elif j==4 and olp_temp[3]>= shallow_ocean and thresh_temp[j] <= obs[k,4]:
+                elif j==4 and olp_temp[3] == water and thresh_temp[j] <= obs[k,4]:
                     cloud_mask_MAIA[k] = 0
                 #SVI applied over all surfaces when over 0. Must exceed thresh
-                elif j==5 and obs[k,5] >= 0.0  and thresh_temp[j] <= obs[k,5]:
+                elif j==5 and obs[k,5] >= 0.0 and thresh_temp[j] <= obs[k,5]:
                     cloud_mask_MAIA[k] = 0
-                #j==5 is SVI. So this is j==6 for cirrus applied everywhere
+                #j==6 for cirrus applied everywhere
                 elif j==6 and thresh_temp[j] <= obs[k,6]:
                     cloud_mask_MAIA[k] = 0
                 else:
