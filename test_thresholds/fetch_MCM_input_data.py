@@ -89,7 +89,7 @@ def get_UIUC_data(Target_Area_X, threshold_filepath, sfc_ID_filepath, config_fil
     #(SZA, VZA, RAZ, Target Area, land_water, snowice,sfc_ID, DOY, sun_glint)
     #each test has the above array that can be indexed for the threshold
     # thresholds = h5py.File('../ancillary_UIUC_data/empty_threshold_database.HDF5', 'r')
-    thresholds = h5py.File(threshold_filepath, 'r')
+    #thresholds = h5py.File(threshold_filepath, 'r')
 
     T_NDVI                      = 0#thresholds['Thresholds/T_NDVI']
     T_NDSI                      = 0#thresholds['Thresholds/T_NDSI']
