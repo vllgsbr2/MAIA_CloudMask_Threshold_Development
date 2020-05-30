@@ -4,7 +4,7 @@ import h5py
 import matplotlib.pyplot as plt
 
 def make_JPL_data_from_MODIS(database_path, time_stamp):
-    
+
     with h5py.File(database_path, 'r') as hf_database:
         #read MODIS data
         rads_b4      = hf_database['{}/radiance/band_3'.format(time_stamp)][()]
@@ -12,7 +12,7 @@ def make_JPL_data_from_MODIS(database_path, time_stamp):
         rads_b6      = hf_database['{}/radiance/band_1'.format(time_stamp)][()]
         rads_b9      = hf_database['{}/radiance/band_2'.format(time_stamp)][()]
         rads_b12     = hf_database['{}/radiance/band_6'.format(time_stamp)][()]
-        rads_b13     = hf_database['{}/radiance/band_26'.format(time_stamp)][()] 
+        rads_b13     = hf_database['{}/radiance/band_26'.format(time_stamp)][()]
 
         rad_scales   = hf_database['{}/scale_factors/radiance'.format(time_stamp)][()]
         ref_scales   = hf_database['{}/scale_factors/reflectance'.format(time_stamp)][()]
@@ -127,5 +127,3 @@ def make_JPL_data_from_MODIS(database_path, time_stamp):
     hf.close()
 
     return lat, lon, modcm
-
-
