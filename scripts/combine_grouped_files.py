@@ -34,7 +34,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
             group_dict.setdefault(key, [])
             group_dict[key].append(data)
 
-    with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file + '_'+str(DOY_bin), 'w') as hf_group:
+    with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file, 'w') as hf_group:
         for key, val in group_dict.items():
             for arr in val:
                 try:
@@ -64,5 +64,5 @@ if __name__ == '__main__':
             DOY_bin = r
             DOY_end = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
-            common_file = 'grouped_obs_and_CM_{:03d}_to_{:03d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
+            common_file = 'grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
             group_bins(home, group_dir, common_file, DOY_bin)
