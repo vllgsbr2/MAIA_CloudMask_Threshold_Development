@@ -18,7 +18,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
     grouped_files  = np.sort(os.listdir(path))
     database_files = [path +'/'+ filename for filename in grouped_files]
     database_file = database_files[DOY_bin]
-    print(database_file, DOY_bin)
+    #print(database_file, DOY_bin)
     #look through each file and find unique bin IDs. Add data to dictiionary
     #After looking through the entire data set, write to one common file
 
@@ -44,7 +44,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
                     group_shape = hf_group[key].shape[0]
                     hf_group[key].resize(group_shape + np.array(arr).shape[0], axis=0)
                     hf_group[key][group_shape:, :] = np.array(arr)
-    print('done')
+    #print('done')
 if __name__ == '__main__':
 
     import mpi4py.MPI as MPI
@@ -58,11 +58,12 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
- 
+
             home        = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
             group_dir   = 'group_60_cores'
             DOY_bin = r
             DOY_end = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
-            common_file = 'grouped_obs_and_CM_{:03d}_to_{:03d}.hdf5'.format(DOY_start, DOY_end, DOY_bin) 
+            common_file = 'grouped_obs_and_CM_{:03d}_to_{:03d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
+            print(common_file)
             group_bins(home, group_dir, common_file, DOY_bin)
