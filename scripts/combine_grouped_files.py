@@ -18,6 +18,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
     grouped_files  = np.sort(os.listdir(path))
     database_files = [path +'/'+ filename for filename in grouped_files]
     database_file = database_files[DOY_bin]
+    print(database_file)
     #print(database_file, DOY_bin)
     #look through each file and find unique bin IDs. Add data to dictiionary
     #After looking through the entire data set, write to one common file
@@ -65,5 +66,4 @@ if __name__ == '__main__':
             DOY_end = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
             common_file = 'grouped_obs_and_CM_{:03d}_to_{:03d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
-            print(common_file)
             group_bins(home, group_dir, common_file, DOY_bin)
