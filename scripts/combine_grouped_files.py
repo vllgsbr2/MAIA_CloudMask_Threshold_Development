@@ -18,7 +18,6 @@ def group_bins(home, group_dir, common_file, DOY_bin):
     grouped_files  = np.sort(os.listdir(path))
     database_files = [path +'/'+ filename for filename in grouped_files]
     database_file = database_files[DOY_bin]
-    print(database_file)
     #print(database_file, DOY_bin)
     #look through each file and find unique bin IDs. Add data to dictiionary
     #After looking through the entire data set, write to one common file
@@ -35,7 +34,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
             group_dict.setdefault(key, [])
             group_dict[key].append(data)
 
-    with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file, 'w') as hf_group:
+    with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file + '_'+DOY_bin, 'w') as hf_group:
         for key, val in group_dict.items():
             for arr in val:
                 try:
