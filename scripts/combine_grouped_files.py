@@ -34,16 +34,17 @@ def group_bins(home, group_dir, common_file, DOY_bin):
             group_dict.setdefault(key, [])
             group_dict[key].append(data)
 
-    with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file, 'w') as hf_group:
-        for key, val in group_dict.items():
-            for arr in val:
-                try:
-                    hf_group.create_dataset(key, data=np.array(arr), maxshape=(None,8))
+    if not os.path.exists(home + 'grouped_obs_and_CMs/'  + common_file):
+        with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file, 'w') as hf_group:
+            for key, val in group_dict.items():
+                for arr in val:
+                    try:
+                        hf_group.create_dataset(key, data=np.array(arr), maxshape=(None,8))
 
-                except:
-                    group_shape = hf_group[key].shape[0]
-                    hf_group[key].resize(group_shape + np.array(arr).shape[0], axis=0)
-                    hf_group[key][group_shape:, :] = np.array(arr)
+                    except:
+                        group_shape = hf_group[key].shape[0]
+                        hf_group[key].resize(group_shape + np.array(arr).shape[0], axis=0)
+                        hf_group[key][group_shape:, :] = np.array(arr)
     #print('done')
 if __name__ == '__main__':
 
