@@ -39,9 +39,9 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
                 conf_matx_mask = np.zeros((1000,1000,4), dtype=np.int)
 
                 #both return cloudy
-                true         = np.where((MAIA_CM == 0) & (MOD_CM <2))
+                true         = np.where((MAIA_CM == 0) & (MOD_CM == 0))
                 #both return clear
-                false        = np.where((MAIA_CM == 1) & (MOD_CM >=2))
+                false        = np.where((MAIA_CM == 1) & (MOD_CM >= 1))
                 #MOD clear MAIA cloudy
                 false_cloudy = np.where((MAIA_CM == 0) & (MOD_CM != 0))
                 #MOD cloudy MAIA clear
