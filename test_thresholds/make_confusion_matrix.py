@@ -47,8 +47,8 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
                 #MOD cloudy MAIA clear
                 false_clear  = np.where((MAIA_CM == 1) & (MOD_CM == 0))
 
-                conf_mat_table = np.array([true[0].shape[0], false[0].shape[0], false_cloudy[0].shape[0],\
-                                           false_clear[0].shape[0] ], dtype=np.int)
+                conf_mat_table = np.array([conf_matx_mask[true].sum(), conf_matx_mask[false].sum(), conf_matx_mask[false_cloudy].sum(),\
+                                           conf_matx_mask[false_clear].sum()], dtype=np.int)
 
                 conf_matx_mask[true[0]        , true[1]        , 0] = 1
                 conf_matx_mask[false[0]       , false[1]       , 1] = 1
