@@ -6,7 +6,7 @@ Purpose:
 Confusion matrix to evaluate the performance of the MAIA Cloud Mask
 '''
 
-def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path):
+def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
     '''
     #now for a particular scene calculate the confusion matrix
     #Grab final cloud mask
@@ -23,18 +23,17 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path):
     time_stamps = os.listdir(MAIA_CM_path)
 
     #open file to write to
-    with h5py.File(MCM_Output_path + 'conf_matx_scene_cc_and_uc.HDF5', 'w') as hf_scene_level_conf_matx:
+    with h5py.File('{}conf_matx_scene_DOY_bin_{:02d}.HDF5'.format(MCM_Output_path, DOY_bin), 'w') as hf_scene_level_conf_matx:
 
         for time_stamp in time_stamps:
         #open file one at a time according to time stamp
-            with h5py.File(MOD_CM_path + '/test_JPL_data_{}.HDF5'.format(time_stamp), 'r')  as hf_MOD_CM  ,\
-                 h5py.File(MAIA_CM_path + '/'+time_stamp+'/MCM_Output.HDF5', 'r') as hf_MAIA_CM:
+            with h5py.File('{}/test_JPL_data_{}.HDF5'.format(MOD_CM_path, time_stamp), 'r')  as hf_MOD_CM  ,\
+                 h5py.File('{}/{}/MCM_Output.HDF5'.format(MAIA_CM_path, time_stamp), 'r') as hf_MAIA_CM:
 
                 MAIA_CM = hf_MAIA_CM['cloud_mask_output/final_cloud_mask'][()]#output files
                 MOD_CM  = hf_MOD_CM['MOD35_cloud_mask'][()]#input files
 
                 conf_matx_mask = np.zeros((1000,1000,4), dtype=np.int)
-
 
                 #both return cloudy
                 true         = np.where((MAIA_CM == 0) & (MOD_CM <2))
@@ -222,7 +221,8 @@ if __name__ == '__main__':
             MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
             MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
             MCM_Output_path = home
-            scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path)
+            DOY_bin = rank
+            scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin)
 
 
 
