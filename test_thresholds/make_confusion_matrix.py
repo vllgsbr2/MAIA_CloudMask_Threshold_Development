@@ -21,6 +21,10 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
     #just some hous keeping to avoid redundent definitions
     home        = MCM_Output_path
     time_stamps = os.listdir(MAIA_CM_path)
+    #select time stamps in current DOY bin
+    DOY_end     = (DOY_bin + 1)*8
+    DOY_start   = DOY_end - 7
+    time_stamps = [t for t in time_stamps if int(t[4:7]) >= DOY_start and int(t[4:7]) <= DOY_end]
 
     #open file to write to
     with h5py.File('{}conf_matx_scene_DOY_bin_{:02d}.HDF5'.format(MCM_Output_path, DOY_bin), 'w') as hf_scene_level_conf_matx:
@@ -203,9 +207,17 @@ if __name__ == '__main__':
         if rank==r:
 
             #define paths for the three databases
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            grouped_path = home + 'grouped_obs_and_CM.hdf5'
-            thresh_path  = home + 'thresholds_MCM_efficient.hdf5'
+            # DOY_bin = rank
+            # home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            # grouped_path = home + 'grouped_obs_and_CM_DOY_.hdf5'
+            #thresh_path  = home + 'thresholds_MCM_efficient.hdf5'
+
+            # DOY_bin = rank
+            # home    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            # grouped_path    = os.listdir(home + 'grouped_obs_and_CMs')
+            # grouped_path    = np.sort(grouped_path)
+            # grouped_path    = grouped_path[DOY_bin]
+            # grouped_obs_and_CM_001_to_008_bin_00.hdf5
 
             # #bin confusion matrix
             # num_land_sfc_types = 12
@@ -215,13 +227,14 @@ if __name__ == '__main__':
             #
             #     group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types)
 
-            #scene confusion matrix
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            #ok i think i will reprocess MCM_Output with the MOD35 CM
+            #scene confusion matrix ********************************************
+            #define paths for the three databases
+            DOY_bin = rank
+            home    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
             MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
             MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
             MCM_Output_path = home
-            DOY_bin = rank
+
             scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin)
 
 
