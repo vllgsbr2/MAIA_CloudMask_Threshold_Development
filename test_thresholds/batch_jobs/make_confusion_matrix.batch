@@ -1,12 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name='eval_MCM'
+#SBATCH -p sesebig
 #SBATCH --time=00:45:00
 #SBATCH --mem-per-cpu=4gb
-#SBATCH -n 4
+#SBATCH -n 46
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
 #SBATCH --mail-user=vllgsbr2@illinois.edu
 #SBATCH --error='slurm_make_confusion_matrix.err'
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/
-python make_confusion_matrix.py
+mpirun -n 46 python make_confusion_matrix.py
