@@ -26,8 +26,7 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
     DOY_start   = DOY_end - 7
     time_stamps = [t for t in time_stamps if int(t[4:7]) >= DOY_start and int(t[4:7]) <= DOY_end]
 
-    #open file to write to
-    with h5py.File('{}conf_matx_scene_DOY_bin_{:02d}.HDF5'.format(MCM_Output_path, DOY_bin), 'w') as hf_scene_level_conf_matx:
+    with h5py.File('{}{}conf_matx_scene_DOY_bin_{:02d}.HDF5'.format(MCM_Output_path, 'conf_matx_scene_all_DOY/', DOY_bin), 'w') as hf_scene_level_conf_matx:
 
         for time_stamp in time_stamps:
         #open file one at a time according to time stamp
