@@ -14,6 +14,7 @@ def scene_conf_matx(conf_matx_path, DOY_bin, result_path):
         num_samples = np.zeros((1000,1000,4))
 
         for i, mask in enumerate(masks):
+            print(mask[-12:])
             mask = hf_confmatx[mask][()]
             present_data_idx = np.where((mask != -999) & (mask != 0))
             no_data_idx    = np.where(mask == -999)
