@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import matplotlib.pyplot as plt
 
 # 'scene_Accuracy_DOY_bin_{:02d}'.format(DOY_bin)
 
