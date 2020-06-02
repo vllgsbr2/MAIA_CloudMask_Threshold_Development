@@ -41,6 +41,7 @@ if __name__ == '__main__':
     import h5py
     import os
     import numpy as np
+    import tables
     tables.file._open_files.close_all()
     import mpi4py.MPI as MPI
 
