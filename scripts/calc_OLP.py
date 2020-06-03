@@ -44,7 +44,7 @@ def add_sceneID(observable_level_parameter):
 
         return OLP
 
-def get_observable_level_parameter_MOD03_SFCTYPES(SZA, VZA, SAA, VAA, Target_Area,\
+def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
           land_water_mask, snow_ice_mask, DOY, sun_glint_mask, time_stamp):
 
     """
