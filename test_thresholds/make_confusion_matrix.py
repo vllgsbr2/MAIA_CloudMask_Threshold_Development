@@ -55,7 +55,7 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
                 conf_mat_table = np.array([conf_matx_mask[true].sum(), conf_matx_mask[false].sum(), conf_matx_mask[false_cloudy].sum(),\
                                            conf_matx_mask[false_clear].sum()], dtype=np.int)
 
-                conf_matx_mask[MAIA_CM==3] = -999
+                conf_matx_mask[MAIA_CM >= 2] = -999
 
                 print(time_stamp, conf_mat_table[:2].sum()/conf_mat_table.sum())
                 try:

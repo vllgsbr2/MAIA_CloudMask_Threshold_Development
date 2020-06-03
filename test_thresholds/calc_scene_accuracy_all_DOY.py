@@ -33,7 +33,8 @@ def scene_conf_matx(conf_matx_path, DOY_bin, result_path):
         MCM_accuracy = np.sum(accuracy[:,:,:2], axis=2) / np.sum(num_samples, axis=2)#num_samples[:,:,0]
 
         #write MCM_accuracy and num_samples to disk
-        np.savez('{}/scene_Accuracy_DOY_bin_{:02d}.npz'.format(result_path, DOY_bin), MCM_accuracy=MCM_accuracy, num_samples=num_samples)
+        np.savez('{}/scene_Accuracy_DOY_bin_{:02d}.npz'.format(result_path, DOY_bin),\
+                  MCM_accuracy=MCM_accuracy, num_samples=num_samples)
 
         # return MCM_accuracy
 
