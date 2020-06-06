@@ -58,7 +58,7 @@ if __name__ == '__main__':
     size = comm.Get_size()
 
     for r in range(size):
-        if rank==r:
+        if rank==0:
 
             home        = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
             group_dir   = 'group_60_cores'
