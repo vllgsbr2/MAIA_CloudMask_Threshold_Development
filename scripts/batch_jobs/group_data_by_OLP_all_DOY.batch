@@ -10,7 +10,7 @@
 #SBATCH --error='slurm_group.err'
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
-for i in 3
+for i in {0..45}
 do
     echo $i
     mpirun -n 46 python group_data_by_OLP.py $i
