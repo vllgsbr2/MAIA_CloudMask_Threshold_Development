@@ -87,61 +87,52 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    for r in range(size):
-        if rank==r:
-            file_select = r
+    with h5py.File(hf_group_path, 'w', driver='mpio', comm=comm) as hf_group:
 
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+        for r in range(size):
+            if rank==r:
+                file_select = r
 
-            DOY_bin = int(sys.argv[1])
-            DOY_end = (DOY_bin+1)*8
-            DOY_start = DOY_end - 7
+                home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
 
-            #define paths for the three databases
-            PTA_file_path = home + 'LA_database_60_cores/'
-            database_files = os.listdir(PTA_file_path)
-            database_files = [PTA_file_path + filename for filename in database_files]
-            database_files = np.sort(database_files)
-            hf_database_path = database_files[file_select]
+                DOY_bin = int(sys.argv[1])
+                DOY_end = (DOY_bin+1)*8
+                DOY_start = DOY_end - 7
 
-            PTA_file_path = home + 'observables_database_60_cores/'
-            database_files = os.listdir(PTA_file_path)
-            database_files = [PTA_file_path + filename for filename in database_files]
-            database_files = np.sort(database_files)
-            hf_observables_path = database_files[file_select]
+                #define paths for the three databases
+                PTA_file_path = home + 'LA_database_60_cores/'
+                database_files = os.listdir(PTA_file_path)
+                database_files = [PTA_file_path + filename for filename in database_files]
+                database_files = np.sort(database_files)
+                hf_database_path = database_files[file_select]
 
-            PTA_file_path = home + 'OLP_database_60_cores/'
-            database_files = os.listdir(PTA_file_path)
-            database_files = [PTA_file_path + filename for filename in database_files]
-            database_files = np.sort(database_files)
-            hf_OLP_path    = database_files[file_select]
+                PTA_file_path = home + 'observables_database_60_cores/'
+                database_files = os.listdir(PTA_file_path)
+                database_files = [PTA_file_path + filename for filename in database_files]
+                database_files = np.sort(database_files)
+                hf_observables_path = database_files[file_select]
 
-            observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
+                PTA_file_path = home + 'OLP_database_60_cores/'
+                database_files = os.listdir(PTA_file_path)
+                database_files = [PTA_file_path + filename for filename in database_files]
+                database_files = np.sort(database_files)
+                hf_OLP_path    = database_files[file_select]
 
-            #get data for input into grouping function
-            with h5py.File(hf_observables_path       , 'r') as hf_observables,\
-                 h5py.File(hf_database_path          , 'r') as hf_database   ,\
-                 h5py.File(hf_OLP_path               , 'r') as hf_OLP        :
-                hf_database_keys = list(hf_database.keys())
-                #grab only DOY bin 6 since I dont have sfc ID yet for other days
-                #hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
-                hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
-                #open file to write groups to
-                hf_group_path = home + 'group_60_cores/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
+                observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
-                try:
-                    with h5py.File(hf_group_path, 'w') as hf_group:
-                        for time_stamp in hf_database_keys:
+                #get data for input into grouping function
+                with h5py.File(hf_observables_path       , 'r') as hf_observables,\
+                     h5py.File(hf_database_path          , 'r') as hf_database   ,\
+                     h5py.File(hf_OLP_path               , 'r') as hf_OLP        :
+                    hf_database_keys = list(hf_database.keys())
+                    #grab only DOY bin 6 since I dont have sfc ID yet for other days
+                    #hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
+                    hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
+                    #open file to write groups to
+                    hf_group_path = home + 'group_60_cores/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
 
-                            CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
-                            OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
-
-                            obs_data = np.empty((1000,1000,7), dtype=np.float)
-                            for i, obs in enumerate(observables):
-                                data_path = '{}/{}'.format(time_stamp, obs)
-                                obs_data[:,:,i] = hf_observables[data_path][()]
-                            group_data(OLP, obs_data, CM, hf_group)
-                except:
+                    #try:
+                    # with h5py.File(hf_group_path, 'w') as hf_group:
                     for time_stamp in hf_database_keys:
 
                         CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
@@ -152,16 +143,27 @@ if __name__ == '__main__':
                             data_path = '{}/{}'.format(time_stamp, obs)
                             obs_data[:,:,i] = hf_observables[data_path][()]
                         group_data(OLP, obs_data, CM, hf_group)
+                    # except:
+                    #     for time_stamp in hf_database_keys:
+                    #
+                    #         CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
+                    #         OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
+                    #
+                    #         obs_data = np.empty((1000,1000,7), dtype=np.float)
+                    #         for i, obs in enumerate(observables):
+                    #             data_path = '{}/{}'.format(time_stamp, obs)
+                    #             obs_data[:,:,i] = hf_observables[data_path][()]
+                    #         group_data(OLP, obs_data, CM, hf_group)
 
-                # except:
-                #     with h5py.File(hf_group_path, 'r+')  as hf_group:
-                #         for time_stamp in hf_database_keys:
-                #
-                #             CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
-                #             OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
-                #
-                #             obs_data = np.empty((1000,1000,7), dtype=np.float)
-                #             for i, obs in enumerate(observables):
-                #                 data_path = '{}/{}'.format(time_stamp, obs)
-                #                 obs_data[:,:,i] = hf_observables[data_path][()]
-                #             group_data(OLP, obs_data, CM, hf_group)
+                    # except:
+                    #     with h5py.File(hf_group_path, 'r+')  as hf_group:
+                    #         for time_stamp in hf_database_keys:
+                    #
+                    #             CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
+                    #             OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
+                    #
+                    #             obs_data = np.empty((1000,1000,7), dtype=np.float)
+                    #             for i, obs in enumerate(observables):
+                    #                 data_path = '{}/{}'.format(time_stamp, obs)
+                    #                 obs_data[:,:,i] = hf_observables[data_path][()]
+                    #             group_data(OLP, obs_data, CM, hf_group)

@@ -40,7 +40,11 @@ for r in range(size):
             DOY_start = DOY_end - 7
             print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
             threshold_filepath = home + 'thresholds_all_DOY/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
-            sfc_ID_filepath    = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_end)
+            if DOY_end == 8:
+                DOY_sfc_ID = 8
+            else:
+                DOY_sfc_ID = DOY_end - 8
+            sfc_ID_filepath    = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_sfc_ID)
 
             #run MCM
             Sun_glint_exclusion_angle,\
