@@ -30,7 +30,7 @@ def group_bins(home, group_dir, common_file, DOY_bin, rank):
     group_dict = {}
 
     for i in range(46):
-        group = grouped_files = home + 'grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin, i)
+        group = grouped_files = home + '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.hdf5'.format(group_dir, DOY_start, DOY_end, DOY_bin, i)
         with h5py.File(group, 'r') as hf_group_:
             group_keys = list(hf_group_.keys())
 
