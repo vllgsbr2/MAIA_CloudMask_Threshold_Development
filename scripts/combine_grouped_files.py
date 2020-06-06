@@ -3,7 +3,7 @@ import h5py
 import numpy as np
 import sys
 
-def group_bins(home, group_dir, common_file, DOY_bin):
+def group_bins(home, group_dir, common_file, DOY_bin, rank):
     '''
     for easy parallelization and file writting over head, the bins were
     written into a file according to the processor that analyzed it. So
