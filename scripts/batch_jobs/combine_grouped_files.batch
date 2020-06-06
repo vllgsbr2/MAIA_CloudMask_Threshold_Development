@@ -11,7 +11,7 @@
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
 
-for i in {14..24}
+for i in {25..35}
 do
     echo $i
     mpirun -n 46 python combine_grouped_files.py $i
