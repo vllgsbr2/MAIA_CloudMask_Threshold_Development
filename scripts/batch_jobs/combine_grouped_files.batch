@@ -10,4 +10,9 @@
 #SBATCH --error='slurm_combine.err'
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/  
-mpirun -n 46 python combine_grouped_files.py
+
+for i in {0..45}
+do
+    echo $i
+    mpirun -n 46 python combine_grouped_files.py $i
+done
