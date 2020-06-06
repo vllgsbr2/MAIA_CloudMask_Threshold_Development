@@ -34,10 +34,11 @@ def group_bins(home, group_dir, common_file, DOY_bin):
         with h5py.File(group, 'r') as hf_group_:
             group_keys = list(hf_group_.keys())
 
-            for key in group_keys:
-                data = hf_group_[key][()]
-                group_dict.setdefault(key, [])
-                group_dict[key].append(data)
+            if len(group_keys) > 0:
+                for key in group_keys:
+                    data = hf_group_[key][()]
+                    group_dict.setdefault(key, [])
+                    group_dict[key].append(data)
 
     if not os.path.exists(home + 'grouped_obs_and_CMs/'  + common_file):
         with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file, 'w') as hf_group:
