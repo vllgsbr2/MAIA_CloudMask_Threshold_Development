@@ -103,6 +103,10 @@ if __name__ == '__main__':
 
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
 
+            DOY_bin = int(sys.argv[1])
+            DOY_end = (DOY_bin+1)*8
+            DOY_start = DOY_end - 7
+            
             #define paths for the three databases
             PTA_file_path = home + 'LA_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
@@ -133,7 +137,7 @@ if __name__ == '__main__':
                 #hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
                 hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
                 #open file to write groups to
-                # hf_group_path = home + 'group_60_cores/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
+                hf_group_path = home + 'group_60_cores/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
 
                 try:
                     with h5py.File(hf_group_path, 'w') as hf_group:
