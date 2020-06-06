@@ -19,9 +19,9 @@ def group_bins(home, group_dir, common_file, DOY_bin, rank):
     grouped_files  = np.sort(os.listdir(path))
     database_files = [path +'/'+ filename for filename in grouped_files]
 
-    if len(database_files) != 46:
-        print('group by OLP failed to produce all DOY bins')
-        sys.exit()
+    # if len(database_files) != 46:
+    #     print('group by OLP failed to produce all DOY bins')
+    #     sys.exit()
 
     #look through each file and find unique bin IDs. Add data to dictiionary
     #After looking through the entire data set, write to one common file
