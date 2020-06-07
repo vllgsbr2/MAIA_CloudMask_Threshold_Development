@@ -478,7 +478,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #apply fill values according to input observable and surface type
     if observable_name == 'VIS_Ref':
         #where water or snow/ice occur this test is not applied
-        observable_data[((scene_type_identifier >= water)) & \
+        observable_data[(scene_type_identifier >= water) & \
                         ((observable_data != fill_val_2)                & \
                          (observable_data != fill_val_3)) ]  = fill_val_1
 
@@ -936,35 +936,23 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     observable_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI',\
                         'Cirrus']
 
-    threhsold_database = {'WI':T_WI,      \
-                          'NDVI':T_NDVI,    \
-                          'NDSI':T_NDSI,    \
-                          'VIS_Ref':T_VIS_Ref, \
-                          'NIR_Ref':T_NIR_Ref, \
-                          'SVI':T_SVI, \
-                          'Cirrus':T_Cirrus}
-
-
     observable_data = np.empty(np.shape(observables))
     T = np.empty(np.shape(observables))
     for i in range(len(observable_names)):
-        #threshold_observable_i = threhsold_database[observable_names[i]][:]
-        #threshold_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-
-
         observable_data[:,:,i], T[:,:,i] = \
         get_test_determination(observable_level_parameter,\
         observables[:,:,i],\
         threshold_filepath,\
         observable_names[i],\
         fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types, MOD03_sfctypes)
+
     #Thresholds
     l,w, = 20,8
     import matplotlib.pyplot as plt
     import matplotlib.cm as cm
     f2, ax2 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
     cmap    = cm.get_cmap('jet')
-    # T[T==-999] = -5#np.nan
+    T[T==-999] = np.nan
     im0 = ax2[0,0].imshow(T[:,:,0], cmap=cmap, vmin=T[:,:,0].min(), vmax=T[:,:,0].max())
     im1 = ax2[0,1].imshow(T[:,:,1], cmap=cmap, vmin=T[:,:,1].min(), vmax=T[:,:,1].max())
     im2 = ax2[0,2].imshow(T[:,:,2], cmap=cmap, vmin=T[:,:,2].min(), vmax=T[:,:,2].max())

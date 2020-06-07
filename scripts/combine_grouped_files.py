@@ -30,7 +30,7 @@ def group_bins(home, group_dir, common_file, DOY_bin, rank):
     group_dict = {}
 
     for i in range(46):
-        group = grouped_files = home + '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.hdf5'.format(group_dir, DOY_start, DOY_end, DOY_bin, i)
+        group =  home + '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.hdf5'.format(group_dir, DOY_start, DOY_end, DOY_bin, i)
         with h5py.File(group, 'r') as hf_group_:
             group_keys = list(hf_group_.keys())
 
@@ -40,25 +40,33 @@ def group_bins(home, group_dir, common_file, DOY_bin, rank):
                     group_dict.setdefault(key, [])
                     group_dict[key].append(data)
 
-    if not os.path.exists(home + 'grouped_obs_and_CMs/'  + common_file):
-        with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file, 'w') as hf_group:
-            for key, val in group_dict.items():
-                for arr in val:
-                    try:
-                        hf_group.create_dataset(key, data=np.array(arr), maxshape=(None,8))
+    #keep trying to gain access until it is available
+    #once access is gained, it should write to file, and then exit while loop
+    being_accessed = True
+    while being_accessed:
+        try:
+            with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file, 'a') as hf_group:
+                for key, val in group_dict.items():
+                    for arr in val:
+                        try:
+                            hf_group.create_dataset(key, data=np.array(arr), maxshape=(None,8))
 
-                    except:
-                        group_shape = hf_group[key].shape[0]
-                        hf_group[key].resize(group_shape + np.array(arr).shape[0], axis=0)
-                        hf_group[key][group_shape:, :] = np.array(arr)
+                        except:
+                            group_shape = hf_group[key].shape[0]
+                            hf_group[key].resize(group_shape + np.array(arr).shape[0], axis=0)
+                            hf_group[key][group_shape:, :] = np.array(arr)
+            being_accessed = False
+        except Exception as e:
+            print(e)
+            being_accessed = True
     #print('done')
 if __name__ == '__main__':
 
     import mpi4py.MPI as MPI
-    import tables
+    # import tables
     import sys
     import os
-    tables.file._open_files.close_all()
+    #tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()

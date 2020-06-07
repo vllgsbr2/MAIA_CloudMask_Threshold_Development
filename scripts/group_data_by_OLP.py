@@ -86,18 +86,6 @@ if __name__ == '__main__':
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    # DOY_bin = int(sys.argv[1])
-    # DOY_end = (DOY_bin+1)*8
-    # DOY_start = DOY_end - 7
-    #
-    # home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-    #
-    # hf_group_path = home + 'group_60_cores/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
-    #
-    # with h5py.File(hf_group_path, 'w', driver='mpio', comm=comm) as hf_group:
-
-    # with h5py.File(hf_group_path, 'w') as hf_group:
-
     for r in range(size):
         if rank==r:
             file_select = r

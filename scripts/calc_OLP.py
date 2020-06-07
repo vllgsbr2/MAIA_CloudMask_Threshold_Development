@@ -163,7 +163,7 @@ if __name__ == '__main__':
                 hf_database_keys = list(hf_database.keys())
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
-                with h5py.File(hf_OLP_path, 'w') as hf_OLP:
+                with h5py.File(hf_OLP_path, 'x') as hf_OLP:
 
                     for time_stamp in hf_database_keys:
 
