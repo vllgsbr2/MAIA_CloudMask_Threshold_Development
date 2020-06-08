@@ -19,7 +19,7 @@ def calc_thresh(group_file):
     DOY_end = (DOY_bin+1)*8
     DOY_start = DOY_end - 7
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-    with h5py.File(group_file, 'r+') as hf_group,\
+    with h5py.File(group_file, 'r') as hf_group,\
          h5py.File(home + 'thresholds_all_DOY' + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
 
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
