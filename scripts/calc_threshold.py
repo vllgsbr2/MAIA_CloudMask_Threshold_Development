@@ -46,10 +46,8 @@ def calc_thresh(group_file, DOY_bin):
             #print(cloud_mask)
             clear_idx = np.where(cloud_mask != 0)
             clear_obs = obs[clear_idx[0],:]
-            if clear_idx[0].shape[0] == 0:
-                print(clear_idx[0].shape)
             cloudy_idx = np.where(cloud_mask == 0)
-            cloudy_obs = obs[cloudy_idx[0],:] #[1:3] since we only need for NDxI
+            cloudy_obs = obs[cloudy_idx[0],:]
             #print(cloudy_idx[0].shape)
             for i in range(7):
                 #thresh_nan = False
@@ -96,11 +94,11 @@ def calc_thresh(group_file, DOY_bin):
 if __name__ == '__main__':
 
     import h5py
-    import tables
+    # import tables
     import os
     import mpi4py.MPI as MPI
     import sys
-    tables.file._open_files.close_all()
+    # tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()

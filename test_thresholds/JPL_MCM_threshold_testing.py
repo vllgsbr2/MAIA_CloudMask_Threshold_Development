@@ -1031,6 +1031,11 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     print('finished: ' , time.time() - start_time)
 
     scene_type_identifier = add_sceneID(observable_level_parameter)
+    OLP_ = np.zeros((1000,1000,6))
+    OLP_[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
+    OLP_[:,:,4]  = scene_type_identifier             #scene_ID
+    OLP_[:,:,5] = observable_level_parameter[:,:,7]  #DOY
+
 
     return Sun_glint_exclusion_angle,\
            Max_RDQI,\
