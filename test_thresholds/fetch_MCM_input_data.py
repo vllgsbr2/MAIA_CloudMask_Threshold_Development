@@ -106,6 +106,7 @@ def get_UIUC_data(Target_Area_X, threshold_filepath, sfc_ID_filepath, config_fil
     #sfc_ID     = sfc_ID_database['Target_Area_'+ Target_Area_X +'/Surface_ID']
     with Dataset(sfc_ID_filepath, 'r', format='NETCDF4') as sfc_ID_file:
         sfc_ID = sfc_ID_file.variables['surface_ID'][:]
+        print(sfc_ID_filepath[-20:])
 
     #read config file
     config_data = pd.read_csv(config_filepath, skiprows=3, header=0)
