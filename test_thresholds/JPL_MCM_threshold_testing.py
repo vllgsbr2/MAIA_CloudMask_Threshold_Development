@@ -668,12 +668,16 @@ def get_DTT_White_Test(T, WI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     max_fill_val = np.max(np.array([fill_val_1, fill_val_2, fill_val_3]))
 
     DTT = np.copy(WI)
+    print(np.where(np.isnan(DTT))[0].shape, '671**********************************')
     # print(Max_valid_DTT, Min_valid_DTT, fill_val_1,fill_val_2, fill_val_3)
     DTT[WI > max_fill_val] = (100 * (T - WI) / T)[WI > max_fill_val]
+    print(np.where(np.isnan(DTT))[0].shape, '674**********************************')
     #put upper bound on DTT (fill vals all negative)
     DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
+    print(np.where(np.isnan(DTT))[0].shape, '677**********************************')
     #put lower bound on DTT where observable is valid (fill vals all negative)
     DTT[(DTT < Min_valid_DTT) & (WI > max_fill_val)] = Min_valid_DTT
+    print(np.where(np.isnan(DTT))[0].shape, '680**********************************')
 
     #where T is -999 we should give a no retreival fill value (fill_val_3 = -127)
     DTT[T==-999] = fill_val_3
@@ -1018,7 +1022,6 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
                      DTT_SVI    ,\
                      DTT_Cirrus))
 
-    print(np.where(np.isnan(DTT))[0].shape, '**********************************')
 
     #in order the activation values are
     #WI, NDVI, NDSI, VIS Ref, NIR Ref, SVI, Cirrus
