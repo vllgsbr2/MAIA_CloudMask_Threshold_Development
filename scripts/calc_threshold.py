@@ -112,7 +112,7 @@ if __name__ == '__main__':
             # grouped_file_path = os.listdir(home + 'grouped_obs_and_CMs')
             # grouped_file_path = np.sort(grouped_file_path)
             # grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
-            DOY_bin   = r
+            DOY_bin   = 5#r
             DOY_end   = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
             grouped_file_path = home + 'grouped_obs_and_CMs/' + 'grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.\
