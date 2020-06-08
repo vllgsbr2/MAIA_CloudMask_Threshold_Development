@@ -668,7 +668,7 @@ def get_DTT_White_Test(T, WI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     max_fill_val = np.max(np.array([fill_val_1, fill_val_2, fill_val_3]))
 
     DTT = np.copy(WI)
-    print(np.where(np.isnan(WI))[0].shape)
+    print(Max_valid_DTT, Min_valid_DTT, fill_val_1,fill_val_2, fill_val_3)
     DTT[WI > max_fill_val] = (100 * (T - WI) / T)[WI > max_fill_val]
     #put upper bound on DTT (fill vals all negative)
     DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
