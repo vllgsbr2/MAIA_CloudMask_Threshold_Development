@@ -37,7 +37,7 @@ def calc_thresh(group_file, DOY_bin):
         num_points = len(hf_keys)
 
         for count, bin_ID in enumerate(hf_keys):
-            print(count, bin_ID)
+            # print(count, bin_ID)
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
 
@@ -112,10 +112,10 @@ if __name__ == '__main__':
             # grouped_file_path = os.listdir(home + 'grouped_obs_and_CMs')
             # grouped_file_path = np.sort(grouped_file_path)
             # grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
-            DOY_bin   = 6#r
+            DOY_bin   = r
             DOY_end   = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
             grouped_file_path = home + 'grouped_obs_and_CMs/' + 'grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.\
                                 format(DOY_start, DOY_end, DOY_bin)
-            print(grouped_file_path)
+            # print(grouped_file_path)
             calc_thresh(grouped_file_path, DOY_bin)
