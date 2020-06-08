@@ -29,7 +29,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
     #add key with empty list, then populate it.
     group_dict = {}
 
-    for i in range(46):
+    for i in range(60):
         group =  home + '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.hdf5'\
                         .format(group_dir, DOY_start, DOY_end, DOY_bin, i)
         print(group)
