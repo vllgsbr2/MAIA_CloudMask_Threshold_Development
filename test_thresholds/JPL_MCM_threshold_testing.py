@@ -537,11 +537,11 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
             #put 0 index where is equal to -999
             #then we will go back and mask the retireved thresholds here as -999
-            # fillVal_idx = np.where(OLP==-999)
-            # OLP[fillVal_idx] = 0
+            fillVal_idx = np.where(OLP==-999)
+            OLP[fillVal_idx] = 0
 
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
-            print(path)
+            print(threshold_path[-20:], path)
 
             database = hf_thresholds[path][()]
             # bad_thresh_binID = np.array(['cosSZA_{}_VZA_{}_RAZ_{}_SceneID_{}'.format(olp[0], olp[1], olp[2], olp[4]) for olp in OLP if database[olp[0], olp[1], olp[2], olp[4]] == -999])
@@ -549,12 +549,12 @@ def get_test_determination(observable_level_parameter, observable_data,\
             # import sys
             # sys.exit()
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
-            #thresholds[fillVal_idx[0]] = -999
+            thresholds[fillVal_idx[0]] = -999
             thresholds = np.array(thresholds).reshape((1000,1000))
 
             return observable_data, thresholds
 
-        # return observable_data, np.ones((1000,1000))*-999
+        return observable_data, np.ones((1000,1000))*-999
 
 #calculate distance to threshold************************************************
 #keep fill values unchanged
