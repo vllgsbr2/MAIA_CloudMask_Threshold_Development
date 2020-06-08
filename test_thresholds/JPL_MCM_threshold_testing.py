@@ -534,6 +534,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             not_fillVal_idx = np.where(OLP[:,3]!=-999)
             TA = OLP[not_fillVal_idx[0], 3][0]
             DOY = OLP[not_fillVal_idx[0], 5][0]
+            print(DOY)
 
             #put 0 index where is equal to -999
             #then we will go back and mask the retireved thresholds here as -999
