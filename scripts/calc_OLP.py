@@ -145,7 +145,7 @@ if __name__ == '__main__':
         if rank==r:
             #open database to read
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            PTA_file_path = home + 'LA_database_60_cores_no_MOD03_sfc_type/'
+            PTA_file_path = home + 'LA_database_60_cores/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
