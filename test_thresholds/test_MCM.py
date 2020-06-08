@@ -11,7 +11,7 @@ Target_Area_X      = 1
 #threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/thresholds_all_DOY/thresholds_DOY_249_to_256_bin_31.hdf5'#thresholds_MOD03_SFCTYPES.hdf5'
 # threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/test_thresholds/thresholds_NO_MOD03_SFCTYPES.hdf5'
 threshold_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/thresholds_all_DOY/thresholds_DOY_049_to_056_bin_06.hdf5'
-sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_surface_types/surfaceID_LA_056.nc'
+sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_surface_types/surfaceID_LA_048.nc'
 #sfc_ID_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/SurfaceID_LA_048.nc'
 config_filepath    = './config.csv'
 
