@@ -545,7 +545,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
             database = hf_thresholds[path][()]
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
-            thresholds[fillVal_idx[0]] = -999
+            #thresholds[fillVal_idx[0]] = -999
             thresholds = np.array(thresholds).reshape((1000,1000))
 
             return observable_data, thresholds
