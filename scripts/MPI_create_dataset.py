@@ -355,10 +355,10 @@ if __name__ == '__main__':
                                               filename_MOD_03_timeStamp[start:end],\
                                               filename_MOD_35_timeStamp[start:end]):
 
-                    if int(time_MOD02[4:7]) >=48 and int(time_MOD02[4:7]) <= 55:
+                    #if int(time_MOD02[4:7]) >=48 and int(time_MOD02[4:7]) <= 55:
                         #try:
-                        build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
-                                        target_lat, target_lon)
+                    build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
+                                    target_lat, target_lon)
 
                         #    output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
                         #except Exception as e:
