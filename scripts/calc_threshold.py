@@ -56,27 +56,30 @@ def calc_thresh(group_file):
 
                 #WI
                 if i==0:
-                    hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
-                    np.nanpercentile(clear_obs[:,i], 1)
+                    if clear_obs[:,i].shape[0] > 0:
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
+                        np.nanpercentile(clear_obs[:,i], 1)
                     #choose least white cloudy pixel as threshold if no clear obs
-                    if clear_obs[:,i].shape[0] == 0:
+                    else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
                         cloudy_obs[:, i].max()
                 #NDxI
                 #pick max from cloudy hist
                 elif i==1 or i==2:
-                    hist, bin_edges = np.histogram(cloudy_obs[:,i], bins=128, range=(-1,1))
-                    hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                    bin_edges[1:][hist==hist.max()].min()
+                    if cloudy_obs[:,i].shape[0] > 0:
+                        hist, bin_edges = np.histogram(cloudy_obs[:,i], bins=128, range=(-1,1))
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
+                        bin_edges[1:][hist==hist.max()].min()
                     #set default value of 1e-3 if no cloudy obs available
-                    if cloudy_obs[:,i].shape[0] == 0:
+                    else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
                 #VIS/NIR/SVI/Cirrus
                 else:
-                    hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                    np.nanpercentile(clear_obs[:,i], 99)
+                    if clear_obs[:,i].shape[0] > 0:
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
+                        np.nanpercentile(clear_obs[:,i], 99)
 
-                    if clear_obs[:,i].shape[0] == 0:
+                    else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                         cloudy_obs[:, i].min()
 
