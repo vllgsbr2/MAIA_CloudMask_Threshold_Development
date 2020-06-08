@@ -544,8 +544,8 @@ def get_test_determination(observable_level_parameter, observable_data,\
             print(path)
 
             database = hf_thresholds[path][()]
-            bad_thresh_binID = ['cosSZA_{}_VZA_{}_RAZ_{}SceneID_{}'.format(olp[0], olp[1], olp[2], olp[4]) for olp in OLP if database[olp[0], olp[1], olp[2], olp[4]] == -999]
-            print(bad_thresh_binID)
+            bad_thresh_binID = np.array(['cosSZA_{}_VZA_{}_RAZ_{}SceneID_{}'.format(olp[0], olp[1], olp[2], olp[4]) for olp in OLP if database[olp[0], olp[1], olp[2], olp[4]] == -999])
+            print(np.unique(bad_thresh_binID))
             import sys
             sys.exit()
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
