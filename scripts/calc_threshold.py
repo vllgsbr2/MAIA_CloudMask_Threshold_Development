@@ -46,16 +46,16 @@ def calc_thresh(group_file, DOY_bin):
             #print(cloud_mask)
             clear_idx = np.where(cloud_mask != 0)
             clear_obs = obs[clear_idx[0],:]
-            #print(clear_idx[0].shape)
+            print(clear_idx[0].shape)
             cloudy_idx = np.where(cloud_mask == 0)
             cloudy_obs = obs[cloudy_idx[0],:] #[1:3] since we only need for NDxI
-            #print(cloudy_idx[0].shape)
+            print(cloudy_idx[0].shape)
             for i in range(7):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = '{}/{}/{}'.format('TA_bin_01', 'DOY_bin_{:02d}'.format(DOY_bin), obs_names[i])
 
-                print(clear_obs[:,i])
+                # print(clear_obs[:,i])
                 #WI
                 if i==0:
                     if clear_obs[:,i].shape[0] > 0:
