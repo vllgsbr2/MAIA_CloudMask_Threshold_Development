@@ -37,6 +37,7 @@ def calc_thresh(group_file):
         num_points = len(hf_keys)
 
         for count, bin_ID in enumerate(hf_keys):
+            print(count, bin_ID)
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
 
@@ -53,7 +54,6 @@ def calc_thresh(group_file):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = '{}/{}/{}'.format('TA_bin_01', 'DOY_bin_{:02d}'.format(DOY_bin), obs_names[i])
-                print('hi')
 
                 #WI
                 if i==0:
