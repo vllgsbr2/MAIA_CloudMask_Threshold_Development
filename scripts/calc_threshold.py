@@ -46,7 +46,8 @@ def calc_thresh(group_file, DOY_bin):
             #print(cloud_mask)
             clear_idx = np.where(cloud_mask != 0)
             clear_obs = obs[clear_idx[0],:]
-            print(clear_idx[0].shape)
+            if clear_idx[0].shape[0] == 0:
+                print(clear_idx[0].shape)
             cloudy_idx = np.where(cloud_mask == 0)
             cloudy_obs = obs[cloudy_idx[0],:] #[1:3] since we only need for NDxI
             print(cloudy_idx[0].shape)
