@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 
-def calc_thresh(group_file):
+def calc_thresh(group_file, DOY_bin):
     '''
     Objective:
         Takes in grouped_obs_and_CM.hdf5 file. Inside are a datasets for
@@ -15,7 +15,7 @@ def calc_thresh(group_file):
     Return:
         void
     '''
-    DOY_bin = r
+
     DOY_end = (DOY_bin+1)*8
     DOY_start = DOY_end - 7
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
@@ -112,10 +112,10 @@ if __name__ == '__main__':
             # grouped_file_path = os.listdir(home + 'grouped_obs_and_CMs')
             # grouped_file_path = np.sort(grouped_file_path)
             # grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
-            DOY_bin   = 5#r
+            DOY_bin   = 6#r
             DOY_end   = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
             grouped_file_path = home + 'grouped_obs_and_CMs/' + 'grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.\
                                 format(DOY_start, DOY_end, DOY_bin)
             print(grouped_file_path)
-            calc_thresh(grouped_file_path)
+            calc_thresh(grouped_file_path, DOY_bin)
