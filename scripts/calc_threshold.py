@@ -55,6 +55,7 @@ def calc_thresh(group_file, DOY_bin):
                 #path to TA/DOY/obs threshold dataset
                 path = '{}/{}/{}'.format('TA_bin_01', 'DOY_bin_{:02d}'.format(DOY_bin), obs_names[i])
 
+                print(clear_obs[:,i])
                 #WI
                 if i==0:
                     if clear_obs[:,i].shape[0] > 0:
