@@ -541,7 +541,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             OLP[fillVal_idx] = 0
 
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
-            print(threshold_path[-25:-5], path)
+            print(threshold_path[-26:-5], path)
 
             database = hf_thresholds[path][()]
             # bad_thresh_binID = np.array(['cosSZA_{}_VZA_{}_RAZ_{}_SceneID_{}'.format(olp[0], olp[1], olp[2], olp[4]) for olp in OLP if database[olp[0], olp[1], olp[2], olp[4]] == -999])
@@ -668,6 +668,7 @@ def get_DTT_White_Test(T, WI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     max_fill_val = np.max(np.array([fill_val_1, fill_val_2, fill_val_3]))
 
     DTT = np.copy(WI)
+    print(np.where(np.isnan(WI))[0].shape)
     DTT[WI > max_fill_val] = (100 * (T - WI) / T)[WI > max_fill_val]
     #put upper bound on DTT (fill vals all negative)
     DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
