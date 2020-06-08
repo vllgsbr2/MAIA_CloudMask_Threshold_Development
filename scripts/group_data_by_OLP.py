@@ -97,7 +97,7 @@ if __name__ == '__main__':
             DOY_start = DOY_end - 7
 
             #define paths for the three databases
-            PTA_file_path = home + 'LA_database_60_cores/'
+            PTA_file_path = home + 'LA_database_60_cores_no_MOD03_sfc_type/'
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
