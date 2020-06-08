@@ -664,22 +664,18 @@ def get_DTT_White_Test(T, WI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
                      the whole space.
 
     """
-    print(np.where(T==-999)[0].shape, '674**********************************')
+    print(np.where(T==-999)[0].shape, '**********************************')
 
     max_fill_val = np.max(np.array([fill_val_1, fill_val_2, fill_val_3]))
 
     DTT = np.copy(WI)
-    print(np.where(np.isnan(DTT))[0].shape, '671**********************************')
+
     # print(Max_valid_DTT, Min_valid_DTT, fill_val_1,fill_val_2, fill_val_3)
     DTT[WI > max_fill_val] = (100 * (T - WI) / T)[WI > max_fill_val]
-    print(np.where(np.isnan(DTT))[0].shape, '674**********************************')
     #put upper bound on DTT (fill vals all negative)
     DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
-    print(np.where(np.isnan(DTT))[0].shape, '677**********************************')
     #put lower bound on DTT where observable is valid (fill vals all negative)
     DTT[(DTT < Min_valid_DTT) & (WI > max_fill_val)] = Min_valid_DTT
-    print(np.where(np.isnan(DTT))[0].shape, '680**********************************')
-
     #where T is -999 we should give a no retreival fill value (fill_val_3 = -127)
     DTT[T==-999] = fill_val_3
 
@@ -957,40 +953,40 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
         fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types, MOD03_sfctypes)
 
     #Thresholds
-    l,w, = 20,8
-    import matplotlib.pyplot as plt
-    import matplotlib.cm as cm
-    f2, ax2 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
-    cmap    = cm.get_cmap('jet')
-    T[T==-999] = np.nan
-    im0 = ax2[0,0].imshow(T[:,:,0], cmap=cmap, vmin=T[:,:,0].min(), vmax=T[:,:,0].max())
-    im1 = ax2[0,1].imshow(T[:,:,1], cmap=cmap, vmin=T[:,:,1].min(), vmax=T[:,:,1].max())
-    im2 = ax2[0,2].imshow(T[:,:,2], cmap=cmap, vmin=T[:,:,2].min(), vmax=T[:,:,2].max())
-    im3 = ax2[0,3].imshow(T[:,:,3], cmap=cmap, vmin=T[:,:,3].min(), vmax=T[:,:,3].max())
-    im4 = ax2[1,0].imshow(T[:,:,4], cmap=cmap, vmin=T[:,:,4].min(), vmax=T[:,:,4].max())
-    im5 = ax2[1,1].imshow(T[:,:,5], cmap=cmap, vmin=T[:,:,5].min(), vmax=0.2)
-    im6 = ax2[1,2].imshow(T[:,:,6], cmap=cmap, vmin=T[:,:,6].min(), vmax=T[:,:,6].max())
-    im0.cmap.set_under('k')
-    im1.cmap.set_under('k')
-    im2.cmap.set_under('k')
-    im3.cmap.set_under('k')
-    im4.cmap.set_under('k')
-    im5.cmap.set_under('k')
-    im6.cmap.set_under('k')
-    ax2[0,0].set_title('Thresholds_WI')
-    ax2[0,1].set_title('Thresholds_NDVI')
-    ax2[0,2].set_title('Thresholds_NDSI')
-    ax2[0,3].set_title('Thresholds_VIS_Ref')
-    ax2[1,0].set_title('Thresholds_NIR_Ref')
-    ax2[1,1].set_title('Thresholds_SVI')
-    ax2[1,2].set_title('Thresholds_Cirrus')
-    cbar0 = f2.colorbar(im0, ax=ax2[0,0],fraction=0.046, pad=0.04, ticks = np.arange(0,WI.max()+0.2,0.2))
-    cbar1 = f2.colorbar(im1, ax=ax2[0,1],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.25,0.25))
-    cbar2 = f2.colorbar(im2, ax=ax2[0,2],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.1,0.1))
-    cbar3 = f2.colorbar(im3, ax=ax2[0,3],fraction=0.046, pad=0.04, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
-    cbar4 = f2.colorbar(im4, ax=ax2[1,0],fraction=0.046, pad=0.04, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
-    cbar5 = f2.colorbar(im5, ax=ax2[1,1],fraction=0.046, pad=0.04, ticks = np.arange(0,SVI.max()+0.1,0.05))
-    cbar6 = f2.colorbar(im6, ax=ax2[1,2],fraction=0.046, pad=0.04, ticks = np.arange(0,1.2,0.2))
+    # l,w, = 20,8
+    # import matplotlib.pyplot as plt
+    # import matplotlib.cm as cm
+    # f2, ax2 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
+    # cmap    = cm.get_cmap('jet')
+    # #T[T==-999] = np.nan
+    # im0 = ax2[0,0].imshow(T[:,:,0], cmap=cmap, vmin=T[:,:,0].min(), vmax=T[:,:,0].max())
+    # im1 = ax2[0,1].imshow(T[:,:,1], cmap=cmap, vmin=T[:,:,1].min(), vmax=T[:,:,1].max())
+    # im2 = ax2[0,2].imshow(T[:,:,2], cmap=cmap, vmin=T[:,:,2].min(), vmax=T[:,:,2].max())
+    # im3 = ax2[0,3].imshow(T[:,:,3], cmap=cmap, vmin=T[:,:,3].min(), vmax=T[:,:,3].max())
+    # im4 = ax2[1,0].imshow(T[:,:,4], cmap=cmap, vmin=T[:,:,4].min(), vmax=T[:,:,4].max())
+    # im5 = ax2[1,1].imshow(T[:,:,5], cmap=cmap, vmin=T[:,:,5].min(), vmax=0.2)
+    # im6 = ax2[1,2].imshow(T[:,:,6], cmap=cmap, vmin=T[:,:,6].min(), vmax=T[:,:,6].max())
+    # im0.cmap.set_under('k')
+    # im1.cmap.set_under('k')
+    # im2.cmap.set_under('k')
+    # im3.cmap.set_under('k')
+    # im4.cmap.set_under('k')
+    # im5.cmap.set_under('k')
+    # im6.cmap.set_under('k')
+    # ax2[0,0].set_title('Thresholds_WI')
+    # ax2[0,1].set_title('Thresholds_NDVI')
+    # ax2[0,2].set_title('Thresholds_NDSI')
+    # ax2[0,3].set_title('Thresholds_VIS_Ref')
+    # ax2[1,0].set_title('Thresholds_NIR_Ref')
+    # ax2[1,1].set_title('Thresholds_SVI')
+    # ax2[1,2].set_title('Thresholds_Cirrus')
+    # cbar0 = f2.colorbar(im0, ax=ax2[0,0],fraction=0.046, pad=0.04, ticks = np.arange(0,WI.max()+0.2,0.2))
+    # cbar1 = f2.colorbar(im1, ax=ax2[0,1],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.25,0.25))
+    # cbar2 = f2.colorbar(im2, ax=ax2[0,2],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.1,0.1))
+    # cbar3 = f2.colorbar(im3, ax=ax2[0,3],fraction=0.046, pad=0.04, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
+    # cbar4 = f2.colorbar(im4, ax=ax2[1,0],fraction=0.046, pad=0.04, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
+    # cbar5 = f2.colorbar(im5, ax=ax2[1,1],fraction=0.046, pad=0.04, ticks = np.arange(0,SVI.max()+0.1,0.05))
+    # cbar6 = f2.colorbar(im6, ax=ax2[1,2],fraction=0.046, pad=0.04, ticks = np.arange(0,1.2,0.2))
     # plt.show()
     #get DTT********************************************************************
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
