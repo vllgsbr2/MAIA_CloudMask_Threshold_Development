@@ -79,8 +79,9 @@ def calc_thresh(group_file, DOY_bin):
                 #VIS/NIR/SVI/Cirrus
                 else:
                     if clear_obs[:,i].shape[0] > 0:
+                        x = np.array(clear_obs[:,i])
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                        np.nanpercentile(clear_obs[:,i], 99)
+                        np.nanpercentile(x, 99)
 
                     else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
