@@ -89,11 +89,8 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
 
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
     DOY_end = (binned_DOY+1)*8
-    if DOY_end == 8:
-        DOY_sfc_ID = 8
-    else:
-        DOY_sfc_ID = DOY_end - 8
-    sfc_ID_path = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_sfc_ID)
+
+    sfc_ID_path = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_end)
     sfc_ID = Dataset(sfc_ID_path, 'r').variables['surface_ID'][:,:]
 
     #these datafields' raw values serve as the bins, so no modification needed:
