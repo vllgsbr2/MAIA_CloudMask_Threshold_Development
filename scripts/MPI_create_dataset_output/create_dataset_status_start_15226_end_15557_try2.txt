@@ -1,4 +1,0 @@
-00280, 2016048.1740, added to database
-00281, 2016048.1745, added to database
-00282, 2016048.1920, added to database
-00283, 2016048.2055, added to database
