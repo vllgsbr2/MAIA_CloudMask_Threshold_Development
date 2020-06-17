@@ -138,7 +138,7 @@ if __name__ == '__main__':
 
                 hf_database_keys = list(hf_database.keys())
                 #grab only DOY bin 6 since I dont have sfc ID yet for other days
-                hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
+                hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=49 and int(x[4:7])<=56]
 
                 #split the work in half per file
                 #half = len(hf_database_keys)//2

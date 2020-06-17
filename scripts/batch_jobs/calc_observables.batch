@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name='MPI_CD.py'
+#SBATCH --job-name='obs'
 #SBATCH --time=5:00:00
 #SBATCH --mem-per-cpu=4gb
 #SBATCH -p sesempi

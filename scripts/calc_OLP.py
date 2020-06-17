@@ -140,7 +140,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     #binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
     sfc_ID         = sfc_ID #sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
 
-    binned_DOY     = np.digitize(DOY    , bin_DOY, right=False)
+    binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
     sfc_ID         = sfc_ID#[:,:,binned_DOY] #just choose the day for sfc_ID map
 
     #these datafields' raw values serve as the bins, so no modification needed:
@@ -197,14 +197,16 @@ if __name__ == '__main__':
         if rank==r:
             #open database to read
             PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
-            sfc_ID_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
+            #sfc_ID_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
             database_files = os.listdir(PTA_file_path)
+            sfc_ID_path    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_surface_types/surfaceID_LA_056.nc'
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_database_path = database_files[r]
 
             with h5py.File(hf_database_path, 'r') as hf_database,\
-                Dataset(sfc_ID_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
+                Dataset(sfc_ID_path, 'r', format='NETCDF4') as sfc_ID_file:
+                #Dataset(sfc_ID_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
 
                 len_pta       = len(PTA_file_path)
                 start, end    = hf_database_path[len_pta + 26:len_pta +31], hf_database_path[len_pta+36:len_pta+41]
@@ -214,9 +216,11 @@ if __name__ == '__main__':
                 hf_OLP_path = '{}OLP_database_60_cores/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path_OLP, start, end)
 
                 hf_database_keys = list(hf_database.keys())
+                DOY_end, DOY_start = 56, 49
+                hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
-                sfc_ID_LAday48 = sfc_ID_file.variables['surface_ID'][:]
+                sfc_ID_LA = sfc_ID_file.variables['surface_ID'][:]
 
                 with h5py.File(hf_OLP_path, 'w') as hf_OLP:
 
@@ -236,7 +240,7 @@ if __name__ == '__main__':
                         SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
 
                         OLP = get_observable_level_parameter(SZA, VZA, SAA,\
-                              VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM, time_stamp)
+                              VAA, TA, LWM, SIM, sfc_ID_LA, DOY, SGM, time_stamp)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)

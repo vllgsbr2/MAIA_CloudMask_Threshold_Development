@@ -18,7 +18,7 @@ def calc_thresh(group_file):
     '''
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
     with h5py.File(group_file, 'r+') as hf_group,\
-         h5py.File(home + '/thresholds_MCM_efficient.hdf5', 'w') as hf_thresh:
+         h5py.File(home + '/thresholds_reproduce.hdf5', 'w') as hf_thresh:
 
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
         TA_group  = hf_thresh.create_group('TA_bin_01')#bin_ID[24:29])

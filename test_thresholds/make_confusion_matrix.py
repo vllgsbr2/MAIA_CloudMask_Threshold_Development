@@ -23,7 +23,7 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path):
     time_stamps = os.listdir(MAIA_CM_path)
 
     #open file to write to
-    with h5py.File(MCM_Output_path + 'conf_matx_scene_cc_and_uc.HDF5', 'w') as hf_scene_level_conf_matx:
+    with h5py.File(MCM_Output_path + 'conf_matx_scene_reproduce.HDF5', 'w') as hf_scene_level_conf_matx:
 
         for time_stamp in time_stamps:
         #open file one at a time according to time stamp
@@ -37,9 +37,9 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path):
 
 
                 #both return cloudy
-                true         = np.where((MAIA_CM == 0) & (MOD_CM <2))
+                true         = np.where((MAIA_CM == 0) & (MOD_CM == 0))
                 #both return clear
-                false        = np.where((MAIA_CM == 1) & (MOD_CM >=2))
+                false        = np.where((MAIA_CM == 1) & (MOD_CM != 0))
                 #MOD clear MAIA cloudy
                 false_cloudy = np.where((MAIA_CM == 0) & (MOD_CM != 0))
                 #MOD cloudy MAIA clear
@@ -193,7 +193,7 @@ if __name__ == '__main__':
     #define paths for the three databases
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
     grouped_path = home + 'grouped_obs_and_CM.hdf5'
-    thresh_path  = home + 'thresholds_MCM_efficient.hdf5'
+    thresh_path  = home + 'thresholds_reproduce.hdf5'
 
     # #bin confusion matrix
     # with h5py.File(grouped_path, 'r') as hf_group,\

@@ -353,7 +353,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_cos_SZA = np.digitize(cos_SZA, bin_cos_SZA, right=True)
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
-    binned_DOY     = np.digitize(DOY    , bin_DOY, right=False)
+    binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
     #only have one day rn
     #sfc_ID         = sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
 
@@ -523,7 +523,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
     OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
     #pick threshold for each pixel in 1000x1000 grid
-    with h5py.File(threshold_path+'/test_thresholds/thresholds_NO_MOD03_SFCTYPES.hdf5', 'r') as hf_thresholds:
+    with h5py.File('/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/thresholds_reproduce.hdf5', 'r') as hf_thresholds:
         OLP = OLP.reshape((1000**2, 6)).astype(dtype=np.int)
         #DOY and TA is same for all pixels in granule
         if not(np.all(OLP[:,3] == -999)) and not(np.all(OLP[:,5] == -999)):
@@ -540,7 +540,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
         #if OLP[0,3]!=-999 or OLP[0,5]!=-999:
             #TA, DOY = OLP[0,3], OLP[0,5]
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
-            print(path)
+            #print(path)
 
             database = hf_thresholds[path][()]
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
@@ -630,6 +630,7 @@ def get_DTT_NDxI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     max_fill_val = np.max(np.array([fill_val_1, fill_val_2, fill_val_3]))
 
     DTT = np.copy(NDxI)
+    T[T==0] = 1e-3
     DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
     #put upper bound on DTT (fill vals all negative)
     DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
@@ -935,64 +936,53 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     observable_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI',\
                         'Cirrus']
 
-    threhsold_database = {'WI':T_WI,      \
-                          'NDVI':T_NDVI,    \
-                          'NDSI':T_NDSI,    \
-                          'VIS_Ref':T_VIS_Ref, \
-                          'NIR_Ref':T_NIR_Ref, \
-                          'SVI':T_SVI, \
-                          'Cirrus':T_Cirrus}
-
-
     observable_data = np.empty(np.shape(observables))
     T = np.empty(np.shape(observables))
     for i in range(len(observable_names)):
         #threshold_observable_i = threhsold_database[observable_names[i]][:]
-        threshold_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-
 
         observable_data[:,:,i], T[:,:,i] = \
         get_test_determination(observable_level_parameter,\
         observables[:,:,i],\
-        threshold_path,\
+        threshold_filepath,\
         observable_names[i],\
         fill_val_1, fill_val_2, fill_val_3)
     #Thresholds
-    l,w, = 20,8
-    import matplotlib.pyplot as plt
-    import matplotlib.cm as cm
-    f2, ax2 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
-    cmap    = cm.get_cmap('jet')
-    #T[observables == np.nan] = -999
-    im0 = ax2[0,0].imshow(T[:,:,0], cmap=cmap, vmin=T[:,:,0].min(), vmax=T[:,:,0].max())
-    im1 = ax2[0,1].imshow(T[:,:,1], cmap=cmap, vmin=T[:,:,1].min(), vmax=T[:,:,1].max())
-    im2 = ax2[0,2].imshow(T[:,:,2], cmap=cmap, vmin=T[:,:,2].min(), vmax=T[:,:,2].max())
-    im3 = ax2[0,3].imshow(T[:,:,3], cmap=cmap, vmin=T[:,:,3].min(), vmax=T[:,:,3].max())
-    im4 = ax2[1,0].imshow(T[:,:,4], cmap=cmap, vmin=T[:,:,4].min(), vmax=T[:,:,4].max())
-    im5 = ax2[1,1].imshow(T[:,:,5], cmap=cmap, vmin=T[:,:,5].min(), vmax=0.2)
-    im6 = ax2[1,2].imshow(T[:,:,6], cmap=cmap, vmin=T[:,:,6].min(), vmax=T[:,:,6].max())
-    im0.cmap.set_under('k')
-    im1.cmap.set_under('k')
-    im2.cmap.set_under('k')
-    im3.cmap.set_under('k')
-    im4.cmap.set_under('k')
-    im5.cmap.set_under('k')
-    im6.cmap.set_under('k')
-    ax2[0,0].set_title('Thresholds_WI')
-    ax2[0,1].set_title('Thresholds_NDVI')
-    ax2[0,2].set_title('Thresholds_NDSI')
-    ax2[0,3].set_title('Thresholds_VIS_Ref')
-    ax2[1,0].set_title('Thresholds_NIR_Ref')
-    ax2[1,1].set_title('Thresholds_SVI')
-    ax2[1,2].set_title('Thresholds_Cirrus')
-    cbar0 = f2.colorbar(im0, ax=ax2[0,0],fraction=0.046, pad=0.04, ticks = np.arange(0,WI.max()+0.2,0.2))
-    cbar1 = f2.colorbar(im1, ax=ax2[0,1],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.25,0.25))
-    cbar2 = f2.colorbar(im2, ax=ax2[0,2],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.1,0.1))
-    cbar3 = f2.colorbar(im3, ax=ax2[0,3],fraction=0.046, pad=0.04, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
-    cbar4 = f2.colorbar(im4, ax=ax2[1,0],fraction=0.046, pad=0.04, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
-    cbar5 = f2.colorbar(im5, ax=ax2[1,1],fraction=0.046, pad=0.04, ticks = np.arange(0,SVI.max()+0.1,0.05))
-    cbar6 = f2.colorbar(im6, ax=ax2[1,2],fraction=0.046, pad=0.04, ticks = np.arange(0,1.2,0.2))
-    plt.show()
+    #l,w, = 20,8
+    #import matplotlib.pyplot as plt
+    #import matplotlib.cm as cm
+    #f2, ax2 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
+    #cmap    = cm.get_cmap('jet')
+    ##T[observables == np.nan] = -999
+    #im0 = ax2[0,0].imshow(T[:,:,0], cmap=cmap, vmin=T[:,:,0].min(), vmax=T[:,:,0].max())
+    #im1 = ax2[0,1].imshow(T[:,:,1], cmap=cmap, vmin=T[:,:,1].min(), vmax=T[:,:,1].max())
+    #im2 = ax2[0,2].imshow(T[:,:,2], cmap=cmap, vmin=T[:,:,2].min(), vmax=T[:,:,2].max())
+    #im3 = ax2[0,3].imshow(T[:,:,3], cmap=cmap, vmin=T[:,:,3].min(), vmax=T[:,:,3].max())
+    #im4 = ax2[1,0].imshow(T[:,:,4], cmap=cmap, vmin=T[:,:,4].min(), vmax=T[:,:,4].max())
+    #im5 = ax2[1,1].imshow(T[:,:,5], cmap=cmap, vmin=T[:,:,5].min(), vmax=0.2)
+    #im6 = ax2[1,2].imshow(T[:,:,6], cmap=cmap, vmin=T[:,:,6].min(), vmax=T[:,:,6].max())
+    #im0.cmap.set_under('k')
+    #im1.cmap.set_under('k')
+    #im2.cmap.set_under('k')
+    #im3.cmap.set_under('k')
+    #im4.cmap.set_under('k')
+    #im5.cmap.set_under('k')
+    #im6.cmap.set_under('k')
+    #ax2[0,0].set_title('Thresholds_WI')
+    #ax2[0,1].set_title('Thresholds_NDVI')
+    #ax2[0,2].set_title('Thresholds_NDSI')
+    #ax2[0,3].set_title('Thresholds_VIS_Ref')
+    #ax2[1,0].set_title('Thresholds_NIR_Ref')
+    #ax2[1,1].set_title('Thresholds_SVI')
+    #ax2[1,2].set_title('Thresholds_Cirrus')
+    #cbar0 = f2.colorbar(im0, ax=ax2[0,0],fraction=0.046, pad=0.04, ticks = np.arange(0,WI.max()+0.2,0.2))
+    #cbar1 = f2.colorbar(im1, ax=ax2[0,1],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.25,0.25))
+    #cbar2 = f2.colorbar(im2, ax=ax2[0,2],fraction=0.046, pad=0.04, ticks = np.arange(-1,1.1,0.1))
+    #cbar3 = f2.colorbar(im3, ax=ax2[0,3],fraction=0.046, pad=0.04, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
+    #cbar4 = f2.colorbar(im4, ax=ax2[1,0],fraction=0.046, pad=0.04, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
+    #cbar5 = f2.colorbar(im5, ax=ax2[1,1],fraction=0.046, pad=0.04, ticks = np.arange(0,SVI.max()+0.1,0.05))
+    #cbar6 = f2.colorbar(im6, ax=ax2[1,2],fraction=0.046, pad=0.04, ticks = np.arange(0,1.2,0.2))
+    #plt.show()
     #get DTT********************************************************************
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
@@ -1039,7 +1029,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     final_cloud_mask = get_cm_confidence(DTT, activation_values,\
                              Min_num_of_activated_tests, fill_val_2, fill_val_3)
 
-    print('finished: ' , time.time() - start_time)
+    #print('finished: ' , time.time() - start_time)
 
     scene_type_identifier = make_sceneID(observable_level_parameter,observable_level_parameter[:,:,4],\
                      observable_level_parameter[:,:,8], observable_level_parameter[:,:,5])
