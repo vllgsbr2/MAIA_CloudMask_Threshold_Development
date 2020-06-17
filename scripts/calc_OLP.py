@@ -1,4 +1,5 @@
 import numpy as np
+
 def get_sun_glint_mask(observable_level_parameter, solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
                        sun_glint_exclusion_angle):
     """
@@ -87,8 +88,6 @@ def add_sceneID(observable_level_parameter, solarZenith, sensorZenith, solarAzim
         OLP[:,:,4]  = scene_type_identifier             #scene_ID
         OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
-
-
         return OLP
 
 def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
@@ -134,14 +133,9 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     bin_DOY     = np.arange(8. , 376., 8.0)
 
     binned_cos_SZA = np.digitize(cos_SZA, bin_cos_SZA, right=True)
-    binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
-    binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
-
-    #binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
-    sfc_ID         = sfc_ID #sfc_ID[:,:,binned_DOY] #just choose the day for sfc_ID map
-
-    binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
-    sfc_ID         = sfc_ID#[:,:,binned_DOY] #just choose the day for sfc_ID map
+    binned_VZA     = np.digitize(VZA    , bin_VZA    , right=True)
+    binned_RAZ     = np.digitize(RAZ    , bin_RAZ    , right=True)
+    binned_DOY     = np.digitize(DOY    , bin_DOY    , right=True)
 
     #these datafields' raw values serve as the bins, so no modification needed:
     #Target_Area, land_water_mask, snow_ice_mask, sun_glint_mask, sfc_ID
@@ -160,8 +154,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
-
-
     observable_level_parameter = add_sceneID(observable_level_parameter, SZA, VZA, SAA, VAA, 40)
 
     #find where there is missing data, use SZA as proxy, and give fill val
@@ -169,14 +161,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
 
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
-    #import matplotlib.pyplot as plt
-    #from matplotlib import cm
-    #cmap = cm.get_cmap('jet', 15)
-    #obs_names = ['WI','NDVI','NDSI','VIS','NIR','SVI','Cirrus']
-    #home = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
-    #for i in range(6):
-    #    im = plt.imshow(observable_level_parameter[:,:,i], cmap=cmap)
-    #    plt.savefig('{}/OLP_images/{}_{}.png'.format(home, time_stamp, obs_names[i]), dpi=200)
 
     return observable_level_parameter
 
@@ -196,31 +180,27 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
             #open database to read
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
+            home_base = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            PTA_file_path = home_base + 'LA_database_60_cores/'
             #sfc_ID_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
             database_files = os.listdir(PTA_file_path)
-            sfc_ID_path    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_surface_types/surfaceID_LA_056.nc'
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             hf_database_path = database_files[r]
 
-            with h5py.File(hf_database_path, 'r') as hf_database,\
-                Dataset(sfc_ID_path, 'r', format='NETCDF4') as sfc_ID_file:
+            with h5py.File(hf_database_path, 'r') as hf_database:
                 #Dataset(sfc_ID_path + '/SurfaceID_LA_048.nc', 'r', format='NETCDF4') as sfc_ID_file:
 
                 len_pta       = len(PTA_file_path)
                 start, end    = hf_database_path[len_pta + 26:len_pta +31], hf_database_path[len_pta+36:len_pta+41]
 
                 #create/open hdf5 file to store observables
-                PTA_file_path_OLP = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-                hf_OLP_path = '{}OLP_database_60_cores/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path_OLP, start, end)
+                hf_OLP_path = '{}OLP_database_60_cores/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(home_base, start, end)
 
                 hf_database_keys = list(hf_database.keys())
-                DOY_end, DOY_start = 56, 49
-                hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
+                # DOY_end, DOY_start = 56, 49
+                # hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
-
-                sfc_ID_LA = sfc_ID_file.variables['surface_ID'][:]
 
                 with h5py.File(hf_OLP_path, 'w') as hf_OLP:
 
@@ -236,7 +216,12 @@ if __name__ == '__main__':
                         TA  = 0 #will change depending where database is stored
                         LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
-                        DOY = time_stamp[4:7]
+                        DOY = int(time_stamp[4:7])
+                        DOY_bin = DOY - (DOY-1)%8 + 7
+                        sfc_ID_path = home_base + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_bin)
+                        with Dataset(sfc_ID_path, 'r', format='NETCDF4') as sfc_ID_file:
+                            sfc_ID_LA = sfc_ID_file.variables['surface_ID'][:]
+
                         SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
 
                         OLP = get_observable_level_parameter(SZA, VZA, SAA,\
