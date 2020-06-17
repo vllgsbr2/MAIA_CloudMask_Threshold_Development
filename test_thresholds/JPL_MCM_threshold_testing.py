@@ -355,11 +355,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
     sfc_ID         = sfc_ID
 
-    #0 is water/ 1-12 is land; shift by -1 => 0-11 is land, -1 is water
-    #then assign water to 12; this way code has consistant interpretation of sfcID
-    sfc_ID = sfc_ID - 1
-    sfc_ID[sfc_ID == -1] = num_land_sfc_types
-
     #these datafields' raw values serve as the bins, so no modification needed:
     #Target_Area, land_water_mask, snow_ice_mask, sun_glint_mask, sfc_ID
 

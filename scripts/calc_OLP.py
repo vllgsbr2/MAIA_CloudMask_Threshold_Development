@@ -110,11 +110,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
-    #0 is water/ 1-12 is land; shift by -1 => 0-11 is land, -1 is water
-    #then assign water to 12; this way code has consistant interpretation of sfcID
-    sfc_ID = sfc_ID - 1
-    sfc_ID[sfc_ID == -1] = 12
-
     observable_level_parameter = add_sceneID(observable_level_parameter)
 
     #find where there is missing data, use SZA as proxy, and give fill val
