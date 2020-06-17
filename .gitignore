@@ -1,0 +1,6 @@
+scripts/__pycache__/
+test_thresholds/__pycache__/
+slurm*
+*.hdf5
+*.HDF5
+scripts/MPI_create_dataset_output
