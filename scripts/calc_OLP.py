@@ -199,7 +199,7 @@ if __name__ == '__main__':
                 hf_database_keys = list(hf_database.keys())
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
-                with h5py.File(hf_OLP_path, 'x') as hf_OLP:
+                with h5py.File(hf_OLP_path, 'w') as hf_OLP:
 
                     for time_stamp in hf_database_keys:
 
@@ -214,15 +214,11 @@ if __name__ == '__main__':
                         LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
                         DOY = time_stamp[4:7]
+                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, LWM)
                         # SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
                         #num_land_sfc_types = 12 #read from config file later
                         #MOD03_sfctypes     = hf_database[time_stamp+'/MOD03_LandSeaMask'][()]
 
-                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA,\
-                                                 40, LWM)
-
-                        #OLP = get_observable_level_parameter(SZA, VZA, SAA,\
-                        #      VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM, time_stamp)
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA, TA,\
                                             LWM, SIM, DOY, SGM, time_stamp)
 
