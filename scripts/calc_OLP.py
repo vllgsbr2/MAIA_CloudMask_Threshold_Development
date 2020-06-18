@@ -1,5 +1,49 @@
 import numpy as np
 
+def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
+                       sun_glint_exclusion_angle, land_water_mask):
+    """
+    Calculate sun-glint flag.
+
+    [Section 3.3.2.3]
+    Sun-glint water pixels are set to 0;
+    non-sun-glint water pixels and land pixels are set to 1.
+
+    Arguments:
+        solarZenith {2D narray} -- Solar zenith angle in degree
+        sensorZenith {2D narray} -- MAIA zenith angle in degree
+        solarAzimuth {2D narray} -- Solar azimuth angle in degree
+        sensorAzimuth {2D narray} -- MAIA azimuth angle in degree
+        sun_glint_exclusion_angle {float} -- maximum scattering angle (degree) for sun-glint
+        land_water_mask {2D binary narray} -- specify the pixel is water (0) or land (1)
+
+    Returns:
+        2D binary narray -- sunglint mask over granule same shape as solarZenith
+    """
+
+    solarZenith               = np.deg2rad(solarZenith)
+    sensorZenith              = np.deg2rad(sensorZenith)
+    solarAzimuth              = np.deg2rad(solarAzimuth)
+    sensorAzimuth             = np.deg2rad(sensorAzimuth)
+    sun_glint_exclusion_angle = np.deg2rad(sun_glint_exclusion_angle)
+
+    cos_theta_r = np.sin(sensorZenith) * np.sin(solarZenith) \
+                * np.cos(sensorAzimuth - solarAzimuth - np.pi ) + np.cos(sensorZenith) \
+                * np.cos(solarZenith)
+    theta_r = np.arccos(cos_theta_r)
+
+    sun_glint_idx = np.where((theta_r >= 0) & \
+                             (theta_r <= sun_glint_exclusion_angle))
+    no_sun_glint_idx = np.where(~((theta_r >= 0) & \
+                                  (theta_r <= sun_glint_exclusion_angle)))
+    theta_r[sun_glint_idx]    = 0
+    theta_r[no_sun_glint_idx] = 1
+    #turn off glint calculated over land
+    theta_r[land_water_mask == 1] = 1
+    sun_glint_mask = theta_r
+
+    return sun_glint_mask
+
 def add_sceneID(observable_level_parameter):
 
         """
@@ -170,9 +214,12 @@ if __name__ == '__main__':
                         LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
                         DOY = time_stamp[4:7]
-                        SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
+                        # SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
                         #num_land_sfc_types = 12 #read from config file later
                         #MOD03_sfctypes     = hf_database[time_stamp+'/MOD03_LandSeaMask'][()]
+
+                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA,\
+                                                 40, LWM)
 
                         #OLP = get_observable_level_parameter(SZA, VZA, SAA,\
                         #      VAA, TA, LWM, SIM, sfc_ID_LAday48, DOY, SGM, time_stamp)
