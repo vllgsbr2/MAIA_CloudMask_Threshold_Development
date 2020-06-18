@@ -102,26 +102,25 @@ if __name__ == '__main__':
     import h5py
     # import tables
     import os
-    # import mpi4py.MPI as MPI
+    import mpi4py.MPI as MPI
     import sys
     # tables.file._open_files.close_all()
 
-    # comm = MPI.COMM_WORLD
-    # rank = comm.Get_rank()
-    # size = comm.Get_size()
-    #
-    # for r in range(size):
-    #     if rank==r:
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
 
-    #define paths for the database
-    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-    # grouped_file_path = os.listdir(home + 'grouped_obs_and_CMs')
-    # grouped_file_path = np.sort(grouped_file_path)
-    # grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
-    DOY_bin   = r
-    DOY_end   = (DOY_bin+1)*8
-    DOY_start = DOY_end - 7
-    grouped_file_path = home + 'grouped_obs_and_CMs/' + 'grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.\
-                        format(DOY_start, DOY_end, DOY_bin)
-    # print(grouped_file_path)
-    calc_thresh(grouped_file_path, DOY_bin)
+    for r in range(size):
+        if rank==r:
+            #define paths for the database
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            # grouped_file_path = os.listdir(home + 'grouped_obs_and_CMs')
+            # grouped_file_path = np.sort(grouped_file_path)
+            # grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
+            DOY_bin   = r
+            DOY_end   = (DOY_bin+1)*8
+            DOY_start = DOY_end - 7
+            grouped_file_path = home + 'grouped_obs_and_CMs/' + 'grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.\
+                                format(DOY_start, DOY_end, DOY_bin)
+            # print(grouped_file_path)
+            calc_thresh(grouped_file_path, DOY_bin)
