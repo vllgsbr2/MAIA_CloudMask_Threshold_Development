@@ -10,4 +10,4 @@
 #SBATCH --error='slurm_thresh.err'
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
-python calc_threshold.py
+mpirun -n 46 python calc_threshold.py
