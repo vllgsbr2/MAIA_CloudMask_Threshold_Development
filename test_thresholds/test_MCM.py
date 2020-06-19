@@ -1,5 +1,6 @@
 from JPL_MCM_threshold_testing import MCM_wrapper
 from MCM_output import make_output
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import matplotlib
@@ -31,10 +32,7 @@ SZA, VZA, VAA,SAA,\
 scene_type_identifier = \
              MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
                              sfc_ID_filepath, config_filepath)
-plt.figure(6)
 
-im_scene_ID = plt.imshow(scene_type_identifier, vmin=0)
-im_scene_ID.cmap.set_under('pink')
 #save output
 make_output(Sun_glint_exclusion_angle,\
             Max_RDQI,\
@@ -69,6 +67,14 @@ DTT_WI, DTT_NDVI, DTT_NDSI, DTT_VIS_Ref, DTT_NIR_Ref, DTT_SVI, DTT_Cirrus =\
                                                 DTT[:,:,6]
 
 #plotting*******************************************************************
+print('Commence Plotting Output')
+plt.figure(6)
+
+im_scene_ID = plt.imshow(scene_type_identifier, vmin=0)
+im_scene_ID.cmap.set_under('pink')
+plt.set_xticks([])
+plt.set_yticks([])
+
 cmap = 'bwr'
 
 vmin = -1.2
@@ -92,6 +98,7 @@ RGB = np.flip(BRFs[:,:,:3], 2)
 RGB[RGB==-999] = np.nan
 #RGB = get_enhanced_RGB(RGB)
 
+RGB = (RGB * 255).astype(np.uint8)
 ax1[1].imshow(RGB)
 ax1[1].set_xticks([])
 ax1[1].set_yticks([])
@@ -147,8 +154,6 @@ ax0[1,3].set_title('BRF RGB')
 for a in ax0.flat:
     a.set_xticks([])
     a.set_yticks([])
-
-
 
 
 #DTT
