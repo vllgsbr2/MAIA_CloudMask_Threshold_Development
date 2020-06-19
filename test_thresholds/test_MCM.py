@@ -79,7 +79,7 @@ l,w, = 20,8
 #f1 = plt.figure(figsize=(20,10))
 f1, ax1 = plt.subplots(ncols=2, figsize=(l,w), sharex=True, sharey=True)
 
-im_cm = ax1[0].imshow(final_cloud_mask, cmap='Greys', vmax=1)
+im_cm = ax1[0].imshow(final_cloud_mask, cmap='Greys', vmax=1.5)
 ax1[0].set_title('final MAIA CLoud Mask')
 
 ax1[0].set_xticks([])
