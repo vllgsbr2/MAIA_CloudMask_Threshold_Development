@@ -1,5 +1,6 @@
 from JPL_MCM_threshold_testing import MCM_wrapper
 from MCM_output import make_output
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import matplotlib
