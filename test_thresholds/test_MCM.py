@@ -1,6 +1,5 @@
 from JPL_MCM_threshold_testing import MCM_wrapper
 from MCM_output import make_output
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import matplotlib
@@ -33,8 +32,9 @@ scene_type_identifier = \
              MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
                              sfc_ID_filepath, config_filepath)
 plt.figure(6)
-scene_type_identifier[scene_type_identifier>0] = np.nan
-plt.imshow(scene_type_identifier)
+
+im_scene_ID = plt.imshow(scene_type_identifier, vmin=0)
+im_scene_ID.cmap.set_under('pink')
 #save output
 make_output(Sun_glint_exclusion_angle,\
             Max_RDQI,\
