@@ -32,6 +32,7 @@ scene_type_identifier = \
              MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
                              sfc_ID_filepath, config_filepath)
 plt.figure(6)
+scene_type_identifier[scene_type_identifier>0] = np.nan
 plt.imshow(scene_type_identifier)
 #save output
 make_output(Sun_glint_exclusion_angle,\
