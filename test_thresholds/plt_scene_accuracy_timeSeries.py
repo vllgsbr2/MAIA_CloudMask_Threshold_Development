@@ -23,9 +23,9 @@ container = []
 for i, scene_accur_path in enumerate(scene_accur_paths):
     with np.load('{}/{}'.format(home, scene_accur_path)) as npz_scene_accur:
         scene_accurs[:,:,i] = npz_scene_accur['MCM_accuracy']*100
-        sample_size = np.sum(npz_scene_accur['num_samples'].flatten())
+        sample_size = np.sum(npz_scene_accur['num_samples'].flatten())/10**8
         mean_accuracy = np.mean(scene_accurs[:,:,i])
-        output = 'DOY Bin {:02d}/45 | mean accuracy {:2.2f} % | num pixels {:1.4} x 10^8'.format(i, mean_accuracy, sample_size/10**8)
+        output = 'DOY Bin {:02d}/45 | mean accuracy {:2.2f} % | num pixels {:1.4} x 10^8'.format(i, mean_accuracy, sample_size)
         print(output)
         image = ax.imshow(scene_accurs[:,:,i], cmap=cmap, vmin=0, vmax=100)
         DOY = (int(scene_accur_path[-6:-4]) + 1)*8
@@ -45,6 +45,6 @@ cbar.set_ticklabels([str(x) for x in np.arange(0,105,5)])
 
 ani = animation.ArtistAnimation(fig, container, interval=700, blit=False,
                                 repeat=True)
-#ani.save('./dynamic_images.mp4')
+ani.save('./MCM_Scene_Accuracy_all_DOY.mp4')
 
 plt.show()
