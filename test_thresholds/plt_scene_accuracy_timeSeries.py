@@ -23,7 +23,7 @@ container = []
 for i, scene_accur_path in enumerate(scene_accur_paths):
     with np.load('{}/{}'.format(home, scene_accur_path)) as npz_scene_accur:
         scene_accurs[:,:,i] = npz_scene_accur['MCM_accuracy']*100
-        print(np.where(np.isnan(scene_accurs[:,:,i]))[0].shape)
+        print(np.where(np.isnan(scene_accurs[:,:,i]))[0].shape, i)
         image = ax.imshow(scene_accurs[:,:,i], cmap=cmap, vmin=0, vmax=100)
         DOY = (int(scene_accur_path[-6:-4]) + 1)*8
         title = ax.text(0.5,1.05,'Accuracy DOY {}/365\nValid previous 8 days'.format(DOY),
