@@ -72,8 +72,8 @@ plt.figure(6)
 
 im_scene_ID = plt.imshow(scene_type_identifier, vmin=0)
 im_scene_ID.cmap.set_under('pink')
-plt.set_xticks([])
-plt.set_yticks([])
+plt.xticks([])
+plt.yticks([])
 
 cmap = 'bwr'
 
