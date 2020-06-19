@@ -23,7 +23,10 @@ container = []
 for i, scene_accur_path in enumerate(scene_accur_paths):
     with np.load('{}/{}'.format(home, scene_accur_path)) as npz_scene_accur:
         scene_accurs[:,:,i] = npz_scene_accur['MCM_accuracy']*100
-        print(i, np.mean(scene_accurs[:,:,i]), np.where(np.isnan(scene_accurs[:,:,i]))[0].shape[0]>0, np.sum(npz_scene_accur['num_samples'].flatten()))
+        sample_size = np.sum(npz_scene_accur['num_samples'].flatten())
+        mean_accuracy = np.mean(scene_accurs[:,:,i])
+        output = 'DOY Bin {:02d}/45 | mean accuracy {:2.2f} % | num pixels {:1.4} x 10^8'.format(i, mean_accuracy, sample_size/10**8)
+        print(output)
         image = ax.imshow(scene_accurs[:,:,i], cmap=cmap, vmin=0, vmax=100)
         DOY = (int(scene_accur_path[-6:-4]) + 1)*8
         title = ax.text(0.5,1.05,'Accuracy DOY {}/365\nValid previous 8 days'.format(DOY),
