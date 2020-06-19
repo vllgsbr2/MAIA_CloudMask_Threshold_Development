@@ -78,11 +78,12 @@ l,w, = 20,8
 #f1 = plt.figure(figsize=(20,10))
 f1, ax1 = plt.subplots(ncols=2, figsize=(l,w), sharex=True, sharey=True)
 
-ax1[0].imshow(final_cloud_mask, cmap='Greys')
+im_cm = ax1[0].imshow(final_cloud_mask, cmap='Greys', vmax=1)
 ax1[0].set_title('final MAIA CLoud Mask')
 
 ax1[0].set_xticks([])
 ax1[0].set_yticks([])
+im_cm.cmap.set_over('r')
 
 from rgb_enhancement import *
 
