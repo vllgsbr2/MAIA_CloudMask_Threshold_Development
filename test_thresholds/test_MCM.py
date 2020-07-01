@@ -97,7 +97,8 @@ from rgb_enhancement import *
 RGB = np.flip(BRFs[:,:,:3], 2)
 RGB[RGB==-999] = 0
 RGB = get_enhanced_RGB(RGB)
-RGB[RGB==0] = np.nan
+# RGB = RGB.astype(dtype=np.float)
+# RGB[RGB==0] = np.nan
 
 RGB = (RGB * 255).astype(np.uint8)
 ax1[1].imshow(RGB)
