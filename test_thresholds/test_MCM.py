@@ -100,7 +100,7 @@ RGB = get_enhanced_RGB(RGB)
 # RGB = RGB.astype(dtype=np.float)
 # RGB[RGB==0] = np.nan
 
-RGB = (RGB * 255).astype(np.uint8)
+# RGB = (RGB * 255).astype(np.uint8)
 ax1[1].imshow(RGB)
 ax1[1].set_xticks([])
 ax1[1].set_yticks([])
