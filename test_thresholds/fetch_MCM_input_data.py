@@ -5,63 +5,66 @@ from netCDF4 import Dataset
 #JPL inputs**********************************************************************
 #land_water and snow_ice mask are not known as of June 2019
 def get_JPL_data(test_data_JPL_path):
-    with h5py.File(test_data_JPL_path, 'r') as JPL_file:
 
-        #retrieve radiances
-        rad_band_4  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_4']
-        rad_band_5  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_5']
-        rad_band_6  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_6']
-        rad_band_9  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_9']
-        rad_band_12 = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_12']
-        rad_band_13 = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_13']
+    JPL_file = h5py.File(test_data_JPL_path, 'r')
 
-        #retrieve radiance quality flag 'RDQI'
-        RDQI_b4  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_4']
-        RDQI_b5  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_5']
-        RDQI_b6  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_6']
-        RDQI_b9  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_9']
-        RDQI_b12 = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_12']
-        RDQI_b13 = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_13']
+    #retrieve radiances
+    rad_band_4  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_4']
+    rad_band_5  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_5']
+    rad_band_6  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_6']
+    rad_band_9  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_9']
+    rad_band_12 = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_12']
+    rad_band_13 = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_13']
 
-        #retrieve Solar Zenith, Sensor Zenith, Solar Azimuth, Sensor Azimuth
-        #assumed sun-view geometry is in degrees
-        #S=sun; V=sensor/viewing; ZA=zenith angle; AA=azimuthal angle
-        SZA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/solar_zenith_angle']
-        VZA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/viewing_zenith_angle']
-        SAA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/solar_azimuth_angle']
-        VAA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/viewing_azimuth_angle']
+    #retrieve radiance quality flag 'RDQI'
+    RDQI_b4  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_4']
+    RDQI_b5  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_5']
+    RDQI_b6  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_6']
+    RDQI_b9  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_9']
+    RDQI_b12 = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_12']
+    RDQI_b13 = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_13']
 
-        #retrieve current earth sun distance 'd' in AU; is d in AU just E0?
-        d = JPL_file['Anicillary_Radiometric_Product/Earth_Sun_Distance/earth_sun_dist_in_AU'][()]
+    #retrieve Solar Zenith, Sensor Zenith, Solar Azimuth, Sensor Azimuth
+    #assumed sun-view geometry is in degrees
+    #S=sun; V=sensor/viewing; ZA=zenith angle; AA=azimuthal angle
+    SZA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/solar_zenith_angle']
+    VZA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/viewing_zenith_angle']
+    SAA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/solar_azimuth_angle']
+    VAA     = JPL_file['Anicillary_Radiometric_Product/Sun_View_Geometry/viewing_azimuth_angle']
 
-        #retrieve standard band weighted solar irradiance at 1AU 'E_std_0b'
-        #[w/m**2/um]
-        #in order MAIA  bands 6,9,4,5,12,13
-        #in order MODIS bands 1,2,3,4,6 ,26
-        E_std_0 = JPL_file['Anicillary_Radiometric_Product/Band_Weighted_Solar_Irradiance_at_1AU/Band_Weighted_Solar_Irradiance_at_1AU']
+    #retrieve current earth sun distance 'd' in AU; is d in AU just E0?
+    d = JPL_file['Anicillary_Radiometric_Product/Earth_Sun_Distance/earth_sun_dist_in_AU'][()]
 
-        #snow/ice mask
-        #0 for clear, 1 for snow/ice
-        #note it should be downscaled from 4km res to 1km res
-        #expected snow/ice mask:
-        #Remote Sensing of Environment 196 (2017) 42-55
-        #Global Multisensor Automated satellite-based Snow and Ice Mapping System
-        #(GMASI) for cryosphere monitoring
-        #Peter Romanov
-        #NOAA-CREST, City University of New York, 160 Convent Ave, New York, NY,
-        #USA Office of Satellite Applications and Research, NOAA NESDIS,
-        #5830 University Research Court, College Park, MD 20740, USA
-        snow_ice_mask = JPL_file['Anicillary_Geometric_Product/Snow_Ice_Mask/Snow_Ice_Mask']
+    #retrieve standard band weighted solar irradiance at 1AU 'E_std_0b'
+    #[w/m**2/um]
+    #in order MAIA  bands 6,9,4,5,12,13
+    #in order MODIS bands 1,2,3,4,6 ,26
+    E_std_0 = JPL_file['Anicillary_Radiometric_Product/Band_Weighted_Solar_Irradiance_at_1AU/Band_Weighted_Solar_Irradiance_at_1AU']
 
-        #land/water mask
-        #0 for water and 1 for land
-        land_water_mask = JPL_file['Anicillary_Geometric_Product/Land_Water_Mask/Land_Water_Mask']
+    #snow/ice mask
+    #0 for clear, 1 for snow/ice
+    #note it should be downscaled from 4km res to 1km res
+    #expected snow/ice mask:
+    #Remote Sensing of Environment 196 (2017) 42-55
+    #Global Multisensor Automated satellite-based Snow and Ice Mapping System
+    #(GMASI) for cryosphere monitoring
+    #Peter Romanov
+    #NOAA-CREST, City University of New York, 160 Convent Ave, New York, NY,
+    #USA Office of Satellite Applications and Research, NOAA NESDIS,
+    #5830 University Research Court, College Park, MD 20740, USA
+    snow_ice_mask = JPL_file['Anicillary_Geometric_Product/Snow_Ice_Mask/Snow_Ice_Mask']
 
-        DOY = JPL_file.get('Anicillary_Radiometric_Product/Day_of_year/Day_of_year')[()]
+    #land/water mask
+    #0 for water and 1 for land
+    land_water_mask = JPL_file['Anicillary_Geometric_Product/Land_Water_Mask/Land_Water_Mask']
 
-        Target_Area = JPL_file.get('Anicillary_Radiometric_Product/Target_Area/Target_Area')[()]
+    DOY = JPL_file.get('Anicillary_Radiometric_Product/Day_of_year/Day_of_year')[()]
 
-        MOD03_SFCTYPES = JPL_file.get('Anicillary_Radiometric_Product/MOD03_LandSeaMask/MOD03_LandSeaMask')[()]
+    Target_Area = JPL_file.get('Anicillary_Radiometric_Product/Target_Area/Target_Area')[()]
+
+    MOD03_SFCTYPES = JPL_file.get('Anicillary_Radiometric_Product/MOD03_LandSeaMask/MOD03_LandSeaMask')[()]
+
+
 
     return rad_band_4, rad_band_5, rad_band_6, rad_band_9, rad_band_12, rad_band_13,\
            RDQI_b4, RDQI_b5, RDQI_b6, RDQI_b9, RDQI_b12, RDQI_b13,\
