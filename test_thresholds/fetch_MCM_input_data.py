@@ -5,8 +5,7 @@ from netCDF4 import Dataset
 #JPL inputs**********************************************************************
 #land_water and snow_ice mask are not known as of June 2019
 def get_JPL_data(test_data_JPL_path):
-    with:
-        JPL_file = h5py.File(test_data_JPL_path, 'r')
+    with h5py.File(test_data_JPL_path, 'r') as JPL_file:
 
         #retrieve radiances
         rad_band_4  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_4']
