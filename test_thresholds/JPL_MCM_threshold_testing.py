@@ -844,13 +844,6 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     MOD03_sfctypes = get_JPL_data(test_data_JPL_path)
 
     #get UIUC provided data*****************************************************
-    T_NDVI,\
-    T_NDSI,\
-    T_WI,\
-    T_VIS_Ref,\
-    T_NIR_Ref,\
-    T_SVI,\
-    T_Cirrus,\
     sfc_ID,\
     Sun_glint_exclusion_angle,\
     Max_RDQI,\

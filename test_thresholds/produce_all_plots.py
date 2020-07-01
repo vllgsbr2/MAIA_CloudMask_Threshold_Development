@@ -79,8 +79,9 @@ for r in range(size):
                 from rgb_enhancement import *
 
                 RGB = np.dstack((BRF_band_6, BRF_band_5, BRF_band_4))
-
-                #RGB = get_enhanced_RGB(RGB)
+                RGB[RGB==-999] = 0
+                
+                RGB = get_enhanced_RGB(RGB)
                 ax1[1].imshow(RGB)
                 ax1[1].set_xticks([])
                 ax1[1].set_yticks([])
