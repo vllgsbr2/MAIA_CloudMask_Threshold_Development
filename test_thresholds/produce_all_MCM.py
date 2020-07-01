@@ -57,7 +57,8 @@ for r in range(size):
             DTT, final_cloud_mask,\
             BRFs,\
             SZA, VZA, VAA,SAA,\
-            scene_type_identifier = \
+            scene_type_identifier,\
+            T = \
             MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
                                          sfc_ID_filepath, config_filepath)
 
