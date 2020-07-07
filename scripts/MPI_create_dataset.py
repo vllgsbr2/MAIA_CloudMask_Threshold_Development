@@ -319,10 +319,17 @@ if __name__ == '__main__':
                                'EV_500_RefSB', 'EV_500_Aggr1km_RefSB',\
                                'EV_1KM_RefSB']
 
-            file_MAIA  = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
-            file_MAIA  = h5py.File(file_MAIA, 'r')
-            target_lat = file_MAIA['lat'][()].astype(np.float64)
-            target_lon = file_MAIA['lon'][()].astype(np.float64)
+            # file_MAIA  = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
+            # file_MAIA  = h5py.File(file_MAIA, 'r')
+            # target_lat = file_MAIA['lat'][()].astype(np.float64)
+            # target_lon = file_MAIA['lon'][()].astype(np.float64)
+
+            #grab target lat/lon from Guangyu h5 files (new JPL grids)
+            PTA = 'USA_LosAngeles'
+            filepath_latlon = '{}/{}/Grids_{}.h5'.format(PTA_file_path, 'PTA_lat_lon_grids', PTA)
+            with h5py.File(filepath_latlon, 'r') as hf_latlon:
+                target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
+                target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
 
             #define start and end file for a particular rank
             #(size - 1) so last processesor can take the modulus
