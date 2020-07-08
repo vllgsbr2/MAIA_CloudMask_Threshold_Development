@@ -6,7 +6,7 @@ home = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Deve
 files = os.listdir(home)
 
 #master dataframe to store all time stamps processed
-master_df = pd.DataFrame(data=None, columns=['time_stamps'], dtype=str)
+master_df = pd.DataFrame(data=None, columns=['time_stamps'], dtype=str, delimiter=',')
 
 for f in files:
     temp_df = pd.read_csv(home+'/'+f, dtype=str)
