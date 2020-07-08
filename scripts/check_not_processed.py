@@ -56,13 +56,12 @@ time_stamps_downloaded = [x[10:22] for x in filename_MOD_02]
 # filename_MOD_35_timeStamp = [x[10:22] for x in filename_MOD_35]
 counter = 0
 for i in time_stamps_downloaded:
-    counter+=1
-    print(len(i), len(processed_files[counter]))
+
     if i in processed_files:
         pass
     else:
         check.write('{} not found'.format(i))
-        print('{} not found'.format(i))
+        print('{} not found #{:0>5d}'.format(i, counter))
     # found = False
     # j=0
     # print(counter)
@@ -76,6 +75,6 @@ for i in time_stamps_downloaded:
     #
     # if not found:
     #     check.write('{},{}\n'.format(i, 0))
-print(counter)
+# print(counter)
 check.close()
 # print(len(master_df))
