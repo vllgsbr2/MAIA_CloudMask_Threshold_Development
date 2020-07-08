@@ -8,17 +8,17 @@ files = ['{}/{}'.format(home, x) for x in os.listdir(home)]
 #master dataframe to store all time stamps processed
 # master_df = pd.DataFrame(data=None, columns=['time_stamps'], dtype=str)
 
+temp_t_stamps = []
 for f in files:
     # temp_df = pd.read_csv(f, dtype=str, delimiter=',')
     # temp_df.columns = ['num', 'time_stamp', 'phrase']
-    temp_t_stamps = []
     with open(f, 'r') as f_current:
         for t_stamp in f_current:
             temp_t_stamps.append(t_stamp.split(', ')[1])
             # print(temp_t_stamps)
 
 master_df = pd.DataFrame(data=temp_t_stamps, columns=['time_stamps'], dtype=str)
-
+print(master_df)
 processed_files = list(master_df['time_stamps'])
 #remove space in front of time stamps
 processed_files = [x[1:] for x in processed_files]
