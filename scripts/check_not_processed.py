@@ -12,11 +12,11 @@ for f in files:
     # temp_df = pd.read_csv(f, dtype=str, delimiter=',')
     # temp_df.columns = ['num', 'time_stamp', 'phrase']
     temp_t_stamps = []
-    temp_t_stamps = pd.DataFrame(data=None, columns=['time_stamps'], dtype=str)
     with open(f, 'r') as f_current:
         for t_stamp in f_current:
             temp_t_stamps.append(t_stamp.split(', ')[1])
-            print(temp_t_stamps)
+            # print(temp_t_stamps)
+    temp_t_stamps = pd.DataFrame(data=temp_t_stamps, columns=['time_stamps'], dtype=str)
 
     master_df['time_stamps'] =  master_df['time_stamps'].append(temp_t_stamps)
 
