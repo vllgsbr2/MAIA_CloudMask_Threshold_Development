@@ -55,13 +55,13 @@ time_stamps_downloaded = [x[10:22] for x in filename_MOD_02]
 counter = 0
 for i in time_stamps_downloaded:
     found = False
-    for j in processed_files:
-        #print(i+'\n'+j[1:])
-        if str(i)==str(j[1:]):
-            #check.write('{},{}\n'.format(i, 1))
+    j=0
+    while not found:#for j in processed_files:
+        if str(i)==str(processed_files[j][1:]):
             found = True
+            check.write('{},{}\n'.format(i, found))
             counter+=1
-            break
+            j+=1
     if not found:
         check.write('{},{}\n'.format(i, 0))
 print(counter)
