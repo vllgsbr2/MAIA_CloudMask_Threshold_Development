@@ -6,7 +6,7 @@ home = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Deve
 files = ['{}/{}'.format(home, x) for x in os.listdir(home)]
 
 #master dataframe to store all time stamps processed
-master_df = pd.DataFrame(data=None, columns=['time_stamps'], dtype=str)
+# master_df = pd.DataFrame(data=None, columns=['time_stamps'], dtype=str)
 
 for f in files:
     # temp_df = pd.read_csv(f, dtype=str, delimiter=',')
@@ -16,9 +16,8 @@ for f in files:
         for t_stamp in f_current:
             temp_t_stamps.append(t_stamp.split(', ')[1])
             # print(temp_t_stamps)
-    temp_t_stamps = pd.DataFrame(data=temp_t_stamps, columns=['time_stamps'], dtype=str)
 
-    master_df['time_stamps'] =  master_df['time_stamps'].append(temp_t_stamps['time_stamps'])
+master_df = pd.DataFrame(data=temp_t_stamps, columns=['time_stamps'], dtype=str)
 
 processed_files = list(master_df['time_stamps'])
 #remove space in front of time stamps
