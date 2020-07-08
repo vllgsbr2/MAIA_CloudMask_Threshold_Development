@@ -58,11 +58,12 @@ counter = 0
 for i in time_stamps_downloaded:
 
     if i in processed_files:
-        pass
-    else:
-        check.write('{} not found'.format(i))
         print('{} not found #{:0>5d}'.format(i, counter))
         counter+=1
+    else:
+        check.write('{} not found'.format(i))
+        # print('{} not found #{:0>5d}'.format(i, counter))
+        # counter+=1
     # found = False
     # j=0
     # print(counter)
