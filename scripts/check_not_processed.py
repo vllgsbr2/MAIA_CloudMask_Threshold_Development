@@ -58,7 +58,7 @@ for i in time_stamps_downloaded:
     for j in processed_files:
         #print(i+'\n'+j[1:])
         if str(i)==str(j[1:]):
-            check.write('{},{}\n'.format(i, 1))
+            #check.write('{},{}\n'.format(i, 1))
             found = True
             counter+=1
             break
