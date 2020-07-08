@@ -18,7 +18,7 @@ for f in files:
             # print(temp_t_stamps)
     temp_t_stamps = pd.DataFrame(data=temp_t_stamps, columns=['time_stamps'], dtype=str)
 
-    master_df['time_stamps'] =  master_df['time_stamps'].append(temp_t_stamps)
+    master_df['time_stamps'] =  master_df['time_stamps'].append(temp_t_stamps['time_stamps'])
 
 processed_files = list(master_df['time_stamps'])
 #remove space in front of time stamps
