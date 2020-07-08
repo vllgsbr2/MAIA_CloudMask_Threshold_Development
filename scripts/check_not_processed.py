@@ -13,7 +13,7 @@ for f in files:
         for t_stamp in f_current:
             processed_files.append(t_stamp.split(', ')[1])
 
-print(processed_files)
+# print(processed_files)
 
 # home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/'
 # f = 'LAADS_query.2019-10-15T18_07.csv'
@@ -40,13 +40,15 @@ filename_MOD_02 = np.sort(filename_MOD_02)
 #it comes from
 time_stamps_downloaded = [x[10:22] for x in filename_MOD_02]
 
-counter = 0
+counter_not_found = 0
+counter_found = 0
 for i in time_stamps_downloaded:
     if i in processed_files:
-        pass
+        counter_found += 1
     else:
         print('{} not found #{:0>5d}'.format(i, counter))
         check.write('{} not found'.format(i))
-        counter+=1
+        counter_not_found += 1
 
+print('found {} | not found {}'.format(counter_not_found, counter_found))
 check.close()
