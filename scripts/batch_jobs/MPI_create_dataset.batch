@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name='MPI_CD.py'
+#SBATCH --job-name=/MPI_CD.py
 #SBATCH -p sesempi
 #SBATCH --time=3:00:00
 #SBATCH --mem-per-cpu=32gb
@@ -7,7 +7,7 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
 #SBATCH --mail-user=vllgsbr2@illinois.edu
-#SBATCH --error='slurm_create_dataset.err'
+#SBATCH --error=/slurm_create_dataset.err
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
 mpirun -n 60 python MPI_create_dataset.py
