@@ -7,28 +7,21 @@ files = ['{}/{}'.format(home, x) for x in os.listdir(home)]
 
 #master dataframe to store all time stamps processed
 
-temp_t_stamps = []
+processed_files = []
 for f in files:
     with open(f, 'r') as f_current:
         for t_stamp in f_current:
-            temp_t_stamps.append(t_stamp.split(', ')[1])
+            processed_files.append(t_stamp.split(', ')[1])
 
-master_df = pd.DataFrame(data=temp_t_stamps, columns=['time_stamps'], dtype=str)
-
-processed_files = list(master_df['time_stamps'])
-#remove space in front of time stamps
-processed_files = [x[1:] for x in processed_files]
 print(processed_files)
-home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/'
-f = 'LAADS_query.2019-10-15T18_07.csv'
 
-laads_query_df = pd.read_csv(home+f)
-file_name_column = 'fileUrls from query MOD021KM--61 MOD03--61 MOD35_L2'\
-                   '--61 2002-01-01..2019-10-15 x-124.4y39.8 x-112.8y30.7[5]'
-all_files = list(laads_query_df[file_name_column])
-
-# check_df = pd.DataFrame()
-# check_df.columns = ['time_stamps', 'processed_1_not_processed_0']
+# home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/'
+# f = 'LAADS_query.2019-10-15T18_07.csv'
+#
+# laads_query_df = pd.read_csv(home+f)
+# file_name_column = 'fileUrls from query MOD021KM--61 MOD03--61 MOD35_L2'\
+#                    '--61 2002-01-01..2019-10-15 x-124.4y39.8 x-112.8y30.7[5]'
+# all_files = list(laads_query_df[file_name_column])
 
 check = open('./check_processed.csv', 'w')
 check.write('time_stamps,processed_1_not_processed_0\n')
@@ -50,10 +43,10 @@ time_stamps_downloaded = [x[10:22] for x in filename_MOD_02]
 counter = 0
 for i in time_stamps_downloaded:
     if i in processed_files:
-        print('{} not found #{:0>5d}'.format(i, counter))
-        counter+=1
-
+        pass
     else:
+        print('{} not found #{:0>5d}'.format(i, counter))
         check.write('{} not found'.format(i))
+        counter+=1
 
 check.close()
