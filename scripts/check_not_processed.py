@@ -43,6 +43,8 @@ time_stamps_downloaded = [x[10:22] for x in filename_MOD_02]
 counter_not_found = 0
 counter_found = 0
 for i in time_stamps_downloaded:
+    print(i, processed_files[0])
+    break
     if i in processed_files:
         counter_found += 1
     else:
