@@ -15,6 +15,7 @@ for f in files:
     with open(f, 'r') as f_current:
         for t_stamp in f_current:
             temp_t_stamps.append(t_stamp.split(', ')[1])
+            print(temp_t_stamps)
 
     master_df['time_stamps'] =  master_df['time_stamps'].append(temp_t_stamps)
 
