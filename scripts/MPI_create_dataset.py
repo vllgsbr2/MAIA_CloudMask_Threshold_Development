@@ -275,7 +275,6 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     #    save_crop(subgroup_cloud_mask_test, cm_test_key, crop_cm_test)
 
 if __name__ == '__main__':
-    print('hi')
     import mpi4py.MPI as MPI
     import pandas as pd
     import tables
@@ -290,90 +289,90 @@ if __name__ == '__main__':
         if rank==r:
             print('entering rank '+str(r))
 
-            #choose PTA from keeling
-            PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
-
-            #grab files names for PTA
-            filename_MOD_02 = np.array(os.listdir(PTA_file_path + '/MOD_02'))
-            filename_MOD_03 = np.array(os.listdir(PTA_file_path + '/MOD_03'))
-            filename_MOD_35 = np.array(os.listdir(PTA_file_path + '/MOD_35'))
-
-            #sort files by time so we can access corresponding files without
-            #searching in for loop
-            filename_MOD_02 = np.sort(filename_MOD_02)
-            filename_MOD_03 = np.sort(filename_MOD_03)
-            filename_MOD_35 = np.sort(filename_MOD_35)
-
-            #grab time stamp (YYYYDDD.HHMM) to name each group after the granule
-            #it comes from
-            filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
-            filename_MOD_03_timeStamp = [x[7:19]  for x in filename_MOD_03]
-            filename_MOD_35_timeStamp = [x[10:22] for x in filename_MOD_35]
-
-            #add full path to file
-            filename_MOD_02 = [PTA_file_path + '/MOD_02/' + x for x in filename_MOD_02]
-            filename_MOD_03 = [PTA_file_path + '/MOD_03/' + x for x in filename_MOD_03]
-            filename_MOD_35 = [PTA_file_path + '/MOD_35/' + x for x in filename_MOD_35]
-
-            #initialize some constants outside of the loop
-            fieldname       = ['EV_250_RefSB', 'EV_250_Aggr1km_RefSB',\
-                               'EV_500_RefSB', 'EV_500_Aggr1km_RefSB',\
-                               'EV_1KM_RefSB']
-
-            # file_MAIA  = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
-            # file_MAIA  = h5py.File(file_MAIA, 'r')
-            # target_lat = file_MAIA['lat'][()].astype(np.float64)
-            # target_lon = file_MAIA['lon'][()].astype(np.float64)
-
-            #grab target lat/lon from Guangyu h5 files (new JPL grids)
-            PTA = 'USA_LosAngeles'
-            filepath_latlon = '{}/{}/Grids_{}.h5'.format(PTA_file_path, 'PTA_lat_lon_grids', PTA)
-            with h5py.File(filepath_latlon, 'r') as hf_latlon:
-                target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
-                target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
-
-            #define start and end file for a particular rank
-            #(size - 1) so last processesor can take the modulus
-            end               = len(filename_MOD_02)
-            processes_per_cpu = end // (size-1)
-            start             = rank * processes_per_cpu
-
-            if rank < (size-1):
-                end = (rank+1) * processes_per_cpu
-            elif rank==(size-1):
-                processes_per_cpu_last = end % (size-1)
-                end = (rank * processes_per_cpu) + processes_per_cpu_last
-
-            #create/open file
-            #open file to write status of algorithm to
-            database_loc = 'try2_database/LA_database_60_cores'
-            hf_path = '{}/{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}_try2.hdf5'.format(PTA_file_path, database_loc, start, end)
-            output_path = './MPI_create_dataset_output/create_dataset_status_start_{:0>5d}_end_{:0>5d}_try2.txt'.format(start, end)
-
-            with h5py.File(hf_path, 'w') as hf:
-                output = open(output_path, 'w')
-
-                i=1
-                print('entering for loop in rank '+str(r))
-                for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
-                                       in zip(filename_MOD_02[start:end]          ,\
-                                              filename_MOD_03[start:end]          ,\
-                                              filename_MOD_35[start:end]          ,\
-                                              filename_MOD_02_timeStamp[start:end],\
-                                              filename_MOD_03_timeStamp[start:end],\
-                                              filename_MOD_35_timeStamp[start:end]):
-
-                    #if int(time_MOD02[4:7]) >=48 and int(time_MOD02[4:7]) <= 55:
-                    try:
-                        build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
-                                    target_lat, target_lon)
-
-                        output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
-                    except Exception as e:
-
-                        output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, 'corrupt\n'))
-                    print(i)
-                    i+=1
-                print('done with for loop in rank '+str(r))
-                hf.close()
-                output.close()
+            # #choose PTA from keeling
+            # PTA_file_path   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
+            #
+            # #grab files names for PTA
+            # filename_MOD_02 = np.array(os.listdir(PTA_file_path + '/MOD_02'))
+            # filename_MOD_03 = np.array(os.listdir(PTA_file_path + '/MOD_03'))
+            # filename_MOD_35 = np.array(os.listdir(PTA_file_path + '/MOD_35'))
+            #
+            # #sort files by time so we can access corresponding files without
+            # #searching in for loop
+            # filename_MOD_02 = np.sort(filename_MOD_02)
+            # filename_MOD_03 = np.sort(filename_MOD_03)
+            # filename_MOD_35 = np.sort(filename_MOD_35)
+            #
+            # #grab time stamp (YYYYDDD.HHMM) to name each group after the granule
+            # #it comes from
+            # filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
+            # filename_MOD_03_timeStamp = [x[7:19]  for x in filename_MOD_03]
+            # filename_MOD_35_timeStamp = [x[10:22] for x in filename_MOD_35]
+            #
+            # #add full path to file
+            # filename_MOD_02 = [PTA_file_path + '/MOD_02/' + x for x in filename_MOD_02]
+            # filename_MOD_03 = [PTA_file_path + '/MOD_03/' + x for x in filename_MOD_03]
+            # filename_MOD_35 = [PTA_file_path + '/MOD_35/' + x for x in filename_MOD_35]
+            #
+            # #initialize some constants outside of the loop
+            # fieldname       = ['EV_250_RefSB', 'EV_250_Aggr1km_RefSB',\
+            #                    'EV_500_RefSB', 'EV_500_Aggr1km_RefSB',\
+            #                    'EV_1KM_RefSB']
+            #
+            # # file_MAIA  = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MAIA.hdf5'
+            # # file_MAIA  = h5py.File(file_MAIA, 'r')
+            # # target_lat = file_MAIA['lat'][()].astype(np.float64)
+            # # target_lon = file_MAIA['lon'][()].astype(np.float64)
+            #
+            # #grab target lat/lon from Guangyu h5 files (new JPL grids)
+            # PTA = 'USA_LosAngeles'
+            # filepath_latlon = '{}/{}/Grids_{}.h5'.format(PTA_file_path, 'PTA_lat_lon_grids', PTA)
+            # with h5py.File(filepath_latlon, 'r') as hf_latlon:
+            #     target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
+            #     target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
+            #
+            # #define start and end file for a particular rank
+            # #(size - 1) so last processesor can take the modulus
+            # end               = len(filename_MOD_02)
+            # processes_per_cpu = end // (size-1)
+            # start             = rank * processes_per_cpu
+            #
+            # if rank < (size-1):
+            #     end = (rank+1) * processes_per_cpu
+            # elif rank==(size-1):
+            #     processes_per_cpu_last = end % (size-1)
+            #     end = (rank * processes_per_cpu) + processes_per_cpu_last
+            #
+            # #create/open file
+            # #open file to write status of algorithm to
+            # database_loc = 'try2_database/LA_database_60_cores'
+            # hf_path = '{}/{}/LA_PTA_database_mpi_start_{:0>5d}_end_{:0>5d}_try2.hdf5'.format(PTA_file_path, database_loc, start, end)
+            # output_path = './MPI_create_dataset_output/create_dataset_status_start_{:0>5d}_end_{:0>5d}_try2.txt'.format(start, end)
+            #
+            # with h5py.File(hf_path, 'w') as hf:
+            #     output = open(output_path, 'w')
+            #
+            #     i=1
+            #     print('entering for loop in rank '+str(r))
+            #     for MOD02, MOD03, MOD35, time_MOD02, time_MOD03, time_MOD35\
+            #                            in zip(filename_MOD_02[start:end]          ,\
+            #                                   filename_MOD_03[start:end]          ,\
+            #                                   filename_MOD_35[start:end]          ,\
+            #                                   filename_MOD_02_timeStamp[start:end],\
+            #                                   filename_MOD_03_timeStamp[start:end],\
+            #                                   filename_MOD_35_timeStamp[start:end]):
+            #
+            #         #if int(time_MOD02[4:7]) >=48 and int(time_MOD02[4:7]) <= 55:
+            #         try:
+            #             build_data_base(MOD02, MOD03, MOD35, hf_path, hf, time_MOD02, fieldname,\
+            #                         target_lat, target_lon)
+            #
+            #             output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
+            #         except Exception as e:
+            #
+            #             output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, 'corrupt\n'))
+            #         print(i)
+            #         i+=1
+            #     print('done with for loop in rank '+str(r))
+            #     hf.close()
+            #     output.close()
