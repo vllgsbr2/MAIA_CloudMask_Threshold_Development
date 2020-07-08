@@ -9,10 +9,14 @@ files = ['{}/{}'.format(home, x) for x in os.listdir(home)]
 master_df = pd.DataFrame(data=None, columns=['time_stamps'], dtype=str)
 
 for f in files:
-    temp_df = pd.read_csv(f, dtype=str, delimiter=',')
-    temp_df.columns = ['num', 'time_stamp', 'phrase']
+    # temp_df = pd.read_csv(f, dtype=str, delimiter=',')
+    # temp_df.columns = ['num', 'time_stamp', 'phrase']
+    temp_t_stamps = []
+    with open(f, 'r') as f_current:
+        for t_stamp in f_current:
+            temp_t_stamps.append(t_stamp.split(', ')[1])
 
-    master_df['time_stamps'] =  master_df['time_stamps'].append(temp_df['time_stamp'])
+    master_df['time_stamps'] =  master_df['time_stamps'].append(temp_t_stamps)
 
 processed_files = list(master_df['time_stamps'])
 #remove space in front of time stamps
