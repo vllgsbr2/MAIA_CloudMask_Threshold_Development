@@ -57,7 +57,7 @@ time_stamps_downloaded = [x[10:22] for x in filename_MOD_02]
 counter = 0
 for i in time_stamps_downloaded:
     counter+=1
-    print(i, processed_files[counter])
+    print(len(i), len(processed_files[counter]))
     if i in processed_files:
         pass
     else:
