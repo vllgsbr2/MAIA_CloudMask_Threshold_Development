@@ -275,6 +275,7 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     #    save_crop(subgroup_cloud_mask_test, cm_test_key, crop_cm_test)
 
 if __name__ == '__main__':
+    print('hi')
     import mpi4py.MPI as MPI
     import pandas as pd
     import tables
@@ -327,10 +328,9 @@ if __name__ == '__main__':
             #grab target lat/lon from Guangyu h5 files (new JPL grids)
             PTA = 'USA_LosAngeles'
             filepath_latlon = '{}/{}/Grids_{}.h5'.format(PTA_file_path, 'PTA_lat_lon_grids', PTA)
-            #with h5py.File(filepath_latlon, 'r') as hf_latlon:
-            hf_latlon = h5py.File(filepath_latlon, 'r')
-            target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
-            target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
+            with h5py.File(filepath_latlon, 'r') as hf_latlon:
+                target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
+                target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
 
             #define start and end file for a particular rank
             #(size - 1) so last processesor can take the modulus
