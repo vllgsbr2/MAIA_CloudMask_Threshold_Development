@@ -18,6 +18,8 @@ for f in files:
     except:
         pass
 processed_files = list(master_df['time_stamps'])
+#remove space in front of time stamps
+processed_files = [x[1:] for x in processed_files]
 #print(master_df)
 home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/'
 f = 'LAADS_query.2019-10-15T18_07.csv'
