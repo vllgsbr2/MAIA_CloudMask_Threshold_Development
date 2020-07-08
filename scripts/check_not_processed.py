@@ -52,5 +52,5 @@ for i in time_stamps_downloaded:
         check.write('{} not found'.format(i))
         counter_not_found += 1
 
-print('found {} | not found {}'.format(counter_not_found, counter_found))
+print('found {} | not found {}'.format(counter_found, counter_not_found))
 check.close()
