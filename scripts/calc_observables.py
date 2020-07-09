@@ -1,5 +1,5 @@
 import numpy as np
-from svi_calculation import svi_calculation
+from svi_dynamic_size_input import svi_calculation
 
 def get_R(radiance, SZA, d, E_std_0b):
     """
@@ -220,14 +220,11 @@ def get_spatial_variability_index(R_band_6):#, numrows, numcols):
     R_band_6_[R_band_6_ == -998] = -999
     bad_value = -999
     min_valid_pixels = 9
-    spatial_variability_index = \
-                            svi_calculation(R_band_6_, bad_value, min_valid_pixels)
+    numcols, numrows = R_band_6.shape[0], R_band_6.shape[1]
+    spatial_variability_index = svi_calculation(R_band_6_, bad_value,\
+                                                min_valid_pixels,\
+                                                numcols, numrows)
 
-    #data quality house keeping
-    spatial_variability_index[R_band_6 == -998] = -998
-    spatial_variability_index[R_band_6 == -999] = -999
-
-    return spatial_variability_index
 
 #cirrus test
 def get_cirrus_Ref(R_band_13):
@@ -295,9 +292,9 @@ if __name__ == '__main__':
                             rad_band_13 = hf_database[time_stamp + '/radiance/band_26'][()]
 
                             #in order MAIA  bands 6,9,4,5,12,13
-                            #in order MODIS bands 1,2,3,4,6 ,26 
+                            #in order MODIS bands 1,2,3,4,6 ,26
                             E_std_0b = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
-                            d        = hf_database[time_stamp + '/earth_sun_distance'][()]                            
+                            d        = hf_database[time_stamp + '/earth_sun_distance'][()]
 
                             R_band_4  = get_R(rad_band_4, SZA, d, E_std_0b[2])
                             R_band_5  = get_R(rad_band_5, SZA, d, E_std_0b[3])
@@ -329,4 +326,3 @@ if __name__ == '__main__':
                                         group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
                                     except:
                                         hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
-
