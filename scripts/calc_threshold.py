@@ -28,7 +28,7 @@ def calc_thresh(group_file, DOY_bin):
 
         num_sfc_types = 15
 
-        master_thresholds = np.ones((10*14*12*num_sfc_types)).reshape((10,14,12,num_sfc_types))*-999
+        master_thresholds = np.ones((10*15*12*num_sfc_types)).reshape((10,15,12,num_sfc_types))*-999
         obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
         for obs in obs_names:
             DOY_group.create_dataset(obs, data=master_thresholds)

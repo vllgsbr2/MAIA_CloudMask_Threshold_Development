@@ -371,7 +371,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
-
     #find where there is missing data, use SZA as proxy, and give fill val
     missing_idx = np.where(SZA==-999)
     observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
@@ -543,6 +542,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             # print(np.unique(bad_thresh_binID))
             # import sys
             # sys.exit()
+
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
             thresholds[fillVal_idx[0]] = -999
             thresholds = np.array(thresholds).reshape(shape)
