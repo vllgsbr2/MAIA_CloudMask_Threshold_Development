@@ -27,9 +27,9 @@ for r in range(size):
             source_data = nc_surfaceID.variables['surface_ID'][:].astype(np.float64)
 
             print('regridding {}'.format(sfcID_x[-19:]))
-            sfcID_regridded = regrid_MODIS_2_MAIA(source_lat, source_lon,\
-                                                  target_lat, target_lon,\
-                                                  source_data).astype(np.int)
+            sfcID_regridded = regrid_MODIS_2_MAIA(np.copy(source_lat), np.copy(source_lon),\
+                                                  np.copy(target_lat), np.copy(target_lon),\
+                                                  np.copy(source_data)).astype(np.int)
             print('saving new {}'.format(sfcID_x[-19:]))
             #reassign regridded data to original file
             nc_surfaceID.variables['Latitude'][:]   = target_lat
