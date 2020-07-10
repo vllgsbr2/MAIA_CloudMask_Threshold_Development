@@ -40,7 +40,7 @@ def make_JPL_data_from_MODIS():
                     hf = h5py.File(output_path + '/test_JPL_data_{}.HDF5'.format(time_stamp), 'w')
 
                     #define arbitrary shape for granule/orbit
-                    shape = (1000,1000)
+                    shape = rad_b4.shape #(1000,1000)
 
                     #add cloud mask for later purposes
                     hf.create_dataset('MOD35_cloud_mask', data=modcm, compression='gzip')
