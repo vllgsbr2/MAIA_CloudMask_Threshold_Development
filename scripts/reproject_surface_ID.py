@@ -2,6 +2,7 @@ from regrid import regrid_MODIS_2_MAIA
 from netCDF4 import Dataset
 import h5py
 import os
+import numpy as np
 import mpi4py.MPI as MPI
 
 comm = MPI.COMM_WORLD
