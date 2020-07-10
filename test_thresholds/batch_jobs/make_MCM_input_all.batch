@@ -3,11 +3,11 @@
 #SBATCH -p sesebig
 #SBATCH --time=00:30:00
 #SBATCH --mem-per-cpu=4gb
-#SBATCH -n 60
+#SBATCH -n 4
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
 #SBATCH --mail-user=vllgsbr2@illinois.edu
 #SBATCH --error='slurm_make_MCM_input_all.err'
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/
-mpirun -n 60 python make_MCM_input_all.py
+python make_MCM_input_all.py
