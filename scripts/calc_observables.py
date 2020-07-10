@@ -312,7 +312,7 @@ if __name__ == '__main__':
                             NIR_reflectance           = get_NIR_reflectance(R_band_9)
                             spatial_variability_index = get_spatial_variability_index(R_band_6)
                             cirrus_Ref                = get_cirrus_Ref(R_band_13)
-
+                            print(spatial_variability_index)
                             print(np.array(spatial_variability_index).shape, cirrus_Ref.shape)
                             data = np.dstack((whiteness_index, NDVI, NDSI,\
                                               visible_reflectance, NIR_reflectance,\
