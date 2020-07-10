@@ -751,6 +751,7 @@ def get_cm_confidence(DTT, activation, N, fill_val_2, fill_val_3):
     #cloud mask, 0-3 inclusive
     #check if all tests failed with DTT = -126 <- bad quality data
     #check if all tests failed with DTT = -127 <- no data
+    shape = DTT[:,:,0]
     cloudy_test_count      = np.zeros(shape)
     failed_retrieval_count = np.zeros(shape)
     no_data_count          = np.zeros(shape)
