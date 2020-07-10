@@ -220,7 +220,7 @@ def get_spatial_variability_index(R_band_6):#, numrows, numcols):
     R_band_6_[R_band_6_ == -998] = -999
     bad_value = -999
     min_valid_pixels = 9
-    numcols, numrows = R_band_6.shape[0], R_band_6.shape[1]
+    numcols, numrows = R_band_6.shape[1], R_band_6.shape[0]
     spatial_variability_index = svi_calculation(R_band_6_, bad_value,\
                                                 min_valid_pixels,\
                                                 numcols, numrows)
