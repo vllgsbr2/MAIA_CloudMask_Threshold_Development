@@ -40,7 +40,7 @@ for r in range(size):
 
                 nc_regrid_sfcID_x.createVariable('Latitude'  , 'f4', ('grid_lat','grid_lon'))
                 nc_regrid_sfcID_x.createVariable('Longitude' , 'f4', ('grid_lat','grid_lon'))
-                nc_regrid_sfcID_x.createVariable('surface_ID', 'i4', ('grid_lat','grid_lon'))
+                nc_regrid_sfcID_x.createVariable('surface_ID', 'i1', ('grid_lat','grid_lon'))
 
                 nc_regrid_sfcID_x.variables['Latitude'][:]   = target_lat
                 nc_regrid_sfcID_x.variables['Longitude'][:]  = target_lon
