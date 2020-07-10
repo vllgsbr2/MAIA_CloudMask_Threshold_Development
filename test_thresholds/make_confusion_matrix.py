@@ -91,7 +91,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
 
     #read in thresholds
     obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
-    thresholds = np.empty((7,10,14,12,19))
+    thresholds = np.empty((7,10,15,12,19))
     for i, obs_ in enumerate(obs_names):
         path = 'TA_bin_01/DOY_bin_{:02d}/{}'.format(DOY_bin, obs_)
         thresholds[i] = hf_thresh[path][()]
