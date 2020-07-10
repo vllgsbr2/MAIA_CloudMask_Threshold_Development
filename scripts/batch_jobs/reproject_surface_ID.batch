@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name='reproj sfc id'
+#SBATCH -p sesebig
+#SBATCH --time=00:20:00
+#SBATCH --mem-per-cpu=4gb
+#SBATCH -n 46
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=END
+#SBATCH --mail-user=vllgsbr2@illinois.edu
+#SBATCH --error='slurm_reproject_surface_ID.err'
+
+cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
+mpirun -n 46 python reproject_surface_ID.py

@@ -15,10 +15,6 @@ from fetch_MCM_input_data import *
 import time
 from svi_dynamic_size_input import svi_calculation #svi_calculation import svi_calculation
 
-
-#define arbitrary shape for granule/orbit to process
-shape = (1000,1000)
-
 #quality check radiance*********************************************************
 #section 3.2.1.3 and 3.3.2.1.2 (last paragraph)
 def mark_bad_radiance(radiance, RDQI, Max_RDQI):
@@ -518,14 +514,14 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     #because scene_type_identifier (sfc_ID) contains information on
     #sunglint/snow_ice/water/land we use less dimensions to decribe the scene
-    OLP = np.zeros((1000,1000,6))
+    OLP = np.zeros((shape[0],shape[1],6))
     OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
     OLP[:,:,4]  = scene_type_identifier             #scene_ID
     OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
-    #pick threshold for each pixel in 1000x1000 grid
+    #pick threshold for each pixel in x by y grid
     with h5py.File(threshold_path, 'r') as hf_thresholds:
-        OLP = OLP.reshape((1000**2, 6)).astype(dtype=np.int)
+        OLP = OLP.reshape((shape[0]*shape[1], 6)).astype(dtype=np.int)
         #DOY and TA is same for all pixels in granule
         if not(np.all(OLP[:,3] == -999)) and not(np.all(OLP[:,5] == -999)):
             #not -999 index; use to define target area and day of year for the granule
@@ -548,11 +544,11 @@ def get_test_determination(observable_level_parameter, observable_data,\
             # sys.exit()
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
             thresholds[fillVal_idx[0]] = -999
-            thresholds = np.array(thresholds).reshape((1000,1000))
+            thresholds = np.array(thresholds).reshape(shape)
 
             return observable_data, thresholds
 
-        return observable_data, np.ones((1000,1000))*-999
+        return observable_data, np.ones(shape)*-999
 
 #calculate distance to threshold************************************************
 #keep fill values unchanged
@@ -846,6 +842,9 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     Target_Area,\
     MOD03_sfctypes = get_JPL_data(test_data_JPL_path)
 
+    #define global shape for granule to process
+    shape = rad_band_4.shape
+
     #get UIUC provided data*****************************************************
     sfc_ID,\
     Sun_glint_exclusion_angle,\
@@ -994,7 +993,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     print('finished: ' , time.time() - start_time)
 
     scene_type_identifier = add_sceneID(observable_level_parameter)
-    OLP_ = np.zeros((1000,1000,6))
+    OLP_ = np.zeros((shape[0],shape[1],6))
     OLP_[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
     OLP_[:,:,4]  = scene_type_identifier             #scene_ID
     OLP_[:,:,5] = observable_level_parameter[:,:,7]  #DOY
