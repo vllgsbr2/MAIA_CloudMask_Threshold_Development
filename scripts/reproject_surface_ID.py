@@ -35,10 +35,12 @@ for r in range(size):
             regrid_sfcID_file = '{}/{}/{}'.format(home, 'try2_database/LA_surface_types', sfcID_x[-19:])
             with Dataset(regrid_sfcID_file, 'w') as nc_regrid_sfcID_x:
                 shape = sfcID_regridded.shape
-                nc_regrid_sfcID_x.createVariable('Latitude'  , 'f4', shape)
-                nc_regrid_sfcID_x.createVariable('Longitude' , 'f4', shape)
-                nc_regrid_sfcID_x.createVariable('surface_ID', 'f4', shape)
-                
+                grid = nc_regrid_sfcID_x.createDimension('grid', shape)
+
+                nc_regrid_sfcID_x.createVariable('Latitude'  , 'f4', 'grid')
+                nc_regrid_sfcID_x.createVariable('Longitude' , 'f4', 'grid')
+                nc_regrid_sfcID_x.createVariable('surface_ID', 'f4', 'grid')
+
                 nc_regrid_sfcID_x.variables['Latitude'][:]   = target_lat
                 nc_regrid_sfcID_x.variables['Longitude'][:]  = target_lon
                 nc_regrid_sfcID_x.variables['surface_ID'][:] = sfcID_regridded
