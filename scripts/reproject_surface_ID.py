@@ -21,8 +21,9 @@ for r in range(size):
             target_lon = hf_LA_grid['Geolocation/Longitude'][()]
 
         with Dataset(sfcID_x, 'r') as nc_surfaceID:
-            source_lat = nc_surfaceID.variables['Latitude'][:]
-            source_lon = nc_surfaceID.variables['Longitude'][:]
+            source_lat  = nc_surfaceID.variables['Latitude'][:]
+            source_lon  = nc_surfaceID.variables['Longitude'][:]
+            source_data = nc_surfaceID.variables['surface_ID'][:]
 
             print('regridding {}'.format(sfcID_x[-19:]))
             sfcID_regridded = regrid_MODIS_2_MAIA(source_lat, source_lon,\
