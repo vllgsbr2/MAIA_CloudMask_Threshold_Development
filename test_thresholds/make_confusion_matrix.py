@@ -36,7 +36,8 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
                 MAIA_CM = hf_MAIA_CM['cloud_mask_output/final_cloud_mask'][()]#output files
                 MOD_CM  = hf_MOD_CM['MOD35_cloud_mask'][()]#input files
 
-                conf_matx_mask = np.zeros((1000,1000,4), dtype=np.int)
+                shape = MAIA_CM.shape
+                conf_matx_mask = np.zeros((shape[0],shape[1],4), dtype=np.int)
 
                 #both return cloudy
                 true         = np.where((MAIA_CM == 0) & (MOD_CM == 0))
