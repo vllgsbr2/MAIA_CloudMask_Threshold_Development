@@ -204,33 +204,33 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
 
-            #bin confusion matrix **********************************************
-            DOY_bin = rank
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            grouped_path   = home + 'grouped_obs_and_CMs'
-            thresh_path    = home + 'thresholds_all_DOY'
-            conf_matx_path = home + 'conf_matx_group'
-
-            grouped_files   = [home + x for x in np.sort(os.listdir(grouped_path))]
-            thresh_files    = [home + x for x in np.sort(os.listdir(thresh_path))]
-            conf_matx_path  = [home + x for x in np.sort(os.listdir(conf_matx_path))]
-
-            num_land_sfc_types = 12
-            with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
-                 h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
-                 h5py.File(conf_matx_path[DOY_bin], 'w') as hf_confmatx:
-
-                group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin)
-
-            # #scene confusion matrix ********************************************
-            # #define paths for the three databases
+            # #bin confusion matrix **********************************************
             # DOY_bin = rank
-            # home    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            # MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
-            # MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
-            # MCM_Output_path = home
+            # home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            # grouped_path   = home + 'grouped_obs_and_CMs'
+            # thresh_path    = home + 'thresholds_all_DOY'
+            # conf_matx_path = home + 'conf_matx_group'
             #
-            # scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin)
+            # grouped_files   = [home + x for x in np.sort(os.listdir(grouped_path))]
+            # thresh_files    = [home + x for x in np.sort(os.listdir(thresh_path))]
+            # conf_matx_path  = [home + x for x in np.sort(os.listdir(conf_matx_path))]
+            #
+            # num_land_sfc_types = 12
+            # with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
+            #      h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
+            #      h5py.File(conf_matx_path[DOY_bin], 'w') as hf_confmatx:
+            #
+            #     group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin)
+
+            #scene confusion matrix ********************************************
+            #define paths for the three databases
+            DOY_bin = rank
+            home    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
+            MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
+            MCM_Output_path = home
+
+            scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin)
 
 
 
