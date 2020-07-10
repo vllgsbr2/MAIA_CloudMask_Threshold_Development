@@ -119,7 +119,6 @@ def make_JPL_data_from_MODIS(database_file, output_path, home):
 if __name__ == '__main__':
 
     import mpi4py.MPI as MPI
-    tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
