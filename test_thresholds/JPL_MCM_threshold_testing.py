@@ -13,7 +13,7 @@ import numpy as np
 import sys
 from fetch_MCM_input_data import *
 import time
-from svi_calculation import svi_calculation#svi_dynamic_size_input import svi_calculation
+from svi_dynamic_size_input import svi_calculation #svi_calculation import svi_calculation
 
 
 #define arbitrary shape for granule/orbit to process
@@ -281,8 +281,11 @@ def get_spatial_variability_index(R_band_6, numrows, numcols):
     R_band_6_[R_band_6_ == -998] = -999
     bad_value = -999
     min_valid_pixels = 9
+    numrows, numcols = R_band_6.shape[0], R_band_6.shape[1]
     spatial_variability_index = \
-                            svi_calculation(R_band_6_, bad_value, min_valid_pixels)
+                            svi_calculation(R_band_6_, bad_value,\
+                                            min_valid_pixels,\
+                                            numcols, numrows)
 
     #data quality house keeping
     spatial_variability_index[R_band_6 == -998] = -998
