@@ -17,13 +17,13 @@ for r in range(size):
 
         LA_grid_file = '{}/{}/{}'.format(home, 'PTA_lat_lon_grids', 'Grids_USA_LosAngeles.h5')
         with h5py.File(LA_grid_file, 'r') as hf_LA_grid:
-            target_lat = hf_LA_grid['Geolocation/Latitude'][()]
-            target_lon = hf_LA_grid['Geolocation/Longitude'][()]
+            target_lat = hf_LA_grid['Geolocation/Latitude'][()].astype(np.float64)).astype(np.int)
+            target_lon = hf_LA_grid['Geolocation/Longitude'][()].astype(np.float64)).astype(np.int)
 
         with Dataset(sfcID_x, 'r') as nc_surfaceID:
-            source_lat  = nc_surfaceID.variables['Latitude'][:]
-            source_lon  = nc_surfaceID.variables['Longitude'][:]
-            source_data = nc_surfaceID.variables['surface_ID'][:]
+            source_lat  = nc_surfaceID.variables['Latitude'][:].astype(np.float64)).astype(np.int)
+            source_lon  = nc_surfaceID.variables['Longitude'][:].astype(np.float64)).astype(np.int)
+            source_data = nc_surfaceID.variables['surface_ID'][:].astype(np.float64)).astype(np.int)
 
             print('regridding {}'.format(sfcID_x[-19:]))
             sfcID_regridded = regrid_MODIS_2_MAIA(source_lat, source_lon,\
