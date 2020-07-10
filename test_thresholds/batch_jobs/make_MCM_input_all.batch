@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name='cloud_mask input'
 #SBATCH -p sesebig
-#SBATCH --time=00:30:00
+#SBATCH --time=01:30:00
 #SBATCH --mem-per-cpu=4gb
 #SBATCH -n 4
 #SBATCH --mail-type=FAIL
