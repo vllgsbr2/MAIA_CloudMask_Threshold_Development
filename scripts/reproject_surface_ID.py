@@ -13,8 +13,8 @@ for r in range(size):
     if rank==r:
 
         home   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
-        sfcID_x = ['{}/{}/{}'.format(home, 'try2_database/LA_surface_types', x)\
-                   for x in os.listdir(home+'/try2_database/LA_surface_types')][r]
+        sfcID_x = ['{}/{}/{}'.format(home, 'try2_database/LA_surface_types_old_grid', x)\
+                   for x in os.listdir(home+'/try2_database/LA_surface_types_old_grid')][r]
 
         LA_grid_file = '{}/{}/{}'.format(home, 'PTA_lat_lon_grids', 'Grids_USA_LosAngeles.h5')
         with h5py.File(LA_grid_file, 'r') as hf_LA_grid:
@@ -31,9 +31,16 @@ for r in range(size):
                                                   np.copy(target_lat), np.copy(target_lon),\
                                                   np.copy(source_data)).astype(np.int)
             print('saving new {}'.format(sfcID_x[-19:]))
-            #reassign regridded data to original file
-            nc_surfaceID.variables['Latitude'][:]   = target_lat
-            nc_surfaceID.variables['Longitude'][:]  = target_lon
-            nc_surfaceID.variables['surface_ID'][:] = sfcID_regridded
+            #reassign regridded data to new file
+            regrid_sfcID_file = '{}/{}/{}'.format(home, 'try2_database/LA_surface_types', sfcID_x[-19:])
+            with Dataset(regrid_sfcID_file, 'w') as nc_regrid_sfcID_x:
+                shape = sfcID_regridded.shape
+                nc_regrid_sfcID_x.createVariable('Latitude'  , 'f4', shape)
+                nc_regrid_sfcID_x.createVariable('Longitude' , 'f4', shape)
+                nc_regrid_sfcID_x.createVariable('surface_ID', 'f4', shape)
+                
+                nc_regrid_sfcID_x.variables['Latitude'][:]   = target_lat
+                nc_regrid_sfcID_x.variables['Longitude'][:]  = target_lon
+                nc_regrid_sfcID_x.variables['surface_ID'][:] = sfcID_regridded
 
         print('successfully regridded and saved {}'.format(sfcID_x[-19:]))
