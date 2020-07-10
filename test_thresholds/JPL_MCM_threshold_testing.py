@@ -514,6 +514,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     #because scene_type_identifier (sfc_ID) contains information on
     #sunglint/snow_ice/water/land we use less dimensions to decribe the scene
+    shape = observable_data.shape
     OLP = np.zeros((shape[0],shape[1],6))
     OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
     OLP[:,:,4]  = scene_type_identifier             #scene_ID
