@@ -15,7 +15,7 @@ for r in range(size):
         sfcID_x = ['{}/{}/{}'.format(home, 'try2_database/LA_surface_types', x)\
                    for x in os.listdir(home+'/try2_database/LA_surface_types')][r]
 
-        LA_grid_file = '{}/{}/{}'.format(home, 'LA_PTA_MODIS_Data', 'Grids_USA_LosAngeles.h5')
+        LA_grid_file = '{}/{}'.format(home, 'Grids_USA_LosAngeles.h5')
         with h5py.File(LA_grid_file, 'r') as hf_LA_grid:
             target_lat = hf_LA_grid['Geolocation/Latitude'][()]
             target_lon = hf_LA_grid['Geolocation/Longitude'][()]
