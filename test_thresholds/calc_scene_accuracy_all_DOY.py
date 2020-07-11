@@ -8,7 +8,7 @@ def scene_conf_matx(conf_matx_path, DOY_bin, result_path):
         tables        = [x for x in confmatx_keys if x[:-13] == 'confusion_matrix_table']
         #print(masks)
         #pixel by pixel accuracy
-        shape = hf_confmatx[mask][()].shape
+        shape = hf_confmatx[masks[0]][()].shape
         accuracy = np.zeros(shape)
         #number of samples that contributed to every evaluation type
         #needed since not all pixels in each scene have data, -999 instead
