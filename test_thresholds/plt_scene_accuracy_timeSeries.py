@@ -8,7 +8,7 @@ import matplotlib.animation as animation
 
 home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/scene_accuracy'
 scene_accur_paths = np.sort(np.array(os.listdir(home)))
-scene_accurs = np.zeros((1000,1000,len(scene_accur_paths)))
+scene_accurs = np.zeros((400,300,len(scene_accur_paths)))
 
 plt.style.use('dark_background')
 fig, ax=plt.subplots(figsize=(10,10))
@@ -45,6 +45,6 @@ cbar.set_ticklabels([str(x) for x in np.arange(0,105,5)])
 
 ani = animation.ArtistAnimation(fig, container, interval=700, blit=False,
                                 repeat=True)
-ani.save('./MCM_Scene_Accuracy_all_DOY.mp4')
+ani.save('./MCM_Scene_Accuracy_all_DOY_new_grid.mp4')
 
 plt.show()
