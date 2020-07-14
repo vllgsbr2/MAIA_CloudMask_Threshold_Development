@@ -1,5 +1,5 @@
 [home]
-home: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/
+home: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs
 
 [PTAs]
 LA: LA
@@ -16,30 +16,30 @@ Boston: Boston
 Johannesburg: Johannesburg
 
 [supporting directories]
-PTA_MODIS_files: PTA_MODIS_files
-Database: Database
-MCM_Input: MCM_Input
-obs: thresh_dev/observables
-OLP: thresh_dev/OLP
+MODXX             : PTA_MODIS_files/MOD
+Database          : Database
+MCM_Input         : MCM_Input
+obs               : thresh_dev/observables
+OLP               : thresh_dev/OLP
 group_intermediate: thresh_dev/group
-combined_group: thresh_dev/grouped_obs_and_CMs
-thresh: thresh_dev/thresholds
-MCM_Ouput: results/MCM_Output
-conf_matx_scene: results/conf_matx_scene
-scene_accuracy: results/scene_accuracy
+combined_group    : thresh_dev/grouped_obs_and_CMs
+thresh            : thresh_dev/thresholds
+MCM_Ouput         : results/MCM_Output
+conf_matx_scene   : results/conf_matx_scene
+scene_accuracy    : results/scene_accuracy
 
 [help]
-PTA_MODIS_files_description: MOD02/03/35 files (possibly MAIAC as well)
-Database_description: data needed from MODIS products
-MCM_Input_description: formatted input for MCM main code for each scene
-obs_description: observable for each scene
-OLP_description: observable level parameter (OLP) for each scene
-group_intermediate_description: intermediate files that combine MOD35 CM and obs by OLP bin
-combined_group_description: combined group files by DOY
-thresh_description: threshold files by DOY
-MCM_Ouput_description: MCM output files for each scene
-conf_matx_scene_description: confusion matrix for each scene
-scene_accuracy_description: accuracy for each scene
+MODXX             : MOD02/03/35 files (possibly MAIAC as well)
+Database          : data needed from MODIS products
+MCM_Input         : formatted input for MCM main code for each scene
+obs               : observable for each scene
+OLP               : observable level parameter (OLP) for each scene
+group_intermediate: intermediate files that combine MOD35 CM and obs by OLP bin
+combined_group    : combined group files by DOY
+thresh            : threshold files by DOY
+MCM_Ouput         : MCM output files for each scene
+conf_matx_scene   : confusion matrix for each scene
+scene_accuracy    : accuracy for each scene
 
 [example path]
 #choose one from PTAs and then one from supporting directories; prefix with home
