@@ -1,46 +1,46 @@
-#home
-/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/
+[home]
+home: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/
 
-#PTAs
-LA
-Beijing
-Barcelona
-AddisAbaba
-Delhi
-TelAviv
-Rome
-Seoul
-Taipei
-Atlanta
-Boston
-Johannesburg
+[PTAs]
+LA: LA
+Beijing: Beijing
+Barcelona: Barcelona
+AddisAbaba: AddisAbaba
+Delhi: Delhi
+TelAviv: TelAviv
+Rome: Rome
+Seoul: Seoul
+Taipei: Taipei
+Atlanta: Atlanta
+Boston: Boston
+Johannesburg: Johannesburg
 
-#supporting directories
-PTA_MODIS_files
-Database
-MCM_Input
-thresh_dev/observables
-thresh_dev/OLP
-thresh_dev/group
-thresh_dev/grouped_obs_and_CMs
-thresh_dev/thresholds
-results/MCM_Output
-results/conf_matx_scene
-results/scene_accuracy
+[supporting directories]
+PTA_MODIS_files: PTA_MODIS_files
+Database: Database
+MCM_Input: MCM_Input
+obs: thresh_dev/observables
+OLP: thresh_dev/OLP
+group_intermediate: thresh_dev/group
+combined_group: thresh_dev/grouped_obs_and_CMs
+thresh: thresh_dev/thresholds
+MCM_Ouput: results/MCM_Output
+conf_matx_scene: results/conf_matx_scene
+scene_accuracy: results/scene_accuracy
 
-#supporting directories with description
-PTA_MODIS_files - MOD02/03/35 files (possibly MAIAC as well)
-Database - data needed from MODIS products
-MCM_Input - formatted input for MCM main code for each scene
-thresh_dev/observables - observable for each scene
-thresh_dev/OLP - observable level parameter (OLP) for each scene
-thresh_dev/group - intermediate files that combine MOD35 CM anbd obs by OLP bin
-thresh_dev/grouped_obs_and_CMs - combined group files by DOY
-thresh_dev/thresholds - threshold files by DOY
-results/MCM_Output - MCM output files for each scene
-results/conf_matx_scene - confusion matrix for each scene
-results/scene_accuracy - accuracy for each scene
+[help]
+PTA_MODIS_files_description: MOD02/03/35 files (possibly MAIAC as well)
+Database_description: data needed from MODIS products
+MCM_Input_description: formatted input for MCM main code for each scene
+obs_description: observable for each scene
+OLP_description: observable level parameter (OLP) for each scene
+group_intermediate_description: intermediate files that combine MOD35 CM and obs by OLP bin
+combined_group_description: combined group files by DOY
+thresh_description: threshold files by DOY
+MCM_Ouput_description: MCM output files for each scene
+conf_matx_scene_description: confusion matrix for each scene
+scene_accuracy_description: accuracy for each scene
 
-#example path
+[example path]
 #choose one from PTAs and then one from supporting directories; prefix with home
 /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA/thresh_dev/observables
