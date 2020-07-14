@@ -1,6 +1,6 @@
 import configparser
 
-# config.sections()
+config = configparser.ConfigParser()
 config.read('directories_config.txt')
 
 print(config.sections())
