@@ -43,4 +43,4 @@ scene_accuracy_description: accuracy for each scene
 
 [example path]
 #choose one from PTAs and then one from supporting directories; prefix with home
-/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA/thresh_dev/observables
+example: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA/thresh_dev/observables
