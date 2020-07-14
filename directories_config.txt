@@ -1,0 +1,46 @@
+#home
+/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/
+
+#PTAs
+LA
+Beijing
+Barcelona
+AddisAbaba
+Delhi
+TelAviv
+Rome
+Seoul
+Taipei
+Atlanta
+Boston
+Johannesburg
+
+#supporting directories
+PTA_MODIS_files
+Database
+MCM_Input
+thresh_dev/observables
+thresh_dev/OLP
+thresh_dev/group
+thresh_dev/grouped_obs_and_CMs
+thresh_dev/thresholds
+results/MCM_Output
+results/conf_matx_scene
+results/scene_accuracy
+
+#supporting directories with description
+PTA_MODIS_files - MOD02/03/35 files (possibly MAIAC as well)
+Database - data needed from MODIS products
+MCM_Input - formatted input for MCM main code for each scene
+thresh_dev/observables - observable for each scene
+thresh_dev/OLP - observable level parameter (OLP) for each scene
+thresh_dev/group - intermediate files that combine MOD35 CM anbd obs by OLP bin
+thresh_dev/grouped_obs_and_CMs - combined group files by DOY
+thresh_dev/thresholds - threshold files by DOY
+results/MCM_Output - MCM output files for each scene
+results/conf_matx_scene - confusion matrix for each scene
+results/scene_accuracy - accuracy for each scene
+
+#example path
+#choose one from PTAs and then one from supporting directories; prefix with home
+/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA/thresh_dev/observables
