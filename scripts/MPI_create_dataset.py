@@ -299,7 +299,7 @@ if __name__ == '__main__':
             MOD02_path = '{}/{}/'.format(home, PTA_path, MODXX, '02')
             MOD03_path = '{}/{}/'.format(home, PTA_path, MODXX, '03')
             MOD35_path = '{}/{}/'.format(home, PTA_path, MODXX, '35')
-            print(MODXX)
+            print(MODXX, '\n', MOD02_path)
             #grab files names for PTA and sort them
             filename_MOD_02 = np.sort(np.array(os.listdir(MOD02_path)))
             filename_MOD_03 = np.sort(np.array(os.listdir(MOD03_path)))
