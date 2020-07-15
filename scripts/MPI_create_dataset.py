@@ -291,12 +291,14 @@ if __name__ == '__main__':
             config = configparser.ConfigParser()
             config.read(config_home_path+'/directories_config.txt')
 
-            home  = config['home']['home']
-            PTA   = config['PTAs']['LA']
-            MODXX = config['supporting directories']['MODXX']
-            MOD02_path = '{}/{}/'.format(home, PTA, MODXX, '02')
-            MOD03_path = '{}/{}/'.format(home, PTA, MODXX, '03')
-            MOD35_path = '{}/{}/'.format(home, PTA, MODXX, '35')
+            home     = config['home']['home']
+            PTA_path = config['PTAs']['LA']
+            PTA      = PTA_path[5:]
+
+            MODXX      = config['supporting directories']['MODXX']
+            MOD02_path = '{}/{}/'.format(home, PTA_path, MODXX, '02')
+            MOD03_path = '{}/{}/'.format(home, PTA_path, MODXX, '03')
+            MOD35_path = '{}/{}/'.format(home, PTA_path, MODXX, '35')
 
             #grab files names for PTA and sort them
             filename_MOD_02 = np.sort(np.array(os.listdir(MOD02_path)))
@@ -318,7 +320,7 @@ if __name__ == '__main__':
                          'EV_1KM_RefSB']
 
             #grab target lat/lon from Guangyu h5 files (new JPL grids)
-            PTA_grid_file_path = config['PTA lat/lon grid files'][PTA[5:]]
+            PTA_grid_file_path = config['PTA lat/lon grid files'][PTA]
             filepath_latlon = '{}/{}'.format(home, PTA_grid_file_path)
             with h5py.File(filepath_latlon, 'r') as hf_latlon:
                 target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
@@ -338,9 +340,9 @@ if __name__ == '__main__':
 
             #create/open file
             #open file to write status of algorithm to
-            database_loc = '{}/{}/{}'.format(home, PTA, config['supporting directories']['Database'])
+            database_loc = '{}/{}/{}'.format(home, PTA_path, config['supporting directories']['Database'])
             hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
-            output_path = '{}/{}/Database_Diagnostics/diagnostics_{}.txt'.format(home, PTA, rank)
+            output_path = '{}/{}/Database_Diagnostics/diagnostics_{:02d}.txt'.format(home, PTA_path, rank)
 
             with h5py.File(hf_path, 'w') as hf, open(output_path, 'w') as ouput:
                 i=1
