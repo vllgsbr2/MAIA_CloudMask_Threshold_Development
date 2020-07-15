@@ -310,9 +310,9 @@ if __name__ == '__main__':
             filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
 
             #add full path to file
-            filename_MOD_02 = [MOD02_path + '/' + x for x in filename_MOD_02]
-            filename_MOD_03 = [MOD03_path + '/' + x for x in filename_MOD_03]
-            filename_MOD_35 = [MOD35_path + '/' + x for x in filename_MOD_35]
+            filename_MOD_02 = [MOD02_path + '02/' + x for x in filename_MOD_02]
+            filename_MOD_03 = [MOD03_path + '03/' + x for x in filename_MOD_03]
+            filename_MOD_35 = [MOD35_path + '35/' + x for x in filename_MOD_35]
 
             #initialize global constants outside of the loop
             fieldname = ['EV_250_RefSB', 'EV_250_Aggr1km_RefSB',\
