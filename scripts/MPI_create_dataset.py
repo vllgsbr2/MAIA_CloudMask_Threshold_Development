@@ -340,7 +340,7 @@ if __name__ == '__main__':
             #open file to write status of algorithm to
             database_loc = '{}/{}/{}'.format(home, PTA, config['supporting directories']['Database'])
             hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
-            output_path = './Database_Diagnostics/diagnostics_{rank}.txt'.format(rank)
+            output_path = '{}/{}/Database_Diagnostics/diagnostics_{rank}.txt'.format(home, PTA, rank)
 
             with h5py.File(hf_path, 'w') as hf, open(output_path, 'w') as ouput:
                 i=1
