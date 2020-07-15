@@ -30,18 +30,18 @@ conf_matx_scene   : results/conf_matx_scene
 scene_accuracy    : results/scene_accuracy
 
 [PTA lat/lon grid files]
-LA          : Grids_USA_LosAngeles.h5
-Beijing     : Grids_CHN_Beijing.h5
-Barcelona   : Grids_ESP_Barcelona.h5
-AddisAbaba  : Grids_ETH_AddisAbaba.h5
-Delhi       : Grids_IND_Delhi.h5
-TelAviv     : Grids_ISR_TelAviv.h5
-Rome        : Grids_ITA_Rome.h5
-Seoul       : Grids_KOR_Seoul.h5
-Taipei      : Grids_TWN_Taipei.h5
-Atlanta     : Grids_USA_Atlanta.h5
-Boston      : Grids_USA_Boston.h5
-Johannesburg: Grids_ZAF_Johannesburg.h5
+LA          : PTA_lat_lon_grids/Grids_USA_LosAngeles.h5
+Beijing     : PTA_lat_lon_grids/Grids_CHN_Beijing.h5
+Barcelona   : PTA_lat_lon_grids/Grids_ESP_Barcelona.h5
+AddisAbaba  : PTA_lat_lon_grids/Grids_ETH_AddisAbaba.h5
+Delhi       : PTA_lat_lon_grids/Grids_IND_Delhi.h5
+TelAviv     : PTA_lat_lon_grids/Grids_ISR_TelAviv.h5
+Rome        : PTA_lat_lon_grids/Grids_ITA_Rome.h5
+Seoul       : PTA_lat_lon_grids/Grids_KOR_Seoul.h5
+Taipei      : PTA_lat_lon_grids/Grids_TWN_Taipei.h5
+Atlanta     : PTA_lat_lon_grids/Grids_USA_Atlanta.h5
+Boston      : PTA_lat_lon_grids/Grids_USA_Boston.h5
+Johannesburg: PTA_lat_lon_grids/Grids_ZAF_Johannesburg.h5
 
 [help]
 MODXX             : Just append 02 or 03 or 35 for desired product
