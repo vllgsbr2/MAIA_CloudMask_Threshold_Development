@@ -1,23 +1,24 @@
 [home]
-home: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs
+home: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev
 
 [PTAs]
-LA: LA
-Beijing: Beijing
-Barcelona: Barcelona
-AddisAbaba: AddisAbaba
-Delhi: Delhi
-TelAviv: TelAviv
-Rome: Rome
-Seoul: Seoul
-Taipei: Taipei
-Atlanta: Atlanta
-Boston: Boston
-Johannesburg: Johannesburg
+LA          : PTAs/LA
+Beijing     : PTAs/Beijing
+Barcelona   : PTAs/Barcelona
+AddisAbaba  : PTAs/AddisAbaba
+Delhi       : PTAs/Delhi
+TelAviv     : PTAs/TelAviv
+Rome        : PTAs/Rome
+Seoul       : PTAs/Seoul
+Taipei      : PTAs/Taipei
+Atlanta     : PTAs/Atlanta
+Boston      : PTAs/Boston
+Johannesburg: PTAs/Johannesburg
 
 [supporting directories]
 MODXX             : PTA_MODIS_files/MOD
 Database          : Database
+Dataset_Diagnostic: Database_Diagnostics
 MCM_Input         : MCM_Input
 obs               : thresh_dev/observables
 OLP               : thresh_dev/OLP
@@ -28,8 +29,22 @@ MCM_Ouput         : results/MCM_Output
 conf_matx_scene   : results/conf_matx_scene
 scene_accuracy    : results/scene_accuracy
 
+[PTA lat/lon grid files]
+LA          : Grids_USA_LosAngeles.h5
+Beijing     : Grids_CHN_Beijing.h5
+Barcelona   : Grids_ESP_Barcelona.h5
+AddisAbaba  : Grids_ETH_AddisAbaba.h5
+Delhi       : Grids_IND_Delhi.h5
+TelAviv     : Grids_ISR_TelAviv.h5
+Rome        : Grids_ITA_Rome.h5
+Seoul       : Grids_KOR_Seoul.h5
+Taipei      : Grids_TWN_Taipei.h5
+Atlanta     : Grids_USA_Atlanta.h5
+Boston      : Grids_USA_Boston.h5
+Johannesburg: Grids_ZAF_Johannesburg.h5
+
 [help]
-MODXX             : MOD02/03/35 files (possibly MAIAC as well)
+MODXX             : Just append 02 or 03 or 35 for desired product
 Database          : data needed from MODIS products
 MCM_Input         : formatted input for MCM main code for each scene
 obs               : observable for each scene
