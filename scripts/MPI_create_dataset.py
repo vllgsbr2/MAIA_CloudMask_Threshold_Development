@@ -352,6 +352,7 @@ if __name__ == '__main__':
                                           filename_MOD_03[start:end]          ,\
                                           filename_MOD_35[start:end]          ,\
                                           filename_MOD_02_timeStamp[start:end]):
+                    print(i, time_MOD02)
 
                     try:
                         build_data_base(MOD02, MOD03, MOD35, hf_path, hf,\
