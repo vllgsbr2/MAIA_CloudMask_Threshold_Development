@@ -344,7 +344,7 @@ if __name__ == '__main__':
             hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
             output_path = '{}/{}/Database_Diagnostics/diagnostics_{:02d}.txt'.format(home, PTA_path, rank)
 
-            with h5py.File(hf_path, 'w') as hf, open(output_path, 'w') as ouput:
+            with h5py.File(hf_path, 'w') as hf, open(output_path, 'w') as output:
                 i=1
 
                 for MOD02, MOD03, MOD35, time_MOD02\
