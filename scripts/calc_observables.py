@@ -250,6 +250,7 @@ if __name__ == '__main__':
     import tables
     import os
     import numpy as np
+    import configparser
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -259,26 +260,30 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
 
+            config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+            config = configparser.ConfigParser()
+            config.read(config_home_path+'/directories_config.txt')
+
+            home     = config['home']['home']
+            PTA_path = config['PTAs']['LA']
+            PTA      = PTA_path[5:]
+
             #open database to read
-            PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/LA_database_60_cores/'
-            database_files = os.listdir(PTA_file_path)
-            database_files = [PTA_file_path + filename for filename in database_files]
+            database_path  = '{}/{}/{}/'.format(home, PTA_path, config['supporting directories']['Database'])
+            database_files = os.listdir(database_path)
+            database_files = [database_path + filename for filename in database_files]
             database_files = np.sort(database_files)
             if r < len(database_files):
                 hf_database_path = database_files[r]
-                # start, end = hf_database_path[26:31], hf_database_path[36:41]
-                # print(start, end)
+
                 with h5py.File(hf_database_path, 'r') as hf_database:
 
                     hf_database_keys = list(hf_database.keys())
                     observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
                     #create/open hdf5 file to store observables
-                    PTA_file_path_obs   = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/observables_database_60_cores'
-                    lenpta = len(PTA_file_path)
-                    start, end = hf_database_path[lenpta + 26:lenpta +31], hf_database_path[lenpta+36:lenpta+41]
-                    #print(start, end)
-                    hf_observables_path = '{}/LA_PTA_observables_start_{}_end_{}_.hdf5'.format(PTA_file_path_obs, start, end)
+                    PTA_file_path_obs   = '{}/{}/{}/'.format(home, PTA_path, config['supporting directories']['obs'])
+                    hf_observables_path = '{}/LA_PTA_observables_rank_{:02d}.hdf5'.format(PTA_file_path_obs, rank)
 
                     with h5py.File(hf_observables_path, 'w') as hf_observables:
                         for time_stamp in hf_database_keys:
@@ -313,7 +318,7 @@ if __name__ == '__main__':
                             NIR_reflectance           = get_NIR_reflectance(R_band_9)
                             spatial_variability_index = get_spatial_variability_index(R_band_6)
                             cirrus_Ref                = get_cirrus_Ref(R_band_13)
-                            
+
                             data = np.dstack((whiteness_index, NDVI, NDSI,\
                                               visible_reflectance, NIR_reflectance,\
                                               spatial_variability_index, cirrus_Ref))

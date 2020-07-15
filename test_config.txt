@@ -1,0 +1,61 @@
+[home]
+home: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev
+
+[PTAs]
+LA          : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA
+Beijing     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Beijing
+Barcelona   : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Barcelona
+AddisAbaba  : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/AddisAbaba
+Delhi       : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Delhi
+TelAviv     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/TelAviv
+Rome        : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Rome
+Seoul       : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Seoul
+Taipei      : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Taipei
+Atlanta     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Atlanta
+Boston      : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Boston
+Johannesburg: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Johannesburg
+
+[supporting directories]
+MODXX             : PTA_MODIS_files/MOD
+Database          : Database
+Dataset_Diagnostic: Database_Diagnostics
+MCM_Input         : MCM_Input
+obs               : thresh_dev/observables
+OLP               : thresh_dev/OLP
+group_intermediate: thresh_dev/group
+combined_group    : thresh_dev/grouped_obs_and_CMs
+thresh            : thresh_dev/thresholds
+MCM_Ouput         : results/MCM_Output
+conf_matx_scene   : results/conf_matx_scene
+scene_accuracy    : results/scene_accuracy
+
+[PTA lat/lon grid files]
+LA          : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_USA_LosAngeles.h5
+Beijing     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_CHN_Beijing.h5
+Barcelona   : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ESP_Barcelona.h5
+AddisAbaba  : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ETH_AddisAbaba.h5
+Delhi       : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_IND_Delhi.h5
+TelAviv     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ISR_TelAviv.h5
+Rome        : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ITA_Rome.h5
+Seoul       : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_KOR_Seoul.h5
+Taipei      : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_TWN_Taipei.h5
+Atlanta     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_USA_Atlanta.h5
+Boston      : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_USA_Boston.h5
+Johannesburg: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ZAF_Johannesburg.h5
+
+[help]
+MODXX             : Just append 02 or 03 or 35 for desired product
+Database          : data needed from MODIS products
+MCM_Input         : formatted input for MCM main code for each scene
+obs               : observable for each scene
+OLP               : observable level parameter (OLP) for each scene
+group_intermediate: intermediate files that combine MOD35 CM and obs by OLP bin
+combined_group    : combined group files by DOY
+thresh            : threshold files by DOY
+MCM_Ouput         : MCM output files for each scene
+conf_matx_scene   : confusion matrix for each scene
+scene_accuracy    : accuracy for each scene
+
+[example path]
+#choose one from PTAs and then one from supporting directories; prefix with home
+example: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA/thresh_dev/observables
