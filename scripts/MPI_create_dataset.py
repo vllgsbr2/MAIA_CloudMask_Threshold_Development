@@ -293,7 +293,7 @@ if __name__ == '__main__':
 
             home  = config['home']['home']
             PTA   = config['PTAs']['LA']
-            MODXX = config['MODXX']
+            MODXX = config['supporting directories']['MODXX']
             MOD02_path = '{}/{}/'.format(home, PTA, MODXX, '02')
             MOD03_path = '{}/{}/'.format(home, PTA, MODXX, '03')
             MOD35_path = '{}/{}/'.format(home, PTA, MODXX, '35')
