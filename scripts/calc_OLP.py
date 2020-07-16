@@ -237,15 +237,6 @@ if __name__ == '__main__':
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
                                 TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp)
 
-                        observable_level_parameter = np.dstack((binned_cos_SZA ,\
-                                                                binned_VZA     ,\
-                                                                binned_RAZ     ,\
-                                                                Target_Area    ,\
-                                                                land_water_mask,\
-                                                                snow_ice_mask  ,\
-                                                                sfc_ID         ,\
-                                                                binned_DOY     ,\
-                                                                sun_glint_mask))
                         print(OLP[0,0,7], sfc_ID_path[-20:])
 
                         try:
