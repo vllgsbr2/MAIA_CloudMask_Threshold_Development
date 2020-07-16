@@ -53,7 +53,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = '{}/{}/{}'.format('TA_bin_{:02d}', 'DOY_bin_{:02d}'.format(TA, DOY_bin), obs_names[i])
-                print(bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3])
+
                 #WI
                 if i==0:
                     if clear_obs[:,i].shape[0] > 0:
@@ -131,5 +131,5 @@ if __name__ == '__main__':
             DOY_start = DOY_end - 7
             grouped_file_path = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.\
                                 format(grouped_home, DOY_start, DOY_end, DOY_bin)
-            # print(grouped_file_path)
+            print(grouped_file_path)
             calc_thresh(thresh_home, grouped_file_path, DOY_bin, TA)
