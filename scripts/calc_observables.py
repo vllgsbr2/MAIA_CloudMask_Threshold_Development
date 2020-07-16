@@ -262,7 +262,7 @@ if __name__ == '__main__':
 
             config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
             config = configparser.ConfigParser()
-            config.read(config_home_path+'/directories_config.txt')
+            config.read(config_home_path+'/test_config.txt')
 
             home     = config['home']['home']
             PTA_path = config['PTAs']['LA']
