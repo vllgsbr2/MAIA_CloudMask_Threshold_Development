@@ -142,7 +142,6 @@ if __name__ == '__main__':
 
                         CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
                         OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
-                        print(OLP.shape, CM.shape)
 
                         shape = CM.shape
                         obs_data = np.empty((shape[0], shape[1], 7), dtype=np.float)
