@@ -18,6 +18,7 @@ def group_data(OLP, obs, CM, hf_group):
     #                                         binned_DOY     ,\
     #                                         sun_glint_mask))
     shape = OLP.shape
+    print(shape)
     row_col_product = shape[0]*shape[1]
     OLP = OLP.reshape(row_col_product, 6)
     obs = obs.reshape(row_col_product, 7)
