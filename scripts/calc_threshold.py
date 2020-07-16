@@ -68,7 +68,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                     #choose least white cloudy pixel as threshold if no clear obs
                     else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
-                        cloudy_obs[:, i].max()
+                        0#cloudy_obs[:, i].max()
 
                 #NDxI
                 #pick max from cloudy hist
