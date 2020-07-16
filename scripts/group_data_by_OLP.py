@@ -17,7 +17,7 @@ def group_data(OLP, obs, CM, hf_group):
     #                                         sfc_ID         ,\
     #                                         binned_DOY     ,\
     #                                         sun_glint_mask))
-    shape = OLP.shape
+    shape = CM.shape
     print(shape)
     row_col_product = shape[0]*shape[1]
     OLP = OLP.reshape(row_col_product, 6)
@@ -144,7 +144,7 @@ if __name__ == '__main__':
                         CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
                         OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
 
-                        shape = OLP.shape
+                        shape = CM.shape
                         obs_data = np.empty((shape[0], shape[1], 7), dtype=np.float)
                         for i, obs in enumerate(observables):
                             data_path = '{}/{}'.format(time_stamp, obs)
