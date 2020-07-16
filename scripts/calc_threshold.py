@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 
-def calc_thresh(group_file, DOY_bin):
+def calc_thresh(thresh_path, group_file, DOY_bin, TA):
     '''
     Objective:
         Takes in grouped_obs_and_CM.hdf5 file. Inside are a datasets for
@@ -20,10 +20,10 @@ def calc_thresh(group_file, DOY_bin):
     DOY_start = DOY_end - 7
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
     with h5py.File(group_file, 'r') as hf_group,\
-         h5py.File(home + 'thresholds_all_DOY' + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
+         h5py.File(thresh_path + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
 
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
-        TA_group  = hf_thresh.create_group('TA_bin_01')#bin_ID[24:29])
+        TA_group  = hf_thresh.create_group('TA_bin_{:02d}'.format(TA))#bin_ID[24:29])
         DOY_group = TA_group.create_group('DOY_bin_{:02d}'.format(DOY_bin))#bin_ID[-6:])
 
         num_sfc_types = 15
@@ -52,7 +52,7 @@ def calc_thresh(group_file, DOY_bin):
             for i in range(7):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
-                path = '{}/{}/{}'.format('TA_bin_01', 'DOY_bin_{:02d}'.format(DOY_bin), obs_names[i])
+                path = '{}/{}/{}'.format('TA_bin_{:02d}', 'DOY_bin_{:02d}'.format(TA, DOY_bin), obs_names[i])
 
                 # print(clear_obs[:,i])
                 #WI
@@ -104,6 +104,7 @@ if __name__ == '__main__':
     import os
     import mpi4py.MPI as MPI
     import sys
+    import configparser
     # tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -112,15 +113,22 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
+
+            config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+            config = configparser.ConfigParser()
+            config.read(config_home_path+'/test_config.txt')
+
+            PTA          = config['current PTA']['PTA']
+            PTA_path     = config['PTAs'][PTA]
+            TA           = config['Target Area Integer'][PTA]
+            grouped_home = config['supporting directories']['combined_group']
+            thresh_path  = config['supporting directories']['thresh']
+
             #define paths for the database
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            # grouped_file_path = os.listdir(home + 'grouped_obs_and_CMs')
-            # grouped_file_path = np.sort(grouped_file_path)
-            # grouped_file_path = home + 'grouped_obs_and_CMs/' + grouped_file_path[r]
             DOY_bin   = r
             DOY_end   = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
-            grouped_file_path = home + 'grouped_obs_and_CMs/' + 'grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.\
-                                format(DOY_start, DOY_end, DOY_bin)
+            grouped_file_path = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.\
+                                format(grouped_home, DOY_start, DOY_end, DOY_bin)
             # print(grouped_file_path)
-            calc_thresh(grouped_file_path, DOY_bin)
+            calc_thresh(grouped_file_path, DOY_bin, TA)
