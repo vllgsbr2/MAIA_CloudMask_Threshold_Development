@@ -39,7 +39,6 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
         for count, bin_ID in enumerate(hf_keys):
             # print(count, bin_ID)
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
-            print(bin_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
 
             cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
@@ -55,6 +54,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #path to TA/DOY/obs threshold dataset
                 path = '{}/{}/{}'.format('TA_bin_{:02d}', 'DOY_bin_{:02d}'.format(TA, DOY_bin), obs_names[i])
                 print([bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]])
+                print(hf_thresh[path])
                 print(hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]])
                 #WI
                 if i==0:
