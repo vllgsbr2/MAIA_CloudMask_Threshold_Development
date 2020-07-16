@@ -120,7 +120,7 @@ if __name__ == '__main__':
 
             PTA          = config['current PTA']['PTA']
             PTA_path     = config['PTAs'][PTA]
-            TA           = config['Target Area Integer'][PTA]
+            TA           = int(config['Target Area Integer'][PTA])
             grouped_home = config['supporting directories']['combined_group']
             thresh_home  = config['supporting directories']['thresh']
             grouped_home = '{}/{}'.format(PTA_path, grouped_home)
