@@ -17,10 +17,11 @@ def group_data(OLP, obs, CM, hf_group):
     #                                         sfc_ID         ,\
     #                                         binned_DOY     ,\
     #                                         sun_glint_mask))
-
-    OLP = OLP.reshape(1000**2, 6)
-    obs = obs.reshape(1000**2, 7)
-    CM  = CM.reshape(1000**2)
+    shape = OLP.shape
+    row_col_product = shape[0]*shape[1]
+    OLP = OLP.reshape(row_col_product, 6)
+    obs = obs.reshape(row_col_product, 7)
+    CM  = CM.reshape(row_col_product)
 
     #remove empty data points
     #where cos(SZA) is negative (which is not possible)
@@ -142,12 +143,14 @@ if __name__ == '__main__':
                         CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
                         OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
 
-                        obs_data = []#np.empty((1000,1000,7), dtype=np.float)
+                        shape = OLP.shape
+                        obs_data = np.empty((shape[0], shape[1], 7), dtype=np.float)
                         for i, obs in enumerate(observables):
                             data_path = '{}/{}'.format(time_stamp, obs)
-                            obs_data.append(hf_observables[data_path][()])
+                            obs_data[:,:,i] = hf_observables[data_path][()]
 
                         group_data(OLP, np.array(obs_data, dtype=np.float), CM, hf_group)
+
                         print(time_stamp)
 
                 # except:
