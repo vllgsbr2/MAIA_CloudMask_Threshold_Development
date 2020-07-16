@@ -15,9 +15,8 @@ def group_bins(home, group_dir, common_file, DOY_bin):
     #first list all files in directory
     DOY_end = (DOY_bin+1)*8
     DOY_start = DOY_end - 7
-    path = home + group_dir
-    grouped_files  = np.sort(os.listdir(path))
-    database_files = [path +'/'+ filename for filename in grouped_files]
+    grouped_files  = np.sort(os.listdir(group_dir))
+    database_files = ['{}/{}'.format(group_dir, filename) for filename in grouped_files]
 
     # if len(database_files) != 46:
     #     print('group by OLP failed to produce all DOY bins')
@@ -30,7 +29,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
     group_dict = {}
 
     for i in range(60):
-        group =  home + '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.hdf5'\
+        group =  '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.h5'\
                         .format(group_dir, DOY_start, DOY_end, DOY_bin, i)
         print(group)
         with h5py.File(group, 'r') as hf_group_:
@@ -47,7 +46,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
     # being_accessed = True
     # while being_accessed:
     #     try:
-    with h5py.File(home + 'grouped_obs_and_CMs/'  + common_file, 'w') as hf_group:
+    with h5py.File(common_file, 'w') as hf_group:
         for key, val in group_dict.items():
             for arr in val:
                 try:
@@ -65,6 +64,7 @@ def group_bins(home, group_dir, common_file, DOY_bin):
 if __name__ == '__main__':
 
     import mpi4py.MPI as MPI
+    import configparser
     # import tables
     import sys
     import os
@@ -77,10 +77,17 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
 
-            home        = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            group_dir   = 'group_60_cores'
-            DOY_bin     = r#int(sys.argv[1])
-            DOY_end     = (DOY_bin+1)*8
-            DOY_start   =  DOY_end - 7
-            common_file = 'grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
+            config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+            config = configparser.ConfigParser()
+            config.read(config_home_path+'/test_config.txt')
+
+            PTA      = config['current PTA']['PTA']
+            PTA_path = config['PTAs'][PTA]
+
+            group_dir    = '{}/{}'.format(PTA_path, config['supporting directories']['group_intermediate'])
+            combined_dir = '{}/{}'.format(PTA_path, config['supporting directories']['combined_group'])
+            DOY_bin      = r#int(sys.argv[1])
+            DOY_end      = (DOY_bin+1)*8
+            DOY_start    =  DOY_end - 7
+            common_file  = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(combined_dir, DOY_start, DOY_end, DOY_bin)
             group_bins(home, group_dir, common_file, DOY_bin)
