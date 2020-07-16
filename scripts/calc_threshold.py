@@ -53,10 +53,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY_bin , obs_names[i])
-                print(path)
-                print([bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]])
-                print(hf_thresh[path])
-                print(hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]])
+
                 #WI
                 if i==0:
                     if clear_obs[:,i].shape[0] > 0:
