@@ -124,7 +124,7 @@ if __name__ == '__main__':
             grouped_home = config['supporting directories']['combined_group']
             thresh_home  = config['supporting directories']['thresh']
             grouped_home = '{}/{}'.format(PTA_path, grouped_home)
-            thresh_home  = '{}/{}'.format(PTA_path, thresh_path)
+            thresh_home  = '{}/{}'.format(PTA_path, thresh_home)
 
             #define paths for the database
             DOY_bin   = r
