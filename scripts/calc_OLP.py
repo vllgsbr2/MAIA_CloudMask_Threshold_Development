@@ -88,7 +88,7 @@ def add_sceneID(observable_level_parameter):
 
         return OLP
 
-def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
+def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area, sfc_ID_path,\
           land_water_mask, snow_ice_mask, DOY, sun_glint_mask, time_stamp):
 
     """
@@ -134,7 +134,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
     DOY_end = (binned_DOY+1)*8
 
-    sfc_ID_path = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_end)
+    # sfc_ID_path = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_end)
     sfc_ID = Dataset(sfc_ID_path, 'r').variables['surface_ID'][:,:]
 
     #these datafields' raw values serve as the bins, so no modification needed:
@@ -171,6 +171,7 @@ if __name__ == '__main__':
     import tables
     from netCDF4 import Dataset
     import os
+    import configparser
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -179,22 +180,26 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
+
+            config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+            config = configparser.ConfigParser()
+            config.read(config_home_path+'/test_config.txt')
+
+            home     = config['home']['home']
+            PTA      = 'LA'
+            PTA_path = config['PTAs'][PTA]
+
             #open database to read
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            PTA_file_path = home + 'LA_database_60_cores/'
-            database_files = os.listdir(PTA_file_path)
-            database_files = [PTA_file_path + filename for filename in database_files]
-            database_files = np.sort(database_files)
+            database_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
+            database_files   = np.sort(os.listdir(database_path))
+            database_files   = [database_path + filename for filename in database_files]
             hf_database_path = database_files[r]
 
             with h5py.File(hf_database_path, 'r') as hf_database:
 
-                len_pta       = len(PTA_file_path)
-                start, end    = hf_database_path[len_pta + 26:len_pta +31], hf_database_path[len_pta+36:len_pta+41]
-
                 #create/open hdf5 file to store observables
-                PTA_file_path_OLP = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-                hf_OLP_path = '{}OLP_database_60_cores/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path_OLP, start, end)
+                PTA_file_path_OLP = '{}/{}'.format(PTA_path, config['supporting directories']['OLP'])
+                hf_OLP_path = '{}/{}_PTA_OLP_start_rank_{:02d}.h5'.format(PTA_file_path_OLP, PTA, rank)
 
                 hf_database_keys = list(hf_database.keys())
                 observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
@@ -203,31 +208,52 @@ if __name__ == '__main__':
 
                     for time_stamp in hf_database_keys:
 
-                        PTA_file_path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data'
-                        hf_OLP_path   = '{}/LA_PTA_OLP_start_{}_end_{}_.hdf5'.format(PTA_file_path, start, end)
-
                         SZA = hf_database[time_stamp+'/sunView_geometry/solarZenith'][()]
                         VZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith'][()]
                         VAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth'][()]
                         SAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth'][()]
-                        TA  = 0 #will change depending where database is stored
+                        TA  = config['Target Area Integer'][PTA]
                         LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
                         DOY = time_stamp[4:7]
                         SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, LWM)
-                        # SGM = hf_database[time_stamp+'/cloud_mask/Sun_glint_Flag'][()]
                         #num_land_sfc_types = 12 #read from config file later
                         #MOD03_sfctypes     = hf_database[time_stamp+'/MOD03_LandSeaMask'][()]
 
-                        OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA, TA,\
-                                            LWM, SIM, DOY, SGM, time_stamp)
+
+                        bin_DOY    = np.arange(8, 376, 8)
+                        binned_DOY = np.digitize(DOY, bin_DOY, right=True)
+                        DOY_end    = (binned_DOY+1)*8
+                        DOY_end    = '{:03d}'.format(DOY_end)
+
+                        sfc_ID_path  = config['supporting directories']['Surface_IDs']
+                        sfc_ID_path  = '{}/{}/'.format(PTA_path, sfc_ID_path)
+                        sfc_ID_paths = os.listdir(sfc_ID_path)
+                        #find correct sfc ID path for DOY bin
+                        sfc_ID_path  = [x for x in sfc_ID_paths if DOY_end in x][0]
+
+                        OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
+                                TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp)
+
+                        observable_level_parameter = np.dstack((binned_cos_SZA ,\
+                                                                binned_VZA     ,\
+                                                                binned_RAZ     ,\
+                                                                Target_Area    ,\
+                                                                land_water_mask,\
+                                                                snow_ice_mask  ,\
+                                                                sfc_ID         ,\
+                                                                binned_DOY     ,\
+                                                                sun_glint_mask))
+                        print(OLP[0,0,7], sfc_ID_path[-20:])
 
                         try:
                             group = hf_OLP.create_group(time_stamp)
-                            group.create_dataset('observable_level_paramter', data=OLP, compression='gzip')
+                            group.create_dataset('observable_level_paramter',\
+                                                  data=OLP, compression='gzip')
                         except:
                             try:
-                                group.create_dataset('observable_level_paramter', data=OLP, compression='gzip')
+                                group.create_dataset('observable_level_paramter',\
+                                                   data=OLP, compression='gzip')
                                 hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP
                             except:
                                 hf_OLP[time_stamp+'/observable_level_paramter'][:] = OLP

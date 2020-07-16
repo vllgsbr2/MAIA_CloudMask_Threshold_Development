@@ -19,6 +19,7 @@ Johannesburg: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Johannesbur
 MODXX             : PTA_MODIS_files/MOD
 Database          : Database
 Dataset_Diagnostic: Database_Diagnostics
+Surface_IDs       : Surface_IDs
 MCM_Input         : MCM_Input
 obs               : thresh_dev/observables
 OLP               : thresh_dev/OLP
@@ -43,9 +44,23 @@ Atlanta     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grid
 Boston      : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_USA_Boston.h5
 Johannesburg: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ZAF_Johannesburg.h5
 
+[Target Area Integer]
+LA          : 0
+Beijing     : 1
+Barcelona   : 2
+AddisAbaba  : 3
+Delhi       : 4
+TelAviv     : 5
+Rome        : 6
+Seoul       : 7
+Taipei      : 8
+Atlanta     : 9
+Boston      : 10
+Johannesburg: 11
+
 [help]
 MODXX             : Just append 02 or 03 or 35 for desired product
-Database          : data needed from MODIS products
+Database          : data needed from MODIS product files
 MCM_Input         : formatted input for MCM main code for each scene
 obs               : observable for each scene
 OLP               : observable level parameter (OLP) for each scene
