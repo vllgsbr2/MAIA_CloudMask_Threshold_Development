@@ -48,7 +48,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
             clear_obs = obs[clear_idx[0],:]
             cloudy_idx = np.where(cloud_mask == 0)
             cloudy_obs = obs[cloudy_idx[0],:]
-            #print(cloudy_idx[0].shape)
+            print(cloudy_idx[0].shape)
             for i in range(7):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
