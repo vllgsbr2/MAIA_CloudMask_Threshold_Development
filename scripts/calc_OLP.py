@@ -237,7 +237,7 @@ if __name__ == '__main__':
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
                                 TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp)
 
-                        good_idx = np.where(OLP != -999)
+                        good_idx = np.where(OLP[:,:,7] != -999)
                         if len(good_idx[0]) > 0:
                             print(OLP[good_idx[0][0], good_idx[1][0],7], binned_DOY)
 
