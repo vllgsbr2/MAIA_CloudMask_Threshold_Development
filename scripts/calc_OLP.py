@@ -238,7 +238,8 @@ if __name__ == '__main__':
                                 TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp)
 
                         good_idx = np.where(OLP != -999)
-                        print(OLP[good_idx[0][0], good_idx[1][0],7], binned_DOY)
+                        if len(good_idx[0]) > 0:
+                            print(OLP[good_idx[0][0], good_idx[1][0],7], binned_DOY)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)
