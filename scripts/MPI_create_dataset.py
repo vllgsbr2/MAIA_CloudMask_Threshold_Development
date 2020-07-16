@@ -292,7 +292,7 @@ if __name__ == '__main__':
             config.read(config_home_path+'/directories_config.txt')
 
             home     = config['home']['home']
-            PTA      = config[current PTA]['PTA']
+            PTA      = config['current PTA']['PTA']
             PTA_path = config['PTAs'][PTA]
 
             MODXX      = config['supporting directories']['MODXX']

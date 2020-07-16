@@ -95,7 +95,7 @@ if __name__ == '__main__':
             config = configparser.ConfigParser()
             config.read(config_home_path+'/test_config.txt')
 
-            PTA      = config[current PTA]['PTA']
+            PTA      = config['current PTA']['PTA']
             PTA_path = config['PTAs'][PTA]
 
             DOY_bin   = int(sys.argv[1])
@@ -148,6 +148,7 @@ if __name__ == '__main__':
                             obs_data.append(hf_observables[data_path][()])
 
                         group_data(OLP, np.array(obs_data, dtype=np.float), CM, hf_group)
+                        print(time_stamp)
 
                 # except:
                 #     with h5py.File(hf_group_path, 'r+')  as hf_group:
