@@ -212,7 +212,7 @@ if __name__ == '__main__':
                         VZA = hf_database[time_stamp+'/sunView_geometry/sensorZenith'][()]
                         VAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth'][()]
                         SAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth'][()]
-                        TA  = config['Target Area Integer'][PTA]
+                        TA  = int(config['Target Area Integer'][PTA])
                         LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
                         DOY = time_stamp[4:7]
