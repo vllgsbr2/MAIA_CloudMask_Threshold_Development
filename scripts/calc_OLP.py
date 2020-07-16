@@ -230,7 +230,8 @@ if __name__ == '__main__':
                         sfc_ID_path  = '{}/{}/'.format(PTA_path, sfc_ID_path)
                         sfc_ID_paths = os.listdir(sfc_ID_path)
                         #find correct sfc ID path for DOY bin
-                        sfc_ID_path  = [x for x in sfc_ID_paths if DOY_end in x][0]
+                        sfc_ID_path  = [sfc_ID_path + x for x in sfc_ID_paths \
+                                                             if DOY_end in x][0]
 
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
                                 TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp)
