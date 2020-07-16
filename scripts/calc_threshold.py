@@ -56,12 +56,14 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
                 # print(clear_obs[:,i].shape)
                 # print(cloudy_obs[:,i].shape)
+                print(type(clear_obs[:,i]))
+                print(type(cloudy_obs[:,i]))
 
                 #WI
                 if i==0:
                     if clear_obs[:,i].shape[0] > 0:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
-                        np.nanpercentile(clear_obs[:,i], 1, axis=0)
+                        np.nanpercentile(clear_obs[:,i], 1)
 
                     #choose least white cloudy pixel as threshold if no clear obs
                     else:
@@ -83,7 +85,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                     if clear_obs[:,i].shape[0] > 0:
                         x = np.array(clear_obs[:,i])
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                        np.nanpercentile(x, 99, axis=0)
+                        np.nanpercentile(x, 99)
 
                     else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
