@@ -80,6 +80,7 @@ if __name__ == '__main__':
     import tables
     import os
     import sys
+    import configparser
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -90,26 +91,31 @@ if __name__ == '__main__':
         if rank==r:
             file_select = r
 
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+            config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+            config = configparser.ConfigParser()
+            config.read(config_home_path+'/test_config.txt')
 
-            DOY_bin = int(sys.argv[1])
-            DOY_end = (DOY_bin+1)*8
+            PTA      = config[current PTA]['PTA']
+            PTA_path = config['PTAs'][PTA]
+
+            DOY_bin   = int(sys.argv[1])
+            DOY_end   = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
 
             #define paths for the three databases
-            PTA_file_path = home + 'LA_database_60_cores/'
-            database_files = os.listdir(PTA_file_path)
-            database_files = [PTA_file_path + filename for filename in database_files]
-            database_files = np.sort(database_files)
+            PTA_file_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
+            database_files   = os.listdir(PTA_file_path)
+            database_files   = [PTA_file_path + filename for filename in database_files]
+            database_files   = np.sort(database_files)
             hf_database_path = database_files[file_select]
 
-            PTA_file_path = home + 'observables_database_60_cores/'
-            database_files = os.listdir(PTA_file_path)
-            database_files = [PTA_file_path + filename for filename in database_files]
-            database_files = np.sort(database_files)
+            PTA_file_path       = '{}/{}/'.format(PTA_path, config['supporting directories']['obs'])
+            database_files      = os.listdir(PTA_file_path)
+            database_files      = [PTA_file_path + filename for filename in database_files]
+            database_files      = np.sort(database_files)
             hf_observables_path = database_files[file_select]
 
-            PTA_file_path = home + 'OLP_database_60_cores/'
+            PTA_file_path  = '{}/{}/'.format(PTA_path, config['supporting directories']['OLP'])
             database_files = os.listdir(PTA_file_path)
             database_files = [PTA_file_path + filename for filename in database_files]
             database_files = np.sort(database_files)
@@ -121,12 +127,13 @@ if __name__ == '__main__':
             with h5py.File(hf_observables_path       , 'r') as hf_observables,\
                  h5py.File(hf_database_path          , 'r') as hf_database   ,\
                  h5py.File(hf_OLP_path               , 'r') as hf_OLP        :
+
                 hf_database_keys = list(hf_database.keys())
-                #grab only DOY bin 6 since I dont have sfc ID yet for other days
-                #hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=48 and int(x[4:7])<=55]
+                #grab only current DOY bin
                 hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
                 #open file to write groups to
-                hf_group_path = home + 'group_60_cores/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin, rank)
+                group_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['group_intermediate'])
+                hf_group_path = '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.h5'.format(group_path, DOY_start, DOY_end, DOY_bin, rank)
 
                 # try:
                 with h5py.File(hf_group_path, 'w') as hf_group:
@@ -135,12 +142,12 @@ if __name__ == '__main__':
                         CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
                         OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
 
-                        obs_data = np.empty((1000,1000,7), dtype=np.float)
+                        obs_data = []#np.empty((1000,1000,7), dtype=np.float)
                         for i, obs in enumerate(observables):
                             data_path = '{}/{}'.format(time_stamp, obs)
-                            obs_data[:,:,i] = hf_observables[data_path][()]
-                        group_data(OLP, obs_data, CM, hf_group)
+                            obs_data.append(hf_observables[data_path][()])
 
+                        group_data(OLP, np.array(obs_data, dtype=np.float), CM, hf_group)
 
                 # except:
                 #     with h5py.File(hf_group_path, 'r+')  as hf_group:

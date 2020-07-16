@@ -292,8 +292,8 @@ if __name__ == '__main__':
             config.read(config_home_path+'/directories_config.txt')
 
             home     = config['home']['home']
-            PTA_path = config['PTAs']['LA']
-            PTA      = PTA_path[5:]
+            PTA      = config[current PTA]['PTA']
+            PTA_path = config['PTAs'][PTA]
 
             MODXX      = config['supporting directories']['MODXX']
             MOD02_path = '{}/{}/{}{}'.format(home, PTA_path, MODXX, '02')

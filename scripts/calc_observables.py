@@ -266,7 +266,7 @@ if __name__ == '__main__':
 
             home     = config['home']['home']
             PTA_path = config['PTAs']['LA']
-            PTA      = PTA_path[5:]
+            PTA      = config[current PTA]['PTA']
 
             #open database to read
             database_path  = '{}/{}/{}/'.format(home, PTA_path, config['supporting directories']['Database'])
