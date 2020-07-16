@@ -82,7 +82,7 @@ def add_sceneID(observable_level_parameter):
         scene_type_identifier[ snow_ice_bins   == 0]    = 14
 
         shape = observable_level_parameter.shape
-        OLP = np.zeros(shape)
+        OLP = np.zeros((shape[0], shape[1], 6))
         OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
         OLP[:,:,4]  = scene_type_identifier             #scene_ID
         OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
