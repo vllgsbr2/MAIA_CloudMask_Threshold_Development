@@ -131,4 +131,4 @@ if __name__ == '__main__':
             grouped_file_path = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.\
                                 format(grouped_home, DOY_start, DOY_end, DOY_bin)
             # print(grouped_file_path)
-            calc_thresh(grouped_file_path, DOY_bin, TA)
+            calc_thresh(thresh_path, grouped_file_path, DOY_bin, TA)
