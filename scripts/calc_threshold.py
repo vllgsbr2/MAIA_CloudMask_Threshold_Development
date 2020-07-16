@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 
-def calc_thresh(thresh_path, group_file, DOY_bin, TA):
+def calc_thresh(thresh_home, group_file, DOY_bin, TA):
     '''
     Objective:
         Takes in grouped_obs_and_CM.hdf5 file. Inside are a datasets for
@@ -20,7 +20,7 @@ def calc_thresh(thresh_path, group_file, DOY_bin, TA):
     DOY_start = DOY_end - 7
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
     with h5py.File(group_file, 'r') as hf_group,\
-         h5py.File(thresh_path + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
+         h5py.File(thresh_home + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
 
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
         TA_group  = hf_thresh.create_group('TA_bin_{:02d}'.format(TA))#bin_ID[24:29])
@@ -122,7 +122,9 @@ if __name__ == '__main__':
             PTA_path     = config['PTAs'][PTA]
             TA           = config['Target Area Integer'][PTA]
             grouped_home = config['supporting directories']['combined_group']
-            thresh_path  = config['supporting directories']['thresh']
+            thresh_home  = config['supporting directories']['thresh']
+            grouped_home = '{}/{}'.format(PTA_path, grouped_home)
+            thresh_home  = '{}/{}'.format(PTA_path, thresh_path)
 
             #define paths for the database
             DOY_bin   = r
@@ -131,4 +133,4 @@ if __name__ == '__main__':
             grouped_file_path = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.\
                                 format(grouped_home, DOY_start, DOY_end, DOY_bin)
             # print(grouped_file_path)
-            calc_thresh(thresh_path, grouped_file_path, DOY_bin, TA)
+            calc_thresh(thresh_home, grouped_file_path, DOY_bin, TA)
