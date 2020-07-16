@@ -237,7 +237,7 @@ if __name__ == '__main__':
                         OLP, DOY = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
                                 TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp)
 
-                        print(, binned_DOY)
+                        print(DOY, binned_DOY)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)
