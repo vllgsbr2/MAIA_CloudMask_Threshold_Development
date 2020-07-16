@@ -163,7 +163,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area, sfc_ID_path,
 
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
 
-    return observable_level_parameter, binned_DOY[0,0]
+    return observable_level_parameter
 
 if __name__ == '__main__':
 
@@ -234,10 +234,8 @@ if __name__ == '__main__':
                         sfc_ID_path  = [sfc_ID_path + x for x in sfc_ID_paths \
                                                              if DOY_end in x][0]
 
-                        OLP, DOY = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
+                        OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
                                 TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp)
-
-                        print(DOY, binned_DOY)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)
