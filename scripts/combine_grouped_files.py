@@ -3,7 +3,7 @@ import h5py
 import numpy as np
 import sys
 
-def group_bins(home, group_dir, common_file, DOY_bin):
+def group_bins(group_dir, common_file, DOY_bin):
     '''
     for easy parallelization and file writting over head, the bins were
     written into a file according to the processor that analyzed it. So
@@ -90,4 +90,4 @@ if __name__ == '__main__':
             DOY_end      = (DOY_bin+1)*8
             DOY_start    =  DOY_end - 7
             common_file  = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(combined_dir, DOY_start, DOY_end, DOY_bin)
-            group_bins(home, group_dir, common_file, DOY_bin)
+            group_bins(group_dir, common_file, DOY_bin)
