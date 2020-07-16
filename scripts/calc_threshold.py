@@ -39,7 +39,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
         for count, bin_ID in enumerate(hf_keys):
             # print(count, bin_ID)
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
-            print(bin_idx)
+            print(bin_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
 
             cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
