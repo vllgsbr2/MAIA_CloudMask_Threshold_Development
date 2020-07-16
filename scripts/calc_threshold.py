@@ -53,12 +53,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = '{}/{}/{}'.format('TA_bin_{:02d}', 'DOY_bin_{:02d}'.format(TA, DOY_bin), obs_names[i])
-
-                # print(clear_obs[:,i].shape)
-                # print(cloudy_obs[:,i].shape)
-                print(type(clear_obs[:,i]))
-                print(type(cloudy_obs[:,i]))
-
+                print(bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3])
                 #WI
                 if i==0:
                     if clear_obs[:,i].shape[0] > 0:
@@ -68,7 +63,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                     #choose least white cloudy pixel as threshold if no clear obs
                     else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
-                        0#cloudy_obs[:, i].max()
+                        cloudy_obs[:, i].max()
 
                 #NDxI
                 #pick max from cloudy hist
