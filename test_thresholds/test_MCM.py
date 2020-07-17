@@ -18,8 +18,8 @@ PTA_path     = config['PTAs'][PTA]
 home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
 test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2009048.1855.HDF5'
 Target_Area_X      = int(config['Target Area Integer'][PTA])
-threshold_filepath = '{}/{}/'.format(PTA_path, config['supporting directories']['thresh'], 'thresholds_DOY_041_to_048_bin_05.h5')
-sfc_ID_filepath    = ''.format(PTA_path, config['supporting directories']['Surface_IDs'], 'surfaceID_LA_048.nc')
+threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], 'thresholds_DOY_041_to_048_bin_05.h5')
+sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], 'surfaceID_LA_048.nc')
 config_filepath    = './config.csv'
 
 #run MCM
