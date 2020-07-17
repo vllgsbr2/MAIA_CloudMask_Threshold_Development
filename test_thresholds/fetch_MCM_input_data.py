@@ -80,7 +80,7 @@ def get_JPL_data(test_data_JPL_path):
 #retrieve UIUC ancillary datasets**************************************
 #thresholds, surface ID , and configuration file are provided by us
 
-def get_UIUC_data(Target_Area_X, threshold_filepath, sfc_ID_filepath, config_filepath):
+def get_UIUC_data(sfc_ID_filepath, config_filepath):
     '''
     Target_Area_X is an int denoting 1 of 30 target areas 1 to 30
     threshold_path is just to find the threshold file
@@ -92,8 +92,6 @@ def get_UIUC_data(Target_Area_X, threshold_filepath, sfc_ID_filepath, config_fil
 
     #land Surface ID
     #0-29 inclusive for each land surface type; 30 water 31 snow/ice
-    Target_Area_X = "{:02d}".format(Target_Area_X)
-
     with Dataset(sfc_ID_filepath, 'r', format='NETCDF4') as sfc_ID_file:
         sfc_ID = sfc_ID_file.variables['surface_ID'][:]
         print(sfc_ID_filepath[-20:])

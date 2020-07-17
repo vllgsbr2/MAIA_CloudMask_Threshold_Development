@@ -843,7 +843,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DOY,\
     Target_Area,\
     MOD03_sfctypes = get_JPL_data(test_data_JPL_path)
-
+    Target_Area = 0
     #define global shape for granule to process
     shape = rad_band_4.shape
 
@@ -857,8 +857,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     fill_val_2,\
     fill_val_3,\
     Min_num_of_activated_tests,\
-    activation_values = get_UIUC_data(Target_Area_X, threshold_filepath,\
-                                      sfc_ID_filepath, config_filepath)
+    activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
 
     #now put data through algorithm flow****************************************
 
