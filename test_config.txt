@@ -30,7 +30,7 @@ OLP               : thresh_dev/OLP
 group_intermediate: thresh_dev/group
 combined_group    : thresh_dev/grouped_obs_and_CMs
 thresh            : thresh_dev/thresholds
-MCM_Ouput         : results/MCM_Output
+MCM_Output         : results/MCM_Output
 conf_matx_scene   : results/conf_matx_scene
 scene_accuracy    : results/scene_accuracy
 
