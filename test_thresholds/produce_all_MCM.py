@@ -40,7 +40,7 @@ for r in range(size):
             time_stamp         = test_data_JPL_path[106+14:106+26]
             Target_Area_X      = int(config['Target Area Integer'][PTA])
             config_filepath    = './config.csv'
-            print(time_stamp[4:7])
+            print(test_data_JPL_path)
             DOY       = int(time_stamp[4:7])
             DOY_bins  = np.arange(8,376,8)
             DOY_bin   = np.digitize(DOY, DOY_bins, right=True)
