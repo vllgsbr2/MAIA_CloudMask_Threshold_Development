@@ -1,18 +1,25 @@
 from JPL_MCM_threshold_testing import MCM_wrapper
 from MCM_output import make_output
 import numpy as np
+import configparser
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import matplotlib
 matplotlib.use('Agg')
+
+
+config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+config = configparser.ConfigParser()
+config.read(config_home_path+'/test_config.txt')
+
+PTA          = config['current PTA']['PTA']
+PTA_path     = config['PTAs'][PTA]
+
 home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-# test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2002051.1820.HDF5'
 test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2009048.1855.HDF5'
-Target_Area_X      = 1
-# threshold_filepath = home + 'thresholds_all_DOY/thresholds_DOY_049_to_056_bin_06.hdf5'
-threshold_filepath = home + 'thresholds_all_DOY/thresholds_DOY_041_to_048_bin_05.hdf5'
-# sfc_ID_filepath    = home + 'LA_surface_types/surfaceID_LA_056.nc'
-sfc_ID_filepath    = home + 'LA_surface_types/surfaceID_LA_048.nc'
+Target_Area_X      = int(config['Target Area Integer'][PTA])
+threshold_filepath = '{}/{}/'.format(PTA_path, config['supporting directories']['thresh'], 'thresholds_DOY_041_to_048_bin_05.h5')
+sfc_ID_filepath    = ''.format(PTA_path, config['supporting directories']['Surface_IDs'], 'surfaceID_LA_048.nc')
 config_filepath    = './config.csv'
 
 #run MCM
