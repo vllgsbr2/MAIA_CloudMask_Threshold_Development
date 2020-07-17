@@ -843,7 +843,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DOY,\
     Target_Area,\
     MOD03_sfctypes = get_JPL_data(test_data_JPL_path)
-    Target_Area = 0
+
     #define global shape for granule to process
     shape = rad_band_4.shape
 

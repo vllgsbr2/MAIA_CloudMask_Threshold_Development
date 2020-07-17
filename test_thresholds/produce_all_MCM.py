@@ -40,7 +40,6 @@ for r in range(size):
         for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
             Target_Area_X      = int(config['Target Area Integer'][PTA])
             config_filepath    = './config.csv'
-            print(test_data_JPL_path)
             DOY       = int(time_stamp[4:7])
             DOY_bins  = np.arange(8,376,8)
             DOY_bin   = np.digitize(DOY, DOY_bins, right=True)
@@ -79,7 +78,7 @@ for r in range(size):
             if not(os.path.exists(directory_name)):
                 os.mkdir(directory_name)
             #save path for MCM output file
-            save_path = '{}/MCM_Output.HDF5'.format(directory_name)
+            save_path = '{}/MCM_Output.h5'.format(directory_name)
             make_output(Sun_glint_exclusion_angle,\
                         Max_RDQI,\
                         Max_valid_DTT,\
