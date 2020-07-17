@@ -38,6 +38,7 @@ for r in range(size):
         test_data_JPL_paths = test_data_JPL_paths[start:end]
 
         for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
+            print(time_stamp,test_data_JPL_path[-30:] )
             Target_Area_X      = int(config['Target Area Integer'][PTA])
             config_filepath    = './config.csv'
             DOY       = int(time_stamp[4:7])
