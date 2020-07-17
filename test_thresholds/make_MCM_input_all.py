@@ -4,9 +4,9 @@ import h5py
 import matplotlib.pyplot as plt
 import os
 
-def make_JPL_data_from_MODIS(database_file, output_path, home):
+def make_JPL_data_from_MODIS(database_file, output_path):
 
-    with h5py.File(home + 'LA_database_60_cores/' + database_file, 'r') as hf_database:
+    with h5py.File(database_file, 'r') as hf_database:
         keys = list(hf_database.keys())
 
         if len(keys) > 0:
@@ -31,7 +31,7 @@ def make_JPL_data_from_MODIS(database_file, output_path, home):
                 MOD03_LandSeaMask     = hf_database[time_stamp + '/MOD03_LandSeaMask'][()]
 
                 #create hdf5 file
-                hf = h5py.File(output_path + '/test_JPL_data_{}.HDF5'.format(time_stamp), 'w')
+                hf = h5py.File(output_path + 'test_JPL_data_{}.HDF5'.format(time_stamp), 'w')
 
                 #define arbitrary shape for granule/orbit
                 shape = rad_b4.shape #(1000,1000)
@@ -119,6 +119,7 @@ def make_JPL_data_from_MODIS(database_file, output_path, home):
 if __name__ == '__main__':
 
     import mpi4py.MPI as MPI
+    import configparser
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
@@ -126,9 +127,17 @@ if __name__ == '__main__':
 
     for r in range(size):
         if rank==r:
-            home       = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            database_files = os.listdir(home + 'LA_database_60_cores')
-            output_path = home + 'JPL_data_all_timestamps'
+
+            config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+            config = configparser.ConfigParser()
+            config.read(config_home_path+'/test_config.txt')
+
+            PTA          = config['current PTA']['PTA']
+            PTA_path     = config['PTAs'][PTA]
+
+            database_path  = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
+            database_files = [database_path + x for x in os.listdir(database_path)]
+            output_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
 
             #this makes the JPL data file to read into the MCM
-            make_JPL_data_from_MODIS(database_files[r], output_path, home)
+            make_JPL_data_from_MODIS(database_files[r], output_path)
