@@ -21,6 +21,7 @@ for r in range(size):
 
         data_home = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
         test_data_JPL_paths = os.listdir(data_home)
+        time_stamps         = [x[14:26] for x in test_data_JPL_paths]
         test_data_JPL_paths = [data_home + x for x in test_data_JPL_paths]
 
         #assign subset of files to current rank
@@ -36,12 +37,11 @@ for r in range(size):
 
         test_data_JPL_paths = test_data_JPL_paths[start:end]
 
-        for test_data_JPL_path in test_data_JPL_paths:
-            time_stamp         = test_data_JPL_path[106+14:106+26]
+        for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
             Target_Area_X      = int(config['Target Area Integer'][PTA])
             config_filepath    = './config.csv'
             print(test_data_JPL_path)
-            DOY       = 322#int(time_stamp[4:7])
+            DOY       = int(time_stamp[4:7])
             DOY_bins  = np.arange(8,376,8)
             DOY_bin   = np.digitize(DOY, DOY_bins, right=True)
             DOY_end   = (DOY_bin+1)*8

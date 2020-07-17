@@ -31,7 +31,7 @@ def make_JPL_data_from_MODIS(database_file, output_path):
                 MOD03_LandSeaMask     = hf_database[time_stamp + '/MOD03_LandSeaMask'][()]
 
                 #create hdf5 file
-                hf = h5py.File(output_path + 'test_JPL_data_{}.HDF5'.format(time_stamp), 'w')
+                hf = h5py.File(output_path + 'test_JPL_data_{}.h5'.format(time_stamp), 'w')
 
                 #define arbitrary shape for granule/orbit
                 shape = rad_b4.shape #(1000,1000)
