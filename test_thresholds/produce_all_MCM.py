@@ -3,6 +3,7 @@ from MCM_output import make_output
 import mpi4py.MPI as MPI
 import os
 import numpy as np
+import configparser
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -10,8 +11,15 @@ size = comm.Get_size()
 
 for r in range(size):
     if rank==r:
-        home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-        data_home = home + 'JPL_data_all_timestamps/'
+
+        config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+        config = configparser.ConfigParser()
+        config.read(config_home_path+'/test_config.txt')
+
+        PTA          = config['current PTA']['PTA']
+        PTA_path     = config['PTAs'][PTA]
+
+        data_home = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
         test_data_JPL_paths = os.listdir(data_home)
         test_data_JPL_paths = [data_home + x for x in test_data_JPL_paths]
 
@@ -30,7 +38,7 @@ for r in range(size):
 
         for test_data_JPL_path in test_data_JPL_paths:
             time_stamp         = test_data_JPL_path[106+14:106+26]
-            Target_Area_X      = 1
+            Target_Area_X      = int(config['Target Area Integer'][PTA])
             config_filepath    = './config.csv'
 
             DOY       = int(time_stamp[4:7])
@@ -39,9 +47,11 @@ for r in range(size):
             DOY_end   = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
             print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
-            threshold_filepath = home + 'thresholds_all_DOY/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(DOY_start, DOY_end, DOY_bin)
+            thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
+            threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
 
-            sfc_ID_filepath    = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_end)
+            sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
+            sfc_ID_filepath    = '{}/surfaceID_LA_{:03d}.nc'.format(thresh_home, DOY_end)
 
             #run MCM
             Sun_glint_exclusion_angle,\
@@ -64,7 +74,7 @@ for r in range(size):
 
             #save output
             #create directory for time stamp
-            output_home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/MCM_Output'
+            output_home = '{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'])
             directory_name = '{}/{}'.format(output_home, time_stamp)
             if not(os.path.exists(directory_name)):
                 os.mkdir(directory_name)
