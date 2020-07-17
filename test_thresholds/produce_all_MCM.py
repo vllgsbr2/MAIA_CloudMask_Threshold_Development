@@ -51,7 +51,7 @@ for r in range(size):
             threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
 
             sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
-            sfc_ID_filepath    = '{}/surfaceID_LA_{:03d}.nc'.format(thresh_home, DOY_end)
+            sfc_ID_filepath    = '{}/surfaceID_LA_{:03d}.nc'.format(sfc_ID_home, DOY_end)
 
             #run MCM
             Sun_glint_exclusion_angle,\
