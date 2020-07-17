@@ -48,7 +48,7 @@ for r in range(size):
             DOY_start = DOY_end - 7
             print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
             thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
-            threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.hdf5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
+            threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
 
             sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
             sfc_ID_filepath    = '{}/surfaceID_LA_{:03d}.nc'.format(sfc_ID_home, DOY_end)
