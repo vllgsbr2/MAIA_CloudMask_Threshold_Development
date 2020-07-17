@@ -4,7 +4,7 @@ import h5py
 import matplotlib.pyplot as plt
 import os
 
-def make_JPL_data_from_MODIS(database_file, output_path):
+def make_JPL_data_from_MODIS(database_file, output_path, TA):
 
     with h5py.File(database_file, 'r') as hf_database:
         keys = list(hf_database.keys())
@@ -71,8 +71,6 @@ def make_JPL_data_from_MODIS(database_file, output_path):
 
                 DOY = int(time_stamp[4:7])
 
-                TA = 1
-
                 #0 for water and 1 for land
                 water_mask[water_mask >= 2] = 1
                 water_mask[water_mask !=1] = 0
@@ -134,10 +132,11 @@ if __name__ == '__main__':
 
             PTA          = config['current PTA']['PTA']
             PTA_path     = config['PTAs'][PTA]
+            TA           = int(config['Target Area Integer'][PTA])
 
             database_path  = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
             database_files = [database_path + x for x in os.listdir(database_path)]
             output_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
 
             #this makes the JPL data file to read into the MCM
-            make_JPL_data_from_MODIS(database_files[r], output_path)
+            make_JPL_data_from_MODIS(database_files[r], output_path, TA)
