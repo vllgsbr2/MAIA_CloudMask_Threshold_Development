@@ -539,7 +539,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
             try:
                 database = hf_thresholds[path][()]
-            except Exception as e::
+            except Exception as e:
                 print(e)
                 import sys
                 sys.exit()
