@@ -541,7 +541,8 @@ def get_test_determination(observable_level_parameter, observable_data,\
                 database = hf_thresholds[path][()]
             except Exception as e::
                 print(e)
-                break
+                import sys
+                sys.exit()
             # bad_thresh_binID = np.array(['cosSZA_{}_VZA_{}_RAZ_{}_SceneID_{}'.format(olp[0], olp[1], olp[2], olp[4]) for olp in OLP if database[olp[0], olp[1], olp[2], olp[4]] == -999])
             # print(np.unique(bad_thresh_binID))
             # import sys
