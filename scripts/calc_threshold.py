@@ -23,8 +23,8 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
          h5py.File(thresh_home + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
 
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
-        TA_group  = hf_thresh.create_group('TA_bin_{:02d}'.format(TA))#bin_ID[24:29])
-        DOY_group = TA_group.create_group('DOY_bin_{:02d}'.format(DOY_bin))#bin_ID[-6:])
+        TA_group  = hf_thresh.create_group('TA_bin_{:02d}'.format(TA))
+        DOY_group = TA_group.create_group('DOY_bin_{:02d}'.format(DOY_bin))
 
         num_sfc_types = 15
 
@@ -38,20 +38,17 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
         print(num_points)
 
         for count, bin_ID in enumerate(hf_keys):
-            # print(count, bin_ID)
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
 
             cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
             obs        = hf_group[bin_ID][:,1:]
-            #print(cloud_mask)
             clear_idx = np.where(cloud_mask != 0)
             clear_obs = obs[clear_idx[0],:]
             cloudy_idx = np.where(cloud_mask == 0)
             cloudy_obs = obs[cloudy_idx[0],:]
-            # print(cloudy_idx[0].shape)
+
             for i in range(7):
-                #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY_bin , obs_names[i])
                 print(path)
@@ -100,12 +97,12 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 if __name__ == '__main__':
 
     import h5py
-    # import tables
+    import tables
     import os
     import mpi4py.MPI as MPI
     import sys
     import configparser
-    # tables.file._open_files.close_all()
+    tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
@@ -132,5 +129,5 @@ if __name__ == '__main__':
             DOY_start = DOY_end - 7
             grouped_file_path = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.\
                                 format(grouped_home, DOY_start, DOY_end, DOY_bin)
-            # print(grouped_file_path)
+
             calc_thresh(thresh_home, grouped_file_path, DOY_bin, TA)
