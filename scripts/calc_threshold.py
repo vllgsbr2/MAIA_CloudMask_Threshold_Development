@@ -18,7 +18,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
     DOY_end = (DOY_bin+1)*8
     DOY_start = DOY_end - 7
-    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
+
     with h5py.File(group_file, 'r') as hf_group,\
          h5py.File(thresh_home + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
 
@@ -35,6 +35,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
         hf_keys    = list(hf_group.keys())
         num_points = len(hf_keys)
+        print(num_points)
 
         for count, bin_ID in enumerate(hf_keys):
             # print(count, bin_ID)
@@ -53,7 +54,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #thresh_nan = False
                 #path to TA/DOY/obs threshold dataset
                 path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY_bin , obs_names[i])
-
+                print(path)
                 #WI
                 if i==0:
                     if clear_obs[:,i].shape[0] > 0:
@@ -86,8 +87,8 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                         cloudy_obs[:, i].min()
 
-                if hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] == -999:
-                    print('binID: {} | obs#: {}'.format(bin_ID, i))
+                # if hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] == -999:
+                #     print('binID: {} | obs#: {}'.format(bin_ID, i))
 
                 #if np.isnan(hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]):
                 #    thresh_nan = True
