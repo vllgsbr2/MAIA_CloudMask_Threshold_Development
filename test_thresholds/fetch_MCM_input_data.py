@@ -82,8 +82,8 @@ def get_JPL_data(test_data_JPL_path):
 
 def get_UIUC_data(sfc_ID_filepath, config_filepath):
     '''
-    Target_Area_X is an int denoting 1 of 30 target areas 1 to 30
-    threshold_path is just to find the threshold file
+    sfc_ID_filepath
+    config_filepath
     '''
 
     #thresholds
@@ -91,7 +91,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     #each test has the above array that can be indexed for the threshold
 
     #land Surface ID
-    #0-29 inclusive for each land surface type; 30 water 31 snow/ice
+    #0-11 inclusive for each land surface type; 12/13/14 water/glint/snow
     with Dataset(sfc_ID_filepath, 'r', format='NETCDF4') as sfc_ID_file:
         sfc_ID = sfc_ID_file.variables['surface_ID'][:]
         print(sfc_ID_filepath[-20:])
