@@ -36,6 +36,7 @@ for r in range(size):
             end = (rank * processes_per_cpu) + processes_per_cpu_last
 
         test_data_JPL_paths = test_data_JPL_paths[start:end]
+        time_stamps = time_stamps[start:end]
 
         for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
             # print(time_stamp,test_data_JPL_path[-30:] )
