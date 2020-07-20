@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH --job-name='cloud_mask'
 #SBATCH -p sesebig
-#SBATCH --time=10:00:00
+#SBATCH --time=2:00:00
 #SBATCH --mem-per-cpu=4gb
-#SBATCH -N 10
+#SBATCH -N 8
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
 #SBATCH --mail-user=vllgsbr2@illinois.edu
 #SBATCH --error='slurm_produce_all_MCM.err'
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/
-mpirun -n 200 python produce_all_MCM.py
+mpirun -n 160 python produce_all_MCM.py
