@@ -533,6 +533,9 @@ def get_test_determination(observable_level_parameter, observable_data,\
             #then we will go back and mask the invalid thresholds as -999
             fillVal_idx = np.where(OLP==-999)
             OLP[fillVal_idx] = 0
+
+            path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
+
             DOY_bin_thresh = int(threshold_path[-5:-3])
             print('threshold metadata: ',threshold_path[-24:-3], path, DOY_bin == DOY_bin_thresh)
 
