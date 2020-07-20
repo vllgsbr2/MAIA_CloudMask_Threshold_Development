@@ -94,7 +94,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     #0-11 inclusive for each land surface type; 12/13/14 water/glint/snow
     with Dataset(sfc_ID_filepath, 'r', format='NETCDF4') as sfc_ID_file:
         sfc_ID = sfc_ID_file.variables['surface_ID'][:]
-        print(sfc_ID_filepath[-20:])
+        # print(sfc_ID_filepath[-20:])
 
     #read config file
     config_data = pd.read_csv(config_filepath, skiprows=3, header=0)
