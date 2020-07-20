@@ -42,10 +42,12 @@ for r in range(size):
             Target_Area_X      = int(config['Target Area Integer'][PTA])
             config_filepath    = './config.csv'
             DOY       = int(time_stamp[4:7])
+
             DOY_bins  = np.arange(8,376,8)
             DOY_bin   = np.digitize(DOY, DOY_bins, right=True)
             DOY_end   = (DOY_bin+1)*8
             DOY_start = DOY_end - 7
+
             print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
             thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
             threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
