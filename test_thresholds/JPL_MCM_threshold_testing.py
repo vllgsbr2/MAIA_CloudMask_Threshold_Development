@@ -533,16 +533,8 @@ def get_test_determination(observable_level_parameter, observable_data,\
             #then we will go back and mask the invalid thresholds as -999
             fillVal_idx = np.where(OLP==-999)
             OLP[fillVal_idx] = 0
-            import configparser
-            config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
-            config = configparser.ConfigParser()
-            config.read(config_home_path+'/test_config.txt')
-
-            PTA          = config['current PTA']['PTA']
-
-            TA_config = int(config['Target Area Integer'][PTA])
-            path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
-            print('threshold metadata: ',threshold_path[-24:-3], path, TA == TA_config)
+            DOY_bin_thresh = int(threshold_path[-5:-3])
+            print('threshold metadata: ',threshold_path[-24:-3], path, DOY_bin == DOY_bin_thresh)
 
             try:
                 database = hf_thresholds[path][()]
