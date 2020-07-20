@@ -537,10 +537,11 @@ def get_test_determination(observable_level_parameter, observable_data,\
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
             print('threshold metadata: ',threshold_path[-26:-5], path)
 
-            # try:
-            database = hf_thresholds[path][()]
-            # except Exception as e:
-            #     print(e)
+            try:
+                database = hf_thresholds[path][()]
+            except Exception as e:
+                print(e, path)
+                return observable_data, np.ones(shape)*-999
                 # import sys
                 # sys.exit()
             # bad_thresh_binID = np.array(['cosSZA_{}_VZA_{}_RAZ_{}_SceneID_{}'.format(olp[0], olp[1], olp[2], olp[4]) for olp in OLP if database[olp[0], olp[1], olp[2], olp[4]] == -999])
