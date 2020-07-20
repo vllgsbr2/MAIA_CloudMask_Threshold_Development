@@ -541,8 +541,8 @@ def get_test_determination(observable_level_parameter, observable_data,\
                 database = hf_thresholds[path][()]
             except Exception as e:
                 print(e)
-                import sys
-                sys.exit()
+                # import sys
+                # sys.exit()
             # bad_thresh_binID = np.array(['cosSZA_{}_VZA_{}_RAZ_{}_SceneID_{}'.format(olp[0], olp[1], olp[2], olp[4]) for olp in OLP if database[olp[0], olp[1], olp[2], olp[4]] == -999])
             # print(np.unique(bad_thresh_binID))
             # import sys
@@ -848,7 +848,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DOY,\
     Target_Area,\
     MOD03_sfctypes = get_JPL_data(test_data_JPL_path)
-    print(Target_Area, '*******************JPLMCM************')
+    # print(Target_Area, '*******************JPLMCM************')
 
     #define global shape for granule to process
     shape = rad_band_4.shape
