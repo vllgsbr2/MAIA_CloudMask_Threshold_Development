@@ -538,7 +538,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             print('threshold metadata: ',threshold_path[-26:-3], path)
 
             try:
-            database = hf_thresholds[path][()]
+                database = hf_thresholds[path][()]
             except Exception as e:
                 print(e, path)
                 # return observable_data, np.ones(shape)*-999
