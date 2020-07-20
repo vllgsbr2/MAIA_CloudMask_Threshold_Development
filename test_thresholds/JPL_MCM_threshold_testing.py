@@ -538,6 +538,8 @@ def get_test_determination(observable_level_parameter, observable_data,\
             config = configparser.ConfigParser()
             config.read(config_home_path+'/test_config.txt')
 
+            PTA          = config['current PTA']['PTA']
+
             TA_config = int(config['Target Area Integer'][PTA])
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
             print('threshold metadata: ',threshold_path[-24:-3], path, TA == TA_config)
