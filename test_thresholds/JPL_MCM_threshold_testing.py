@@ -667,7 +667,7 @@ def get_DTT_White_Test(T, WI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
                      the whole space.
 
     """
-    print('pixels with no threshold available', np.where(T==-999)[0].shape[0]==np.where(WI < 0)[0].shape[0])
+    # print('pixels with no threshold available', np.where(T==-999)[0].shape[0]==np.where(WI < 0)[0].shape[0])
 
     max_fill_val = np.max(np.array([fill_val_1, fill_val_2, fill_val_3]))
 
