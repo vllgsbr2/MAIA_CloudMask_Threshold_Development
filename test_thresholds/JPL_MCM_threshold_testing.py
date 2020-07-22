@@ -535,7 +535,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             OLP[fillVal_idx] = 0
 
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
-
+            print(path)
             DOY_bin_thresh = int(threshold_path[-5:-3])
             # print('thresh status: ',threshold_path[-24:-3], path, DOY_bin == DOY_bin_thresh)
             print('thresh status: ',DOY == DOY_bin_thresh)
