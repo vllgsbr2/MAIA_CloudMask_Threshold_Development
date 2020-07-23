@@ -14,13 +14,13 @@ def find_good_scenes():
     data_home          = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
     database_files     = os.listdir(data_home)
     database_filepaths = [data_home + x for x in database_files]
-    print(database_filepaths[0])
 
     with open('./scenes_worth_inspecting.txt', 'w') as txt_good_scenes:
         for db_file in database_filepaths:
+            print(db_file)
             with h5py.File(db_file, 'r') as hf_file:
                 time_stamps = list(hf_file.keys())
-
+                count_good_scenes = 0
                 for scene in time_stamps:
                     rad_path = '{}/{}/{}'.format(scene, 'radiance', 'band_1')
                     data     = hf_file[rad_path][()]
@@ -34,6 +34,8 @@ def find_good_scenes():
                     if percent_good_pix > 0.1:
                         metadata = '{} , {:1.2f}'.format(scene, percent_good_pix)
                         txt_good_scenes.write(metadata)
+                        count_good_scenes += 1
+                print(count_good_scenes)
 
 if __name__ == '__main__':
     find_good_scenes()
