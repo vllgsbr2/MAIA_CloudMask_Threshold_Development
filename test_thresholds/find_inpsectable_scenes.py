@@ -32,7 +32,8 @@ def find_good_scenes():
                     percent_good_pix = 1 - percent_bad_pix
 
                     if percent_good_pix > 0.1:
-                        txt_good_scenes.writeline(scene, percent_good_pix)
+                        metadata = '{} , {:1.2f}'.format(scene, percent_good_pix)
+                        txt_good_scenes.write(metadata)
 
 if __name__ == '__main__':
     find_good_scenes()
