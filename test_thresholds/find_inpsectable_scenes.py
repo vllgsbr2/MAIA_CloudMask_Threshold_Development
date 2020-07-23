@@ -14,6 +14,7 @@ def find_good_scenes():
     data_home          = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
     database_files     = os.listdir(data_home)
     database_filepaths = [x + data_home for x in database_files]
+    print(database_filepaths[0])
 
     with open('./scenes_worth_inspecting.txt', 'w') as txt_good_scenes:
         for db_file in database_filepaths:
