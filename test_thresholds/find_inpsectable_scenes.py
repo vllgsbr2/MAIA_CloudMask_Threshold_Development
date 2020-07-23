@@ -12,7 +12,7 @@ def find_good_scenes():
     PTA_path     = config['PTAs'][PTA]
 
     data_home          = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
-    database_files     = os.listdir(datahome)
+    database_files     = os.listdir(data_home)
     database_filepaths = [x + data_home for x in database_files]
 
     with open('./scenes_worth_inspecting.txt', 'w') as txt_good_scenes:
