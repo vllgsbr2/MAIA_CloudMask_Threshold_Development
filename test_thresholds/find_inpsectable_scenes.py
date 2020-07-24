@@ -57,7 +57,7 @@ def choose_random_scenes():
 
     with open('./scenes_worth_inspecting.txt', 'w') as txt_good_scenes:
         for scene in rand_scenes:
-            rand_scenes_str += '{}\n'.format(scene)
+            rand_scenes_str += '{}'.format(scene)
 
 
         txt_good_scenes.write(rand_scenes_str)
@@ -138,6 +138,6 @@ def graph_scenes(scenes_file):
 
 if __name__ == '__main__':
     # find_good_scenes()
-    # choose_random_scenes()
+    choose_random_scenes()
     scenes_file = './scenes_worth_inspecting.txt'
     graph_scenes(scenes_file)
