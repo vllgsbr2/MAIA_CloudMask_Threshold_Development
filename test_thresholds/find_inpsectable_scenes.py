@@ -67,20 +67,20 @@ def graph_scenes(scenes_file):
     scenes_file {str} -- txt file where each row is time stamp YYYYDDD.HHMM
                          i.e. 2020.048.1230 -> DOY 48, year 2020, 12:30 UTC
     '''
-    print('graph_scenes')
+
     import h5py
     import numpy as np
     import matplotlib.pyplot as plt
     from rgb_enhancement import get_enhanced_RGB
     import configparser
     import os
-
+    print('graph_scenes')
     #grab relevant  scenes
     with open(scenes_file, 'r') as txt_scenes:
         scenes = []
         for time_stamp in txt_scenes:
             scenes.append(time_stamp)
-
+    print('graph_scenes')
     #find output files
     config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
     config           = configparser.ConfigParser()
@@ -101,7 +101,7 @@ def graph_scenes(scenes_file):
     # data_home          = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
     # database_files     = os.listdir(data_home)
     # database_filepaths = [data_home + x for x in database_files]
-
+    print('graph_scenes')
     for MCM_Output, time_stamp in zip(output_filepaths, time_stamps):
         print(time_stamp)
         #get RGB and MCM
