@@ -128,7 +128,11 @@ def graph_scenes(scenes_file):
             a.set_xticks([])
             a.set_yticks([])
 
+        plt.show()
+
 
 if __name__ == '__main__':
     # find_good_scenes()
-    choose_random_scenes()
+    # choose_random_scenes()
+    scenes_file = './scenes_worth_inspecting.txt'
+    graph_scenes(scenes_file)
