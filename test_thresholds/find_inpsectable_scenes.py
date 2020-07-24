@@ -45,21 +45,22 @@ def choose_random_scenes():
     import numpy as np
 
     scenes_2_inspect = []
-    df_scenes   = pd.read_csv('./scenes_2_inspecting.txt', header=0, delimiter=',').to_numpy()
-    time_stamps = df_scenes[:,0]
-    #
-    # low, high = 0, time_stamps.shape[0]-1
-    # size = 100
-    # random_scene_idx = np.random.randint(low=low, high=high, size=size)
-    # rand_scenes = time_stamps[random_scene_idx]
-    # rand_scenes_str = ''
-    #
-    # with open('./scenes_worth_inspecting.txt', 'w') as txt_good_scenes:
-    #     for scene in rand_scenes:
-    #         rand_scenes_str += '{}/n'.format(scene)
-    #
-    #
-    #     txt_good_scenes.write(rand_scenes_str)
+    df_scenes   = pd.read_csv('./scenes_2_inspecting.txt', header=0, delimiter=',')
+    time_stamp = list(df_scenes.columns)[0]
+    time_stamps = df_scenes[time_stamp].values
+
+    low, high = 0, time_stamps.shape[0]-1
+    size = 100
+    random_scene_idx = np.random.randint(low=low, high=high, size=size)
+    rand_scenes = time_stamps[random_scene_idx]
+    rand_scenes_str = ''
+
+    with open('./scenes_worth_inspecting.txt', 'w') as txt_good_scenes:
+        for scene in rand_scenes:
+            rand_scenes_str += '{}/n'.format(scene)
+
+
+        txt_good_scenes.write(rand_scenes_str)
 
 
 
