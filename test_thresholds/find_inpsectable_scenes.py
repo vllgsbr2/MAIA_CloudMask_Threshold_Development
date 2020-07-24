@@ -46,6 +46,7 @@ def choose_random_scenes():
 
     scenes_2_inspect = []
     df_scenes   = pd.read_csv('./scenes_2_inspecting.txt', header=0, delimiter=' , ')
+    print(df_scenes.columns)
     time_stamps = df_scenes['time_stamp YYYYDDD.HHMM'].to_numpy()
 
     low, high = 0, time_stamps.shape[0]-1
