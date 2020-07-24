@@ -64,5 +64,5 @@ def choose_random_scenes():
 
 
 if __name__ == '__main__':
-    find_good_scenes()
+    # find_good_scenes()
     choose_random_scenes()
