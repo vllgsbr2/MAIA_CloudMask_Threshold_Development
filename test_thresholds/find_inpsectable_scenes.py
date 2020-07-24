@@ -93,6 +93,7 @@ def graph_scenes(scenes_file):
     output_home      = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Output'])
     output_dir       = os.listdir(output_home)
     print(len(output_dir), output_dir[0])
+    print(scenes)
     #use only scenes from scene file
     output_dir       = [x for x in output_dir if x in scenes]
     print(len(output_dir))
