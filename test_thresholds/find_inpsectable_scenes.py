@@ -72,6 +72,7 @@ def graph_scenes(scenes_file):
     import matplotlib.pyplot as plt
     from rgb_enhancement import get_enhanced_RGB
     import configparser
+    import os
 
     #grab relevant  scenes
     with open(scenes_file, 'r') as txt_scenes:
