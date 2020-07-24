@@ -74,13 +74,13 @@ def graph_scenes(scenes_file):
     from rgb_enhancement import get_enhanced_RGB
     import configparser
     import os
-    print('graph_scenes')
+
     #grab relevant  scenes
     with open(scenes_file, 'r') as txt_scenes:
         scenes = []
         for time_stamp in txt_scenes:
             scenes.append(time_stamp)
-    print('graph_scenes')
+
     #find output files
     config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
     config           = configparser.ConfigParser()
@@ -92,8 +92,10 @@ def graph_scenes(scenes_file):
     #grab MCM and RGB from MCM Output files
     output_home      = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Output'])
     output_dir       = os.listdir(output_home)
+    print(len(output_dir))
     #use only scenes from scene file
     output_dir       = [x for x in output_dir if x in scenes]
+    print(len(output_dir))
     output_filepaths = [output_home + x + '/MCM_Output.h5' for x in output_dir]
     time_stamps      = output_dir
 
@@ -101,7 +103,7 @@ def graph_scenes(scenes_file):
     # data_home          = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
     # database_files     = os.listdir(data_home)
     # database_filepaths = [data_home + x for x in database_files]
-    print('graph_scenes')
+
     for MCM_Output, time_stamp in zip(output_filepaths, time_stamps):
         print(time_stamp)
         #get RGB and MCM
