@@ -70,7 +70,7 @@ def graph_scenes(scenes_file):
     import h5py
     import numpy as np
     import matplotlib.pyplot as plt
-    from rgb_enhancement import *
+    from rgb_enhancement import get_enhanced_RGB
     import configparser
 
     #grab relevant  scenes
