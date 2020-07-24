@@ -67,6 +67,7 @@ def graph_scenes(scenes_file):
     scenes_file {str} -- txt file where each row is time stamp YYYYDDD.HHMM
                          i.e. 2020.048.1230 -> DOY 48, year 2020, 12:30 UTC
     '''
+    print('graph_scenes')
     import h5py
     import numpy as np
     import matplotlib.pyplot as plt
