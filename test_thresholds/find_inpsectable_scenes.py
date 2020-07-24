@@ -102,7 +102,7 @@ def graph_scenes(scenes_file):
     # database_filepaths = [data_home + x for x in database_files]
 
     for MCM_Output, time_stamp in zip(output_filepaths, time_stamps):
-
+        print(time_stamp)
         #get RGB and MCM
         with h5py.File(MCM_Output, 'r') as hf_MCM_Output:
             R_band_4 = hf_MCM_Output['Reflectance/band_04']
