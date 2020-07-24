@@ -39,63 +39,68 @@ for r in range(size):
         time_stamps = time_stamps[start:end]
 
         for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
-            # print(time_stamp,test_data_JPL_path[-30:] )
-            Target_Area_X      = int(config['Target Area Integer'][PTA])
-            config_filepath    = './config.csv'
-            DOY       = int(time_stamp[4:7])
 
-            DOY_bins  = np.arange(8,376,8)
-            DOY_bin   = np.digitize(DOY, DOY_bins, right=True)
-            DOY_end   = (DOY_bin+1)*8
-            DOY_start = DOY_end - 7
-
-            print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
-            thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
-            threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
-
-            sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
-            sfc_ID_filepath    = '{}/surfaceID_LA_{:03d}.nc'.format(sfc_ID_home, DOY_end)
-
-            #run MCM
-            Sun_glint_exclusion_angle,\
-            Max_RDQI,\
-            Max_valid_DTT,\
-            Min_valid_DTT,\
-            fill_val_1,\
-            fill_val_2,\
-            fill_val_3,\
-            Min_num_of_activated_tests,\
-            activation_values,\
-            observable_data,\
-            DTT, final_cloud_mask,\
-            BRFs,\
-            SZA, VZA, VAA,SAA,\
-            scene_type_identifier,\
-            T = \
-            MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
-                                         sfc_ID_filepath, config_filepath)
-
-            #save output
-            #create directory for time stamp
             output_home = '{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'])
             directory_name = '{}/{}'.format(output_home, time_stamp)
             if not(os.path.exists(directory_name)):
-                os.mkdir(directory_name)
-            #save path for MCM output file
-            save_path = '{}/MCM_Output.h5'.format(directory_name)
-            make_output(Sun_glint_exclusion_angle,\
-                        Max_RDQI,\
-                        Max_valid_DTT,\
-                        Min_valid_DTT,\
-                        fill_val_1,\
-                        fill_val_2,\
-                        fill_val_3,\
-                        Min_num_of_activated_tests,\
-                        activation_values,\
-                        observable_data,\
-                        DTT, final_cloud_mask,\
-                        BRFs,\
-                        SZA, VZA, VAA,SAA,\
-                        scene_type_identifier,\
-                        save_path=save_path)
-            # print(save_path)
+
+                # print(time_stamp,test_data_JPL_path[-30:] )
+                Target_Area_X      = int(config['Target Area Integer'][PTA])
+                config_filepath    = './config.csv'
+                DOY       = int(time_stamp[4:7])
+
+                DOY_bins  = np.arange(8,376,8)
+                DOY_bin   = np.digitize(DOY, DOY_bins, right=True)
+                DOY_end   = (DOY_bin+1)*8
+                DOY_start = DOY_end - 7
+
+                print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
+                thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
+                threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
+
+                sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
+                sfc_ID_filepath    = '{}/surfaceID_LA_{:03d}.nc'.format(sfc_ID_home, DOY_end)
+
+                #run MCM
+                Sun_glint_exclusion_angle,\
+                Max_RDQI,\
+                Max_valid_DTT,\
+                Min_valid_DTT,\
+                fill_val_1,\
+                fill_val_2,\
+                fill_val_3,\
+                Min_num_of_activated_tests,\
+                activation_values,\
+                observable_data,\
+                DTT, final_cloud_mask,\
+                BRFs,\
+                SZA, VZA, VAA,SAA,\
+                scene_type_identifier,\
+                T = \
+                MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
+                                             sfc_ID_filepath, config_filepath)
+
+                #save output
+                #create directory for time stamp
+                output_home = '{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'])
+                directory_name = '{}/{}'.format(output_home, time_stamp)
+                if not(os.path.exists(directory_name)):
+                    os.mkdir(directory_name)
+                #save path for MCM output file
+                save_path = '{}/MCM_Output.h5'.format(directory_name)
+                make_output(Sun_glint_exclusion_angle,\
+                            Max_RDQI,\
+                            Max_valid_DTT,\
+                            Min_valid_DTT,\
+                            fill_val_1,\
+                            fill_val_2,\
+                            fill_val_3,\
+                            Min_num_of_activated_tests,\
+                            activation_values,\
+                            observable_data,\
+                            DTT, final_cloud_mask,\
+                            BRFs,\
+                            SZA, VZA, VAA,SAA,\
+                            scene_type_identifier,\
+                            save_path=save_path)
+                # print(save_path)
