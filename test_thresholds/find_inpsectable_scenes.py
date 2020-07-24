@@ -45,9 +45,8 @@ def choose_random_scenes():
     import numpy as np
 
     scenes_2_inspect = []
-    df_scenes   = pd.read_csv('./scenes_2_inspecting.txt', header=0, delimiter=',')
-    time_stamp = list(df_scenes.columns)[0]
-    time_stamps = df_scenes[time_stamp].to_numpy()
+    df_scenes   = pd.read_csv('./scenes_2_inspecting.txt', header=0, delimiter=',').to_numpy()
+    time_stamps = df_scenes[:,0]
     #
     # low, high = 0, time_stamps.shape[0]-1
     # size = 100
