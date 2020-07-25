@@ -79,8 +79,6 @@ def graph_scenes(scenes_file):
     df_scenes   = pd.read_csv('./scenes_worth_inspecting.txt', header=None, dtype=str, delimiter='\n')
     scenes = [x[:-1] for x in df_scenes.values[:,0]]
 
-    print(scenes)
-
     # with open(scenes_file, 'r') as txt_scenes:
     #     scenes = []
     #     for time_stamp in txt_scenes:
@@ -119,26 +117,29 @@ def graph_scenes(scenes_file):
 
         #construct and enhance RGB
         print(np.where(R_band_6 == -999)[0].shape[0])
-        RGB            = np.dstack((R_band_6, R_band_5, R_band_4))
-        RGB[RGB==-999] = 0
-        RGB            = get_enhanced_RGB(RGB)
+        if np.where(R_band_6 == -999)[0].shape[0] <= 12000:
+            RGB            = np.dstack((R_band_6, R_band_5, R_band_4))
+            RGB[RGB==-999] = 0
+            RGB            = get_enhanced_RGB(RGB)
 
-        #plot RGB enhanced against MCM binary
-        f, ax = plt.subplots(ncols=2)
+            #plot RGB enhanced against MCM binary
+            f, ax = plt.subplots(ncols=2)
 
-        image_MCM = ax[0].imshow(MCM, cmap='binary', vmin=0, vmax=1.1)
-        ax[1].imshow(RGB)
+            image_MCM = ax[0].imshow(MCM, cmap='binary', vmin=0, vmax=1.1)
+            ax[1].imshow(RGB)
 
-        ax[0].set_title('MCM ' + time_stamp)
-        ax[1].set_title('RGB ' + time_stamp)
+            ax[0].set_title('MCM ' + time_stamp)
+            ax[1].set_title('RGB ' + time_stamp)
 
-        image_MCM.cmap.set_over('red')
+            image_MCM.cmap.set_over('red')
 
-        for a in ax:
-            a.set_xticks([])
-            a.set_yticks([])
+            for a in ax:
+                a.set_xticks([])
+                a.set_yticks([])
 
-        plt.show()
+            plt.show()
+        else:
+            print('no good pixels what the heck')
 
 
 if __name__ == '__main__':
