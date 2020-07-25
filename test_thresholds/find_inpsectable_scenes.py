@@ -57,9 +57,7 @@ def choose_random_scenes():
 
     with open('./scenes_worth_inspecting.txt', 'w') as txt_good_scenes:
         for scene in rand_scenes:
-            rand_scenes_str += '{}'.format(scene)
-            print(scene, 'hellow')
-
+            rand_scenes_str += '{}\n'.format(scene)
 
         txt_good_scenes.write(rand_scenes_str)
 
