@@ -74,7 +74,7 @@ def graph_scenes(scenes_file):
     from rgb_enhancement import get_enhanced_RGB
     import configparser
     import os
-    import pandas
+    import pandas as pd
 
     #grab relevant  scenes
     df_scenes   = pd.read_csv('./scenes_worth_inspecting.txt', header=None, delimiter=',', dtype=str)
