@@ -124,16 +124,16 @@ def graph_scenes(scenes_file):
             # RGB            = get_enhanced_RGB(RGB)
 
             #normalize band 6 and band 13
-            R_band_6_norm = (R_band_6 - R_band_6.mean()) / R_band_6.std()
-            R_band_13_norm = (R_band_13 - R_band_13.mean()) / R_band_13.std()
-            R_band_13_6_norm = R_band_13_norm + R_band_6_norm
+            # R_band_6_norm = (R_band_6 - R_band_6.mean()) / R_band_6.std()
+            # R_band_13_norm = (R_band_13 - R_band_13.mean()) / R_band_13.std()
+            # R_band_13_6_norm = R_band_13_norm + R_band_6_norm
             #then add them together
 
             #plot RGB enhanced against MCM binary
             f, ax = plt.subplots(ncols=2)
 
             image_MCM = ax[0].imshow(MCM, cmap='binary', vmin=0, vmax=1.1)
-            ax[1].imshow(R_band_13_6_norm, cmap = 'binary')
+            ax[1].imshow(R_band_6 + 3*R_band_13, cmap = 'binary')
 
             ax[0].set_title('MCM ' + time_stamp)
             ax[1].set_title('RGB ' + time_stamp)
