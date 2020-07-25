@@ -112,11 +112,11 @@ def graph_scenes(scenes_file):
         print(time_stamp)
         #get RGB and MCM
         with h5py.File(MCM_Output, 'r') as hf_MCM_Output:
-            R_band_4 = hf_MCM_Output['Reflectance/band_04']
-            R_band_5 = hf_MCM_Output['Reflectance/band_05']
-            R_band_6 = hf_MCM_Output['Reflectance/band_06']
+            R_band_4 = hf_MCM_Output['Reflectance/band_04'][()]
+            R_band_5 = hf_MCM_Output['Reflectance/band_05'][()]
+            R_band_6 = hf_MCM_Output['Reflectance/band_06'][()]
 
-            MCM = hf_MCM_Output['cloud_mask_output/final_cloud_mask']
+            MCM = hf_MCM_Output['cloud_mask_output/final_cloud_mask'][()]
 
         #construct and enhance RGB
         RGB            = np.dstack((R_band_6, R_band_5, R_band_4))
