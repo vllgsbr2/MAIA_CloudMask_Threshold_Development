@@ -131,7 +131,7 @@ def graph_scenes(scenes_file):
             # R_band_6_norm[R_band_6!=fill_val] = (R_band_6[R_band_6!=fill_val] - R_band_6[R_band_6!=fill_val].mean()) / R_band_6[R_band_6!=fill_val].std()
             # R_band_13_norm[R_band_13!=fill_val] = (R_band_13[R_band_13!=fill_val] - R_band_13[R_band_13!=fill_val].mean()) / R_band_13[R_band_13!=fill_val].std()
             # R_band_13_6_norm = R_band_13_norm + R_band_6_norm
-            R_band_13_6_norm = 3*R_band_13/R_band_13.max() + R_band_6/R_band_6.max()
+            R_band_13_6_norm = R_band_6/R_band_6.max()# + 3*R_band_13/R_band_13.max()
 
             #then add them together
 
