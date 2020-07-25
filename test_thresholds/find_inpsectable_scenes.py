@@ -125,6 +125,8 @@ def graph_scenes(scenes_file):
 
             #normalize band 6 and band 13
             fill_val = -999
+            R_band_6_norm = np.copy(R_band_6)
+            R_band_13_norm = np.copy(R_band_13)
             R_band_6_norm[R_band_6!=fill_val] = (R_band_6[R_band_6!=fill_val] - R_band_6[R_band_6!=fill_val].mean()) / R_band_6[R_band_6!=fill_val].std()
             R_band_13_norm[R_band_13!=fill_val] = (R_band_13[R_band_13!=fill_val] - R_band_13[R_band_13!=fill_val].mean()) / R_band_13[R_band_13!=fill_val].std()
             R_band_13_6_norm = R_band_13_norm + R_band_6_norm
