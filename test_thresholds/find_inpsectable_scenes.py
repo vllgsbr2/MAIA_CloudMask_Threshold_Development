@@ -150,7 +150,7 @@ def graph_scenes(scenes_file):
 
 
 if __name__ == '__main__':
-    find_good_scenes()
-    choose_random_scenes()
+    # find_good_scenes()
+    # choose_random_scenes()
     scenes_file = './scenes_worth_inspecting.txt'
     graph_scenes(scenes_file)
