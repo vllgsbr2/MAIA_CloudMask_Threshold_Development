@@ -139,7 +139,7 @@ def graph_scenes(scenes_file):
             f, ax = plt.subplots(ncols=2)
 
             image_MCM = ax[0].imshow(MCM, cmap='binary', vmin=0, vmax=1.1)
-            image_brf = ax[1].imshow(R_band_13_6_norm, cmap = 'bone_r', vmin=0, vmax = R_band_13_6_norm.max())
+            image_brf = ax[1].imshow(R_band_13_6_norm, cmap = 'bone', vmin=0, vmax = R_band_13_6_norm.max())
 
             ax[0].set_title('MCM ' + time_stamp)
             ax[1].set_title('RGB ' + time_stamp)
