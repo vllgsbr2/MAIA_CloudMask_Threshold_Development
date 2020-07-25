@@ -132,7 +132,7 @@ def graph_scenes(scenes_file):
         ax[0].set_title('MCM ' + time_stamp)
         ax[1].set_title('RGB ' + time_stamp)
 
-        image_MCM.set_under('red')
+        image_MCM.cmap.set_under('red')
 
         for a in ax:
             a.set_xticks([])
