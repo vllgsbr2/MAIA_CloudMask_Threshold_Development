@@ -124,8 +124,9 @@ def graph_scenes(scenes_file):
             # RGB            = get_enhanced_RGB(RGB)
 
             #normalize band 6 and band 13
-            R_band_6_norm = (R_band_6 - R_band_6.mean()) / R_band_6.std()
-            R_band_13_norm = (R_band_13 - R_band_13.mean()) / R_band_13.std()
+            fill_val = -999
+            R_band_6_norm[R_band_6!=fill_val] = (R_band_6[R_band_6!=fill_val] - R_band_6[R_band_6!=fill_val].mean()) / R_band_6[R_band_6!=fill_val].std()
+            R_band_13_norm[R_band_13!=fill_val] = (R_band_13[R_band_13!=fill_val] - R_band_13[R_band_13!=fill_val].mean()) / R_band_13[R_band_13!=fill_val].std()
             R_band_13_6_norm = R_band_13_norm + R_band_6_norm
             #then add them together
 
