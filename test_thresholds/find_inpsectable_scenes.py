@@ -27,7 +27,7 @@ def find_good_scenes():
                     rad_path = '{}/{}/{}'.format(scene, 'radiance', 'band_1')
                     data     = hf_file[rad_path][()]
 
-                    num_fill_vals    = np.where(data != -999)[0].shape[0]
+                    num_fill_vals    = np.where(data == -999)[0].shape[0]
                     image_shape      = data.shape
                     num_pix_total    = image_shape[0]*image_shape[1]
                     percent_bad_pix  = num_fill_vals/num_pix_total
