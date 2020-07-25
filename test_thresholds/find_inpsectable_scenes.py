@@ -57,7 +57,7 @@ def choose_random_scenes():
 
     with open('./scenes_worth_inspecting.txt', 'w') as txt_good_scenes:
         for scene in rand_scenes:
-            rand_scenes_str += '{}'.format(scene)
+            rand_scenes_str += '{}\n'.format(scene)
 
 
         txt_good_scenes.write(rand_scenes_str)
@@ -74,12 +74,16 @@ def graph_scenes(scenes_file):
     from rgb_enhancement import get_enhanced_RGB
     import configparser
     import os
+    import pandas
 
     #grab relevant  scenes
-    with open(scenes_file, 'r') as txt_scenes:
-        scenes = []
-        for time_stamp in txt_scenes:
-            scenes.append(time_stamp)
+    df_scenes   = pd.read_csv('./scenes_worth_inspecting.txt', header=None, delimiter=',', dtype=str)
+    scenes = df_scenes.values.tolist()
+
+    # with open(scenes_file, 'r') as txt_scenes:
+    #     scenes = []
+    #     for time_stamp in txt_scenes:
+    #         scenes.append(time_stamp)
 
     #find output files
     config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
