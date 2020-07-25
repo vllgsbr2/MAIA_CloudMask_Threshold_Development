@@ -99,7 +99,6 @@ def graph_scenes(scenes_file):
     output_dir       = os.listdir(output_home)
     #use only scenes from scene file
     output_dir       = [x for x in output_dir if x in scenes]
-    print(len(output_dir))
     output_filepaths = [output_home + x + '/MCM_Output.h5' for x in output_dir]
     time_stamps      = output_dir
 
@@ -119,6 +118,7 @@ def graph_scenes(scenes_file):
             MCM = hf_MCM_Output['cloud_mask_output/final_cloud_mask'][()]
 
         #construct and enhance RGB
+        print(np.where(R_band_6 == -999)[0].shape[0])
         RGB            = np.dstack((R_band_6, R_band_5, R_band_4))
         RGB[RGB==-999] = 0
         RGB            = get_enhanced_RGB(RGB)
