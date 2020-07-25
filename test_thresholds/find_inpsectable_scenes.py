@@ -142,7 +142,7 @@ def graph_scenes(scenes_file):
             image_brf = ax[1].imshow(R_band_13_6_norm, cmap = 'bone', vmin=0, vmax = 1)
 
             ax[0].set_title('MCM ' + time_stamp)
-            ax[1].set_title('RGB ' + time_stamp)
+            ax[1].set_title('red + 3 x water_vapor ' + time_stamp)
 
             image_MCM.cmap.set_over('red')
             image_brf.cmap.set_under('red')
