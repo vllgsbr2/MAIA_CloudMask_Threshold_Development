@@ -77,8 +77,8 @@ def graph_scenes(scenes_file):
     import pandas as pd
 
     #grab relevant  scenes
-    df_scenes   = pd.read_csv('./scenes_worth_inspecting.txt', header=None, dtype=str)
-    scenes = df_scenes.values[:,0]
+    df_scenes   = pd.read_csv('./scenes_worth_inspecting.txt', header=None, dtype=str, delimiter='\n')
+    scenes = df_scenes.values
     print(scenes)
 
     # with open(scenes_file, 'r') as txt_scenes:
@@ -97,8 +97,6 @@ def graph_scenes(scenes_file):
     #grab MCM and RGB from MCM Output files
     output_home      = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Output'])
     output_dir       = os.listdir(output_home)
-    print(len(output_dir), output_dir[0])
-    print(scenes)
     #use only scenes from scene file
     output_dir       = [x for x in output_dir if x in scenes]
     print(len(output_dir))
