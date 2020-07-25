@@ -125,6 +125,7 @@ def graph_scenes(scenes_file):
 
             #normalize band 6 and band 13
             fill_val = -999
+            R_band_13[R_band_13<0] = 0
             R_band_6_norm = np.copy(R_band_6)
             R_band_13_norm = np.copy(R_band_13)
             R_band_6_norm[R_band_6!=fill_val] = (R_band_6[R_band_6!=fill_val] - R_band_6[R_band_6!=fill_val].mean()) / R_band_6[R_band_6!=fill_val].std()
@@ -136,12 +137,13 @@ def graph_scenes(scenes_file):
             f, ax = plt.subplots(ncols=2)
 
             image_MCM = ax[0].imshow(MCM, cmap='binary', vmin=0, vmax=1.1)
-            ax[1].imshow(R_band_13_6_norm, cmap = 'bone_r', vmin=0, vmax = R_band_13_6_norm.max())
+            image_brf = ax[1].imshow(R_band_13_6_norm, cmap = 'bone_r', vmin=0, vmax = R_band_13_6_norm.max())
 
             ax[0].set_title('MCM ' + time_stamp)
             ax[1].set_title('RGB ' + time_stamp)
 
             image_MCM.cmap.set_over('red')
+            image_brf.cmap.set_under('red')
 
             for a in ax:
                 a.set_xticks([])
