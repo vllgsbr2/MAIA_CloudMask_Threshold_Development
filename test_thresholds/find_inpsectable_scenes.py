@@ -109,24 +109,31 @@ def graph_scenes(scenes_file):
         print(time_stamp)
         #get RGB and MCM
         with h5py.File(MCM_Output, 'r') as hf_MCM_Output:
-            R_band_4 = hf_MCM_Output['Reflectance/band_04'][()]
-            R_band_5 = hf_MCM_Output['Reflectance/band_05'][()]
-            R_band_6 = hf_MCM_Output['Reflectance/band_06'][()]
+            # R_band_4  = hf_MCM_Output['Reflectance/band_04'][()]
+            # R_band_5  = hf_MCM_Output['Reflectance/band_05'][()]
+            R_band_6  = hf_MCM_Output['Reflectance/band_06'][()]
+            R_band_13 = hf_MCM_Output['Reflectance/band_13'][()]
 
             MCM = hf_MCM_Output['cloud_mask_output/final_cloud_mask'][()]
 
         #construct and enhance RGB
         print(np.where(R_band_6 == -999)[0].shape[0])
         if np.where(R_band_6 == -999)[0].shape[0] <= 12000:
-            RGB            = np.dstack((R_band_6, R_band_5, R_band_4))
-            RGB[RGB==-999] = 0
-            RGB            = get_enhanced_RGB(RGB)
+            # RGB            = np.dstack((R_band_6, R_band_5, R_band_4))
+            # RGB[RGB==-999] = 0
+            # RGB            = get_enhanced_RGB(RGB)
+
+            #normalize band 6 and band 13
+            R_band_6_norm = (R_band_6 - R_band_6.mean()) / R_band_6.std()
+            R_band_13_norm = (R_band_13 - R_band_13.mean()) / R_band_13.std()
+            R_band_13_6_norm = R_band_13_norm + R_band_6_norm
+            #then add them together
 
             #plot RGB enhanced against MCM binary
             f, ax = plt.subplots(ncols=2)
 
             image_MCM = ax[0].imshow(MCM, cmap='binary', vmin=0, vmax=1.1)
-            ax[1].imshow(RGB)
+            ax[1].imshow(R_band_13_6_norm)
 
             ax[0].set_title('MCM ' + time_stamp)
             ax[1].set_title('RGB ' + time_stamp)
