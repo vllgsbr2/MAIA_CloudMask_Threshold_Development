@@ -126,7 +126,7 @@ def graph_scenes(scenes_file):
         #plot RGB enhanced against MCM binary
         f, ax = plt.subplots(ncols=2)
 
-        image_MCM = ax[0].imshow(MCM, cmap='binary', vmax=1)
+        image_MCM = ax[0].imshow(MCM, cmap='binary', vmin=0, vmax=1.1)
         ax[1].imshow(RGB)
 
         ax[0].set_title('MCM ' + time_stamp)
