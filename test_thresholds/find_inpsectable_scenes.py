@@ -77,7 +77,7 @@ def graph_scenes(scenes_file):
     import pandas as pd
 
     #grab relevant  scenes
-    df_scenes   = pd.read_csv('./scenes_worth_inspecting.txt', header=None, delimiter=',', dtype=str)
+    df_scenes   = pd.read_csv('./scenes_worth_inspecting.txt', header=None, dtype=str)
     scenes = df_scenes.values.tolist()
 
     # with open(scenes_file, 'r') as txt_scenes:
