@@ -17,6 +17,8 @@ thresh_home  = config['supporting directories']['thresh']
 thresh_path = '{}/{}/'.format(PTA_path, thresh_home)
 thresh_files = [thresh_path + x for x in os.listdir(thresh_path)]
 
+fill_val = -999
+
 for thresh_file in thresh_files:
     with h5py.File(thresh_file, 'r') as hf_thresh:
         DOYs = list(hf_thresh['TA_bin_00'].keys())
@@ -27,9 +29,8 @@ for thresh_file in thresh_files:
         for DOY in DOYs:
             SVI_path = '{}/{}/{}'.format('TA_bin_00', DOY, obs[4])
             SVI = hf_thresh[SVI_path][()].flatten()
-            print(SVI[SVI<0])
-            sys.exit()
-            num_negative_SVI += len(SVI[SVI<0])
+
+            num_negative_SVI += len(SVI[(SVI<0) & (SVI != fill_val)])
             num_positive_SVI += len(SVI[SVI>=0])
 
-    print('neg {:05d}, pos {:05d}'.format(num_negative_SVI, num_positive_SVI))
+    print('%neg {:1.2f}, neg {:05d}, pos {:05d}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI))
