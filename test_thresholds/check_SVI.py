@@ -26,5 +26,5 @@ with h5py.File(thresh_path, 'r') as hf_thresh:
         if num_negative_SVI > 0:
             SVI_negative_count += num_negative_SVI
 
-print(num_negative_SVI)
+print(SVI_negative_count)
 print(num_positive_SVI)
