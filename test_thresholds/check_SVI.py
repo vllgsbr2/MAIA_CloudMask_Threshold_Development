@@ -31,5 +31,4 @@ for thresh_file in thresh_files:
             if num_negative_SVI > 0:
                 SVI_negative_count += num_negative_SVI
 
-    print(SVI_negative_count)
-    print(num_positive_SVI)
+    print('neg {:05d}, pos {:05d}'.format(SVI_negative_count, num_positive_SVI))
