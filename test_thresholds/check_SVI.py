@@ -2,6 +2,7 @@ import h5py
 import numpy
 import configparser
 import os
+import sys
 
 config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
 config           = configparser.ConfigParser()
@@ -28,6 +29,6 @@ for thresh_file in thresh_files:
             SVI = hf_thresh[SVI_path][()].flatten()
 
             num_negative_SVI += len(SVI[SVI<0])
-            num_positive_SVI += len(SVI[SVI>0])
+            num_positive_SVI += len(SVI[SVI>=0])
 
     print('neg {:05d}, pos {:05d}'.format(num_negative_SVI, num_positive_SVI))
