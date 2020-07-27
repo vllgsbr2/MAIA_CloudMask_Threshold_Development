@@ -1,5 +1,5 @@
 import h5py
-import numpy
+import numpy as np
 import configparser
 import os
 import sys
