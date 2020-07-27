@@ -27,7 +27,8 @@ for thresh_file in thresh_files:
         for DOY in DOYs:
             SVI_path = '{}/{}/{}'.format('TA_bin_00', DOY, obs[4])
             SVI = hf_thresh[SVI_path][()].flatten()
-
+            print(SVI[SVI<0])
+            sys.exit()
             num_negative_SVI += len(SVI[SVI<0])
             num_positive_SVI += len(SVI[SVI>=0])
 
