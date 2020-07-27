@@ -32,5 +32,5 @@ for thresh_file in thresh_files:
 
             num_negative_SVI += len(SVI[(SVI<0) & (SVI != fill_val)])
             num_positive_SVI += len(SVI[SVI>=0])
-
-    print('%neg {:1.6f}, neg {:05d}, pos {:05d}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI))
+            print(SVI[(SVI<0) & (SVI != fill_val)])
+    # print('%neg {:1.6f}, neg {:05d}, pos {:05d}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI))
