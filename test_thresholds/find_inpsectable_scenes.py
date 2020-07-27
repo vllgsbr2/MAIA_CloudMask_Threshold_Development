@@ -153,6 +153,30 @@ def graph_scenes(scenes_file):
                 a.set_yticks([])
 
             plt.show()
+
+            # for i, sfc_ID_path in enumerate(sfc_ID_paths):
+            #     with Dataset(home + sfc_ID_path, 'r') as nc_sfc_ID:
+            #         sfc_IDs[:,:,i] = nc_sfc_ID.variables['surface_ID'][:,:]
+            #         # print(sfc_IDs[:,:,i].min(), sfc_IDs[:,:,i].max())
+            #         image = ax.imshow(sfc_IDs[:,:,i], cmap=cmap, vmin=0, vmax=11)
+            #         title = ax.text(0.5,1.05,'K-Means Cluster Surface ID \nDOY {}/365 Valid previous 8 days'.format(sfc_ID_path[-6:-3]),
+            #                         size=plt.rcParams["axes.titlesize"],
+            #                         ha="center", transform=ax.transAxes, )
+            #
+            #     container.append([image, title])
+            #
+            # ax.set_yticks([])
+            # ax.set_xticks([])
+            # image.cmap.set_over('black')
+            # #cbar_ax = fig.add_axes([0.93, 0.15, 0.02, 0.7])
+            # cbar = plt.colorbar(image,fraction=0.046, pad=0.04)
+            # cbar.set_ticks(np.arange(0.5,12,0.9))
+            # cbar.set_ticklabels([str(x) for x in np.arange(12)])
+            #
+            # ani = animation.ArtistAnimation(fig, container, interval=700, blit=False,
+            #                                 repeat=True)
+            # ani.save('./yizhe_sfc_ID.mp4')
+
         else:
             print('no good pixels what the heck')
 
