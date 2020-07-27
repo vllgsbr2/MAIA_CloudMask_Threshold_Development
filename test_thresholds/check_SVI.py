@@ -28,9 +28,14 @@ for thresh_file in thresh_files:
         num_positive_SVI = 0
         for DOY in DOYs:
             SVI_path = '{}/{}/{}'.format('TA_bin_00', DOY, obs[4])
-            SVI = hf_thresh[SVI_path][()].flatten()
+            # SVI = hf_thresh[SVI_path][()].flatten()
+            SVI = hf_thresh[SVI_path][()]
 
-            num_negative_SVI += len(SVI[(SVI<0) & (SVI != fill_val)])
-            num_positive_SVI += len(SVI[SVI>=0])
-            print(SVI[(SVI<0) & (SVI != fill_val)])
+            print(np.where((SVI<0) & (SVI != fill_val)))
+
+            SVI = SVI.flatten()
+
+            # num_negative_SVI += len(SVI[(SVI<0) & (SVI != fill_val)])
+            # num_positive_SVI += len(SVI[SVI>=0])
+
     # print('%neg {:1.6f}, neg {:05d}, pos {:05d}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI))
