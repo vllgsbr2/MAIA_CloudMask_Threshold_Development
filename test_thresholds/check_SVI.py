@@ -22,6 +22,7 @@ with h5py.File(thresh_path, 'r') as hf_thresh:
         SVI_path = '{}/{}/{}'.format('TA_bin_00', DOY, obs[4])
         SVI = hf_thresh[SVI_path][()]
         num_negative_SVI = len(SVI[SVI<0])
+        num_positive_SVI = len(SVI) - num_negative_SVI
         if num_negative_SVI > 0:
             SVI_negative_count += num_negative_SVI
 
