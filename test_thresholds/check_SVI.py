@@ -62,7 +62,7 @@ def check_neg_SVI_grouped():
             for bin in bins:
                 # SVI is index 6
                 SVI_idx = 6
-                SVI     = hf_thresh[bin][:, SVI_idx].flatten()
+                SVI     = hf_grouped[bin][:, SVI_idx].flatten()
 
                 neg_SVI = SVI[(SVI<0) & (SVI != fill_val)]
                 num_negative_SVI += len(neg_SVI)
