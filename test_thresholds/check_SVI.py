@@ -10,34 +10,70 @@ config.read(config_home_path+'/test_config.txt')
 
 PTA          = config['current PTA']['PTA']
 PTA_path     = config['PTAs'][PTA]
-thresh_home  = config['supporting directories']['thresh']
+
 
 # thresh_path = '{}/{}/{}'.format(PTA_path, thresh_home, 'thresholds_DOY_041_to_048_bin_05.h5')
 
-thresh_path = '{}/{}/'.format(PTA_path, thresh_home)
-thresh_files = [thresh_path + x for x in os.listdir(thresh_path)]
+check neg_SVI_thresh():
 
-fill_val = -999
+    thresh_home  = config['supporting directories']['thresh']
+    thresh_path = '{}/{}/'.format(PTA_path, thresh_home)
+    thresh_files = [thresh_path + x for x in os.listdir(thresh_path)]
 
-for thresh_file in thresh_files:
-    with h5py.File(thresh_file, 'r') as hf_thresh:
-        DOYs = list(hf_thresh['TA_bin_00'].keys())
-        obs  = list(hf_thresh['TA_bin_00/' + DOYs[0]].keys())
+    fill_val = -999
 
-        num_negative_SVI = 0
-        num_positive_SVI = 0
-        for DOY in DOYs:
-            SVI_path = '{}/{}/{}'.format('TA_bin_00', DOY, obs[4])
-            SVI = hf_thresh[SVI_path][()].flatten()
+    for thresh_file in thresh_files:
+        with h5py.File(thresh_file, 'r') as hf_thresh:
+            DOYs = list(hf_thresh['TA_bin_00'].keys())
+            obs  = list(hf_thresh['TA_bin_00/' + DOYs[0]].keys())
 
-            # SVI = hf_thresh[SVI_path][()]
-            # print(np.where((SVI<0) & (SVI != fill_val)))
-            # SVI = SVI.flatten()
+            num_negative_SVI = 0
+            num_positive_SVI = 0
+            for DOY in DOYs:
+                SVI_path = '{}/{}/{}'.format('TA_bin_00', DOY, obs[4])
+                SVI = hf_thresh[SVI_path][()].flatten()
 
-            neg_SVI = SVI[(SVI<0) & (SVI != fill_val)]
-            num_negative_SVI += len(neg_SVI)
-            num_positive_SVI += len(SVI[SVI>=0])
+                # SVI = hf_thresh[SVI_path][()]
+                # print(np.where((SVI<0) & (SVI != fill_val)))
+                # SVI = SVI.flatten()
+
+                neg_SVI = SVI[(SVI<0) & (SVI != fill_val)]
+                num_negative_SVI += len(neg_SVI)
+                num_positive_SVI += len(SVI[SVI>=0])
 
 
 
-    print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}, neg SVIs {}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI, neg_SVI))
+        print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}, neg SVIs {}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI, neg_SVI))
+
+check_neg_SVI_grouped():
+
+    grouped_home  = config['supporting directories']['combined_group']
+    grouped_path = '{}/{}/'.format(PTA_path, grouped_home)
+    grouped_files = [grouped_path + x for x in os.listdir(grouped_path)]
+
+    fill_val = -999
+
+    for grouped_file in grouped_files:
+        with h5py.File(grouped_file, 'r') as hf_grouped:
+            bins = list(hf_grouped.keys())
+
+            num_negative_SVI = 0
+            num_positive_SVI = 0
+            for bin in bins:
+                # SVI is index 6
+                SVI_idx = 6
+                SVI     = hf_thresh[bin][:, SVI_idx].flatten()
+
+                neg_SVI = SVI[(SVI<0) & (SVI != fill_val)]
+                num_negative_SVI += len(neg_SVI)
+                num_positive_SVI += len(SVI[SVI>=0])
+
+            print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}, neg SVIs {}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI)) #, neg_SVI))
+
+check_neg_SVI_grouped()
+
+
+
+
+
+#
