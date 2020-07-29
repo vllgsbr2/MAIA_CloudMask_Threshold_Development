@@ -14,7 +14,7 @@ PTA_path     = config['PTAs'][PTA]
 
 # thresh_path = '{}/{}/{}'.format(PTA_path, thresh_home, 'thresholds_DOY_041_to_048_bin_05.h5')
 
-check_neg_SVI_thresh():
+def check_neg_SVI_thresh():
 
     thresh_home  = config['supporting directories']['thresh']
     thresh_path = '{}/{}/'.format(PTA_path, thresh_home)
@@ -45,7 +45,7 @@ check_neg_SVI_thresh():
 
         print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}, neg SVIs {}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI, neg_SVI))
 
-check_neg_SVI_grouped():
+def check_neg_SVI_grouped():
 
     grouped_home  = config['supporting directories']['combined_group']
     grouped_path = '{}/{}/'.format(PTA_path, grouped_home)
