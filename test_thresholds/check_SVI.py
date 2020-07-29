@@ -14,7 +14,7 @@ PTA_path     = config['PTAs'][PTA]
 
 # thresh_path = '{}/{}/{}'.format(PTA_path, thresh_home, 'thresholds_DOY_041_to_048_bin_05.h5')
 
-check neg_SVI_thresh():
+check_neg_SVI_thresh():
 
     thresh_home  = config['supporting directories']['thresh']
     thresh_path = '{}/{}/'.format(PTA_path, thresh_home)
