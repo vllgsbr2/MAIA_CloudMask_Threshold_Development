@@ -68,7 +68,8 @@ def check_neg_SVI_grouped():
                 num_negative_SVI += len(neg_SVI)
                 num_positive_SVI += len(SVI[SVI>=0])
 
-            print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}, neg SVIs {}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI)) #, neg_SVI))
+            # print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}, neg SVIs {}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI, neg_SVI))
+            print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI))
 
 check_neg_SVI_grouped()
 
