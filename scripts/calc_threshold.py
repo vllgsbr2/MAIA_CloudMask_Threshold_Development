@@ -81,16 +81,17 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                     if clear_obs[:,i].shape[0] > num_samples_valid_hist:
                         x = np.array(clear_obs[:,i])
                         current_thresh = np.nanpercentile(x, 99)
-
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                         bin_idx[3]] = current_thresh
+
                         # check if SVI thresh is negative
                         if current_thresh < 0 and i==5:
                             neg_SVI_count += 1
 
                     else:
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                        cloudy_obs[:, i].min()
+                        current_thresh = cloudy_obs[:, i].min()
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
+                                        bin_idx[3]] = current_thresh
 
                         # check if SVI thresh is negative
                         if current_thresh < 0 and i==5:
