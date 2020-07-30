@@ -86,20 +86,21 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                                         bin_idx[3]] = current_thresh
 
                         # check if SVI thresh is negative
-                        if current_thresh < 0 and i==5:
+                        if current_thresh < 0 and i==5 and current_thresh != -999:
                             neg_SVI_thresh_count += 1
-                        elif x.min() < 0 and i==5:
+                        elif x.min() < 0 and i==5 and x.min() != -999:
                             neg_SVI_obs_count += 1
 
                     else:
-                        current_thresh = cloudy_obs[:, i].min()
+                        x = cloudy_obs[:, i]
+                        current_thresh = x.min()
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                         bin_idx[3]] = current_thresh
 
                         # check if SVI thresh is negative
-                        if current_thresh < 0 and i==5:
+                        if current_thresh < 0 and i==5 and current_thresh != -999:
                             neg_SVI_thresh_count += 1
-                        elif x.min() < 0 and i==5:
+                        elif x.min() < 0 and i==5 and x.min() != -999:
                             neg_SVI_obs_count += 1
 
             meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
