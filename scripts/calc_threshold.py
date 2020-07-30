@@ -16,7 +16,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
         void
     '''
 
-    DOY_end = (DOY_bin+1)*8
+    DOY_end   = (DOY_bin+1)*8
     DOY_start = DOY_end - 7
 
     with h5py.File(group_file, 'r') as hf_group,\
@@ -35,8 +35,11 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
         hf_keys    = list(hf_group.keys())
         num_points = len(hf_keys)
-        print(num_points)
+        # print(num_points)
 
+
+        neg_SVI_count = 0
+        num_samples_valid_hist = 0 #30
         for count, bin_ID in enumerate(hf_keys):
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
@@ -51,10 +54,10 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
             for i in range(7):
                 #path to TA/DOY/obs threshold dataset
                 path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY_bin , obs_names[i])
-                print(path)
+                # print(path)
                 #WI
                 if i==0:
-                    if clear_obs[:,i].shape[0] > 0:
+                    if clear_obs[:,i].shape[0] > num_samples_valid_hist:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
                         np.nanpercentile(clear_obs[:,i], 1)
 
@@ -66,7 +69,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #NDxI
                 #pick max from cloudy hist
                 elif i==1 or i==2:
-                    if cloudy_obs[:,i].shape[0] > 0:
+                    if cloudy_obs[:,i].shape[0] > num_samples_valid_hist:
                         hist, bin_edges = np.histogram(cloudy_obs[:,i], bins=128, range=(-1,1))
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                         bin_edges[1:][hist==hist.max()].min()
@@ -75,14 +78,27 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
                 #VIS/NIR/SVI/Cirrus
                 else:
-                    if clear_obs[:,i].shape[0] > 0:
+                    if clear_obs[:,i].shape[0] > num_samples_valid_hist:
                         x = np.array(clear_obs[:,i])
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                        np.nanpercentile(x, 99)
+                        current_thresh = np.nanpercentile(x, 99)
+
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
+                                        bin_idx[3]] = current_thresh
+                        # check if SVI thresh is negative
+                        if current_thresh < 0 and i==5:
+                            neg_SVI_count += 1
 
                     else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                         cloudy_obs[:, i].min()
+
+                        # check if SVI thresh is negative
+                        if current_thresh < 0 and i==5:
+                            neg_SVI_count += 1
+
+            meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}'\
+                            .format(DOY_bin, neg_SVI_count)
+            print(meta_data)
 
                 # if hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] == -999:
                 #     print('binID: {} | obs#: {}'.format(bin_ID, i))
