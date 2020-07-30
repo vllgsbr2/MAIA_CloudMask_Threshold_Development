@@ -38,7 +38,8 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
         # print(num_points)
 
 
-        neg_SVI_count = 0
+        neg_SVI_thresh_count = 0
+        neg_SVI_obs_count    = 0
         num_samples_valid_hist = 0 #30
         for count, bin_ID in enumerate(hf_keys):
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
@@ -86,7 +87,9 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
                         # check if SVI thresh is negative
                         if current_thresh < 0 and i==5:
-                            neg_SVI_count += 1
+                            neg_SVI_thresh_count += 1
+                        elif x.min() < 0 and i==5:
+                            neg_SVI_obs_count += 1
 
                     else:
                         current_thresh = cloudy_obs[:, i].min()
@@ -95,10 +98,12 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
                         # check if SVI thresh is negative
                         if current_thresh < 0 and i==5:
-                            neg_SVI_count += 1
+                            neg_SVI_thresh_count += 1
+                        elif x.min() < 0 and i==5:
+                            neg_SVI_obs_count += 1
 
-            meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}'\
-                            .format(DOY_bin, neg_SVI_count)
+            meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
+                            .format(DOY_bin, neg_SVI_thresh_count, neg_SVI_obs_count)
             print(meta_data)
 
                 # if hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] == -999:
