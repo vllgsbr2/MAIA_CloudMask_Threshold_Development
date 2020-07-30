@@ -105,7 +105,8 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
             meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
                             .format(DOY_bin, neg_SVI_thresh_count, neg_SVI_obs_count)
-            print(meta_data)
+            if neg_SVI_thresh_count > 0:
+                print(meta_data)
 
                 # if hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] == -999:
                 #     print('binID: {} | obs#: {}'.format(bin_ID, i))
