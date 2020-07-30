@@ -103,10 +103,10 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         elif x.min() < 0 and i==5 and x.min() != -999:
                             neg_SVI_obs_count += 1
 
-            meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
-                            .format(DOY_bin, neg_SVI_thresh_count, neg_SVI_obs_count)
-            if neg_SVI_thresh_count > 0:
-                print(meta_data)
+        meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
+                        .format(DOY_bin, neg_SVI_thresh_count, neg_SVI_obs_count)
+        if neg_SVI_thresh_count > 0:
+            print(meta_data)
 
                 # if hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] == -999:
                 #     print('binID: {} | obs#: {}'.format(bin_ID, i))
