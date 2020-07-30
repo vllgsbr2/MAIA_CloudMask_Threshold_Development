@@ -48,9 +48,11 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
             cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
             obs        = hf_group[bin_ID][:,1:]
-            clear_idx = np.where(cloud_mask != 0)
-            clear_obs = obs[clear_idx[0],:]
-            cloudy_idx = np.where(cloud_mask == 0)
+
+            clear_idx  = np.where((cloud_mask != 0) & (cloud_mask != -999))
+            clear_obs  = obs[clear_idx[0],:]
+
+            cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask != -999))
             cloudy_obs = obs[cloudy_idx[0],:]
 
             for i in range(7):
@@ -78,6 +80,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                     #set default value of 1e-3 if no cloudy obs available
                     else:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
+
                 #VIS/NIR/SVI/Cirrus
                 else:
                     if clear_obs[:,i].shape[0] > num_samples_valid_hist:
