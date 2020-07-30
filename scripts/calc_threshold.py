@@ -92,10 +92,10 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         # check if SVI thresh is negative
                         if current_thresh < 0 and i==5 and current_thresh != -999:
                             neg_SVI_thresh_count += 1
-                            if_or_else.append('if')
-                        elif x.min() < 0 and i==5 and x.min() != -999:
+                            if_or_else.append('if1')
+                        if x.min() < 0 and i==5 and x.min() != -999:
                             neg_SVI_obs_count += 1
-                            if_or_else.append('if')
+                            if_or_else.append('if2')
 
                     else:
                         x = cloudy_obs[:, i]
@@ -106,10 +106,10 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         # check if SVI thresh is negative
                         if current_thresh < 0 and i==5 and current_thresh != -999:
                             neg_SVI_thresh_count += 1
-                            if_or_else.append('else')
-                        elif x.min() < 0 and i==5 and x.min() != -999:
+                            if_or_else.append('else1')
+                        if x.min() < 0 and i==5 and x.min() != -999:
                             neg_SVI_obs_count += 1
-                            if_or_else.append('else')
+                            if_or_else.append('else2')
 
         meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
                         .format(DOY_bin, neg_SVI_thresh_count, neg_SVI_obs_count)
