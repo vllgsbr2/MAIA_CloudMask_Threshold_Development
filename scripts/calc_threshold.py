@@ -92,7 +92,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         # check if SVI thresh is negative
                         if current_thresh < 0 and i==5 and current_thresh != -999:
                             neg_SVI_thresh_count += 1
-                            if_or_else.append('if1')
+                            if_or_else.append(x)
                         if x.min() < 0 and i==5 and x.min() != -999:
                             neg_SVI_obs_count += 1
                             if_or_else.append('if2')
