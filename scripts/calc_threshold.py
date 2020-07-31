@@ -19,6 +19,8 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
     DOY_end   = (DOY_bin+1)*8
     DOY_start = DOY_end - 7
 
+    fill_val = -999
+
     with h5py.File(group_file, 'r') as hf_group,\
          h5py.File(thresh_home + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
 
@@ -51,9 +53,11 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
             clear_idx  = np.where((cloud_mask != 0) & (cloud_mask != -999))
             clear_obs  = obs[clear_idx[0],:]
+            # clear_obs  = clear_obs[clear_obs != fill_val]
 
             cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask != -999))
             cloudy_obs = obs[cloudy_idx[0],:]
+            # cloudy_obs = cloudy_obs[cloudy_obs != fill_val]
 
             for i in range(7):
                 #path to TA/DOY/obs threshold dataset
@@ -84,7 +88,8 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #VIS/NIR/SVI/Cirrus
                 else:
                     if clear_obs[:,i].shape[0] > num_samples_valid_hist:
-                        x = np.array(clear_obs[:,i])
+                        x = clear_obs[:,i]
+                        x = x[x != fill_val]
                         current_thresh = np.nanpercentile(x, 99)
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                         bin_idx[3]] = current_thresh
@@ -99,6 +104,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
                     else:
                         x = cloudy_obs[:, i]
+                        x = x[x != fill_val]
                         current_thresh = x.min()
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                         bin_idx[3]] = current_thresh
