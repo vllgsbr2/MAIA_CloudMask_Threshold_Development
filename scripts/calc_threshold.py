@@ -88,34 +88,43 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #VIS/NIR/SVI/Cirrus
                 else:
                     if clear_obs[:,i].shape[0] > num_samples_valid_hist:
+                        #clean out fill values
                         x = clear_obs[:,i]
                         x = x[x != fill_val]
-                        current_thresh = np.nanpercentile(x, 99)
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
-                                        bin_idx[3]] = current_thresh
 
-                        # check if SVI thresh is negative
-                        if current_thresh < 0 and i==5 and current_thresh != -999:
-                            neg_SVI_thresh_count += 1
-                            if_or_else.append(x)
-                        if x.min() < 0 and i==5 and x.min() != -999:
-                            neg_SVI_obs_count += 1
-                            if_or_else.append('if2')
+                        #check size again and continue
+                        if x.shape[0] > num_samples_valid_hist:
+                            current_thresh = np.nanpercentile(x, 99)
+                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
+                                            bin_idx[3]] = current_thresh
+
+                            # check if SVI thresh is negative
+                            if current_thresh < 0 and i==5 and current_thresh != -999:
+                                neg_SVI_thresh_count += 1
+                                if_or_else.append(x)
+                            if x.min() < 0 and i==5 and x.min() != -999:
+                                neg_SVI_obs_count += 1
+                                if_or_else.append('if2')
 
                     else:
-                        x = cloudy_obs[:, i]
-                        x = x[x != fill_val]
-                        current_thresh = x.min()
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
-                                        bin_idx[3]] = current_thresh
+                        if cloudy_obs[:, i].shape[0] > 0:
+                            #clean out fill values
+                            x = cloudy_obs[:, i]
+                            x = x[x != fill_val]
 
-                        # check if SVI thresh is negative
-                        if current_thresh < 0 and i==5 and current_thresh != -999:
-                            neg_SVI_thresh_count += 1
-                            if_or_else.append('else1')
-                        if x.min() < 0 and i==5 and x.min() != -999:
-                            neg_SVI_obs_count += 1
-                            if_or_else.append('else2')
+                            #check size again and continue
+                            if x.shape[0] > 0:
+                                current_thresh = x.min()
+                                hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
+                                                bin_idx[3]] = current_thresh
+
+                                # check if SVI thresh is negative
+                                if current_thresh < 0 and i==5 and current_thresh != -999:
+                                    neg_SVI_thresh_count += 1
+                                    if_or_else.append('else1')
+                                if x.min() < 0 and i==5 and x.min() != -999:
+                                    neg_SVI_obs_count += 1
+                                    if_or_else.append('else2')
 
         meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
                         .format(DOY_bin, neg_SVI_thresh_count, neg_SVI_obs_count)
