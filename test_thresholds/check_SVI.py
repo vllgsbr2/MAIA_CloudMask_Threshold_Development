@@ -71,7 +71,8 @@ def check_neg_SVI_grouped():
             # print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}, neg SVIs {}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI, neg_SVI))
             print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI))
 
-check_neg_SVI_grouped()
+check_neg_SVI_thresh()
+# check_neg_SVI_grouped()
 
 
 
