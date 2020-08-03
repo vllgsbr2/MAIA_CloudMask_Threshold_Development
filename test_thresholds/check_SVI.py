@@ -94,7 +94,7 @@ def check_thresh(which_thresh):
             thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY,\
                                             obs[thresh_dict[which_thresh]])
 
-            thresh = hf_thresh[thresh_path][()].flatten()
+            thresh = hf_thresh[thresh_path][()]#.flatten()
 
             # only take positve/non- fill_val thresholds from
             # WI/VIS/NIR/SVI/Cirrus
@@ -117,8 +117,8 @@ if __name__ == '__main__':
     # check_neg_SVI_grouped()
 
     #make histograms of thresholds
-    thresh_dict = {'WI':1, 'NDVI':2, 'NDSI':3, 'VIS_Ref':4, 'NIR_Ref':5,\
-                   'SVI':6, 'Cirrus':7}
+    thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
+                   'SVI':5, 'Cirrus':6}
     thresholds     = []
     range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
@@ -128,9 +128,10 @@ if __name__ == '__main__':
 
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
-        thresholds.append(check_thresh(obs))
-        t = thresholds[i]
-        print(obs, len(t), len(t[t<0]))
+        thresh_temp = check_thresh(obs)
+        thresholds.append(thresh_temp.flatten())
+        # t = thresholds[i]
+        print(obs)#, len(t), len(t[t<0]))
 
         if i==0 or i>=3:
             num_bins = num_bins_other
