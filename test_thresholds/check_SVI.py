@@ -142,9 +142,11 @@ if __name__ == '__main__':
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         if i==1 or i>=4:
             num_bins = num_bins_other
+            x1, x2   = range_other
         else:
             num_bins = num_bins_ndxi
-        x = np.arange(num_bins)
+            x1, x2   = range_ndxi
+        x = np.arange(x1, x2, num_bins)
         a.plot(x, binned_thresholds[i])
         a.set_title(obs)
     plt.show()
