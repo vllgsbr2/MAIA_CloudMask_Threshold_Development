@@ -95,7 +95,7 @@ def check_thresh(which_thresh):
                                             obs[thresh_dict[which_thresh]])
 
             thresh = hf_thresh[thresh_path][()]#.flatten()
-
+            print(thresh.shape)
             # only take positve/non- fill_val thresholds from
             # WI/VIS/NIR/SVI/Cirrus
             if thresh_dict[which_thresh] >= 3 or \
