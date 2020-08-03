@@ -101,7 +101,7 @@ def check_thresh(which_thresh):
             if thresh_dict[which_thresh] >= 3 or \
                thresh_dict[which_thresh] == 0    :
 
-               thresh = thresh[(thresh<0) & (thresh != fill_val)]
+               thresh = thresh[(thresh >= 0) & (thresh != fill_val)]
             #take out fill val from NDVI/NDSI
             else:
                 thresh = thresh[thresh != fill_val]
@@ -128,8 +128,9 @@ if __name__ == '__main__':
 
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
-        print(obs)
         thresholds.append(check_thresh(obs))
+        print(obs, len(thresholds[i]))
+
         if i==0 or i>=3:
             num_bins = num_bins_other
             range    = range_other
@@ -137,7 +138,7 @@ if __name__ == '__main__':
             num_bins = num_bins_ndxi
             range    = range_ndxi
         binned_thresholds.append(np.histogram(thresholds[i], bins=num_bins, range=range)[0])
-        print(len(thresholds[i]))
+
     f, ax = plt.subplots(ncols=4, nrows=2)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
@@ -150,7 +151,7 @@ if __name__ == '__main__':
         x = np.arange(x1, x2, (x2-x1)/num_bins)
         a.plot(x, binned_thresholds[i])
         a.set_title(obs)
-    plt.show()
+    # plt.show()
 
 
 
