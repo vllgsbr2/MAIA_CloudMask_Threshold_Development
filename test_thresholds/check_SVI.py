@@ -129,6 +129,10 @@ if __name__ == '__main__':
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
         thresholds.append(check_thresh(obs))
+        if i==1 or i>=4:
+            num_bins = num_bins_other
+        else:
+            num_bins = num_bins_ndxi
         binned_thresholds.append(np.histogram(thresholds[i], bins=num_bins)[0])
 
     f, ax = plt.subplots(ncols=4, nrows=2)
