@@ -120,20 +120,22 @@ if __name__ == '__main__':
     thresh_dict = {'WI':1, 'NDVI':2, 'NDSI':3, 'VIS_Ref':4, 'NIR_Ref':5,\
                    'SVI':6, 'Cirrus':7}
     thresholds     = []
-    range_NDxI     = (-1.,1.)
+    range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
     num_bins_ndxi  = 50
     num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
-                                     (range_NDxI[1]  - range_NDxI[0]))
+                                     (range_ndxi[1]  - range_ndxi[0]))
 
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
         thresholds.append(check_thresh(obs))
         if i==1 or i>=4:
             num_bins = num_bins_other
+            range    = range_other
         else:
             num_bins = num_bins_ndxi
-        binned_thresholds.append(np.histogram(thresholds[i], bins=num_bins)[0])
+            range    = range_ndxi
+        binned_thresholds.append(np.histogram(thresholds[i], bins=num_bins, range=range)[0])
 
     f, ax = plt.subplots(ncols=4, nrows=2)
 
