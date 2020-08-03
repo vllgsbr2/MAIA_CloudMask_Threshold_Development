@@ -76,8 +76,8 @@ def check_thresh(which_thresh):
     which_thresh {str} -- choose from WI,NDVI,NDSI,VIS_Ref,NIR_Ref,SVI,Cirrus
     '''
 
-    thresh_dict = {'WI':1, 'NDVI':2, 'NDSI':3, 'VIS_Ref':4, 'NIR_Ref':5,\
-                   'SVI':6, 'Cirrus':7}
+    thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
+                   'SVI':5, 'Cirrus':6}
 
     thresh_home  = config['supporting directories']['thresh']
     thresh_path = '{}/{}/'.format(PTA_path, thresh_home)
@@ -92,14 +92,14 @@ def check_thresh(which_thresh):
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
 
             thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY,\
-                                            obs[thresh_dict[which_thresh]-1])
+                                            obs[thresh_dict[which_thresh]])
 
             thresh = hf_thresh[thresh_path][()].flatten()
 
             # only take positve/non- fill_val thresholds from
             # WI/VIS/NIR/SVI/Cirrus
-            if thresh_dict[which_thresh] >= 4 or \
-               thresh_dict[which_thresh] == 1    :
+            if thresh_dict[which_thresh] >= 3 or \
+               thresh_dict[which_thresh] == 0    :
 
                thresh = thresh[(thresh<0) & (thresh != fill_val)]
             #take out fill val from NDVI/NDSI
