@@ -151,7 +151,7 @@ if __name__ == '__main__':
         x = np.arange(x1, x2, (x2-x1)/num_bins)
         a.plot(x, binned_thresholds[i])
         a.set_title(obs)
-    # plt.show()
+    plt.show()
 
 
 
