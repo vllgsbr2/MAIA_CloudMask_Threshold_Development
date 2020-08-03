@@ -101,12 +101,12 @@ def check_thresh(which_thresh):
             if thresh_dict[which_thresh] >= 3 or \
                thresh_dict[which_thresh] == 0    :
 
-               thresh = thresh[(thresh >= 0) & (thresh != fill_val)]
-               print(thresh.shape)
+               # thresh = thresh[(thresh >= 0) & (thresh != fill_val)]
+               thresh[(thresh >= 0) & (thresh != fill_val)] = np.nan
             #take out fill val from NDVI/NDSI
             else:
-                thresh = thresh[thresh != fill_val]
-                print(thresh.shape)
+                # thresh = thresh[thresh != fill_val]
+                thresh[thresh != fill_val] = np.nan
 
     return thresh
 
