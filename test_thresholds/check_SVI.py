@@ -96,6 +96,27 @@ def check_thresh(which_thresh):
 
             thresh = hf_thresh[thresh_path][()]#.flatten()
 
+            #axis 3 is sceneID. Store thresh when sceneID is valid for thresh
+            # 'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
+                           # 'SVI':5, 'Cirrus'
+            if thresh_dict[which_thresh] == 0:
+                # WI no glint or snow
+                thresh = thresh[:,:,:,0:13]
+            elif thresh_dict[which_thresh] == 1:
+                #NDVI no snow
+                thresh = thresh[:,:,:,0:14]
+            elif thresh_dict[which_thresh] == 2:
+                #NDSI only snow
+                thresh = thresh[:,:,:,14]
+            elif thresh_dict[which_thresh] == 3:
+                #VIS only land
+                thresh = thresh[:,:,:,0:12]
+            elif thresh_dict[which_thresh] == 4:
+                #NIR only non glint water
+                thresh = thresh[:,:,:,12]
+            else:
+                #everything
+                pass
             # only take positve/non- fill_val thresholds from
             # WI/VIS/NIR/SVI/Cirrus
             if thresh_dict[which_thresh] >= 3 or \
