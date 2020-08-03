@@ -189,7 +189,7 @@ def plot_thresh_vs_VZA():
         thresh_obs_i = thresh_obs_i/thresh_obs_i.max()
 
 
-        a.imshow(thresh_obs_i)
+        a.scatter(thresh_obs_i)
         a.set_title(obs)
 
     plt.show()
