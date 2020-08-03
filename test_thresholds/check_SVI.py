@@ -97,8 +97,6 @@ def check_thresh(which_thresh):
             thresh = hf_thresh[thresh_path][()]#.flatten()
 
             #axis 3 is sceneID. Store thresh when sceneID is valid for thresh
-            # 'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
-                           # 'SVI':5, 'Cirrus'
             if thresh_dict[which_thresh] == 0:
                 # WI no glint or snow
                 thresh = thresh[:,:,:,0:13]
