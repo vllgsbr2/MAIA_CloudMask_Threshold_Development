@@ -153,7 +153,7 @@ def plot_thresh_hist():
         else:
             num_bins = num_bins_ndxi
             range    = range_ndxi
-        binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range)[0])
+        binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins)[0])
 
     f, ax = plt.subplots(ncols=4, nrows=2)
 
