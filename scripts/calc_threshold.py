@@ -40,10 +40,10 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
         # print(num_points)
 
 
-        neg_SVI_thresh_count = 0
-        neg_SVI_obs_count    = 0
-        num_samples_valid_hist = 0 #30
-        if_or_else = []
+        # neg_SVI_thresh_count = 0
+        # neg_SVI_obs_count    = 0
+        # num_samples_valid_hist = 0 #30
+        # if_or_else = []
         for count, bin_ID in enumerate(hf_keys):
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
@@ -98,13 +98,13 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                             hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                             bin_idx[3]] = current_thresh
 
-                            # check if SVI thresh is negative
-                            if current_thresh < 0 and i==5 and current_thresh != -999:
-                                neg_SVI_thresh_count += 1
-                                if_or_else.append(x)
-                            if x.min() < 0 and i==5 and x.min() != -999:
-                                neg_SVI_obs_count += 1
-                                if_or_else.append('if2')
+                            # # check if SVI thresh is negative
+                            # if current_thresh < 0 and i==5 and current_thresh != -999:
+                            #     neg_SVI_thresh_count += 1
+                            #     if_or_else.append(x)
+                            # if x.min() < 0 and i==5 and x.min() != -999:
+                            #     neg_SVI_obs_count += 1
+                            #     if_or_else.append('if2')
 
                     else:
                         if cloudy_obs[:, i].shape[0] > 0:
@@ -118,19 +118,19 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                                 hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                                 bin_idx[3]] = current_thresh
 
-                                # check if SVI thresh is negative
-                                if current_thresh < 0 and i==5 and current_thresh != -999:
-                                    neg_SVI_thresh_count += 1
-                                    if_or_else.append('else1')
-                                if x.min() < 0 and i==5 and x.min() != -999:
-                                    neg_SVI_obs_count += 1
-                                    if_or_else.append('else2')
+                                # # check if SVI thresh is negative
+                                # if current_thresh < 0 and i==5 and current_thresh != -999:
+                                #     neg_SVI_thresh_count += 1
+                                #     if_or_else.append('else1')
+                                # if x.min() < 0 and i==5 and x.min() != -999:
+                                #     neg_SVI_obs_count += 1
+                                #     if_or_else.append('else2')
 
-        meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
-                        .format(DOY_bin, neg_SVI_thresh_count, neg_SVI_obs_count)
-        if neg_SVI_thresh_count > 0:
-            print(meta_data)
-            print(if_or_else)
+        # meta_data = 'DOY bin: {:02d} | # neg SVI thresh: {:04d}, # neg SVI obs: {:04d}'\
+        #                 .format(DOY_bin, neg_SVI_thresh_count, neg_SVI_obs_count)
+        # if neg_SVI_thresh_count > 0:
+        #     print(meta_data)
+        #     print(if_or_else)
 
                 # if hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] == -999:
                 #     print('binID: {} | obs#: {}'.format(bin_ID, i))
