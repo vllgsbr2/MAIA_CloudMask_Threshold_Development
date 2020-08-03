@@ -137,7 +137,7 @@ if __name__ == '__main__':
             num_bins = num_bins_ndxi
             range    = range_ndxi
         binned_thresholds.append(np.histogram(thresholds[i], bins=num_bins, range=range)[0])
-        binned_thresholds[i].max()
+        print(binned_thresholds[i].max())
     f, ax = plt.subplots(ncols=4, nrows=2)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
