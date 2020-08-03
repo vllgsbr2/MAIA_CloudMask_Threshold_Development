@@ -138,7 +138,7 @@ if __name__ == '__main__':
     f, ax = plt.subplots(ncols=4, nrows=2)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-        a.imshow(binned_thresholds[i])
+        a.plot(binned_thresholds[i])
         a.set_title(thresh_dict)
     plt.show()
 
