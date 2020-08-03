@@ -146,7 +146,7 @@ if __name__ == '__main__':
         else:
             num_bins = num_bins_ndxi
             x1, x2   = range_ndxi
-        x = np.arange(x1, x2, num_bins)
+        x = np.arange(x1, x2, (x2-x1)/num_bins)
         a.plot(x, binned_thresholds[i])
         a.set_title(obs)
     plt.show()
