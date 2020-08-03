@@ -129,7 +129,8 @@ if __name__ == '__main__':
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
         thresholds.append(check_thresh(obs))
-        print(obs, len(thresholds[i]))
+        t = thresholds[i]
+        print(obs, len(t), len(t[t<0]))
 
         if i==0 or i>=3:
             num_bins = num_bins_other
@@ -149,7 +150,7 @@ if __name__ == '__main__':
             num_bins = num_bins_ndxi
             x1, x2   = range_ndxi
         x = np.arange(x1, x2, (x2-x1)/num_bins)
-        a.bar(x, binned_thresholds[i])
+        a.plot(x, binned_thresholds[i])
         a.set_title(obs)
     plt.show()
 
