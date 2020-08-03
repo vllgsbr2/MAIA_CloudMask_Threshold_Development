@@ -184,12 +184,14 @@ def plot_thresh_vs_VZA():
         #reorder threshold dims so VZA is first
         thresh_obs_i = np.moveaxis(thresh_obs_i, 1, 0)
         #reshape so VZA is axis 0 and the other axis is everything else flattened
-        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[1], thresh_shape[0]*thresh_shape[2]*thresh_shape[3])
+        shape_2       = thresh_shape[0]*thresh_shape[2]*thresh_shape[3]
+        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[1], shape_2)
         #normalize
         thresh_obs_i = thresh_obs_i/thresh_obs_i.max()
+        thresh_obs_i = thresh_obs_i.flatten()
+        vza_obs_i    = np.repeat(np.arange(0,75,5), thresh_shape[0])
 
-
-        a.scatter(thresh_obs_i)
+        a.scatter(vza_obs_i, thresh_obs_i.flatten())
         a.set_title(obs)
 
     plt.show()
