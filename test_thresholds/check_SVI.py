@@ -129,7 +129,7 @@ if __name__ == '__main__':
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
         thresholds.append(check_thresh(obs))
-        if i==1 or i>=4:
+        if i==0 or i>=3:
             num_bins = num_bins_other
             range    = range_other
         else:
@@ -140,7 +140,7 @@ if __name__ == '__main__':
     f, ax = plt.subplots(ncols=4, nrows=2)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-        if i==1 or i>=4:
+        if i==0 or i>=3:
             num_bins = num_bins_other
             x1, x2   = range_other
         else:
