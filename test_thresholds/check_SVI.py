@@ -122,7 +122,7 @@ if __name__ == '__main__':
     thresholds     = []
     range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
-    num_bins_ndxi  = 50
+    num_bins_ndxi  = 100
     num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
                                      (range_ndxi[1]  - range_ndxi[0]))
 
