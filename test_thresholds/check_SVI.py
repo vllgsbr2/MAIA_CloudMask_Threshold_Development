@@ -123,8 +123,8 @@ if __name__ == '__main__':
     range_NDxI     = (-1.,1.)
     range_other    = (0. ,1.5)
     num_bins_ndxi  = 50
-    num_bins_other = num_bins_ndxi * (range_other[1] - range_other[0]) / \
-                                     (range_NDxI[1]  - range_NDxI[0])
+    num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
+                                     (range_NDxI[1]  - range_NDxI[0]))
 
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
