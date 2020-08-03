@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         a.imshow(binned_thresholds[i])
-        a.set_title()
+        a.set_title(thresh_dict)
     plt.show()
 
 
