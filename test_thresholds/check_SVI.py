@@ -92,7 +92,7 @@ def check_thresh(which_thresh):
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
 
             thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY,\
-                                            obs[thresh_dict[which_thresh]])
+                                            obs[thresh_dict[which_thresh]-1])
 
             thresh = hf_thresh[thresh_path][()].flatten()
 
