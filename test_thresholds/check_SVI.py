@@ -86,7 +86,7 @@ def check_thresh(which_thresh):
     fill_val = -999
 
     for thresh_file in thresh_files:
-        print(thresh_file[-9:-3])
+        # print(thresh_file[-9:-3])
         with h5py.File(thresh_file, 'r') as hf_thresh:
             DOY = list(hf_thresh['TA_bin_00'].keys())[0]
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
@@ -128,6 +128,7 @@ if __name__ == '__main__':
 
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
+        print(obs)
         thresholds.append(check_thresh(obs))
         if i==0 or i>=3:
             num_bins = num_bins_other
