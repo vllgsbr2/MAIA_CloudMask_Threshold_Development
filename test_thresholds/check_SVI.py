@@ -138,8 +138,13 @@ if __name__ == '__main__':
     f, ax = plt.subplots(ncols=4, nrows=2)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-        a.plot(binned_thresholds[i])
-        a.set_title(thresh_dict)
+        if i==1 or i>=4:
+            num_bins = num_bins_other
+        else:
+            num_bins = num_bins_ndxi
+        x = np.arange(num_bins)
+        a.plot(x, binned_thresholds[i])
+        a.set_title(obs)
     plt.show()
 
 
