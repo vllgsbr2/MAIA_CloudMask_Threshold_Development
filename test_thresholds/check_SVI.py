@@ -108,14 +108,7 @@ def check_thresh(which_thresh):
 
     return thresh
 
-
-
-if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-
-    # check_neg_SVI_thresh()
-    # check_neg_SVI_grouped()
-
+def plot_thresh_hist():
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
@@ -128,9 +121,8 @@ if __name__ == '__main__':
 
     binned_thresholds = []
     for i, obs in enumerate(thresh_dict):
-        thresh_temp = check_thresh(obs)
-        thresholds.append(thresh_temp.flatten())
-        # t = thresholds[i]
+        thresholds.append(check_thresh(obs))
+
         print(obs)#, len(t), len(t[t<0]))
 
         if i==0 or i>=3:
@@ -139,7 +131,7 @@ if __name__ == '__main__':
         else:
             num_bins = num_bins_ndxi
             range    = range_ndxi
-        binned_thresholds.append(np.histogram(thresholds[i], bins=num_bins, range=range)[0])
+        binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range)[0])
 
     f, ax = plt.subplots(ncols=4, nrows=2)
 
@@ -154,6 +146,15 @@ if __name__ == '__main__':
         a.plot(x, binned_thresholds[i])
         a.set_title(obs)
     plt.show()
+
+if __name__ == '__main__':
+    import matplotlib.pyplot as plt
+
+    # check_neg_SVI_thresh()
+    # check_neg_SVI_grouped()
+    plot_thresh_hist()
+
+
 
 
 
