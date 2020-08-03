@@ -109,6 +109,7 @@ def check_thresh(which_thresh):
     return thresh
 
 def plot_thresh_hist():
+    import matplotlib.pyplot as plt
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
@@ -147,12 +148,56 @@ def plot_thresh_hist():
         a.set_title(obs)
     plt.show()
 
-if __name__ == '__main__':
+def plot_thresh_vs_VZA():
     import matplotlib.pyplot as plt
+    #make histograms of thresholds
+    thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
+                   'SVI':5, 'Cirrus':6}
+
+    thresholds = []
+    for i, obs in enumerate(thresh_dict):
+        thresholds.append(check_thresh(obs))
+        print(obs)#, len(t), len(t[t<0]))
+
+    range_ndxi     = (-1.,1.)
+    range_other    = (0. ,1.5)
+    num_bins_ndxi  = 100
+    num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
+                                     (range_ndxi[1]  - range_ndxi[0]))
+
+    f, ax = plt.subplots(ncols=4, nrows=2)
+
+    for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+        # if i==0 or i>=3:
+        #     num_bins = num_bins_other
+        #     x1, x2   = range_other
+        # else:
+        #     num_bins = num_bins_ndxi
+        #     x1, x2   = range_ndxi
+        #
+        # x = np.arange(x1, x2, (x2-x1)/num_bins)
+
+        thresh_shape  = thresholds[i].shape
+        thresh_obs_i  = thresholds[i]
+        #reorder threshold dims so VZA is first
+        thresh_obs_i = np.moveaxis(thresh_obs_i, 1, 0)
+        #reshape so VZA is axis 0 and the other axis is everything else flattened
+        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[1], thresh_shape[0]*thresh_shape[2]*thresh_shape[3])
+        #normalize
+        thresh_obs_i = thresh_obs_i/thresh_obs_i.max()
+
+
+        a.imshow(thresh_obs_i)
+        a.set_title(obs)
+
+    plt.show()
+
+if __name__ == '__main__':
 
     # check_neg_SVI_thresh()
     # check_neg_SVI_grouped()
-    plot_thresh_hist()
+    # plot_thresh_hist()
+    plot_thresh_vs_VZA()
 
 
 
