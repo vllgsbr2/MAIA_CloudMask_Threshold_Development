@@ -157,7 +157,7 @@ def plot_thresh_vs_VZA():
     thresholds = []
     for i, obs in enumerate(thresh_dict):
         thresholds.append(check_thresh(obs))
-        print(obs)#, len(t), len(t[t<0]))
+        print(obs, thresholds[i].shape)#, len(t), len(t[t<0]))
 
     range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
