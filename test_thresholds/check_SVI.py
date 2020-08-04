@@ -205,6 +205,7 @@ def plot_thresh_vs_VZA():
         # x = np.arange(x1, x2, (x2-x1)/num_bins)
 
         thresh_shape  = thresholds[i].shape
+        print(thresh_shape)
         thresh_obs_i  = thresholds[i]
         #reorder threshold dims so VZA is first
         thresh_obs_i = np.moveaxis(thresh_obs_i, 1, 0)
