@@ -71,7 +71,7 @@ def check_neg_SVI_grouped():
             # print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}, neg SVIs {}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI, neg_SVI))
             print('%neg {:1.6f}, num neg {:05d}, num pos {:05d}'.format(num_negative_SVI/num_positive_SVI, num_negative_SVI, num_positive_SVI))
 
-def check_thresh(which_thresh):
+def check_thresh(which_thresh, flatten_or_nah=False):
     '''
     which_thresh {str} -- choose from WI,NDVI,NDSI,VIS_Ref,NIR_Ref,SVI,Cirrus
     '''
@@ -120,12 +120,18 @@ def check_thresh(which_thresh):
             if thresh_dict[which_thresh] >= 3 or \
                thresh_dict[which_thresh] == 0    :
 
-               thresh = thresh[(thresh >= 0) & (thresh != fill_val)]
-               # thresh[(thresh >= 0) & (thresh != fill_val)] = np.nan
+               if flatten_or_nah:
+                   thresh[(thresh >= 0) & (thresh != fill_val)] = np.nan
+               else:
+                   thresh = thresh[(thresh >= 0) & (thresh != fill_val)]
+
             #take out fill val from NDVI/NDSI
             else:
-                thresh = thresh[thresh != fill_val]
-                # thresh[thresh != fill_val] = np.nan
+                if flatten_or_nah:
+                    thresh[thresh != fill_val] = np.nan
+                else:
+                    thresh = thresh[thresh != fill_val]
+
 
     return thresh
 
@@ -177,7 +183,7 @@ def plot_thresh_vs_VZA():
 
     thresholds = []
     for i, obs in enumerate(thresh_dict):
-        thresholds.append(check_thresh(obs))
+        thresholds.append(check_thresh(obs, flatten_or_nah=True))
         print(obs, thresholds[i].shape)#, len(t), len(t[t<0]))
 
     range_ndxi     = (-1.,1.)
