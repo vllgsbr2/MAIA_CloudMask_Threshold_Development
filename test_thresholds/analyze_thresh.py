@@ -257,6 +257,7 @@ def plot_thresh_vs_sfcID():
     f, ax = plt.subplots(ncols=4, nrows=2)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+        print(i)
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
         #reorder threshold dims so sfcID is first
