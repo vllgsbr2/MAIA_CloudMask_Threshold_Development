@@ -185,13 +185,12 @@ def plot_thresh_vs_VZA():
     thresholds = []
     for i, obs in enumerate(thresh_dict):
         thresholds.append(check_thresh(obs, flatten_or_nah=False))
-        # print(obs, thresholds[i].shape)#, len(t), len(t[t<0]))
 
     range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
     num_bins_ndxi  = 100
     num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
-                                     (range_ndxi[1]  - range_ndxi[0]))
+                                         (range_ndxi[1]  - range_ndxi[0] ))
 
     f, ax = plt.subplots(ncols=4, nrows=2)
 
@@ -200,36 +199,29 @@ def plot_thresh_vs_VZA():
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
         #reorder threshold dims so VZA is first
-        # print(thresholds[i].shape)
         thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
         thresh_shape  = thresholds[i].shape
-        # print(thresholds[i].shape)
-        #If test is applied on only one surface type then only 3 dims
-        if len(thresh_shape) == 4:
-            #reshape so VZA is axis 0 and the other axis is everything else flattened
-            shape_cosSZA_x_RAZ_x_sfcID = thresh_shape[1]*thresh_shape[2]*thresh_shape[3]
-        else:
-            #reshape so VZA is axis 0 and the other axis is everything else flattened
-            shape_cosSZA_x_RAZ_x_sfcID = thresh_shape[1]*thresh_shape[2]
 
+        #reshape so VZA is axis 0 and the other axis is everything else flattened
+        shape_cosSZA_x_RAZ_x_sfcID = np.prod(thresh_shape[1:])
         thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID)
-        # #normalize
-        # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
         print(thresh_obs_i.shape)
         thresh_obs_i  = thresh_obs_i.flatten()
-        # print(thresh_obs_i.shape)
+
+        # #normalize
+        # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
+
+        #array to match each thresh to VZA bin from [0-14]
+
+        print(np.arange(0,75,5).shape)
         vza_obs_i     = np.repeat(np.arange(0,75,5), shape_cosSZA_x_RAZ_x_sfcID)
-        print(thresh_shape[0]*shape_cosSZA_x_RAZ_x_sfcID)
 
-        print('*************************************************',thresh_obs_i.shape,vza_obs_i.shape )
         #take nan out of thresholds and adjust vza
-        vza_obs_i    = vza_obs_i[thresh_obs_i == fill_val]
-        thresh_obs_i = thresh_obs_i[thresh_obs_i == fill_val]
+        vza_obs_i    = vza_obs_i[thresh_obs_i != fill_val]
+        thresh_obs_i = thresh_obs_i[thresh_obs_i != fill_val]
 
-
-
-        print('VZA\n', vza_obs_i)
-        print('thresh\n', thresh_obs_i)
+        # print('VZA\n', vza_obs_i)
+        # print('thresh\n', thresh_obs_i)
         # import sys
         # sys.exit()
 
