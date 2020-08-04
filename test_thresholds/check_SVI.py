@@ -133,7 +133,6 @@ def check_thresh(which_thresh, flatten_or_nah=True):
                 else:
                     thresh[thresh != fill_val] = np.nan
 
-
     return thresh
 
 def plot_thresh_hist():
@@ -229,8 +228,8 @@ if __name__ == '__main__':
 
     # check_neg_SVI_thresh()
     # check_neg_SVI_grouped()
-    # plot_thresh_hist()
-    plot_thresh_vs_VZA()
+    plot_thresh_hist()
+    # plot_thresh_vs_VZA()
 
 
 
