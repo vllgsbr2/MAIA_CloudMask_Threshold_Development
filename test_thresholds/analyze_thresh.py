@@ -173,6 +173,10 @@ def plot_thresh_hist():
         x = np.arange(x1, x2, (x2-x1)/num_bins)
         a.plot(x, binned_thresholds[i])
         a.set_title(obs)
+
+    #only 7 obs so lets turn 8th axis off
+    ax[1,3].axis('off')
+    
     plt.show()
 
 def plot_thresh_vs_VZA():
@@ -227,6 +231,9 @@ def plot_thresh_vs_VZA():
         # a.scatter(vza_obs_i, thresh_obs_i)
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
+
+    #only 7 obs so lets turn 8th axis off
+    ax[1,3].axis('off')
 
     plt.show()
 
