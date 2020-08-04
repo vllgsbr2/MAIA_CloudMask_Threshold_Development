@@ -199,6 +199,7 @@ def plot_thresh_vs_VZA():
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
         #reorder threshold dims so VZA is first
+        print(thresholds[i].shape)
         thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
         thresh_shape  = thresholds[i].shape
         print(thresh_shape)
