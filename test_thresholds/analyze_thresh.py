@@ -269,16 +269,12 @@ def plot_thresh_vs_sfcID():
         shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
         thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
 
-        # #normalize
-        # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
-
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
             filtered_thresh_sfcID_x_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
-            if len(filtered_thresh_sfcID_x_i)==0:
-                boxplot_thresh_obs_i.append([])
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_i)
+            print(filtered_thresh_sfcID_x_i.shape)
 
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
