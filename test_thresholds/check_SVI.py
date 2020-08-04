@@ -204,18 +204,18 @@ def plot_thresh_vs_VZA():
         #If test is applied on only one surface type then only 3 dims
         if len(thresh_shape) == 4:
             #reshape so VZA is axis 0 and the other axis is everything else flattened
-            shape_2       = thresh_shape[1]*thresh_shape[2]*thresh_shape[3]
+            shape_cosSZA_x_RAZ_x_sfcID = thresh_shape[1]*thresh_shape[2]*thresh_shape[3]
         else:
             #reshape so VZA is axis 0 and the other axis is everything else flattened
-            shape_2       = thresh_shape[1]*thresh_shape[2]
+            shape_cosSZA_x_RAZ_x_sfcID = thresh_shape[1]*thresh_shape[2]
 
-        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_2)
+        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID)
         # #normalize
         # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
         # print(thresh_obs_i.shape)
         thresh_obs_i  = thresh_obs_i.flatten()
         # print(thresh_obs_i.shape)
-        vza_obs_i     = np.repeat(np.arange(0,75,5), shape_2)
+        vza_obs_i     = np.repeat(np.arange(0,75,5), shape_cosSZA_x_RAZ_x_sfcID)
 
         #take nan out of thresholds and adjust vza
         vza_obs_i    = vza_obs_i[np.isnan(thresh_obs_i) == False]
