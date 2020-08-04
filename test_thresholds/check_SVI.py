@@ -229,8 +229,8 @@ def plot_thresh_vs_VZA():
         vza_obs_i     = np.repeat(np.arange(0,75,5), shape_2)
 
         #take nan out of thresholds and adjust vza
-        vza_obs_i    = vza_obs_i[np.isnan(thresh_obs_i) == True]
-        thresh_obs_i = thresh_obs_i[np.isnan(thresh_obs_i) == True]
+        vza_obs_i    = vza_obs_i[np.isnan(thresh_obs_i) == False]
+        thresh_obs_i = thresh_obs_i[np.isnan(thresh_obs_i) == False]
 
         print('*************************************************',thresh_obs_i.shape,vza_obs_i.shape )
 
