@@ -234,8 +234,8 @@ def plot_thresh_vs_VZA():
 
         print('VZA\n', vza_obs_i)
         print('thresh\n', thresh_obs_i)
-        import sys
-        sys.exit()
+        # import sys
+        # sys.exit()
 
         a.scatter(vza_obs_i, thresh_obs_i.flatten())
         a.set_title(obs)
