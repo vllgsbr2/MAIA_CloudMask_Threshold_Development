@@ -217,10 +217,10 @@ def plot_thresh_vs_VZA():
         vza_obs_i    = vza_obs_i[thresh_obs_i != fill_val]
         thresh_obs_i = thresh_obs_i[thresh_obs_i != fill_val]
 
-        print('VZA\n', vza_obs_i)
-        print('thresh\n', thresh_obs_i)
-        import sys
-        sys.exit()
+        # print('VZA\n', vza_obs_i)
+        # print('thresh\n', thresh_obs_i)
+        # import sys
+        # sys.exit()
 
         a.scatter(vza_obs_i, thresh_obs_i)
         a.set_title(obs)
