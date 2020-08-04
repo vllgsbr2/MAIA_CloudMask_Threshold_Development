@@ -263,6 +263,7 @@ def plot_thresh_vs_sfcID():
         #reorder threshold dims so sfcID is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, -1, 0)
         thresh_shape  = thresh_obs_i.shape
+        print(thresh_shape)
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
@@ -274,7 +275,7 @@ def plot_thresh_vs_sfcID():
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
-            print('hi')
+            # print('hi')
             boxplot_thresh_obs_i.append(thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val])
 
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
