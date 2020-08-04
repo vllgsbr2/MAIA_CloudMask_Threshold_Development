@@ -205,7 +205,7 @@ def plot_thresh_vs_VZA():
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = np.prod(thresh_shape[1:])
         thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID)
-        thresh_obs_i  = thresh_obs_i.flatten()
+        # thresh_obs_i  = thresh_obs_i.flatten()
 
         # #normalize
         # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
@@ -214,16 +214,13 @@ def plot_thresh_vs_VZA():
         vza_obs_i     = np.repeat(np.arange(0,75,5), shape_cosSZA_x_RAZ_x_sfcID)
 
         #take nan out of thresholds and adjust vza
-        vza_obs_i    = vza_obs_i[thresh_obs_i != fill_val]
-        thresh_obs_i = thresh_obs_i[thresh_obs_i != fill_val]
+        # vza_obs_i    = vza_obs_i[thresh_obs_i != fill_val]
+        # thresh_obs_i = thresh_obs_i[thresh_obs_i != fill_val]
 
-        # print('VZA\n', vza_obs_i)
-        # print('thresh\n', thresh_obs_i)
-        # import sys
-        # sys.exit()
+        thresh_obs_i[thresh_obs_i == fill_val] = np.nan
 
         # a.scatter(vza_obs_i, thresh_obs_i)
-        a.boxplot(thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
+        a.boxplot(thresh_obs_i, notch=True)
         a.set_title(obs)
 
     plt.show()
