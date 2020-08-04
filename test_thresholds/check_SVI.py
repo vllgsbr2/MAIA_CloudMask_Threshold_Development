@@ -201,6 +201,7 @@ def plot_thresh_vs_VZA():
         #reorder threshold dims so VZA is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
         thresh_shape  = thresholds[i].shape
+        print(thresh_shape)
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = np.prod(thresh_shape[1:])
