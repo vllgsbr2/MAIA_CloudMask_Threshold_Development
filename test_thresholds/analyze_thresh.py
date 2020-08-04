@@ -208,14 +208,14 @@ def plot_thresh_vs_VZA():
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = np.prod(thresh_shape[1:])
-        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID)
+        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_VZA)
         # thresh_obs_i  = thresh_obs_i.flatten()
 
         # #normalize
         # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
 
         #array to match each thresh to VZA bin from [0-14]
-        vza_obs_i     = np.repeat(np.arange(0,75,5), shape_cosSZA_x_RAZ_x_sfcID)
+        vza_obs_i     = np.repeat(np.arange(0,75,5), shape_cosSZA_x_RAZ_x_VZA)
 
         #take nan out of thresholds and adjust vza
         # vza_obs_i    = vza_obs_i[thresh_obs_i != fill_val]
@@ -264,8 +264,8 @@ def plot_thresh_vs_sfcID():
         thresh_shape  = thresh_obs_i.shape
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
-        shape_cosSZA_x_RAZ_x_VZA = np.prod(thresh_shape[1:])
-        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_VZA)
+        shape_cosSZA_x_RAZ_x_sfcID = np.prod(thresh_shape[1:])
+        thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
 
         # #normalize
         # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
