@@ -227,7 +227,11 @@ def plot_thresh_vs_VZA():
         thresh_obs_i  = thresh_obs_i.flatten()
         # print(thresh_obs_i.shape)
         vza_obs_i     = np.repeat(np.arange(0,75,5), shape_2)
-        # print(vza_obs_i.shape)
+
+        print('VZA\n', vza_obs_i)
+        print('thresh\n', thresh_obs_i)
+        import sys
+        sys.exit()
 
         a.scatter(vza_obs_i, thresh_obs_i.flatten())
         a.set_title(obs)
