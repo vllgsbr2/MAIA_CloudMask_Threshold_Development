@@ -222,7 +222,8 @@ def plot_thresh_vs_VZA():
         # import sys
         # sys.exit()
 
-        a.scatter(vza_obs_i, thresh_obs_i)
+        # a.scatter(vza_obs_i, thresh_obs_i)
+        a.boxplot(thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
         a.set_title(obs)
 
     plt.show()
