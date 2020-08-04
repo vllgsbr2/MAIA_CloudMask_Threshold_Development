@@ -274,6 +274,7 @@ def plot_thresh_vs_sfcID():
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
+            print('hi')
             boxplot_thresh_obs_i.append(thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val])
 
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
