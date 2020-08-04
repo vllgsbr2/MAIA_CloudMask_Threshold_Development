@@ -272,7 +272,7 @@ def plot_thresh_vs_sfcID():
         a.set_title(obs)
 
         #only 7 obs so lets turn 8th axis off
-        ax[7].axis('off')
+        ax[1,3].axis('off')
 
     plt.show()
 
