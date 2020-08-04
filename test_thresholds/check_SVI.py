@@ -200,10 +200,10 @@ def plot_thresh_vs_VZA():
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
         #reorder threshold dims so VZA is first
-        print(thresholds[i].shape)
+        # print(thresholds[i].shape)
         thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
         thresh_shape  = thresholds[i].shape
-        print(thresholds[i].shape)
+        # print(thresholds[i].shape)
         #If test is applied on only one surface type then only 3 dims
         if len(thresh_shape) == 4:
             #reshape so VZA is axis 0 and the other axis is everything else flattened
@@ -215,11 +215,11 @@ def plot_thresh_vs_VZA():
         thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID)
         # #normalize
         # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
-        # print(thresh_obs_i.shape)
+        print(thresh_obs_i.shape)
         thresh_obs_i  = thresh_obs_i.flatten()
         # print(thresh_obs_i.shape)
         vza_obs_i     = np.repeat(np.arange(0,75,5), shape_cosSZA_x_RAZ_x_sfcID)
-        print(15*shape_cosSZA_x_RAZ_x_sfcID)
+        print(thresh_shape[0]*shape_cosSZA_x_RAZ_x_sfcID)
 
         print('*************************************************',thresh_obs_i.shape,vza_obs_i.shape )
         #take nan out of thresholds and adjust vza
