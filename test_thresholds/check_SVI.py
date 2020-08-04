@@ -204,21 +204,23 @@ def plot_thresh_vs_VZA():
         #
         # x = np.arange(x1, x2, (x2-x1)/num_bins)
 
-        thresh_shape  = thresholds[i].shape
-        print(thresh_shape)
+
+
 
         thresh_obs_i  = np.copy(thresholds[i])
+        thresh_shape  = thresholds[i].shape
+        print(thresh_shape)
         #reorder threshold dims so VZA is first
-        thresh_obs_i = np.moveaxis(thresh_obs_i, 1, 0)
+        thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_2       = thresh_shape[0]*thresh_shape[2]*thresh_shape[3]
         thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[1], shape_2)
         #normalize
-        thresh_obs_i = thresh_obs_i/thresh_obs_i.max()
+        thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
         # print(thresh_obs_i.shape)
-        thresh_obs_i = thresh_obs_i.flatten()
+        thresh_obs_i  = thresh_obs_i.flatten()
         # print(thresh_obs_i.shape)
-        vza_obs_i    = np.repeat(np.arange(0,75,5), shape_2)
+        vza_obs_i     = np.repeat(np.arange(0,75,5), shape_2)
         # print(vza_obs_i.shape)
 
         a.scatter(vza_obs_i, thresh_obs_i.flatten())
