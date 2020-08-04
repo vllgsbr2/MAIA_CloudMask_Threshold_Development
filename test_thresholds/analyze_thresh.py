@@ -246,7 +246,7 @@ def plot_thresh_vs_sfcID():
 
     thresholds = []
     for i, obs in enumerate(thresh_dict):
-        thresholds.append(check_thresh(obs, flatten_or_nah=False, by_SFC_ID_or_nah=False))
+        thresholds.append(check_thresh(obs, flatten_or_nah=True, by_SFC_ID_or_nah=False))
 
     range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
