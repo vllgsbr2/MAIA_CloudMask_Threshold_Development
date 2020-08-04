@@ -232,7 +232,7 @@ def plot_thresh_vs_VZA():
         vza_obs_i    = vza_obs_i[np.isnan(thresh_obs_i) == False]
         thresh_obs_i = thresh_obs_i[np.isnan(thresh_obs_i) == False]
 
-        print('*************************************************',thresh_obs_i.shape)
+        print('*************************************************',thresh_obs_i.shape,vza_obs_i.shape )
 
         print('VZA\n', vza_obs_i)
         print('thresh\n', thresh_obs_i)
