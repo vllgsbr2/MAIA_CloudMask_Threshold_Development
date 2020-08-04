@@ -37,13 +37,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
         hf_keys    = list(hf_group.keys())
         num_points = len(hf_keys)
-        # print(num_points)
 
-
-        # neg_SVI_thresh_count = 0
-        # neg_SVI_obs_count    = 0
-        # num_samples_valid_hist = 0 #30
-        # if_or_else = []
         for count, bin_ID in enumerate(hf_keys):
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]

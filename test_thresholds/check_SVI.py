@@ -124,14 +124,14 @@ def check_thresh(which_thresh, flatten_or_nah=True):
                if flatten_or_nah:
                    thresh = thresh[(thresh >= 0) & (thresh != fill_val)]
                else:
-                   thresh[(thresh >= 0) & (thresh != fill_val)] = np.nan
+                   thresh[(thresh >= 0) & (thresh != fill_val)] = fill_val#np.nan
 
             #take out fill val from NDVI/NDSI
             else:
                 if flatten_or_nah:
                     thresh = thresh[thresh != fill_val]
                 else:
-                    thresh[thresh != fill_val] = np.nan
+                    thresh[thresh != fill_val] = fill_val
 
     return thresh
 
@@ -222,8 +222,8 @@ def plot_thresh_vs_VZA():
 
         print('*************************************************',thresh_obs_i.shape,vza_obs_i.shape )
         #take nan out of thresholds and adjust vza
-        vza_obs_i    = vza_obs_i[np.isnan(thresh_obs_i) == False]
-        thresh_obs_i = thresh_obs_i[np.isnan(thresh_obs_i) == False]
+        vza_obs_i    = vza_obs_i[thresh_obs_i == fill_val]
+        thresh_obs_i = thresh_obs_i[thresh_obs_i == fill_val]
 
 
 
