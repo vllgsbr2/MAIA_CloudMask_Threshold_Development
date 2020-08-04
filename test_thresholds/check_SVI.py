@@ -196,22 +196,22 @@ def plot_thresh_vs_VZA():
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
 
+        #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
-        thresh_shape  = thresholds[i].shape
-        print(obs, thresh_shape)
         #reorder threshold dims so VZA is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
-        print(obs, thresh_obs_i.shape)
+        thresh_shape  = thresholds[i].shape
         #If test is applied on only one surface type then only 3 dims
         if len(thresh_shape) == 4:
             #reshape so VZA is axis 0 and the other axis is everything else flattened
-            shape_2       = thresh_shape[0]*thresh_shape[2]*thresh_shape[3]
+            shape_2       = thresh_shape[1]*thresh_shape[2]*thresh_shape[3]
         else:
             #reshape so VZA is axis 0 and the other axis is everything else flattened
-            shape_2       = thresh_shape[0]*thresh_shape[2]
-        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[1], shape_2)
-        #normalize
-        thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
+            shape_2       = thresh_shape[1]*thresh_shape[2]
+
+        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_2)
+        # #normalize
+        # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
         # print(thresh_obs_i.shape)
         thresh_obs_i  = thresh_obs_i.flatten()
         # print(thresh_obs_i.shape)
