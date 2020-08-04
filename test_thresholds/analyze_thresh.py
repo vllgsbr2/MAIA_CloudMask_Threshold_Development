@@ -176,7 +176,7 @@ def plot_thresh_hist():
 
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
-    
+
     plt.show()
 
 def plot_thresh_vs_VZA():
@@ -260,7 +260,7 @@ def plot_thresh_vs_sfcID():
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
         #reorder threshold dims so sfcID is first
-        thresh_obs_i  = np.moveaxis(thresh_obs_i, 3, 0)
+        thresh_obs_i  = np.moveaxis(thresh_obs_i, -1, 0)
         thresh_shape  = thresh_obs_i.shape
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
