@@ -195,24 +195,13 @@ def plot_thresh_vs_VZA():
     f, ax = plt.subplots(ncols=4, nrows=2)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-        # if i==0 or i>=3:
-        #     num_bins = num_bins_other
-        #     x1, x2   = range_other
-        # else:
-        #     num_bins = num_bins_ndxi
-        #     x1, x2   = range_ndxi
-        #
-        # x = np.arange(x1, x2, (x2-x1)/num_bins)
-
-
-
 
         thresh_obs_i  = np.copy(thresholds[i])
         thresh_shape  = thresholds[i].shape
         print(obs, thresh_shape)
         #reorder threshold dims so VZA is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
-
+        print(obs, thresh_shape)
         #If test is applied on only one surface type then only 3 dims
         if len(thresh_shape) == 4:
             #reshape so VZA is axis 0 and the other axis is everything else flattened
