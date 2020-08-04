@@ -201,30 +201,26 @@ def plot_thresh_vs_VZA():
         #reorder threshold dims so VZA is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
         thresh_shape  = thresh_obs_i.shape
-        print(thresh_shape)
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = np.prod(thresh_shape[1:])
         thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID)
-        print(thresh_obs_i.shape)
         thresh_obs_i  = thresh_obs_i.flatten()
 
         # #normalize
         # thresh_obs_i  = thresh_obs_i/thresh_obs_i.max()
 
         #array to match each thresh to VZA bin from [0-14]
-
-        print(np.arange(0,75,5).shape)
         vza_obs_i     = np.repeat(np.arange(0,75,5), shape_cosSZA_x_RAZ_x_sfcID)
 
         #take nan out of thresholds and adjust vza
         vza_obs_i    = vza_obs_i[thresh_obs_i != fill_val]
         thresh_obs_i = thresh_obs_i[thresh_obs_i != fill_val]
 
-        # print('VZA\n', vza_obs_i)
-        # print('thresh\n', thresh_obs_i)
-        # import sys
-        # sys.exit()
+        print('VZA\n', vza_obs_i)
+        print('thresh\n', thresh_obs_i)
+        import sys
+        sys.exit()
 
         a.scatter(vza_obs_i, thresh_obs_i)
         a.set_title(obs)
