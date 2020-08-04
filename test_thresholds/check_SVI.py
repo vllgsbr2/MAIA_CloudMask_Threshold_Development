@@ -202,7 +202,7 @@ def plot_thresh_vs_VZA():
         print(thresholds[i].shape)
         thresh_obs_i  = np.moveaxis(thresh_obs_i, 1, 0)
         thresh_shape  = thresholds[i].shape
-        print(thresh_shape)
+        print(thresholds[i].shape)
         #If test is applied on only one surface type then only 3 dims
         if len(thresh_shape) == 4:
             #reshape so VZA is axis 0 and the other axis is everything else flattened
