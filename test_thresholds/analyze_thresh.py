@@ -264,7 +264,7 @@ def plot_thresh_vs_sfcID():
         thresh_shape  = thresh_obs_i.shape
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
-        shape_cosSZA_x_RAZ_x_sfcID = np.prod(thresh_shape[1:])
+        shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
         thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
 
         # #normalize
