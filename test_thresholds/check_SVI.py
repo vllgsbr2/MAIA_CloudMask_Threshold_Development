@@ -215,11 +215,11 @@ def plot_thresh_vs_VZA():
         thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[1], shape_2)
         #normalize
         thresh_obs_i = thresh_obs_i/thresh_obs_i.max()
-        print(thresh_obs_i.shape)
+        # print(thresh_obs_i.shape)
         thresh_obs_i = thresh_obs_i.flatten()
-        print(thresh_obs_i.shape)
+        # print(thresh_obs_i.shape)
         vza_obs_i    = np.repeat(np.arange(0,75,5), shape_2)
-        print(vza_obs_i.shape)
+        # print(vza_obs_i.shape)
 
         a.scatter(vza_obs_i, thresh_obs_i.flatten())
         a.set_title(obs)
