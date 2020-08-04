@@ -216,6 +216,7 @@ def plot_thresh_vs_VZA():
         thresh_obs_i  = thresh_obs_i.flatten()
         # print(thresh_obs_i.shape)
         vza_obs_i     = np.repeat(np.arange(0,75,5), shape_cosSZA_x_RAZ_x_sfcID)
+        print(15*shape_cosSZA_x_RAZ_x_sfcID)
 
         print('*************************************************',thresh_obs_i.shape,vza_obs_i.shape )
         #take nan out of thresholds and adjust vza
