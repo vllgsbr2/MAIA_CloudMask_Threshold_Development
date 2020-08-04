@@ -225,7 +225,7 @@ def plot_thresh_vs_VZA():
         # thresh_obs_i[thresh_obs_i == fill_val] = np.nan
 
         # a.scatter(vza_obs_i, thresh_obs_i)
-        a.boxplot(boxplot_thresh_obs_i, notch=True)
+        a.boxplot(boxplot_thresh_obs_i, notch=False, sym='.')
         a.set_title(obs)
 
     plt.show()
