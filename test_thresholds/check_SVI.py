@@ -184,7 +184,7 @@ def plot_thresh_vs_VZA():
     thresholds = []
     for i, obs in enumerate(thresh_dict):
         thresholds.append(check_thresh(obs, flatten_or_nah=False))
-        print(obs, thresholds[i].shape)#, len(t), len(t[t<0]))
+        # print(obs, thresholds[i].shape)#, len(t), len(t[t<0]))
 
     range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
@@ -206,6 +206,7 @@ def plot_thresh_vs_VZA():
 
         thresh_shape  = thresholds[i].shape
         print(thresh_shape)
+
         thresh_obs_i  = thresholds[i]
         #reorder threshold dims so VZA is first
         thresh_obs_i = np.moveaxis(thresh_obs_i, 1, 0)
