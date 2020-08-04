@@ -217,10 +217,15 @@ def plot_thresh_vs_VZA():
         # vza_obs_i    = vza_obs_i[thresh_obs_i != fill_val]
         # thresh_obs_i = thresh_obs_i[thresh_obs_i != fill_val]
 
-        thresh_obs_i[thresh_obs_i == fill_val] = np.nan
+        #eliminate fill vals while keeping a vector for each VZA bin
+        boxplot_thresh_obs_i = []
+        for thresh_vza_x_i in thresh_obs_i:
+            boxplot_thresh_obs_i.append(thresh_vza_x_i[thresh_vza_x_i != fill_val])
+
+        # thresh_obs_i[thresh_obs_i == fill_val] = np.nan
 
         # a.scatter(vza_obs_i, thresh_obs_i)
-        a.boxplot(thresh_obs_i, notch=True)
+        a.boxplot(boxplot_thresh_obs_i, notch=True)
         a.set_title(obs)
 
     plt.show()
