@@ -255,9 +255,8 @@ def plot_thresh_vs_sfcID():
                                          (range_ndxi[1]  - range_ndxi[0] ))
 
     f, ax = plt.subplots(ncols=4, nrows=2)
-
+    count = 0
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-        print(i)
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
         #reorder threshold dims so sfcID is first
@@ -273,13 +272,14 @@ def plot_thresh_vs_sfcID():
         for thresh_sfcID_x_i in thresh_obs_i:
             filtered_thresh_sfcID_x_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_i)
-        # print(boxplot_thresh_obs_i)
-        boxplot_thresh_obs_i = np.array(boxplot_thresh_obs_i)
+            if len(filtered_thresh_sfcID_x_i) > 0:
+                count += 1
+
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
-
-        #only 7 obs so lets turn 8th axis off
-        ax[1,3].axis('off')
+    print(count, 15*7)
+    #only 7 obs so lets turn 8th axis off
+    ax[1,3].axis('off')
 
     plt.show()
 
