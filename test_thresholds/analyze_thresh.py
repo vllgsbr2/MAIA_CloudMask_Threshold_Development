@@ -278,6 +278,11 @@ def plot_thresh_vs_sfcID():
             #     boxplot_thresh_obs_i.append([])
             # print(len(filtered_thresh_sfcID_x_i))
         print('***************************')
+        if i==0 or i>=3:
+            ymin,ymax = range_other[0], range_other[1]
+        else:
+            ymin,ymax = range_ndxi[0], range_ndxi[1]
+        a.set_ylim([ymin,ymax])
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
 
