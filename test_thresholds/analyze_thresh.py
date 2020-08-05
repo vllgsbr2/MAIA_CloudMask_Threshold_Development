@@ -263,7 +263,6 @@ def plot_thresh_vs_sfcID():
         #reorder threshold dims so sfcID is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, -1, 0)
         thresh_shape  = thresh_obs_i.shape
-        print(thresh_shape)
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
@@ -274,7 +273,7 @@ def plot_thresh_vs_sfcID():
         for thresh_sfcID_x_i in thresh_obs_i:
             filtered_thresh_sfcID_x_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_i)
-            print(filtered_thresh_sfcID_x_i.shape)
+        print(np.shape(boxplot_thresh_obs_i))
 
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
