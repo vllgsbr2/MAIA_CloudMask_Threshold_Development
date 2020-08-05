@@ -270,12 +270,13 @@ def plot_thresh_vs_sfcID():
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
+            print(len(thresh_sfcID_x_i))
             filtered_thresh_sfcID_x_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
             # if len(filtered_thresh_sfcID_x_i) > 0:
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_i)
             # else:
             #     boxplot_thresh_obs_i.append([])
-            print(len(filtered_thresh_sfcID_x_i))
+            # print(len(filtered_thresh_sfcID_x_i))
         print('***************************')
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
