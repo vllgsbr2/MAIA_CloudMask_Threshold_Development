@@ -119,18 +119,18 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
                     #everything
                     pass
 
-            # only take positve/non- fill_val thresholds from
-            # WI/VIS/NIR/SVI/Cirrus
-            if thresh_dict[which_thresh] >= 3 or \
-               thresh_dict[which_thresh] == 0    :
-
-               if flatten_or_nah:
-                   thresh = thresh[(thresh >= 0) & (thresh != fill_val)]
-
-            #take out fill val from NDVI/NDSI
-            else:
-                if flatten_or_nah:
-                    thresh = thresh[thresh != fill_val]
+            # # only take positve/non- fill_val thresholds from
+            # # WI/VIS/NIR/SVI/Cirrus
+            # if thresh_dict[which_thresh] >= 3 or \
+            #    thresh_dict[which_thresh] == 0    :
+            #
+            #    if flatten_or_nah:
+            #        thresh = thresh[(thresh >= 0) & (thresh != fill_val)]
+            #
+            # #take out fill val from NDVI/NDSI
+            # else:
+            #     if flatten_or_nah:
+            #         thresh = thresh[thresh != fill_val]
 
 
     return thresh
@@ -246,7 +246,7 @@ def plot_thresh_vs_sfcID():
 
     thresholds = []
     for i, obs in enumerate(thresh_dict):
-        thresholds.append(check_thresh(obs, flatten_or_nah=False, by_SFC_ID_or_nah=True))
+        thresholds.append(check_thresh(obs, flatten_or_nah=False, by_SFC_ID_or_nah=False))
 
     range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
