@@ -275,9 +275,9 @@ def plot_thresh_vs_sfcID():
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_i)
             # else:
             #     boxplot_thresh_obs_i.append([])
-        print(len(boxplot_thresh_obs_i))
+            print(len(filtered_thresh_sfcID_x_i))
 
-        a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
+        a.boxplot(np.arange(15), boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
 
     #only 7 obs so lets turn 8th axis off
