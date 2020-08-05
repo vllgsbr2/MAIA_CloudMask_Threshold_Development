@@ -276,7 +276,7 @@ def plot_thresh_vs_sfcID():
             # else:
             #     boxplot_thresh_obs_i.append([])
             print(len(filtered_thresh_sfcID_x_i))
-
+        print('***************************')
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
 
