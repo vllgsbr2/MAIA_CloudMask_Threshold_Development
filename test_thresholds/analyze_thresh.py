@@ -270,14 +270,14 @@ def plot_thresh_vs_sfcID():
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
-            print(len(thresh_sfcID_x_i))
+            # print(len(thresh_sfcID_x_i))
             filtered_thresh_sfcID_x_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
             # if len(filtered_thresh_sfcID_x_i) > 0:
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_i)
             # else:
             #     boxplot_thresh_obs_i.append([])
             # print(len(filtered_thresh_sfcID_x_i))
-        print('***************************')
+        # print('***************************')
         if i==0 or i>=3:
             ymin,ymax = range_other[0], range_other[1]
         else:
@@ -294,13 +294,12 @@ def plot_thresh_vs_sfcID():
             '''
             a is previous, b is next; can be arrays of same length or floats
             '''
-            return np.mean(100*np.abs(a-b)/a)
+            return 100*np.abs(a-b)/a
 
         sfcID_thresh_percent_change = []
         for sfcID_j in range(1,15):
-            a = boxplot_thresh_obs_i[sfcID_j - 1]
-            b = boxplot_thresh_obs_i[sfcID_j]
-            print(a.shape, b.shape)
+            a = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
+            b = np.mean(boxplot_thresh_obs_i[sfcID_j])
             sfcID_thresh_percent_change.append(percent_change(a, b))
 
         a_twin = a.twinx()
