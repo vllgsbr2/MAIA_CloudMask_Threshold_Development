@@ -282,9 +282,35 @@ def plot_thresh_vs_sfcID():
             ymin,ymax = range_other[0], range_other[1]
         else:
             ymin,ymax = range_ndxi[0], range_ndxi[1]
+
+
+
         a.set_ylim([ymin,ymax])
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
+
+        #print percent change from one sfc ID to next
+        def percent_change(a, b):
+            '''
+            a is previous, b is next; can be arrays of same length or floats
+            '''
+            return np.mean(100*np.abs(a-b)/a)
+
+        sfcID_thresh_percent_change = []
+        for sfcID_j in range(1,15):
+            a = boxplot_thresh_obs_i[sfcID_j - 1]
+            b = boxplot_thresh_obs_i[sfcID_j]
+            sfcID_thresh_percent_change.append(percent_change(a, b))
+
+        a_twin = a.twinx()
+        a_twin = a_twin.scatter(np.arange(15), sfcID_thresh_percent_change)
+
+        #add axis for number of samples
+        # a_twin  = a.twinx()
+        # num_thresh = len(boxplot_thresh_obs_i.flatten())
+        # a_twin.scatter(num_thresh, )
+
+        #color the axis' points by accuracy between 0% & 100% and add colorbar
 
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
