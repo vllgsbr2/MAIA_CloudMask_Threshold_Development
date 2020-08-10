@@ -300,6 +300,7 @@ def plot_thresh_vs_sfcID():
         for sfcID_j in range(1,15):
             a = boxplot_thresh_obs_i[sfcID_j - 1]
             b = boxplot_thresh_obs_i[sfcID_j]
+            print(a.shape, b.shape)
             sfcID_thresh_percent_change.append(percent_change(a, b))
 
         a_twin = a.twinx()
