@@ -292,11 +292,11 @@ def plot_thresh_vs_sfcID():
             print(x, y)
             return 100*np.abs(x-y)/x
 
-        sfcID_thresh_percent_change = []
+        sfcID_thresh_percent_change = np.zeros((15))
         for sfcID_j in range(1,15):
             x = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
             y = np.mean(boxplot_thresh_obs_i[sfcID_j])
-            sfcID_thresh_percent_change.append(percent_change(x, y))
+            sfcID_thresh_percent_change[sfcID_j] = percent_change(x, y)
 
         a_twin = a.twinx()
         a_twin = a_twin.scatter(np.arange(15), sfcID_thresh_percent_change)
