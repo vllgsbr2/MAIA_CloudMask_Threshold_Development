@@ -270,14 +270,9 @@ def plot_thresh_vs_sfcID():
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
-            # print(len(thresh_sfcID_x_i))
             filtered_thresh_sfcID_x_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
-            # if len(filtered_thresh_sfcID_x_i) > 0:
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_i)
-            # else:
-            #     boxplot_thresh_obs_i.append([])
-            # print(len(filtered_thresh_sfcID_x_i))
-        # print('***************************')
+
         if i==0 or i>=3:
             ymin,ymax = range_other[0], range_other[1]
         else:
@@ -289,12 +284,12 @@ def plot_thresh_vs_sfcID():
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
 
-        #print percent change from one sfc ID to next
+        #plot percent change from one sfc ID to next
         def percent_change(x, y):
             '''
             x is previous, y is next; can be arrays of same length or floats
             '''
-            print(x.shape, y.shape)
+            print(x, y)
             return 100*np.abs(x-y)/x
 
         sfcID_thresh_percent_change = []
