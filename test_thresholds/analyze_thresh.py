@@ -294,6 +294,7 @@ def plot_thresh_vs_sfcID():
             '''
             x is previous, y is next; can be arrays of same length or floats
             '''
+            print(x.shape, y.shape)
             return 100*np.abs(x-y)/x
 
         sfcID_thresh_percent_change = []
