@@ -290,16 +290,16 @@ def plot_thresh_vs_sfcID():
         a.set_title(obs)
 
         #print percent change from one sfc ID to next
-        def percent_change(a, b):
+        def percent_change(x, y):
             '''
-            a is previous, b is next; can be arrays of same length or floats
+            x is previous, y is next; can be arrays of same length or floats
             '''
             return 100*np.abs(a-b)/a
 
         sfcID_thresh_percent_change = []
         for sfcID_j in range(1,15):
-            a = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
-            b = np.mean(boxplot_thresh_obs_i[sfcID_j])
+            x = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
+            y = np.mean(boxplot_thresh_obs_i[sfcID_j])
             sfcID_thresh_percent_change.append(percent_change(a, b))
 
         a_twin = a.twinx()
