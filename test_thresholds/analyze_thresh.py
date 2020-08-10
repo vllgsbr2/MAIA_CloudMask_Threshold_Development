@@ -299,7 +299,7 @@ def plot_thresh_vs_sfcID():
             sfcID_thresh_percent_change[sfcID_j] = percent_change(x, y)
 
         a_twin = a.twinx()
-        a_twin = a_twin.scatter(np.arange(15), sfcID_thresh_percent_change)
+        a_twin = a_twin.scatter(np.arange(15), sfcID_thresh_percent_change, vmax=100)
 
         #add axis for number of samples
         # a_twin  = a.twinx()
