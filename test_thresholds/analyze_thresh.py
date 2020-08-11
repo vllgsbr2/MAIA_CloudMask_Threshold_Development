@@ -11,9 +11,6 @@ config.read(config_home_path+'/test_config.txt')
 PTA          = config['current PTA']['PTA']
 PTA_path     = config['PTAs'][PTA]
 
-
-# thresh_path = '{}/{}/{}'.format(PTA_path, thresh_home, 'thresholds_DOY_041_to_048_bin_05.h5')
-
 def check_neg_SVI_thresh():
 
     thresh_home  = config['supporting directories']['thresh']
@@ -289,14 +286,17 @@ def plot_thresh_vs_sfcID():
             '''
             x is previous, y is next; can be arrays of same length or floats
             '''
-            print(x, y)
-            return 100*(x-y)/np.abs(x)
+            return 100*(y-x)/np.abs(x)
 
         sfcID_thresh_percent_change = np.zeros((15))
         for sfcID_j in range(1,15):
             x = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
             y = np.mean(boxplot_thresh_obs_i[sfcID_j])
-            sfcID_thresh_percent_change[sfcID_j] = percent_change(x, y)
+
+            p_change_temp = percent_change(x, y)
+            # if
+
+            sfcID_thresh_percent_change[sfcID_j] = p_change_temp
             sfcID_thresh_percent_change[np.abs(sfcID_thresh_percent_change) > 100] = 100
 
         a_twin = a.twinx()

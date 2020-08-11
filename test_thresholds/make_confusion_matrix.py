@@ -76,11 +76,11 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
     '''
 
     hf_group_keys = list(hf_group.keys())
-    num_groups = len(hf_group_keys)
-    accuracy = np.zeros((num_groups))
+    num_groups    = len(hf_group_keys)
+    accuracy      = np.zeros((num_groups))
 
     #read bin ID (OLP)
-    n = 0
+    n   = 0
     OLP = np.zeros((num_groups, 4))
     for i, bins in enumerate(hf_group_keys):
         #print(bins)
@@ -88,6 +88,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
                     int(bins[n+14:n+16]),\
                     int(bins[n+21:n+23]),\
                     int(bins[n+45:n+47]) ]
+
     OLP = OLP.astype(dtype=np.int)
 
     #read in thresholds
@@ -99,9 +100,9 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
 
     #define surface types by bin number
     #remember it's 0 indexed
-    water     = 12
-    sun_glint = 13
-    snow      = 14
+    water     = num_land_sfc_types + 0 #12
+    sun_glint = num_land_sfc_types + 1 #13
+    snow      = num_land_sfc_types + 2 #14
 
     #iterate by group
     for i, bin_ID in enumerate(hf_group_keys):
@@ -196,6 +197,7 @@ if __name__ == '__main__':
     import tables
     import os
     import numpy as np
+    import configparser
     import mpi4py.MPI as MPI
 
     comm = MPI.COMM_WORLD
@@ -205,33 +207,50 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
 
-            # #bin confusion matrix **********************************************
-            # DOY_bin = rank
-            # home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            # grouped_path   = home + 'grouped_obs_and_CMs'
-            # thresh_path    = home + 'thresholds_all_DOY'
-            # conf_matx_path = home + 'conf_matx_group'
-            #
-            # grouped_files   = [home + x for x in np.sort(os.listdir(grouped_path))]
-            # thresh_files    = [home + x for x in np.sort(os.listdir(thresh_path))]
-            # conf_matx_path  = [home + x for x in np.sort(os.listdir(conf_matx_path))]
-            #
-            # num_land_sfc_types = 12
-            # with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
-            #      h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
-            #      h5py.File(conf_matx_path[DOY_bin], 'w') as hf_confmatx:
-            #
-            #     group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin)
+            config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+            config           = configparser.ConfigParser()
+            config.read(config_home_path+'/test_config.txt')
 
-            #scene confusion matrix ********************************************
-            #define paths for the three databases
+            PTA          = config['current PTA']['PTA']
+            PTA_path     = config['PTAs'][PTA]
+
+            calc_scene_or_group_accur = False
             DOY_bin = rank
-            home    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database/'
-            MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
-            MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
-            MCM_Output_path = home
 
-            scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin)
+            if calc_scene_or_group_accur:
+                #scene confusion matrix ****************************************
+                #define paths for the three databases
+                # MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
+                # MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
+                # MCM_Output_path = home
+
+                MOD_CM_path     = PTA_path
+                MAIA_CM_path    = PTA_path + '/' + config['MCM_Output']
+                MCM_Output_path = home
+
+                #fix these paths lol**************
+                scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin)
+
+            else:
+                #bin confusion matrix ******************************************
+                # grouped_path   = home + 'grouped_obs_and_CMs'
+                # thresh_path    = home + 'thresholds_all_DOY'
+                # conf_matx_path = home + 'conf_matx_group'
+
+                grouped_path   = PTA_path + '/' + config['combined_group']
+                thresh_path    = PTA_path + '/' + config['thresh']
+                conf_matx_path = PTA_path + '/' + config['conf_matx_group']
+
+                grouped_files   = [home + x for x in np.sort(os.listdir(grouped_path))]
+                thresh_files    = [home + x for x in np.sort(os.listdir(thresh_path))]
+                conf_matx_path  = [home + x for x in np.sort(os.listdir(conf_matx_path))]
+
+                num_land_sfc_types = 12
+                with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
+                     h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
+                     h5py.File(conf_matx_path[DOY_bin], 'w') as hf_confmatx:
+
+                    group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin)
 
 
 

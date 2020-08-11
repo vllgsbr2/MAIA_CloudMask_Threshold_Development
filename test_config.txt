@@ -30,8 +30,9 @@ OLP               : thresh_dev/OLP
 group_intermediate: thresh_dev/group
 combined_group    : thresh_dev/grouped_obs_and_CMs
 thresh            : thresh_dev/thresholds
-MCM_Output         : results/MCM_Output
+MCM_Output        : results/MCM_Output
 conf_matx_scene   : results/conf_matx_scene
+conf_matx_group   : results/conf_matx_group
 scene_accuracy    : results/scene_accuracy
 
 [PTA lat/lon grid files]
