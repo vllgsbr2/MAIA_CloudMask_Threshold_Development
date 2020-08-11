@@ -263,18 +263,18 @@ def plot_thresh_vs_sfcID():
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
         thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
-        # thresh_obs_i_glint = thresh_obs_i[14,:]
-        # thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
-        # print(thresh_obs_i_glint_valid_idx[0].shape)
-        # print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
+        thresh_obs_i_glint = thresh_obs_i[13,:]
+        thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
+        print(thresh_obs_i_glint_valid_idx[0].shape)
+        print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
 
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for sfcID_j in range(15):
             thresh_obs_i_sfcID_j = thresh_obs_i[sfcID_j, :]
             valid_idx = np.where(thresh_obs_i_sfcID_j != fill_val)
-            if sfcID_j == 13:
-                print(valid_idx)
+            # if sfcID_j == 13:
+            #     print(valid_idx)
             filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[valid_idx]
             boxplot_thresh_obs_i.append(filtered_thresh_obs_i_sfcID_j)
 
