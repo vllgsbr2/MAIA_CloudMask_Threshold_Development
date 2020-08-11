@@ -263,14 +263,16 @@ def plot_thresh_vs_sfcID():
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
         thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
-        thresh_obs_i_glint = thresh_obs_i[14,:]
-        thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
+        # thresh_obs_i_glint = thresh_obs_i[14,:]
+        # thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
         # print(thresh_obs_i_glint_valid_idx[0].shape)
-        print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
+        # print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
-            filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
+            # filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
+            filtered_thresh_sfcID_x_obs_i = np.where(thresh_sfcID_x_i != fill_val)
+            filtered_thresh_sfcID_x_obs_i = filtered_thresh_sfcID_x_obs_i.flatten()
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_obs_i)
 
         if i==0 or i>=3:
@@ -315,7 +317,7 @@ def plot_thresh_vs_sfcID():
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
 
-    # plt.show()
+    plt.show()
 
 def check_sunglint_thresh():
     '''
