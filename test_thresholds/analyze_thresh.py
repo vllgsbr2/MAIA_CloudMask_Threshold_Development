@@ -273,6 +273,9 @@ def plot_thresh_vs_sfcID():
             if i_glint == 13:
                 print(thresh_sfcID_x_i)
             filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
+            if i_glint == 13:
+                print(thresh_sfcID_x_i)
+
             # valid_idx = np.where(thresh_sfcID_x_i != fill_val)
             # filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[valid_idx]
             # filtered_thresh_sfcID_x_obs_i = filtered_thresh_sfcID_x_obs_i.flatten()
