@@ -263,12 +263,12 @@ def plot_thresh_vs_sfcID():
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
         thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
-
+        print(thresh_obs_i.shape)
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
-            filtered_thresh_sfcID_x_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
-            boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_i)
+            filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
+            boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_obs_i)
 
         if i==0 or i>=3:
             ymin,ymax = range_other[0], range_other[1]
@@ -312,7 +312,7 @@ def plot_thresh_vs_sfcID():
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
 
-    plt.show()
+    # plt.show()
 
 def check_sunglint_thresh():
     '''
