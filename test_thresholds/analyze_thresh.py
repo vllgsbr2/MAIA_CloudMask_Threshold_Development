@@ -269,11 +269,12 @@ def plot_thresh_vs_sfcID():
         # print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
+        print(thresh_obs_i.shape)
         for thresh_sfcID_x_i in thresh_obs_i:
-            # filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
-            valid_idx = np.where(thresh_sfcID_x_i != fill_val)
-            filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[valid_idx]
-            filtered_thresh_sfcID_x_obs_i = filtered_thresh_sfcID_x_obs_i.flatten()
+            filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
+            # valid_idx = np.where(thresh_sfcID_x_i != fill_val)
+            # filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[valid_idx]
+            # filtered_thresh_sfcID_x_obs_i = filtered_thresh_sfcID_x_obs_i.flatten()
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_obs_i)
 
         if i==0 or i>=3:
