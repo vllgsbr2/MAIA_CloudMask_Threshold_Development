@@ -265,7 +265,8 @@ def plot_thresh_vs_sfcID():
         thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
         thresh_obs_i_glint = thresh_obs_i[14,:]
         thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
-        print(thresh_obs_i_glint_valid_idx[0].shape)
+        # print(thresh_obs_i_glint_valid_idx[0].shape)
+        print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
