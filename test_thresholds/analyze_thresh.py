@@ -352,8 +352,8 @@ if __name__ == '__main__':
     # check_neg_SVI_grouped()
     # plot_thresh_hist()
     # plot_thresh_vs_VZA()
-    # plot_thresh_vs_sfcID()
-    check_sunglint_thresh()
+    plot_thresh_vs_sfcID()
+    # check_sunglint_thresh()
 
 
 
