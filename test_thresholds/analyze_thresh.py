@@ -273,7 +273,7 @@ def plot_thresh_vs_sfcID():
         for sfcID_j in range(15):
             thresh_obs_i_sfcID_j = thresh_obs_i[sfcID_j, :]
             valid_idx = np.where(thresh_obs_i_sfcID_j != fill_val)
-            if sfcID_j = 13:
+            if sfcID_j == 13:
                 print(valid_idx)
             filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[valid_idx]
             boxplot_thresh_obs_i.append(filtered_thresh_obs_i_sfcID_j)
