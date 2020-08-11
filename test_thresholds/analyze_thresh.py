@@ -267,12 +267,16 @@ def plot_thresh_vs_sfcID():
         # thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
         # print(thresh_obs_i_glint_valid_idx[0].shape)
         # print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
-        
+
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
-        for thresh_sfcID_x_i in thresh_obs_i:
-            filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i >-5]
-            boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_obs_i)
+        for sfcID_j in range(15):
+            thresh_obs_i_sfcID_j = thresh_obs_i[sfcID_j, :]
+            valid_idx = np.where(thresh_obs_i_sfcID_j != fill_val)
+            if sfcID_j = 13:
+                print(valid_idx)
+            filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[valid_idx]
+            boxplot_thresh_obs_i.append(filtered_thresh_obs_i_sfcID_j)
 
         if i==0 or i>=3:
             ymin,ymax = range_other[0], range_other[1]
@@ -316,7 +320,7 @@ def plot_thresh_vs_sfcID():
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
 
-    plt.show()
+    # plt.show()
 
 def check_sunglint_thresh():
     '''
