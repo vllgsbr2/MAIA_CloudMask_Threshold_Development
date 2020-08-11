@@ -263,10 +263,10 @@ def plot_thresh_vs_sfcID():
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
         thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
-        thresh_obs_i_glint = thresh_obs_i[13,:]
-        thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
-        print(thresh_obs_i_glint_valid_idx[0].shape)
-        print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
+        # thresh_obs_i_glint = thresh_obs_i[13,:]
+        # thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
+        # print(thresh_obs_i_glint_valid_idx[0].shape)
+        # print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
 
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
@@ -282,8 +282,6 @@ def plot_thresh_vs_sfcID():
             ymin,ymax = range_other[0], range_other[1]
         else:
             ymin,ymax = range_ndxi[0], range_ndxi[1]
-
-
 
         a.set_ylim([ymin,ymax])
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='.')
@@ -348,7 +346,7 @@ def check_sunglint_thresh():
 
             thresh = hf_thresh[thresh_path][()]
 
-            sunglint_thresh       = thresh[:,:,:,14]
+            sunglint_thresh       = thresh[:,:,:,13]
             valid_sunglint_thresh = sunglint_thresh[sunglint_thresh != fill_val]
             num_sunglint_thresh   = valid_sunglint_thresh.shape
             print(i, num_sunglint_thresh)
@@ -360,8 +358,8 @@ if __name__ == '__main__':
     # check_neg_SVI_grouped()
     # plot_thresh_hist()
     # plot_thresh_vs_VZA()
-    plot_thresh_vs_sfcID()
-    # check_sunglint_thresh()
+    # plot_thresh_vs_sfcID()
+    check_sunglint_thresh()
 
 
 
