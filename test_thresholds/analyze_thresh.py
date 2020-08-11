@@ -314,13 +314,46 @@ def plot_thresh_vs_sfcID():
 
     plt.show()
 
+def check_sunglint_thresh():
+    '''
+    need to check if sunglint (sfcID=13) thresholds were derived
+    '''
+    thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
+                   'SVI':5, 'Cirrus':6}
+
+    thresh_home  = config['supporting directories']['thresh']
+    thresh_path = '{}/{}/'.format(PTA_path, thresh_home)
+    thresh_files = [thresh_path + x for x in os.listdir(thresh_path)]
+
+    fill_val = -999
+    #just check in svi since it should produce something
+    which_thresh = 'SVI'
+
+    for i, thresh_file in enumerate(thresh_files):
+        # print(thresh_file[-9:-3])
+        with h5py.File(thresh_file, 'r') as hf_thresh:
+            DOY = list(hf_thresh['TA_bin_00'].keys())[0]
+            obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
+
+            thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY,\
+                                            obs[thresh_dict[which_thresh]])
+
+            thresh = hf_thresh[thresh_path][()]
+
+            sunglint_thresh       = thresh[:,:,:,14]
+            valid_sunglint_thresh = sunglint_thresh[sunglint_thresh != fill_val]
+            num_sunglint_thresh   = valid_sunglint_thresh.shape
+            print(i, num_sunglint_thresh)
+
+
 if __name__ == '__main__':
 
     # check_neg_SVI_thresh()
     # check_neg_SVI_grouped()
     # plot_thresh_hist()
     # plot_thresh_vs_VZA()
-    plot_thresh_vs_sfcID()
+    # plot_thresh_vs_sfcID()
+    check_sunglint_thresh()
 
 
 
