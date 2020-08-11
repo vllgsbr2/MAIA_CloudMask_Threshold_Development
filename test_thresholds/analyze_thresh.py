@@ -271,7 +271,7 @@ def plot_thresh_vs_sfcID():
         boxplot_thresh_obs_i = []
         for i_glint, thresh_sfcID_x_i in enumerate(thresh_obs_i):
             print(i_glint)
-            filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
+            filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i >-5]
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_obs_i)
 
         if i==0 or i>=3:
