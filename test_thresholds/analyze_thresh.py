@@ -271,7 +271,8 @@ def plot_thresh_vs_sfcID():
         boxplot_thresh_obs_i = []
         for thresh_sfcID_x_i in thresh_obs_i:
             # filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[thresh_sfcID_x_i != fill_val]
-            filtered_thresh_sfcID_x_obs_i = np.where(thresh_sfcID_x_i != fill_val)
+            valid_idx = np.where(thresh_sfcID_x_i != fill_val)
+            filtered_thresh_sfcID_x_obs_i = thresh_sfcID_x_i[valid_idx]
             filtered_thresh_sfcID_x_obs_i = filtered_thresh_sfcID_x_obs_i.flatten()
             boxplot_thresh_obs_i.append(filtered_thresh_sfcID_x_obs_i)
 
