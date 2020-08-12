@@ -388,7 +388,7 @@ def check_sunglint_flag_in_grouped_cm_and_obs():
             bins = list(hf_group.keys())
             for bin_x in bins:
                 if bin_x[-9:-7] == '13':
-                    sunglint_bin_data = hf_group[bin]
+                    sunglint_bin_data = hf_group[bin_x]
                     print(sunglint_bin_data.shape[0])
 
 
