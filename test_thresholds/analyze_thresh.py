@@ -351,6 +351,26 @@ def check_sunglint_thresh():
             num_sunglint_thresh   = valid_sunglint_thresh.shape
             print(i, num_sunglint_thresh)
 
+def check_sunglint_flag_in_database():
+
+    database_home  = config['supporting directories']['database']
+    database_path  = '{}/{}/'.format(PTA_path, database_home)
+    database_files = [database_path + x for x in os.listdir(database_path)]
+
+    sunglint_count = 0
+    for i, db in enumerate(database_files):
+        with h5py.File(db, 'r') as hf_db:
+            scenes_timestamps = list(hf_db.keys())
+
+            for scene in scenes_timestamps:
+                sunglint_flag_path = '{}/{}/{}'.format(scene, 'cloud_mask', 'Sun_glint_Flag')
+                sunglint_flag = hf_db[sunglint_flag_path][()]
+
+                sunglint_idx += np.where(sunglint_flag == 0)[0].shape[0]
+        print(i, sunglint_idx)
+
+
+
 
 if __name__ == '__main__':
 
@@ -359,8 +379,8 @@ if __name__ == '__main__':
     # plot_thresh_hist()
     # plot_thresh_vs_VZA()
     # plot_thresh_vs_sfcID()
-    check_sunglint_thresh()
-
+    # check_sunglint_thresh()
+    check_sunglint_flag_in_database()
 
 
 
