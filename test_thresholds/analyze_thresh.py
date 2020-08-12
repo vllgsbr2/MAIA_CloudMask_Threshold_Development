@@ -255,6 +255,8 @@ def plot_thresh_vs_sfcID():
     f, ax = plt.subplots(ncols=4, nrows=2)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+
+        print(thresh_obs_i[thresh_obs_i[:,:,:,13] != fill_val])
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
         #reorder threshold dims so sfcID is first
@@ -271,8 +273,8 @@ def plot_thresh_vs_sfcID():
             thresh_obs_i_sfcID_j = thresh_obs_i[sfcID_j, :]
             filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[thresh_obs_i_sfcID_j != fill_val]
             boxplot_thresh_obs_i.append(filtered_thresh_obs_i_sfcID_j)
-            if sfcID_j==13:
-                print(boxplot_thresh_obs_i[sfcID_j])
+            # if sfcID_j==13:
+            #     print(boxplot_thresh_obs_i[sfcID_j])
         if i==0 or i>=3:
             ymin,ymax = range_other[0], range_other[1]
         else:
