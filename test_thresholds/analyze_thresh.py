@@ -206,7 +206,7 @@ def plot_thresh_vs_VZA():
 
         #reshape so VZA is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_sfcID = np.prod(thresh_shape[1:])
-        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_VZA)
+        thresh_obs_i  = thresh_obs_i.reshape(thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID)
         # thresh_obs_i  = thresh_obs_i.flatten()
 
         # #normalize
@@ -260,22 +260,16 @@ def plot_thresh_vs_sfcID():
         #reorder threshold dims so sfcID is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, -1, 0)
         thresh_shape  = thresh_obs_i.shape
-
-        #reshape so VZA is axis 0 and the other axis is everything else flattened
-        shape_cosSZA_x_RAZ_x_sfcID = int(np.prod(thresh_shape[1:]))
-        thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_sfcID))
-        # thresh_obs_i_glint = thresh_obs_i[13,:]
-        # thresh_obs_i_glint_valid_idx = np.where(thresh_obs_i_glint != fill_val)
-        # print(thresh_obs_i_glint_valid_idx[0].shape)
-        # print(thresh_obs_i_glint[thresh_obs_i_glint_valid_idx])
+        print(thresh_shape)
+        #reshape so sfcID is axis 0 and the other axis is everything else flattened
+        shape_cosSZA_x_RAZ_x_VZA = int(np.prod(thresh_shape[1:]))
+        thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_VZA))
 
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for sfcID_j in range(15):
             thresh_obs_i_sfcID_j = thresh_obs_i[sfcID_j, :]
             valid_idx = np.where(thresh_obs_i_sfcID_j != fill_val)
-            # if sfcID_j == 13:
-            #     print(valid_idx)
             filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[valid_idx]
             boxplot_thresh_obs_i.append(filtered_thresh_obs_i_sfcID_j)
 
@@ -401,8 +395,8 @@ if __name__ == '__main__':
     # check_neg_SVI_grouped()
     # plot_thresh_hist()
     # plot_thresh_vs_VZA()
-    # plot_thresh_vs_sfcID()
-    check_sunglint_thresh()
+    plot_thresh_vs_sfcID()
+    # check_sunglint_thresh()
     # check_sunglint_flag_in_database()
     # check_sunglint_flag_in_grouped_cm_and_obs()
 
