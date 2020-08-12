@@ -264,15 +264,15 @@ def plot_thresh_vs_sfcID():
         #reshape so sfcID is axis 0 and the other axis is everything else flattened
         shape_cosSZA_x_RAZ_x_VZA = int(np.prod(thresh_shape[1:]))
         thresh_obs_i  = thresh_obs_i.reshape((thresh_shape[0], shape_cosSZA_x_RAZ_x_VZA))
-        print(thresh_obs_i.shape)
+
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
         for sfcID_j in range(15):
             thresh_obs_i_sfcID_j = thresh_obs_i[sfcID_j, :]
-            valid_idx = np.where(thresh_obs_i_sfcID_j != fill_val)
-            filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[valid_idx]
+            filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[thresh_obs_i_sfcID_j != fill_val]
             boxplot_thresh_obs_i.append(filtered_thresh_obs_i_sfcID_j)
-
+            if sfcID_j==13:
+                print(boxplot_thresh_obs_i[sfcID_j])
         if i==0 or i>=3:
             ymin,ymax = range_other[0], range_other[1]
         else:
