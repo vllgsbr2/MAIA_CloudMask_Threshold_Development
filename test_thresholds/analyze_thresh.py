@@ -379,7 +379,7 @@ def check_sunglint_flag_in_grouped_cm_and_obs():
     import matplotlib.pyplot as plt
 
     group_home  = config['supporting directories']['combined_group']
-    group_path  = '{}/{}/'.format(PTA_path, database_home)
+    group_path  = '{}/{}/'.format(PTA_path, group_home)
     group_files = [group_path + x for x in os.listdir(group_path)]
 
     sunglint_count = 0
