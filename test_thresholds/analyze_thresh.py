@@ -366,7 +366,7 @@ def check_sunglint_flag_in_database():
                 sunglint_flag_path = '{}/{}/{}'.format(scene, 'cloud_mask', 'Sun_glint_Flag')
                 sunglint_flag = hf_db[sunglint_flag_path][()]
 
-                sunglint_idx += np.where(sunglint_flag == 0)[0].shape[0]
+                sunglint_count += np.where(sunglint_flag == 0)[0].shape[0]
         print(i, sunglint_idx)
 
 
