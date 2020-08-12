@@ -337,7 +337,7 @@ def check_sunglint_thresh():
     which_thresh = 'SVI'
 
     for i, thresh_file in enumerate(thresh_files):
-        # print(thresh_file[-9:-3])
+        print(thresh_file)
         with h5py.File(thresh_file, 'r') as hf_thresh:
             DOY = list(hf_thresh['TA_bin_00'].keys())[0]
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
@@ -402,9 +402,9 @@ if __name__ == '__main__':
     # plot_thresh_hist()
     # plot_thresh_vs_VZA()
     # plot_thresh_vs_sfcID()
-    # check_sunglint_thresh()
+    check_sunglint_thresh()
     # check_sunglint_flag_in_database()
-    check_sunglint_flag_in_grouped_cm_and_obs()
+    # check_sunglint_flag_in_grouped_cm_and_obs()
 
 
 
