@@ -256,9 +256,10 @@ def plot_thresh_vs_sfcID():
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
 
-        print(thresh_obs_i[thresh_obs_i[:,:,:,13] != fill_val])
+
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
+        print(thresh_obs_i[thresh_obs_i[:,:,:,13] != fill_val])
         #reorder threshold dims so sfcID is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, -1, 0)
         thresh_shape  = thresh_obs_i.shape
