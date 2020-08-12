@@ -4,6 +4,7 @@ import configparser
 import os
 import sys
 
+
 config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
 config           = configparser.ConfigParser()
 config.read(config_home_path+'/test_config.txt')
@@ -352,6 +353,7 @@ def check_sunglint_thresh():
             print(i, num_sunglint_thresh)
 
 def check_sunglint_flag_in_database():
+    import matplotlib.pyplot as plt
 
     database_home  = config['supporting directories']['database']
     database_path  = '{}/{}/'.format(PTA_path, database_home)
@@ -368,6 +370,10 @@ def check_sunglint_flag_in_database():
 
                 # sunglint_count += np.where(sunglint_flag == 0)[0].shape[0]
                 print(i, scene, np.where(sunglint_flag == 0)[0].shape[0])
+
+                if scene == '2003114.1845':
+                    plt.imshow(sunglint_flag, cmap='bone_r')
+                    plt.show()
 
 
 
