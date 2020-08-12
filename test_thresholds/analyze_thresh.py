@@ -375,6 +375,23 @@ def check_sunglint_flag_in_database():
                     plt.imshow(sunglint_flag, cmap='bone_r')
                     plt.show()
 
+def check_sunglint_flag_in_grouped_cm_and_obs():
+    import matplotlib.pyplot as plt
+
+    group_home  = config['supporting directories']['combined_group']
+    group_path  = '{}/{}/'.format(PTA_path, database_home)
+    group_files = [group_path + x for x in os.listdir(group_path)]
+
+    sunglint_count = 0
+    for i, group in enumerate(group_files):
+        with h5py.File(group, 'r') as hf_group:
+            bins = list(hf_db.keys())
+            for bin_x in bins:
+                if bin_x[-9:-7] == '13':
+                    sunglint_bin_data = hf_group[bin]
+                    print(sunglint_bin_data.shape[0])
+
+
 
 
 
@@ -386,8 +403,8 @@ if __name__ == '__main__':
     # plot_thresh_vs_VZA()
     # plot_thresh_vs_sfcID()
     # check_sunglint_thresh()
-    check_sunglint_flag_in_database()
-
+    # check_sunglint_flag_in_database()
+    check_sunglint_flag_in_grouped_cm_and_obs()
 
 
 
