@@ -367,7 +367,7 @@ def check_sunglint_flag_in_database():
                 sunglint_flag = hf_db[sunglint_flag_path][()]
 
                 sunglint_count += np.where(sunglint_flag == 1)[0].shape[0]
-        print(i, sunglint_count)
+                print(i, sunglint_count)
 
 
 
