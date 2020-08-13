@@ -354,7 +354,7 @@ def check_sunglint_thresh():
 
             thresh = hf_thresh[thresh_path][()]
 
-            sunglint_thresh       = thresh[:,:,:,1]
+            sunglint_thresh       = thresh[:,:,:,13]
             valid_sunglint_thresh = sunglint_thresh[sunglint_thresh != fill_val]
             num_sunglint_thresh   = valid_sunglint_thresh.shape
             print(i, num_sunglint_thresh)
@@ -394,7 +394,7 @@ def check_sunglint_flag_in_grouped_cm_and_obs():
         with h5py.File(group, 'r') as hf_group:
             bins = list(hf_group.keys())
             for bin_x in bins:
-                if bin_x[-9:-7] == '13':
+                if bin_x[-9:-7] == '02':
                     sunglint_bin_data = hf_group[bin_x]
                     print(sunglint_bin_data.shape[0])
 
@@ -409,9 +409,9 @@ if __name__ == '__main__':
     # plot_thresh_hist()
     # plot_thresh_vs_VZA()
     # plot_thresh_vs_sfcID()
-    check_sunglint_thresh()
+    # check_sunglint_thresh()
     # check_sunglint_flag_in_database()
-    # check_sunglint_flag_in_grouped_cm_and_obs()
+    check_sunglint_flag_in_grouped_cm_and_obs()
 
 
 
