@@ -394,7 +394,7 @@ def check_sunglint_flag_in_grouped_cm_and_obs():
         with h5py.File(group, 'r') as hf_group:
             bins = list(hf_group.keys())
             for bin_x in bins:
-                if bin_x[-9:-7] == '02':
+                if bin_x[-9:-7] == '01':
                     sunglint_bin_data = hf_group[bin_x]
                     print(sunglint_bin_data.shape[0])
 
