@@ -354,7 +354,7 @@ def check_sunglint_thresh():
 
             thresh = hf_thresh[thresh_path][()]
 
-            sunglint_thresh       = thresh[:,:,:,13]
+            sunglint_thresh       = thresh[:,:,:,1]
             valid_sunglint_thresh = sunglint_thresh[sunglint_thresh != fill_val]
             num_sunglint_thresh   = valid_sunglint_thresh.shape
             print(i, num_sunglint_thresh)
@@ -408,8 +408,8 @@ if __name__ == '__main__':
     # check_neg_SVI_grouped()
     # plot_thresh_hist()
     # plot_thresh_vs_VZA()
-    plot_thresh_vs_sfcID()
-    # check_sunglint_thresh()
+    # plot_thresh_vs_sfcID()
+    check_sunglint_thresh()
     # check_sunglint_flag_in_database()
     # check_sunglint_flag_in_grouped_cm_and_obs()
 
