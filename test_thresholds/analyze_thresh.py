@@ -75,7 +75,6 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
     flatten_or_nah {bool} -- True filter values and flatten; False replace w/nan
     by_SFC_ID_or_nah {bool} -- True shows thresh applied by sfcID; False all thresh
     '''
-
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
 
@@ -85,6 +84,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
 
     fill_val = -999
 
+    thresh = []
     for thresh_file in thresh_files:
         # print(thresh_file[-9:-3])
         with h5py.File(thresh_file, 'r') as hf_thresh:
@@ -93,29 +93,37 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
 
             thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY,\
                                             obs[thresh_dict[which_thresh]])
+            thresh.append(hf_thresh[thresh_path][()])
 
-            thresh = hf_thresh[thresh_path][()]#.flatten()
+    thresh = np.array(thresh)
+    thresh_no_DOY_dim = thresh[0]
+    for DOY in range(1, thresh.shape[0]):
+        thresh_no_DOY_dim = np.concatenate((thresh_no_DOY_dim, thresh[DOY]), axis=0)
 
-            if by_SFC_ID_or_nah:
-                #axis 3 is sceneID. Store thresh when sceneID is valid for thresh
-                if thresh_dict[which_thresh] == 0:
-                    # WI no glint or snow
-                    thresh = thresh[:,:,:,0:13]
-                elif thresh_dict[which_thresh] == 1:
-                    #NDVI no snow
-                    thresh = thresh[:,:,:,0:14]
-                elif thresh_dict[which_thresh] == 2:
-                    #NDSI only snow
-                    thresh = thresh[:,:,:,14]
-                elif thresh_dict[which_thresh] == 3:
-                    #VIS only land
-                    thresh = thresh[:,:,:,0:12]
-                elif thresh_dict[which_thresh] == 4:
-                    #NIR only non glint water
-                    thresh = thresh[:,:,:,12]
-                else:
-                    #everything
-                    pass
+
+
+    return thresh_no_DOY_dim
+
+            # if by_SFC_ID_or_nah:
+            #     #axis 3 is sceneID. Store thresh when sceneID is valid for thresh
+            #     if thresh_dict[which_thresh] == 0:
+            #         # WI no glint or snow
+            #         thresh = thresh[:,:,:,0:13]
+            #     elif thresh_dict[which_thresh] == 1:
+            #         #NDVI no snow
+            #         thresh = thresh[:,:,:,0:14]
+            #     elif thresh_dict[which_thresh] == 2:
+            #         #NDSI only snow
+            #         thresh = thresh[:,:,:,14]
+            #     elif thresh_dict[which_thresh] == 3:
+            #         #VIS only land
+            #         thresh = thresh[:,:,:,0:12]
+            #     elif thresh_dict[which_thresh] == 4:
+            #         #NIR only non glint water
+            #         thresh = thresh[:,:,:,12]
+            #     else:
+            #         #everything
+            #         pass
 
             # # only take positve/non- fill_val thresholds from
             # # WI/VIS/NIR/SVI/Cirrus
@@ -131,7 +139,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
             #         thresh = thresh[thresh != fill_val]
 
 
-    return thresh
+    # return thresh
 
 def plot_thresh_hist():
     import matplotlib.pyplot as plt
@@ -259,7 +267,7 @@ def plot_thresh_vs_sfcID():
 
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
-        print(thresh_obs_i[thresh_obs_i[:,:,:,13] != -999])
+
         #reorder threshold dims so sfcID is first
         thresh_obs_i  = np.moveaxis(thresh_obs_i, -1, 0)
         thresh_shape  = thresh_obs_i.shape
