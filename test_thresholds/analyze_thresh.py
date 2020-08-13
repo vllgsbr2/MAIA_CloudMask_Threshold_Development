@@ -291,8 +291,8 @@ def plot_thresh_vs_sfcID():
         else:
             ymin,ymax = range_ndxi[0], range_ndxi[1]
 
-        a.set_ylim([ymin,ymax])
-        a.boxplot(boxplot_thresh_obs_i, notch=False, sym='.')
+        #a.set_ylim([ymin,ymax])
+        a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_title(obs)
 
         #plot percent change from one sfc ID to next
