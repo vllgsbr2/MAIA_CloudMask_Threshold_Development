@@ -459,7 +459,7 @@ def make_obs_hist_by_group(obs):
 
 
 
-            group_hists.append(hf_gf[])
+            # group_hists.append(hf_gf[])
     #         image = ax.imshow(sfc_IDs[:,:,i], cmap=cmap, vmin=0, vmax=11)
     #         title = ax.text(0.5,1.05,'K-Means Cluster Surface ID \nDOY {}/365 Valid previous 8 days'.format(sfc_ID_path[-6:-3]),
     #                         size=plt.rcParams["axes.titlesize"],
