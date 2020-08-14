@@ -416,10 +416,10 @@ def make_obs_hist_by_group(obs):
 
     group_hists = []
 
-    plt.style.use('dark_background')
-    fig, ax=plt.subplots(figsize=(10,10))
-    plt.rcParams['font.size'] = 16
-    container = []
+    # plt.style.use('dark_background')
+    # fig, ax=plt.subplots(figsize=(10,10))
+    # plt.rcParams['font.size'] = 16
+    # container = []
 
     for i, gf in enumerate(group_files):
         with h5py.File(gf, 'r') as hf_gf:
@@ -451,7 +451,9 @@ def make_obs_hist_by_group(obs):
                                     bins=bin_num, density=True)
 
                 #plot
-                # x_clear = np.arange()
+                fig, ax=plt.subplots(figsize=(10,10))
+                plt.rcParams['font.size'] = 16
+
                 num_sample_clear = len(hist_clear)
                 num_sample_cloud = len(hist_cloud)
                 plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
