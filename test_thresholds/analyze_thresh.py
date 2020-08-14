@@ -438,7 +438,7 @@ def make_obs_hist_by_group(obs):
                 obs_x_cloud = obs_x[cloud_mask != 1]
 
                 #turn these into binned 1d arrays for plotting the histograms
-                min, max = 0, 3
+                min, max = 0, .1
                 bin_num  = 1000
                 interval = np.abs(max-min)/bin_num
                 bin_params = np.arange(min, max, interval)
@@ -453,6 +453,7 @@ def make_obs_hist_by_group(obs):
                 #plot
                 # x_clear = np.arange()
                 plt.plot(bin_edges_clear[:-1], hist_clear, 'b', bin_edges_cloud[:-1], hist_cloud, 'r')
+                plt.title(obs+'\n'+bin)
                 plt.show()
 
 
