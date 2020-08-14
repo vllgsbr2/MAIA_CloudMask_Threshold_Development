@@ -412,7 +412,7 @@ def make_obs_hist_by_group(obs):
 
     group_home  = config['supporting directories']['combined_group']
     group_home  = '{}/{}/'.format(PTA_path, group_home)
-    group_files = [group_path + x for x in os.listdir(group_home)]
+    group_files = [group_home + x for x in os.listdir(group_home)]
 
     group_hists = []
 
