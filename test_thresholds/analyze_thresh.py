@@ -452,7 +452,7 @@ def make_obs_hist_by_group(obs):
 
                 #plot
                 # x_clear = np.arange()
-                plt.plot(bin_edges_clear, hist_clear, 'b', bin_edges_cloud, hist_cloud, 'r')
+                plt.plot(bin_edges_clear[:-1], hist_clear, 'b', bin_edges_cloud[:-1], hist_cloud, 'r')
                 plt.show()
 
 
