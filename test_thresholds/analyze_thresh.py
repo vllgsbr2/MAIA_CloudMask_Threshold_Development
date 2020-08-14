@@ -446,9 +446,9 @@ def make_obs_hist_by_group(obs):
                 # binned_obs_cloud = np.digitize(obs_x_cloud, bin_params)
 
                 hist_clear, bin_edges_clear = np.histogram(obs_x_clear,\
-                                    bins=bin_num, density=True)
+                                    bins=bin_num, density=False)
                 hist_cloud, bin_edges_cloud = np.histogram(obs_x_cloud,\
-                                    bins=bin_num, density=True)
+                                    bins=bin_num, density=False)
 
                 #plot
                 fig, ax=plt.subplots(figsize=(10,10))
