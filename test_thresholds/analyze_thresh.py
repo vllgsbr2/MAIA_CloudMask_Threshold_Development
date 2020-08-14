@@ -454,8 +454,8 @@ def make_obs_hist_by_group(obs):
                 # x_clear = np.arange()
                 num_sample_clear = len(hist_clear)
                 num_sample_cloud = len(hist_cloud)
-                plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear',\
-                         bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
+                plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
+                plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
                 title = 'obs: {}\nbin: {}\n#clear: {}, #cloud: {}'.format(obs, bin, num_sample_clear, num_sample_cloud)
                 plt.legend()
                 plt.title(obs+'\n'+bin)
