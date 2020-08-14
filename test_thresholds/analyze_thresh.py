@@ -460,7 +460,7 @@ def make_obs_hist_by_group(obs):
                 plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
                 title = 'obs: {}\nbin: {}\n#clear: {}, #cloud: {}'.format(obs, bin, num_sample_clear, num_sample_cloud)
                 plt.legend()
-                plt.title(obs+'\n'+bin)
+                plt.title(title)
                 plt.show()
 
 
