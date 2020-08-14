@@ -394,13 +394,82 @@ def check_sunglint_flag_in_grouped_cm_and_obs():
         with h5py.File(group, 'r') as hf_group:
             bins = list(hf_group.keys())
             for bin_x in bins:
-                if bin_x[-9:-7] == '00':
+                if bin_x[-9:-7] == '01':
                     sunglint_bin_data = hf_group[bin_x]
                     print(sunglint_bin_data.shape[0])
 
+def make_obs_hist_by_group(obs):
+    '''
+    make hists for 100 random bins for an obs from all grouped_obs_and_cm files
+    and make them into a movie
+    '''
+
+    import matplotlib.pyplot as plt
+    from random import sample
+
+    obs_idx_dict = {'WI':1, 'NDVI':2, 'NDSI':3, 'VIS_Ref':4, 'NIR_Ref':5,\
+                   'SVI':6, 'Cirrus':7}
+
+    group_home  = config['supporting directories']['combined_group']
+    group_home  = '{}/{}/'.format(PTA_path, group_home)
+    group_files = [group_path + x for x in os.listdir(group_home)]
+
+    group_hists = []
+
+    plt.style.use('dark_background')
+    fig, ax=plt.subplots(figsize=(10,10))
+    plt.rcParams['font.size'] = 16
+    container = []
+
+    for i, gf in enumerate(group_files):
+        with h5py.File(gf, 'r') as hf_gf:
+            bins = list(hf_gf.keys())
+            # choose a random subset of 20
+            bins_subset = sample(bins, 20)
+
+            for bin in bins_subset:
+                data = hf_gf[bin]
+                #grab cloud mask and desired observable
+                cloud_mask = data[:,0]
+                obs_x      = data[:,obs_idx_dict[obs]]
+
+                #divide obs_x by clear and cloudy componants
+                obs_x_clear = obs_x[cloud_mask != 0]
+                obs_x_cloud = obs_x[cloud_mask != 1]
+
+                #turn these into binned 1d arrays for plotting the histograms
+                min, max = 0, 3
+                bin_num  = 1000
+                interval = np.abs(max-min)/bin_num
+                bin_params = np.arange(min, max, interval)
+                # binned_obs_clear = np.digitize(obs_x_clear, bin_params)
+                # binned_obs_cloud = np.digitize(obs_x_cloud, bin_params)
+
+                hist_clear, bin_edges_clear = np.histogram(obs_x_clear,\
+                                   range=(min, max), bins=bin_num, density=True)
+                hist_cloud, bin_edges_cloud = np.histogram(obs_x_cloud,\
+                                   range=(min, max), bins=bin_num, density=True)
+
+                #plot
+                # x_clear = np.arange()
+                plt.plot(bin_edges_clear, hist_clear, 'b', bin_edges_cloud, hist_cloud, 'r')
+                plt.show()
 
 
 
+
+
+            group_hists.append(hf_gf[])
+            image = ax.imshow(sfc_IDs[:,:,i], cmap=cmap, vmin=0, vmax=11)
+            title = ax.text(0.5,1.05,'K-Means Cluster Surface ID \nDOY {}/365 Valid previous 8 days'.format(sfc_ID_path[-6:-3]),
+                            size=plt.rcParams["axes.titlesize"],
+                            ha="center", transform=ax.transAxes, )
+
+            container.append([image, title])
+
+    ani = animation.ArtistAnimation(fig, container, interval=700, blit=False,
+                                    repeat=True)
+    ani.save('./{}_hists.mp4'.format(obs))
 
 if __name__ == '__main__':
 
@@ -411,7 +480,8 @@ if __name__ == '__main__':
     # plot_thresh_vs_sfcID()
     # check_sunglint_thresh()
     # check_sunglint_flag_in_database()
-    check_sunglint_flag_in_grouped_cm_and_obs()
+    # check_sunglint_flag_in_grouped_cm_and_obs()
+    make_obs_hist_by_group('Cirrus')
 
 
 
