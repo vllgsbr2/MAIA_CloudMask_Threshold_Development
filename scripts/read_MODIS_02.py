@@ -91,6 +91,7 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     fill_val_bad_data  = -999
 
     #save indices of where bad values occured occured
+    print(data_raw_temp.shape)
     detector_saturated_idx = np.where(data_raw_temp == detector_saturated)
     detector_dead_idx      = np.where(data_raw_temp == detector_dead)
     missing_data_idx       = np.where(data_raw_temp == missing_data)
