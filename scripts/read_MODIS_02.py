@@ -97,7 +97,7 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     missing_data_idx       = np.where(data_raw_temp == missing_data)
     over_DN_max_idx        = np.where(data_raw_temp >  max_DN)
     below_min_DN_idx       = np.where(data_raw_temp <  min_DN)
-
+    print(over_DN_max_idx)
     #correct raw data to get radiance/reflectance values
     #correct first band manually
     data_corrected_total = (data_raw_temp[0,:] - offset[0]) * scale_factor[0]
