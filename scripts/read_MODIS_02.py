@@ -198,8 +198,8 @@ if __name__ == '__main__':
     rad_or_ref = True
     data = prepare_data(filename_MOD_02, fieldnames_list[2], rad_or_ref)[0]
     import matplotlib.pyplot as plt
-    print(data[data>32767])
-    print(data[(data<0) & (data > -999)])
+    print(data[data>32767].shape)
+    print(data[data==-999].shape)
     for d in data[::-1]:
         im = plt.imshow(d, vmin=0)
         im.cmap.set_under('r')
