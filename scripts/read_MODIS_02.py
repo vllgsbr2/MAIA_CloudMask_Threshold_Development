@@ -82,6 +82,20 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     data_raw_temp = np.reshape(data_raw,(num_bands, num_horizontal * num_vertical))
     scale_factor, offset = get_scale_and_offset(data_field, rad_or_ref)
 
+    #fill values found in data
+    detector_saturated = 65533
+    detector_dead      = 65531
+    missing_data       = 65535
+    max_DN             = 32767
+    min_DN             = 0
+
+    #save indices of where bad values occured occured
+    detector_saturated_idx = np.where(data_raw_temp == detector_saturated)
+    detector_dead_idx      = np.where(data_raw_temp == detector_dead)
+    missing_data_idx       = np.where(data_raw_temp == missing_data)
+    over_DN_max_idx        = np.where(data_raw_temp >  max_DN)
+    below_min_DN_idx       = np.where(data_raw_temp <  min_DN)
+
     #correct raw data to get radiance/reflectance values
     #correct first band manually
     data_corrected_total = (data_raw_temp[0,:] - offset[0]) * scale_factor[0]
@@ -89,6 +103,12 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     for i in range(1,num_bands):
         #corrected band
         data_corrected = (data_raw_temp[i,:] - offset[i]) * scale_factor[i]
+        #reinput fill vals to be queried later
+        data_corrected[detector_saturated_idx[i]] = detector_saturated
+        data_corrected[detector_dead_idx[i]]      = detector_dead
+        data_corrected[missing_data_idx[i]]       = missing_data
+        data_corrected[over_DN_max_idx[i]]        = over_DN_max
+        data_corrected[below_min_DN_idx[i]]       = below_min_DN
         #aggregate bands
         data_corrected_total = np.concatenate((data_corrected_total, data_corrected), axis=0)
 
