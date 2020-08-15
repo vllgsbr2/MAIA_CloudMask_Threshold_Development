@@ -183,9 +183,9 @@ if __name__ == '__main__':
     #test fill val
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA/PTA_MODIS_files/MOD02/'
     filename_MOD_02 = home + 'MOD021KM.A2019278.1935.061.2019279071645.hdf'
-    fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
+    fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB', 'EV_Band26']
     rad_or_ref = True
-    data = prepare_data(filename_MOD_02, fieldnames_list[1], rad_or_ref)[0]
+    data = prepare_data(filename_MOD_02, fieldnames_list[2], rad_or_ref)[0]
     import matplotlib.pyplot as plt
     print(data[data>32767])
     print(data[data<0].shape)
