@@ -185,11 +185,10 @@ if __name__ == '__main__':
     filename_MOD_02 = home + 'MOD021KM.A2019278.1935.061.2019279071645.hdf'
     fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
     rad_or_ref = True
-    data = prepare_data(filename_MOD_02, fieldnames_list[1], rad_or_ref)
-    print(data.shape)
-    # import matplotlib.pyplot as plt
-    # plt.imshow(data)
-    # plt.show()
+    data = prepare_data(filename_MOD_02, fieldnames_list[1], rad_or_ref)[0]
+    import matplotlib.pyplot as plt
+    plt.imshow(data[0])
+    plt.show()
 
     # ##example plot
     # filename   = '/u/sciteam/villegas/MAIA_Threshold_Development/test_data/MOD021KM.A2017118.1715.061.2017314055816.hdf'
