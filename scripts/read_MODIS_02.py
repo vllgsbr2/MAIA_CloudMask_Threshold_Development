@@ -176,7 +176,18 @@ def plt_RGB(filename, fieldnames_list, rad_or_ref, plot=True):
         return image_RGB
 
 if __name__ == '__main__':
-    pass
+    # pass
+
+    #test fill val
+    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA/PTA_MODIS_files/MOD02/'
+    filename_MOD_02 = home + 'MOD021KM.A2019278.1935.061.2019279071645.hdf'
+    fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
+    rad_or_ref = True
+    data = prepare_data(filename_MOD_02, fieldnames_list[1], rad_or_ref)[0]
+    import matplotlib.pyplot as plt
+    plt.imshow(data)
+    plt.show()
+
     # ##example plot
     # filename   = '/u/sciteam/villegas/MAIA_Threshold_Development/test_data/MOD021KM.A2017118.1715.061.2017314055816.hdf'
     # fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
