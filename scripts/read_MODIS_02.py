@@ -101,11 +101,11 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     #correct first band manually
     data_corrected_total = (data_raw_temp[0,:] - offset[0]) * scale_factor[0]
     #for loop to put all the bands together
-    print(num_bands)
     for i in range(1,num_bands):
         #corrected band
         data_corrected = (data_raw_temp[i,:] - offset[i]) * scale_factor[i]
         #reinput fill vals to be queried later
+        print(np.shaoe(over_DN_max_idx))
         data_corrected[over_DN_max_idx[i]]        = fill_val_bad_data
         data_corrected[below_min_DN_idx[i]]       = fill_val_bad_data
         data_corrected[detector_saturated_idx[i]] = detector_saturated
