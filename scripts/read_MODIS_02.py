@@ -188,7 +188,7 @@ if __name__ == '__main__':
     data = prepare_data(filename_MOD_02, fieldnames_list[1], rad_or_ref)[0]
     import matplotlib.pyplot as plt
     print(data[data>32767])
-    print(data[data<0])
+    print(data[data<0].shape)
     plt.imshow(data[0])
     plt.show()
 
