@@ -88,6 +88,8 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     missing_data       = 65535
     max_DN             = 32767
     min_DN             = 0
+
+    #to replace DN outside of range and not any of the other fill vals
     fill_val_bad_data  = -999
 
     #save indices of where bad values occured occured
@@ -199,7 +201,7 @@ if __name__ == '__main__':
     print(data[data>32767])
     print(data[data<0].shape)
     for d in data[::-1]:
-        im = plt.imshow(d, vmin=0, vmax=32767)
+        im = plt.imshow(d, vmin=0)
         im.cmap.set_under('r')
         im.cmap.set_over('pink')
         plt.show()
