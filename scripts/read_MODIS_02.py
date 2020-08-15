@@ -189,9 +189,11 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     print(data[data>32767])
     print(data[data<0].shape)
-    im = plt.imshow(data[0], vmin=0)
-    im.cmap.set_under('r')
-    plt.show()
+    for d in data:
+        im = plt.imshow(d, vmin=0, vmax=32767)
+        im.cmap.set_under('r')
+        im.cmap.set_over('pink')
+        plt.show()
 
     # ##example plot
     # filename   = '/u/sciteam/villegas/MAIA_Threshold_Development/test_data/MOD021KM.A2017118.1715.061.2017314055816.hdf'
