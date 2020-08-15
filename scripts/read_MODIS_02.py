@@ -111,7 +111,8 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
         data_corrected = (data_raw_temp[i,:] - offset[i]) * scale_factor[i]
 
         #aggregate bands
-        data_corrected_total = np.concatenate((data_corrected_total, data_corrected), axis=0)
+        # data_corrected_total = np.concatenate((data_corrected_total, data_corrected), axis=0)
+        data_corrected_total = np.vstack((data_corrected_total, data_corrected))
     print(data_corrected_total.shape)
     #add fill values back in
     data_corrected_total[over_DN_max_idx]        = fill_val_bad_data
