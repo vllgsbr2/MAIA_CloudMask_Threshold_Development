@@ -200,11 +200,12 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     print(data[data>32767].shape)
     print(data[data==-999].shape)
-    for d in data[::-1]:
-        im = plt.imshow(d, vmin=0)
-        im.cmap.set_under('r')
-        im.cmap.set_over('pink')
-        plt.show()
+    print(data[(data<0) & (data > -999)].shape)
+    # for d in data[::-1]:
+    #     im = plt.imshow(d, vmin=0)
+    #     im.cmap.set_under('r')
+    #     im.cmap.set_over('pink')
+    #     plt.show()
 
     # ##example plot
     # filename   = '/u/sciteam/villegas/MAIA_Threshold_Development/test_data/MOD021KM.A2017118.1715.061.2017314055816.hdf'
