@@ -189,7 +189,8 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     print(data[data>32767])
     print(data[data<0].shape)
-    plt.imshow(data[0])
+    im = plt.imshow(data[0], vmin=0)
+    im.cmap.set_under('r')
     plt.show()
 
     # ##example plot
