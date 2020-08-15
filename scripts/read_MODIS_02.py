@@ -187,6 +187,8 @@ if __name__ == '__main__':
     rad_or_ref = True
     data = prepare_data(filename_MOD_02, fieldnames_list[1], rad_or_ref)[0]
     import matplotlib.pyplot as plt
+    print(data[data>32767])
+    print(data[data<0])
     plt.imshow(data[0])
     plt.show()
 
