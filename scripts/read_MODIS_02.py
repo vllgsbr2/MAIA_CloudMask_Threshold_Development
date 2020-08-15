@@ -101,7 +101,7 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     data_raw_temp = data_raw_temp.astype(np.float)
     data_raw_temp[over_DN_max_idx] = np.nan
     data_raw_temp[below_min_DN_idx] = np.nan
-
+    print(data_raw_temp.shape)
     #correct raw data to get radiance/reflectance values
     #correct first band manually
     data_corrected_total = (data_raw_temp[0,:] - offset[0]) * scale_factor[0]
@@ -112,7 +112,7 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
 
         #aggregate bands
         data_corrected_total = np.concatenate((data_corrected_total, data_corrected), axis=0)
-
+    print(data_corrected_total.shape)
     #add fill values back in
     data_corrected_total[over_DN_max_idx]        = fill_val_bad_data
     data_corrected_total[below_min_DN_idx]       = fill_val_bad_data

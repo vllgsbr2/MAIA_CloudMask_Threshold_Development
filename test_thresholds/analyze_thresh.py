@@ -427,41 +427,44 @@ def make_obs_hist_by_group(obs):
             # choose a random subset of 20
             bins_subset = sample(bins, 20)
 
+            # cloud_mask = []
+            # obs_x      = []
+
             for bin in bins_subset:
                 data = hf_gf[bin]
                 #grab cloud mask and desired observable
                 cloud_mask = data[:,0]
                 obs_x      = data[:,obs_idx_dict[obs]]
 
-                #divide obs_x by clear and cloudy componants
-                obs_x_clear = obs_x[cloud_mask != 0]
-                obs_x_cloud = obs_x[cloud_mask == 0]
+            #divide obs_x by clear and cloudy componants
+            obs_x_clear = obs_x[cloud_mask != 0]
+            obs_x_cloud = obs_x[cloud_mask == 0]
 
-                #turn these into binned 1d arrays for plotting the histograms
-                # min, max = 0, .03
-                bin_num  = 128
-                # interval = np.abs(max-min)/bin_num
-                # bin_params = np.arange(min, max, interval)
-                # binned_obs_clear = np.digitize(obs_x_clear, bin_params)
-                # binned_obs_cloud = np.digitize(obs_x_cloud, bin_params)
+            #turn these into binned 1d arrays for plotting the histograms
+            # min, max = 0, .03
+            bin_num  = 128
+            # interval = np.abs(max-min)/bin_num
+            # bin_params = np.arange(min, max, interval)
+            # binned_obs_clear = np.digitize(obs_x_clear, bin_params)
+            # binned_obs_cloud = np.digitize(obs_x_cloud, bin_params)
 
-                hist_clear, bin_edges_clear = np.histogram(obs_x_clear,\
-                                    bins=bin_num, density=False)
-                hist_cloud, bin_edges_cloud = np.histogram(obs_x_cloud,\
-                                    bins=bin_num, density=False)
+            hist_clear, bin_edges_clear = np.histogram(obs_x_clear,\
+                                bins=bin_num, density=False)
+            hist_cloud, bin_edges_cloud = np.histogram(obs_x_cloud,\
+                                bins=bin_num, density=False)
 
-                #plot
-                fig, ax=plt.subplots(figsize=(10,10))
-                plt.rcParams['font.size'] = 16
+            #plot
+            fig, ax=plt.subplots(figsize=(10,10))
+            plt.rcParams['font.size'] = 16
 
-                num_sample_clear = np.sum(hist_clear)
-                num_sample_cloud = np.sum(hist_cloud)
-                plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
-                plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
-                plt.legend()
-                title = 'obs: {}\nbin: {}\n#clear: {}, #cloud: {}'.format(obs, bin, num_sample_clear, num_sample_cloud)
-                plt.title(title)
-                plt.show()
+            num_sample_clear = np.sum(hist_clear)
+            num_sample_cloud = np.sum(hist_cloud)
+            plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
+            plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
+            plt.legend()
+            title = 'obs: {}\nbin: {}\n#clear: {}, #cloud: {}'.format(obs, bin, num_sample_clear, num_sample_cloud)
+            plt.title(title)
+            plt.show()
 
 
 
