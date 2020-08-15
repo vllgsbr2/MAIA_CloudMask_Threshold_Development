@@ -91,13 +91,16 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     fill_val_bad_data  = -999
 
     #save indices of where bad values occured occured
-    print(data_raw_temp.shape)
     detector_saturated_idx = np.where(data_raw_temp == detector_saturated)
     detector_dead_idx      = np.where(data_raw_temp == detector_dead)
     missing_data_idx       = np.where(data_raw_temp == missing_data)
     over_DN_max_idx        = np.where(data_raw_temp >  max_DN)
     below_min_DN_idx       = np.where(data_raw_temp <  min_DN)
-    print(over_DN_max_idx)
+
+    #mark all invalid data as nan
+    data_raw_temp[over_DN_max_idx] = np.nan
+    data_raw_temp[below_min_DN_idx] = np.nan
+
     #correct raw data to get radiance/reflectance values
     #correct first band manually
     data_corrected_total = (data_raw_temp[0,:] - offset[0]) * scale_factor[0]
@@ -105,16 +108,18 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     for i in range(1,num_bands):
         #corrected band
         data_corrected = (data_raw_temp[i,:] - offset[i]) * scale_factor[i]
-        #reinput fill vals to be queried later
-        print(np.shape(over_DN_max_idx))
-        data_corrected[over_DN_max_idx[i]]        = fill_val_bad_data
-        data_corrected[below_min_DN_idx[i]]       = fill_val_bad_data
-        data_corrected[detector_saturated_idx[i]] = detector_saturated
-        data_corrected[detector_dead_idx[i]]      = detector_dead
-        data_corrected[missing_data_idx[i]]       = missing_data
 
         #aggregate bands
         data_corrected_total = np.concatenate((data_corrected_total, data_corrected), axis=0)
+
+    #add fill values back in
+    data_corrected_total[over_DN_max_idx]        = fill_val_bad_data
+    data_corrected_total[below_min_DN_idx]       = fill_val_bad_data
+    data_corrected_total[detector_saturated_idx] = detector_saturated
+    data_corrected_total[detector_dead_idx]      = detector_dead
+    data_corrected_total[missing_data_idx]       = missing_data
+
+
 
     #get original shape and return radiance/reflectance
     if not scale_factor:
