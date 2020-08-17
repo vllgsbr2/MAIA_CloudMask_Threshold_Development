@@ -199,6 +199,7 @@ if __name__ == '__main__':
     print(data[data>32767].shape)
     print(data[data==-999].shape)
     print(data[(data<0) & (data > -999)].shape)
+    print(data.shape)
     # for d in data[::-1]:
     #     im = plt.imshow(d, vmin=0)
     #     im.cmap.set_under('r')
