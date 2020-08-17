@@ -168,21 +168,40 @@ def plt_RGB(filename, fieldnames_list, rad_or_ref, plot=True):
 
 
 if __name__ == '__main__':
+
+    #test fill val
+    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LA/PTA_MODIS_files/MOD02/'
+    filename_MOD_02 = home + 'MOD021KM.A2019278.1935.061.2019279071645.hdf'
+    fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB', 'EV_1KM_RefSB']
+    rad_or_ref = True
+    data = prepare_data(filename_MOD_02, fieldnames_list[2], rad_or_ref)[0]
+    import matplotlib.pyplot as plt
+    print(data[data>32767].shape)
+    print(data[data==-999].shape)
+    print(data[(data<0) & (data > -999)].shape)
+    print(data.shape)
+    data = data[-1]
+    print(data[data>32767].shape)
+    print(data[data==-999].shape)
+    print(data[(data<0) & (data > -999)].shape)
+    print(data.shape)
+
+
     #example plot
 
-    path = '/home/javi/MODIS_Training/MODIS data/MAIA_Science_Team_Meeting_Cases/'
-
-    filename_MOD_02 = ['Aerosol_case/'+'MOD021KM.A2017308.0600.061.2017308193326.hdf',\
-                       'Toronto_case/'+'MOD021KM.A2008159.1620.061.2017256040332.hdf']
-    filename_MOD_03 = ['Aerosol_case/'+'MOD03.A2017308.0600.061.2017308125139.hdf',\
-                       'Toronto_case/'+'MOD03.A2008159.1620.061.2017255201822.hdf']
-    filename_MOD_35 = ['Aerosol_case/'+'MOD35_L2.A2017308.0600.061.2017308193505.hdf',\
-                       'Toronto_case/'+'MOD35_L2.A2008159.1620.061.2017289200022.hdf']
-
-    fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
-    rad_or_ref = False #True for radiance, False for reflectance
-    plt_RGB(path + filename_MOD_02[1], fieldnames_list, rad_or_ref)
-    print(get_data(filename, fieldnames_list[0], 2))
+    # path = '/home/javi/MODIS_Training/MODIS data/MAIA_Science_Team_Meeting_Cases/'
+    #
+    # filename_MOD_02 = ['Aerosol_case/'+'MOD021KM.A2017308.0600.061.2017308193326.hdf',\
+    #                    'Toronto_case/'+'MOD021KM.A2008159.1620.061.2017256040332.hdf']
+    # filename_MOD_03 = ['Aerosol_case/'+'MOD03.A2017308.0600.061.2017308125139.hdf',\
+    #                    'Toronto_case/'+'MOD03.A2008159.1620.061.2017255201822.hdf']
+    # filename_MOD_35 = ['Aerosol_case/'+'MOD35_L2.A2017308.0600.061.2017308193505.hdf',\
+    #                    'Toronto_case/'+'MOD35_L2.A2008159.1620.061.2017289200022.hdf']
+    #
+    # fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB']
+    # rad_or_ref = False #True for radiance, False for reflectance
+    # plt_RGB(path + filename_MOD_02[1], fieldnames_list, rad_or_ref)
+    # print(get_data(filename, fieldnames_list[0], 2))
 
     # #debugging tools
     # file = SD('/Users/vllgsbr2/Desktop/MODIS_Training/Data/MOD021KM.A2017245.1635.061.2017258193451.hdf')
