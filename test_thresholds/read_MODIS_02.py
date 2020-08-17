@@ -174,7 +174,7 @@ if __name__ == '__main__':
     filename_MOD_02 = home + 'MOD021KM.A2019278.1935.061.2019279071645.hdf'
     fieldnames_list  = ['EV_500_Aggr1km_RefSB', 'EV_250_Aggr1km_RefSB', 'EV_1KM_RefSB']
     rad_or_ref = True
-    data = prepare_data(filename_MOD_02, fieldnames_list[2], rad_or_ref)[0]
+    data = prepare_data(filename_MOD_02, fieldnames_list[2], rad_or_ref)
     import matplotlib.pyplot as plt
     print(data[data>32767].shape)
     print(data[data==-999].shape)
