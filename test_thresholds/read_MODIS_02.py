@@ -73,6 +73,27 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref):
     data_raw_temp = np.reshape(data_raw,(num_bands, num_horizontal * num_vertical))
     scale_factor, offset = get_scale_and_offset(data_field, rad_or_ref)
 
+    #fill values found in data
+    detector_saturated = 65533
+    detector_dead      = 65531
+    missing_data       = 65535
+    max_DN             = 32767
+    min_DN             = 0
+
+    #to replace DN outside of range and not any of the other fill vals
+    fill_val_bad_data  = -999
+
+    #save indices of where bad values occured occured
+    detector_saturated_idx = np.where(data_raw_temp == detector_saturated)
+    detector_dead_idx      = np.where(data_raw_temp == detector_dead)
+    missing_data_idx       = np.where(data_raw_temp == missing_data)
+    over_DN_max_idx        = np.where(data_raw_temp >  max_DN)
+    below_min_DN_idx       = np.where(data_raw_temp <  min_DN)
+
+    #mark all invalid data as nan
+    data_raw_temp = data_raw_temp.astype(np.float)
+    data_raw_temp[over_DN_max_idx]  = np.nan
+    data_raw_temp[below_min_DN_idx] = np.nan
     #correct raw data to get radiance/reflectance values
     #correct first band manually
     data_corrected_total = (data_raw_temp[0,:] - offset[0]) * scale_factor[0]
@@ -80,8 +101,16 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref):
     for i in range(1,num_bands):
         #corrected band
         data_corrected = (data_raw_temp[i,:] - offset[i]) * scale_factor[i]
+
         #aggregate bands
-        data_corrected_total = np.concatenate((data_corrected_total, data_corrected), axis=0)
+        data_corrected_total = np.vstack((data_corrected_total, data_corrected))
+
+    #add fill values back in
+    data_corrected_total[over_DN_max_idx]        = fill_val_bad_data
+    data_corrected_total[below_min_DN_idx]       = fill_val_bad_data
+    data_corrected_total[detector_saturated_idx] = detector_saturated
+    data_corrected_total[detector_dead_idx]      = detector_dead
+    data_corrected_total[missing_data_idx]       = missing_data
 
     #get original shape and return radiance/reflectance
     return data_corrected_total.reshape((num_bands, num_horizontal, num_vertical))
@@ -136,7 +165,7 @@ def plt_RGB(filename, fieldnames_list, rad_or_ref, plot=True):
         plt.show()
     else:
         return image_RGB
-        
+
 
 if __name__ == '__main__':
     #example plot
