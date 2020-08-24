@@ -14,12 +14,12 @@ cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Developme
 conda activate base_netcdf4
 
 ## run observable level parameter
-time mpirun -n 60 python calc_OLP.py >                 make_thresh_time_output.txt
+time mpirun -n 60 python calc_OLP.py >                 make_thresh_time_output.txt &
 
 wait
 
 ## run observables
-time mpirun -n 60 python calc_observables.py >         make_thresh_time_output.txt
+time mpirun -n 60 python calc_observables.py >         make_thresh_time_output.txt &
 
 wait
 
@@ -27,15 +27,15 @@ wait
 for i in {0..45}
 do
     echo $i
-    time mpirun -n 60 python group_data_by_OLP.py $i > make_thresh_time_output.txt
+    time mpirun -n 60 python group_data_by_OLP.py $i > make_thresh_time_output.txt &
 done
 
 wait
 
 ##combine grouped files by DOY
-time mpirun -n 46 python combine_grouped_files.py >    make_thresh_time_output.txt
+time mpirun -n 46 python combine_grouped_files.py >    make_thresh_time_output.txt &
 
 wait
 
 ## run thresholds
-time mpirun -n 46 python calc_threshold.py >           make_thresh_time_output.txt
+time mpirun -n 46 python calc_threshold.py >           make_thresh_time_output.txt &
