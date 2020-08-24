@@ -38,4 +38,6 @@ time mpirun -n 46 python combine_grouped_files.py >    make_thresh_time_output.t
 wait
 
 ## run thresholds
-time mpirun -n 46 python calc_threshold.py >           make_thresh_time_output.txt &
+time mpirun -n 46 python calc_threshold.py >           make_thresh_time_output.txt
+
+exit 0
