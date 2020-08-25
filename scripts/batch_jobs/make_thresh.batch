@@ -18,7 +18,7 @@ time mpirun -n 60 python calc_OLP.py >                 make_thresh_time_output.t
 
 wait
 
-#echo run observables
+echo run observables
 time mpirun -n 60 python calc_observables.py >         make_thresh_time_output.txt &
 
 wait

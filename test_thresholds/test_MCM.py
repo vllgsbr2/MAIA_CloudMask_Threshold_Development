@@ -21,7 +21,7 @@ test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories'
 Target_Area_X      = int(config['Target Area Integer'][PTA])
 threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], 'thresholds_DOY_113_to_120_bin_14.h5')
 print(threshold_filepath)
-sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], 'surfaceID_LA_120.nc')
+sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], 'surfaceID_LosAngeles_120.nc')
 config_filepath    = './config.csv'
 
 #run MCM
