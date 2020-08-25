@@ -303,9 +303,9 @@ if __name__ == '__main__':
             PTA_path = config['PTAs'][PTA]
 
             MODXX      = config['supporting directories']['MODXX']
-            MOD02_path = '{}/{}/{}{}'.format(home, PTA_path, MODXX, '02')
-            MOD03_path = '{}/{}/{}{}'.format(home, PTA_path, MODXX, '03')
-            MOD35_path = '{}/{}/{}{}'.format(home, PTA_path, MODXX, '35')
+            MOD02_path = '{}/{}{}'.format(PTA_path, MODXX, '02')
+            MOD03_path = '{}/{}{}'.format(PTA_path, MODXX, '03')
+            MOD35_path = '{}/{}{}'.format(PTA_path, MODXX, '35')
 
             #grab files names for PTA and sort them
             filename_MOD_02 = np.sort(np.array(os.listdir(MOD02_path)))
