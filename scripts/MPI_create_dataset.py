@@ -116,10 +116,16 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     data_SD, hdf_file = get_data(filename_MOD_35, 'Cloud_Mask', 2, True)
     data_SD_bit       = get_bits(data_SD, 0)
     data_decoded_bits = decode_byte_1(data_SD_bit)
+    cloud_mask        = data_decoded_bits[-1]
 
     #calculate cloud mask tests
     data_SD_cloud_mask       = data_SD
     decoded_cloud_mask_tests = decode_tests(data_SD_cloud_mask, filename_MOD_35)
+    #only take the overall qaulity flag; 0 not determined, 1 determined, 2 not good QA
+    cloud_mask_QA = np.copy(decoded_cloud_mask_tests[-1])
+    #mask the cloud_mask with QA fill vals for downstream use
+    quality_screened_cloud_mask[cloud_mask_QA != 1] = -998
+
 
     #grab earth sun distance
     earth_sun_dist = get_earth_sun_dist(filename_MOD_02)
@@ -234,12 +240,13 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
 
     #*******************************************************************************
     #cloud mask
-    cloud_mask = {'Cloud_Mask_Flag':data_decoded_bits[0],\
-                  'Day_Night_Flag':data_decoded_bits[2],\
-                  'Sun_glint_Flag':data_decoded_bits[3],\
-                  'Snow_Ice_Background_Flag':data_decoded_bits[4],\
-                  'Land_Water_Flag':data_decoded_bits[5],\
-                  'Unobstructed_FOV_Quality_Flag':data_decoded_bits[1]\
+    cloud_mask = {'Cloud_Mask_Flag'              :data_decoded_bits[0],\
+                  'Day_Night_Flag'               :data_decoded_bits[2],\
+                  'Sun_glint_Flag'               :data_decoded_bits[3],\
+                  'Snow_Ice_Background_Flag'     :data_decoded_bits[4],\
+                  'Land_Water_Flag'              :data_decoded_bits[5],\
+                  'Unobstructed_FOV_Quality_Flag':data_decoded_bits[1],\
+                  'quality_screened_cloud_mask'  :quality_screened_cloud_mask\
                   }
     for cm_key, cm_val in cloud_mask.items():
         crop_cm = cm_val[regrid_row_idx, regrid_col_idx]

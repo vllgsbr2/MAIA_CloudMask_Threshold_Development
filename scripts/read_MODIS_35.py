@@ -67,19 +67,28 @@ def get_bits(data_SD, N, cMask_or_QualityAssur=True):
     shape = np.shape(data_SD)
 
     #convert MODIS 35 signed ints to unsigned ints
+    #basically AND all values with 255 (2**8 - 1 for a byte) which makes sets
+    #the first bit to 0 i.e. positive
     if cMask_or_QualityAssur:
+        #this SDS has 10 bytes in axis 0
         data_unsigned = np.bitwise_and(data_SD[N, :, :], 0xff)
     else:
+        #this SDS has 6 bytes in axis 2
         data_unsigned = np.bitwise_and(data_SD[:, :, N], 0xff)
 
 
 
     #type is int16, but unpackbits taks int8, so cast array
-    data_unsigned = data_unsigned.astype(np.uint8)#data_unsigned.view('uint8')
+    #we want one byte representation so 8 bits -> uint8
+    data_unsigned = data_unsigned.astype(np.uint8)
 
     #return numpy array of length 8 lists for every element of data_SD
+    #this is now in binary. Note binary is read right to left, so bits
+    #bit[0,1,2,3,4,5,6,7] is indexed with
+    #idx[7,6,5,4,3,2,1,0]
     data_bits = np.unpackbits(data_unsigned)
 
+    #reshape so each pixel has list of 8 bits representing an integer in axis 2
     if cMask_or_QualityAssur:
         data_bits = np.reshape(data_bits, (shape[1], shape[2], 8))
     else:
@@ -116,6 +125,10 @@ def decode_byte_1(decoded_mod35_hdf):
     '''
     data = decoded_mod35_hdf
     shape = np.shape(data)
+
+    #Note binary is read right to left, so bits
+    #bit[0,1,2,3,4,5,6,7] is indexed with
+    #idx[7,6,5,4,3,2,1,0]
 
     #create empty arrays to fill later
     #binary 1 or 0 fill
@@ -171,34 +184,11 @@ def decode_byte_1(decoded_mod35_hdf):
            Snow_Ice_Background_Flag,\
            new_Land_Water_Flag
 
-def decode_Quality_Assurance(data_SD_Quality_Assurance):
+
+def decode_tests(data_SD_cloud_mask, filename_MOD_35):
     '''
     INPUT:
-          data_SD_Quality_Assurance - numpy array (2030,1354,10) - HDF SD of QA
-    RETURN:
-          Quality assurance for 5 cloud mask tests
-    '''
-    data_bits_3 = get_bits(data_SD_Quality_Assurance, 2, \
-                           cMask_or_QualityAssur=False)
-    data_bits_4 = get_bits(data_SD_Quality_Assurance, 3, \
-                           cMask_or_QualityAssur=False)
-
-    QA_High_Cloud_Flag_1380nm         = data_bits_3[:,:, 0]
-    QA_Cloud_Flag_Visible_Reflectance = data_bits_3[:,:, 4]
-    QA_Cloud_Flag_Visible_Ratio       = data_bits_3[:,:, 5]
-    QA_Near_IR_Reflectance            = data_bits_3[:,:, 6]
-    QA_Cloud_Flag_Spatial_Variability = data_bits_4[:,:, 1]
-
-    return QA_High_Cloud_Flag_1380nm,\
-           QA_Cloud_Flag_Visible_Reflectance,\
-           QA_Cloud_Flag_Visible_Ratio,\
-           QA_Near_IR_Reflectance,\
-           QA_Cloud_Flag_Spatial_Variability
-
-def decode_tests(data_SD, filename_MOD_35):
-    '''
-    INPUT:
-          data_SD         - numpy array (6,2030,1354) - SD from HDF of cloud
+          data_SD_cloud_mask - numpy array (6,2030,1354) - SD from HDF of cloud
                                                         mask
           filename_MOD_35 - str                       - path to mod 35 file
     RETURN:
@@ -209,33 +199,88 @@ def decode_tests(data_SD, filename_MOD_35):
           Cloud_Flag_Visible_Ratio,
           Near_IR_Reflectance,
           Cloud_Flag_Spatial_Variability
+          overall_cloud_mask
 
     '''
-    data_bits_3_ = get_bits(data_SD, 2)
-    data_bits_4_ = get_bits(data_SD, 3)
 
-    data_SD_Quality_Assurance = get_data(filename_MOD_35, 'Quality_Assurance',2)
-    #for bytes 3&4
-    data_bits_QA = decode_Quality_Assurance(data_SD_Quality_Assurance)
+    def decode_Quality_Assurance(data_SD_Quality_Assurance):
+        '''
+        INPUT:
+              data_SD_Quality_Assurance - numpy array (2030,1354,10) - HDF SD of QA
+        RETURN:
+              Quality assurance for 5 cloud mask tests and overall cloud mask
+        '''
+        byte_1 = get_bits(data_SD_Quality_Assurance, 0, \
+                               cMask_or_QualityAssur=False)
+        byte_3 = get_bits(data_SD_Quality_Assurance, 2, \
+                               cMask_or_QualityAssur=False)
+        byte_4 = get_bits(data_SD_Quality_Assurance, 3, \
+                               cMask_or_QualityAssur=False)
 
-    High_Cloud_Flag_1380nm         = data_bits_3_[:,:, 0]
-    Cloud_Flag_Visible_Reflectance = data_bits_3_[:,:, 4]
-    Cloud_Flag_Visible_Ratio       = data_bits_3_[:,:, 5]
-    Near_IR_Reflectance            = data_bits_3_[:,:, 6]
-    Cloud_Flag_Spatial_Variability = data_bits_4_[:,:, 1]
+        #Note binary is read right to left, so bits
+        #bit[0,1,2,3,4,5,6,7] is indexed with
+        #idx[7,6,5,4,3,2,1,0]
 
-    # find indicies where test is not applied; set to -9
-    High_Cloud_Flag_1380nm[np.where(data_bits_QA[0]==0)]         = 9
-    Cloud_Flag_Visible_Reflectance[np.where(data_bits_QA[1]==0)] = 9
-    Cloud_Flag_Visible_Ratio[np.where(data_bits_QA[2]==0)]       = 9
-    Near_IR_Reflectance[np.where(data_bits_QA[3]==0)]            = 9
-    Cloud_Flag_Spatial_Variability[np.where(data_bits_QA[4]==0)] = 9
+        QA_High_Cloud_Flag_1380nm         = byte_3[:,:, 0]
+        QA_Cloud_Flag_Visible_Reflectance = byte_3[:,:, 4]
+        QA_Cloud_Flag_Visible_Ratio       = byte_3[:,:, 5]
+        QA_Near_IR_Reflectance            = byte_3[:,:, 6]
+        QA_Cloud_Flag_Spatial_Variability = byte_4[:,:, 1]
+        #0 not useful; 1 useful
+        QA_Cloud_Mask_Flag                = byte_1[:,:, 7]
 
-    return High_Cloud_Flag_1380nm,\
+
+        return QA_High_Cloud_Flag_1380nm,\
+               QA_Cloud_Flag_Visible_Reflectance,\
+               QA_Cloud_Flag_Visible_Ratio,\
+               QA_Near_IR_Reflectance,\
+               QA_Cloud_Flag_Spatial_Variability,\
+               QA_Cloud_Mask_Flag
+
+    fieldname = 'Quality_Assurance'
+    data_SD_Quality_Assurance = get_data(filename_MOD_35, fieldname, 2)
+    #for bytes 1&3&4
+    #0 not applied; 1 applied
+    QA_High_Cloud_Flag_1380nm,\
+    QA_Cloud_Flag_Visible_Reflectance,\
+    QA_Cloud_Flag_Visible_Ratio,\
+    QA_Near_IR_Reflectance,\
+    QA_Cloud_Flag_Spatial_Variability,\
+    QA_Cloud_Mask_Flag = decode_Quality_Assurance(data_SD_Quality_Assurance)
+
+    #Note binary is read right to left, so bits
+    #bit[0,1,2,3,4,5,6,7] is indexed with
+    #idx[7,6,5,4,3,2,1,0]
+
+    #get test flags; 0 cloud, 1 clear; byte 1, 0 not determined, 1 determined
+    byte_1 = get_bits(data_SD_cloud_mask, 0)
+    byte_3 = get_bits(data_SD_cloud_mask, 2)
+    byte_4 = get_bits(data_SD_cloud_mask, 3)
+
+    #byte 1, 2 and 3 from cloud mask SDS
+    High_Cloud_Flag_1380nm         = byte_3[:,:, 0]
+    Cloud_Flag_Visible_Reflectance = byte_3[:,:, 4]
+    Cloud_Flag_Visible_Ratio       = byte_3[:,:, 5]
+    Near_IR_Reflectance            = byte_3[:,:, 6]
+    Cloud_Flag_Spatial_Variability = byte_4[:,:, 1]
+    Cloud_Mask_Flag                = byte_1[:,:, 7]
+
+    #find indices where test is not applied; set to fill val
+    #0 cloudy, 1 clear
+    fill_val = 2
+    High_Cloud_Flag_1380nm[QA_High_Cloud_Flag_1380nm == 0]                 = fill_val
+    Cloud_Flag_Visible_Reflectance[QA_Cloud_Flag_Visible_Reflectance == 0] = fill_val
+    Cloud_Flag_Visible_Ratio[QA_Cloud_Flag_Visible_Ratio == 0]             = fill_val
+    Near_IR_Reflectance[QA_Near_IR_Reflectance == 0]                       = fill_val
+    Cloud_Flag_Spatial_Variability[QA_Cloud_Flag_Spatial_Variability == 0] = fill_val
+    Cloud_Mask_Flag[QA_Cloud_Mask_Flag == 0]                               = fill_val
+
+    return High_Cloud_Flag_1380nm        ,\
            Cloud_Flag_Visible_Reflectance,\
-           Cloud_Flag_Visible_Ratio,\
-           Near_IR_Reflectance,\
-           Cloud_Flag_Spatial_Variability
+           Cloud_Flag_Visible_Ratio      ,\
+           Near_IR_Reflectance           ,\
+           Cloud_Flag_Spatial_Variability,\
+           Cloud_Mask_Flag
 
 
 
@@ -244,30 +289,40 @@ if __name__ == '__main__':
 
     ############################################################################
     #speed test
-    filename_MOD_35 = '/data/keeling/a/vllgsbr2/b/modis_data/toronto_PTA/MOD_35/MOD35_L2.A2017038.1715.061.2017312050207.hdf'  
+    filename_MOD_35 = '/data/keeling/a/vllgsbr2/b/modis_data/toronto_PTA/MOD_35/MOD35_L2.A2017038.1715.061.2017312050207.hdf'
     data_SD         = get_data(filename_MOD_35, 'Cloud_Mask', 2)
 
-    #fast bit
-    start = time.time()
-    fast_bits = get_bits(data_SD, 0)
-    fast_bits = decode_byte_1(fast_bits)
-    print('---------- ', time.time()-start,' ---------')
+    #cloud mask tests with QA
+    #not applied is 2; 0 cloudy, 1 clear
+    High_Cloud_Flag_1380nm        ,\
+    Cloud_Flag_Visible_Reflectance,\
+    Cloud_Flag_Visible_Ratio      ,\
+    Near_IR_Reflectance           ,\
+    Cloud_Flag_Spatial_Variability = decode_tests(data_SD, filename_MOD_35)
 
 
-    #############################################
-    #plot
-    import matplotlib.colors as matCol
-    from matplotlib.colors import ListedColormap
-    cmap=plt.cm.PiYG
-    cmap = ListedColormap(['white', 'green', 'blue','black'])
-    norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
-    plt.imshow(fast_bits[1], cmap=cmap, norm=norm)
-    plt.imsave('/data/keeling/a/vllgsbr2/b/modis_data/toronto_PTA/test_cases/CloudMask_2017038.1715.png', fast_bits[1], cmap=cmap)
-    cbar = plt.colorbar()
-    cbar.set_ticks([0.5,1.5,2.5,3.5])
-    cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
-                         'probably\nclear', 'confident\nclear'])
-    plt.title('MODIS Cloud Mask')
-    plt.xticks([])
-    plt.yticks([])
+
+    # #cloud mask plot
+    # #fast bit
+    # start = time.time()
+    # fast_bits = get_bits(data_SD, 0)
+    # fast_bits = decode_byte_1(fast_bits)
+    # print('---------- ', time.time()-start,' ---------')
+    #
+    # #############################################
+    # #plot
+    # import matplotlib.colors as matCol
+    # from matplotlib.colors import ListedColormap
+    # cmap=plt.cm.PiYG
+    # cmap = ListedColormap(['white', 'green', 'blue','black'])
+    # norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
+    # plt.imshow(fast_bits[1], cmap=cmap, norm=norm)
+    # plt.imsave('/data/keeling/a/vllgsbr2/b/modis_data/toronto_PTA/test_cases/CloudMask_2017038.1715.png', fast_bits[1], cmap=cmap)
+    # cbar = plt.colorbar()
+    # cbar.set_ticks([0.5,1.5,2.5,3.5])
+    # cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
+    #                      'probably\nclear', 'confident\nclear'])
+    # plt.title('MODIS Cloud Mask')
+    # plt.xticks([])
+    # plt.yticks([])
     #plt.show()
