@@ -368,7 +368,7 @@ if __name__ == '__main__':
                                     target_lon)
 
                         # output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
-                        # print(i, time_MOD02, '\n')
+                    print(i, time_MOD02, '\n')
                     # except Exception as e:
                     #
                     #     output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, 'corrupt\n'))
