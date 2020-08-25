@@ -328,7 +328,7 @@ if __name__ == '__main__':
 
             #grab target lat/lon from Guangyu h5 files (new JPL grids)
             PTA_grid_file_path = config['PTA lat/lon grid files'][PTA]
-            filepath_latlon = '{}/{}'.format(PTA_grid_file_path)
+            filepath_latlon = '{}'.format(PTA_grid_file_path)
             with h5py.File(filepath_latlon, 'r') as hf_latlon:
                 target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
                 target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
