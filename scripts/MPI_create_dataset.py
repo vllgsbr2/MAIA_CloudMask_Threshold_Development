@@ -116,7 +116,8 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     data_SD, hdf_file = get_data(filename_MOD_35, 'Cloud_Mask', 2, True)
     data_SD_bit       = get_bits(data_SD, 0)
     data_decoded_bits = decode_byte_1(data_SD_bit)
-    cloud_mask        = np.copy(data_decoded_bits[-1])
+    cloud_mask        = np.copy(data_decoded_bits[1])
+
 
     #calculate cloud mask tests
     data_SD_cloud_mask       = data_SD
