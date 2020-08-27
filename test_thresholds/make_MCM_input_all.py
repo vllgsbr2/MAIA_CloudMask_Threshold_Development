@@ -28,16 +28,16 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 snow_ice_mask      = hf_database[time_stamp + '/cloud_mask/Snow_Ice_Background_Flag'][()]
                 water_mask         = hf_database[time_stamp + '/cloud_mask/Land_Water_Flag'][()]
                 earth_sun_distance = hf_database[time_stamp + '/earth_sun_distance'][()]
-                MOD03_LandSeaMask     = hf_database[time_stamp + '/MOD03_LandSeaMask'][()]
+                MOD03_LandSeaMask  = hf_database[time_stamp + '/MOD03_LandSeaMask'][()]
+                #bad values are -998; use in RDQI
+                QA_cloud_mask      = hf_database[time_stamp + '/cloud_mask/quality_screened_cloud_mask'][()]
+
 
                 #create hdf5 file
                 hf = h5py.File(output_path + 'test_JPL_data_{}.h5'.format(time_stamp), 'w')
 
                 #define arbitrary shape for granule/orbit
-                shape = rad_b4.shape #(1000,1000)
-
-                #add cloud mask for later purposes
-                hf.create_dataset('MOD35_cloud_mask', data=modcm, compression='gzip')
+                shape = rad_b4.shape
 
                 #create structure in hdf file
                 ARP                = hf.create_group('Anicillary_Radiometric_Product')
@@ -55,6 +55,8 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 AGP_LWM = AGP.create_group('Land_Water_Mask')
                 AGP_SIM = AGP.create_group('Snow_Ice_Mask')
 
+                #RDQI will be based on MOD35 QA and MOD02 radiance fill vals
+                #0 good, 1 ok, 2 dont use, 3 no data
                 RDQI_b4  = np.zeros(shape)
                 RDQI_b5  = np.zeros(shape)
                 RDQI_b6  = np.zeros(shape)
@@ -62,12 +64,24 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 RDQI_b12 = np.zeros(shape)
                 RDQI_b13 = np.zeros(shape)
 
-                RDQI_b4[rad_b4==-999]   = 3
-                RDQI_b5[rad_b5==-999]   = 3
-                RDQI_b6[rad_b6==-999]   = 3
-                RDQI_b9[rad_b9==-999]   = 3
-                RDQI_b12[rad_b12==-999] = 3
-                RDQI_b13[rad_b13==-999] = 3
+                rad_max = 32767
+                rad_min = 0
+
+                RDQI_b4[(rad_b4 < rad_min)   & (rad_b4 > rad_min)]  = 3
+                RDQI_b5[(rad_b5 < rad_min)   & (rad_b5 > rad_min)]  = 3
+                RDQI_b6[(rad_b6 < rad_min)   & (rad_b6 > rad_min)]  = 3
+                RDQI_b9[(rad_b9 < rad_min)   & (rad_b9 > rad_min)]  = 3
+                RDQI_b12[(rad_b12 < rad_min) & (rad_b12 > rad_min)] = 3
+                RDQI_b13[(rad_b13 < rad_min) & (rad_b13 > rad_min)] = 3
+
+                #now do the same according to MOD35 QA 'quality_screened_cloud_mask'
+                bad_data_fill_val = -998
+                RDQI_b4[QA_cloud_mask == bad_data_fill_val]  = 3
+                RDQI_b5[QA_cloud_mask == bad_data_fill_val]  = 3
+                RDQI_b6[QA_cloud_mask == bad_data_fill_val]  = 3
+                RDQI_b9[QA_cloud_mask == bad_data_fill_val]  = 3
+                RDQI_b12[QA_cloud_mask == bad_data_fill_val] = 3
+                RDQI_b13[QA_cloud_mask == bad_data_fill_val] = 3
 
                 DOY = int(time_stamp[4:7])
 
@@ -109,6 +123,11 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
 
                 AGP_LWM.create_dataset('Land_Water_Mask', data=land_water_mask, dtype='i4', compression='gzip')
                 AGP_SIM.create_dataset('Snow_Ice_Mask', data=snow_ice_mask, dtype='i4', compression='gzip')
+
+                #add cloud mask for later purposes
+                hf.create_dataset('MOD35_cloud_mask', data=modcm, compression='gzip')
+                #add QA filtered MOD35 CM
+                hf.create_dataset('MOD35_QA_filtered_cloud_mask', data=QA_filtered_cloud_mask, compression='gzip')
 
                 hf.close()
 
