@@ -28,9 +28,10 @@ for i in {0..45}
 do
     echo $i
     time mpirun -n 60 python group_data_by_OLP.py $i > make_thresh_time_output.txt &
+    wait
 done
 
-wait
+
 
 echo combine grouped files by DOY
 time mpirun -n 46 python combine_grouped_files.py >    make_thresh_time_output.txt &
