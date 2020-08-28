@@ -24,7 +24,7 @@ def get_R(radiance, SZA, d, E_std_0b):
     rad_min = 0
     rad_max = 32767
     invalid_idx = np.where((np.cos(np.deg2rad(SZA)) <= 0.01) | \
-                         (radiance < rad_min) & (radiance > rad_max)
+                         (radiance < rad_min) & (radiance > rad_max))
     radiance[invalid_idx] = -998
 
     #condition to not step on fill values when converting to BRF(R)
