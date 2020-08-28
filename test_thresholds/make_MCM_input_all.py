@@ -127,7 +127,7 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 #add cloud mask for later purposes
                 hf.create_dataset('MOD35_cloud_mask', data=modcm, compression='gzip')
                 #add QA filtered MOD35 CM
-                hf.create_dataset('MOD35_QA_filtered_cloud_mask', data=QA_filtered_cloud_mask, compression='gzip')
+                hf.create_dataset('MOD35_QA_filtered_cloud_mask', data=QA_cloud_mask, compression='gzip')
 
                 hf.close()
 
