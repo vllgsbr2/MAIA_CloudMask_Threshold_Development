@@ -31,6 +31,13 @@ def group_data(OLP, obs, CM, hf_group):
     obs = obs[full_idx[0], :]
     CM  = CM[full_idx[0]]
 
+    #now again for the -998 in the cloud mask
+    full_idx = np.where(CM !=-998) # obs -> (1, 1e6-x)
+
+    OLP = OLP[full_idx[0], :]
+    obs = obs[full_idx[0], :]
+    CM  = CM[full_idx[0]]
+
     thresh_dict = {}
 
     #track number of groups seen to compare to groups actually processed
