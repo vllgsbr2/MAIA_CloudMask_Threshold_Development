@@ -399,11 +399,11 @@ def add_sceneID(observable_level_parameter):
         [Section N/A]
         Arguments:
             observable_level_parameter {3D int narray} -- return from func get_observable_level_parameter()
-            num_land_sfc_types {int} -- number of land surface types from max BRF clusters
-            MOD03_sfctypes {2D int narray} -- 0-7 water (1 land type) surface types from MOD03 MODIS TERRA product
+            **num_land_sfc_types {int} -- number of land surface types from max BRF clusters
+            **MOD03_sfctypes {2D int narray} -- 0-7 water (1 land type) surface types from MOD03 MODIS TERRA product
         Returns:
-            2D narray -- scene ID. Values 0-28 inclusive are land types; values
-                         29, 30, 31 are water, water with sun glint, snow/ice
+            2D narray -- scene ID. Values 0-11 inclusive are land types; values
+                         12, 13, 14 are water, water with sun glint, snow/ice
                          respectively. Is the size of the granule. These integers
                          serve as the indicies to select a threshold based off
                          surface type.
@@ -464,9 +464,9 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #                         (observable_data  != fill_val_3)) ]  = fill_val_1
 
 
-    water    = 12
+    water     = 12
     sun_glint = 13
-    snow     = 14
+    snow      = 14
 
     #apply fill values according to input observable and surface type
     if observable_name == 'VIS_Ref':
