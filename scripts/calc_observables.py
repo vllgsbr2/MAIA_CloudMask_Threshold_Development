@@ -268,12 +268,11 @@ if __name__ == '__main__':
             config = configparser.ConfigParser()
             config.read(config_home_path+'/test_config.txt')
 
-            home     = config['home']['home']
             PTA_path = config['PTAs']['LA']
             PTA      = config['current PTA']['PTA']
 
             #open database to read
-            database_path  = '{}/{}/{}/'.format(home, PTA_path, config['supporting directories']['Database'])
+            database_path  = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
             database_files = os.listdir(database_path)
             database_files = [database_path + filename for filename in database_files]
             database_files = np.sort(database_files)
@@ -286,7 +285,7 @@ if __name__ == '__main__':
                     observables = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI', 'cirrus']
 
                     #create/open hdf5 file to store observables
-                    PTA_file_path_obs   = '{}/{}/{}/'.format(home, PTA_path, config['supporting directories']['obs'])
+                    PTA_file_path_obs   = '{}/{}/'.format(PTA_path, config['supporting directories']['obs'])
                     hf_observables_path = '{}/LA_PTA_observables_rank_{:02d}.hdf5'.format(PTA_file_path_obs, rank)
 
                     with h5py.File(hf_observables_path, 'w') as hf_observables:
