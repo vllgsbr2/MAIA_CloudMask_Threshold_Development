@@ -335,3 +335,4 @@ if __name__ == '__main__':
                                         group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
                                     except:
                                         hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
+                            print(time_stamp)
