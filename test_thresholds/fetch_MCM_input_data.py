@@ -82,8 +82,8 @@ def get_JPL_data(test_data_JPL_path):
 
 def get_UIUC_data(sfc_ID_filepath, config_filepath):
     '''
-    sfc_ID_filepath
-    config_filepath
+    sfc_ID_filepath {str} -- path to surface ID for a particular PTA and DOY bin
+    config_filepath {str} -- path to configuration file
     '''
 
     #thresholds
