@@ -236,7 +236,7 @@ cbar4 = f2.colorbar(im4, ax=ax2[1,0],fraction=0.046, pad=0.04)#, ticks = np.aran
 cbar5 = f2.colorbar(im5, ax=ax2[1,1],fraction=0.046, pad=0.04)#, ticks = np.arange(0,SVI.max()+0.1,0.05))
 cbar6 = f2.colorbar(im6, ax=ax2[1,2],fraction=0.046, pad=0.04)#, ticks = np.arange(0,1.2,0.2))
 
-for a in ax.flat:
+for a in ax2.flat:
     a.set_xticks([])
     a.set_yticks([])
 
