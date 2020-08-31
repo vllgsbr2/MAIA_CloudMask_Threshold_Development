@@ -32,5 +32,5 @@ if __name__ == '__main__':
     filename_MOD_02,\
     filename_MOD_03,\
     filename_MOD_35 = get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt)
-    n=35
+    n=-1
     print(filename_MOD_02[n], filename_MOD_03[n], filename_MOD_35[n])
