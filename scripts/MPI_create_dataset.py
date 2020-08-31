@@ -378,15 +378,15 @@ if __name__ == '__main__':
                                           filename_MOD_02_timeStamp[start:end]):
                     # print('{}\n{}\n{}\n{}\n{}'.format(i, MOD02, MOD03, MOD35, time_MOD02))
 
-                    try:
-                        build_data_base(MOD02, MOD03, MOD35, hf_path, hf,\
-                                    time_MOD02, fieldname, target_lat,\
-                                    target_lon)
-
-                        output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
-                        print(i, time_MOD02, '\n')
-                    except Exception as e:
-
-                        output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, 'corrupt\n'))
-                        print(i, time_MOD02, 'corrupt\n')
-                    i+=1
+                    # try:
+                    build_data_base(MOD02, MOD03, MOD35, hf_path, hf,\
+                    #                 time_MOD02, fieldname, target_lat,\
+                    #                 target_lon)
+                    #
+                    #     output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
+                    print(i, time_MOD02, '\n')
+                    # except Exception as e:
+                    #
+                    #     output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, 'corrupt\n'))
+                    #     print(i, time_MOD02, 'corrupt\n')
+                    # i+=1
