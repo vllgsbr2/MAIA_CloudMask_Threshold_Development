@@ -34,7 +34,7 @@ def make_SID_MCM_rdy(home_og, home):
     #set sfcID 3 to 13 to 0 to 10
     sfc_IDs_mod[sfc_IDs >=3]  = sfc_IDs_mod[sfc_IDs >=3] - 3
     #set invalid to -999
-    sfc_IDs_mod[sfc_IDs == 2] = np.nan
+    sfc_IDs_mod[sfc_IDs == 2] = -999
     #set coastline to 11
     sfc_IDs_mod[sfc_IDs == 1] = 11
     #set water (0) to 12
@@ -59,8 +59,9 @@ def make_SID_MCM_rdy(home_og, home):
     for i, sfc_ID_path in enumerate(sfc_ID_paths):
         with Dataset(home + sfc_ID_path, 'r') as nc_sfc_ID:
             sfc_IDs_read_mod[:,:,i] = nc_sfc_ID.variables['surface_ID'][:,:]
-    im=plt.imshow(sfc_IDs_read_mod[:,:,0], cmap='jet', vmax=11)
+    im=plt.imshow(sfc_IDs_read_mod[:,:,0], cmap='jet', vmin=0, vmax=11)
     im.cmap.set_over('k')
+    im.cmap.set_under('pink')
     plt.show()
     sys.exit()
 
