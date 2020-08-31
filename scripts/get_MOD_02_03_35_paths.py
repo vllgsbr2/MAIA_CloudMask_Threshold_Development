@@ -11,12 +11,12 @@ def get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt):
 
     if len(MOD02_paths) == len(MOD03_paths) and len(MOD02_paths) == len(MOD35_paths):
         for count, (i,j,k) in enumerate(zip(MOD02_paths, MOD03_paths, MOD35_paths)):
-            if not os.path.isfile(i[-44:]):
-            print(count, i, 'is DNE')
-            if not os.path.isfile(j[-34:]):
-                print(count, j, 'is DNE')
-            if not os.path.isfile(k[-44:]):
-                print(count, k, 'is DNE')
+            if not os.exists.isfile(i):
+                print(count, i, ' DNE')
+            if not os.exists.isfile(j):
+                print(count, j, ' DNE')
+            if not os.exists.isfile(k):
+                print(count, k, ' DNE')
             # print(count)
 
         return MOD02_paths, MOD03_paths, MOD35_paths
