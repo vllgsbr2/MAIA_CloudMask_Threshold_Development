@@ -13,6 +13,7 @@ def make_SID_MCM_rdy(home_og, home):
 
     #grab OG surface IDs
     sfc_ID_paths = np.sort(np.array(os.listdir(home_og)))
+    sfc_ID_paths = [x for x in sfc_ID_paths if x[:10] == 'surfaceID_']
     sfc_IDs = np.zeros((400,300,len(sfc_ID_paths)))
 
     for i, sfc_ID_path in enumerate(sfc_ID_paths):
@@ -46,7 +47,7 @@ def make_SID_MCM_rdy(home_og, home):
     # sys.exit()
 
     #copy files into new destination
-    os.system('cp {}/* {}/'.format(home_og, home))
+    os.system('cp {}/surfaceID* {}/'.format(home_og, home))
 
     #edit copied surface IDs files with new surface ID
     sfc_ID_paths = np.sort(np.array(os.listdir(home)))
