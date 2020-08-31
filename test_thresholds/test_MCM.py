@@ -166,6 +166,7 @@ ax0[1,3].set_title('BRF RGB')
 for a in ax0.flat:
     a.set_xticks([])
     a.set_yticks([])
+    a.axis('off')
 
 
 #DTT
