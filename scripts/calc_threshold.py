@@ -44,71 +44,78 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
 
-            cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
-            obs        = hf_group[bin_ID][:,1:]
+            #only calc a thresh when valid surface ID is available
+            #invalid is -9
+            if bin_idx[3] != -9:
 
-            clear_idx  = np.where((cloud_mask != 0) & (cloud_mask != -999))
-            clear_obs  = obs[clear_idx[0],:]
-            # clear_obs  = clear_obs[clear_obs != fill_val]
+                cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
+                obs        = hf_group[bin_ID][:,1:]
 
-            cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask != -999))
-            cloudy_obs = obs[cloudy_idx[0],:]
-            # cloudy_obs = cloudy_obs[cloudy_obs != fill_val]
+                clear_idx  = np.where((cloud_mask != 0) & (cloud_mask != -999))
+                clear_obs  = obs[clear_idx[0],:]
+                # clear_obs  = clear_obs[clear_obs != fill_val]
 
-            #if there isn't enough clear or cloudy obs, assign value to make threshold true
-            #if no clear, and need clear, assign threshold as least brightest cloudy
-            #if no cloudy, and need cloudy, assign thresholds as 1e-3 (NDxI)
+                cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask != -999))
+                cloudy_obs = obs[cloudy_idx[0],:]
+                # cloudy_obs = cloudy_obs[cloudy_obs != fill_val]
 
-            for i in range(7):
-                #path to TA/DOY/obs threshold dataset
-                path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY_bin , obs_names[i])
-                # print(path)
-                #WI
-                if i==0:
-                    if clear_obs[:,i].shape[0] > num_samples_valid_hist:
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
-                        np.nanpercentile(clear_obs[:,i], 1)
+                #if there isn't enough clear or cloudy obs, assign value to make threshold true
+                #if no clear, and need clear, assign threshold as least brightest cloudy
+                #if no cloudy, and need cloudy, assign thresholds as 1e-3 (NDxI)
 
-                    #choose least white cloudy pixel as threshold if no clear obs
+                for i in range(7):
+                    #path to TA/DOY/obs threshold dataset
+                    path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY_bin , obs_names[i])
+                    # print(path)
+                    #WI
+                    if i==0:
+                        if clear_obs[:,i].shape[0] > num_samples_valid_hist:
+                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
+                            np.nanpercentile(clear_obs[:,i], 1)
+
+                        #choose least white cloudy pixel as threshold if no clear obs
+                        else:
+                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
+                            cloudy_obs[:, i].max()
+
+                    #NDxI
+                    #pick max from cloudy hist
+                    elif i==1 or i==2:
+                        if cloudy_obs[:,i].shape[0] > num_samples_valid_hist:
+                            hist, bin_edges = np.histogram(cloudy_obs[:,i], bins=128, range=(-1,1))
+                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
+                            bin_edges[1:][hist==hist.max()].min()
+                        #set default value of 1e-3 if no cloudy obs available
+                        else:
+                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
+
+                    #VIS/NIR/SVI/Cirrus
                     else:
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
-                        cloudy_obs[:, i].max()
-
-                #NDxI
-                #pick max from cloudy hist
-                elif i==1 or i==2:
-                    if cloudy_obs[:,i].shape[0] > num_samples_valid_hist:
-                        hist, bin_edges = np.histogram(cloudy_obs[:,i], bins=128, range=(-1,1))
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                        bin_edges[1:][hist==hist.max()].min()
-                    #set default value of 1e-3 if no cloudy obs available
-                    else:
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
-
-                #VIS/NIR/SVI/Cirrus
-                else:
-                    if clear_obs[:,i].shape[0] > num_samples_valid_hist:
-                        #clean out fill values
-                        x = clear_obs[:,i]
-                        x = x[x != fill_val]
-
-                        #check size again and continue
-                        if x.shape[0] > num_samples_valid_hist:
-                            current_thresh = np.nanpercentile(x, 99)
-                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
-                                            bin_idx[3]] = current_thresh
-
-                    else:
-                        if cloudy_obs[:, i].shape[0] > 0:
+                        if clear_obs[:,i].shape[0] > num_samples_valid_hist:
                             #clean out fill values
-                            x = cloudy_obs[:, i]
+                            x = clear_obs[:,i]
                             x = x[x != fill_val]
 
                             #check size again and continue
-                            if x.shape[0] > 0:
-                                current_thresh = x.min()
+                            if x.shape[0] > num_samples_valid_hist:
+                                current_thresh = np.nanpercentile(x, 99)
                                 hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                                 bin_idx[3]] = current_thresh
+
+                        else:
+                            if cloudy_obs[:, i].shape[0] > 0:
+                                #clean out fill values
+                                x = cloudy_obs[:, i]
+                                x = x[x != fill_val]
+
+                                #check size again and continue
+                                if x.shape[0] > 0:
+                                    current_thresh = x.min()
+                                    hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
+                                                    bin_idx[3]] = current_thresh
+
+
+
 
 
 
