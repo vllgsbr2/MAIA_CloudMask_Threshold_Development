@@ -10,6 +10,14 @@ def get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt):
         MOD35_paths = np.sort([path for path in txt_MOD35_files])
 
     if len(MOD02_paths) == len(MOD03_paths) and len(MOD02_paths) == len(MOD35_paths):
+        for i,j,k in zip(MOD02_paths, MOD03_paths, MOD35_paths):
+            if not os.path.isfile(i):
+                print(i, 'is DNE')
+            if not os.path.isfile(j):
+                print(j, 'is DNE')
+            if not os.path.isfile(k):
+                print(k, 'is DNE')
+
         return MOD02_paths, MOD03_paths, MOD35_paths
     else:
         print("files don't match up")
