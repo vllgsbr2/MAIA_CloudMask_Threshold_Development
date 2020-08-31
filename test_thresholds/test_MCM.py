@@ -75,7 +75,7 @@ DTT_WI, DTT_NDVI, DTT_NDSI, DTT_VIS_Ref, DTT_NIR_Ref, DTT_SVI, DTT_Cirrus =\
                                                 DTT[:,:,4],\
                                                 DTT[:,:,5],\
                                                 DTT[:,:,6]
-
+print(len(SVI[SVI=-999]) - len(scene_type_identifier[scene_type_identifier == -9]) )
 #plotting*******************************************************************
 print('Commence Plotting Output')
 plt.figure(6)
