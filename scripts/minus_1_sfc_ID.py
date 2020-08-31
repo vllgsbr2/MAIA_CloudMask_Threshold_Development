@@ -59,6 +59,10 @@ def make_SID_MCM_rdy(home_og, home):
     for i, sfc_ID_path in enumerate(sfc_ID_paths):
         with Dataset(home + sfc_ID_path, 'r') as nc_sfc_ID:
             sfc_IDs_read_mod[:,:,i] = nc_sfc_ID.variables['surface_ID'][:,:]
+    im=plt.imshow(sfc_IDs_read_mod[:,:,0], cmap='jet', vmax=11)
+    im.cmap.set_over('k')
+    plt.show()
+    sys.exit()
 
 
 if __name__ == '__main__':
