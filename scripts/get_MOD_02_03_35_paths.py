@@ -22,7 +22,7 @@ def get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt):
             if not os.path.exists(k):
                 print(count, k, ' DNE')
                 count_DNE += 1
-        print(count_DNE, total)
+        # print(count_DNE, total)
 
 
         return MOD02_paths, MOD03_paths, MOD35_paths
