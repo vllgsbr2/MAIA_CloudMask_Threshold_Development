@@ -34,7 +34,7 @@ def make_SID_MCM_rdy(home_og, home):
     #set sfcID 3 to 13 to 0 to 10
     sfc_IDs_mod[sfc_IDs >=3]  = sfc_IDs_mod[sfc_IDs >=3] - 3
     #set invalid to -999
-    sfc_IDs_mod[sfc_IDs == 2] = -999
+    sfc_IDs_mod[sfc_IDs == 2] = np.nan
     #set coastline to 11
     sfc_IDs_mod[sfc_IDs == 1] = 11
 
