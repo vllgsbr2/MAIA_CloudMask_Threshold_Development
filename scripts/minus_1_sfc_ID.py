@@ -75,6 +75,8 @@ if __name__ == '__main__':
 
     PTA      = config['current PTA']['PTA']
     # PTA_path = config['PTAs'][PTA]
+    if PTA == 'LA':
+        PTA = 'LosAngeles'
 
     home        = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/{}/'.format(PTA)
     destination = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/{}/Surface_IDs/'.format(PTA)
