@@ -20,9 +20,23 @@ def make_SID_MCM_rdy(home_og, home):
             sfc_IDs[:,:,i] = nc_sfc_ID.variables['surface_ID'][:,:]
             print(sfc_IDs[:,:,i].max())
 
+    # 0 - Water
+    # 1 - Coastline
+    # 2 - Not-enough-sample
+    # 3 - Darkest
+    # .
+    # .
+    # .
+    # 13- Brightest
+
     #modify the surface ID in memory
-    sfc_IDs_mod = sfc_IDs - 1
-    sfc_IDs_mod[sfc_IDs_mod == -1] = 12
+    sfc_IDs_mod = np.copy(sfc_IDs)
+    #set sfcID 3 to 13 to 0 to 10
+    sfc_IDs_mod[sfc_IDs >=3]  = sfc_IDs_mod[sfc_IDs >=3] - 3
+    #set invalid to -999
+    sfc_IDs_mod[sfc_IDs == 2] = -999
+    #set coastline to 11
+    sfc_IDs_mod[sfc_IDs == 1] = 11
 
     im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='jet', vmax=11)
     im.cmap.set_over('k')
