@@ -268,8 +268,9 @@ if __name__ == '__main__':
             config = configparser.ConfigParser()
             config.read(config_home_path+'/test_config.txt')
 
-            PTA_path = config['PTAs']['LA']
             PTA      = config['current PTA']['PTA']
+            PTA_path = config['PTAs'][PTA]
+
 
             #open database to read
             database_path  = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])

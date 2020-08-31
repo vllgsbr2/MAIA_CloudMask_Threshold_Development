@@ -1,6 +1,6 @@
 [current PTA]
 #you can choose PTA from the PTAs section below
-PTA: LA
+PTA: Rome
 
 [home]
 home: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev
