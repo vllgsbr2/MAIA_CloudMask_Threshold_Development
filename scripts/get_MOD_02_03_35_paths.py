@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     #home     = config['home']['home']
     PTA      = config['current PTA']['PTA']
-    PTA_path = config['PTAs'][PTA
+    PTA_path = config['PTAs'][PTA]
 
     MODXX_home = PTA_path + '/' + config['supporting directories']['MODXX_paths_lists']
     MOD02_txt = MODXX_home + '/MOD02_paths.txt'
