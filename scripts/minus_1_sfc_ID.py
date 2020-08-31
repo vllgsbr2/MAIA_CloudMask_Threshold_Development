@@ -55,6 +55,6 @@ if __name__ == '__main__':
     PTA      = config['current PTA']['PTA']
     PTA_path = config['PTAs'][PTA]
 
-    home = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/Rome'
+    home = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/Rome/'
     destination    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Rome/Surface_IDs/'
     make_SID_MCM_rdy(home, destination)
