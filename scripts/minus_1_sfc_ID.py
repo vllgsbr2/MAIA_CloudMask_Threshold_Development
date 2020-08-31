@@ -51,6 +51,7 @@ def make_SID_MCM_rdy(home_og, home):
 
     #edit copied surface IDs files with new surface ID
     sfc_ID_paths = np.sort(np.array(os.listdir(home)))
+    sfc_ID_paths = [x for x in sfc_ID_paths if x[:10] == 'surfaceID_']
 
     for i, sfc_ID_path in enumerate(sfc_ID_paths):
         with Dataset(home + sfc_ID_path, 'r+') as nc_sfc_ID:
