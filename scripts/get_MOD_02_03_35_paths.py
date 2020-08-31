@@ -10,14 +10,20 @@ def get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt):
         MOD35_paths = np.sort([path[:-1] for path in txt_MOD35_files])
 
     if len(MOD02_paths) == len(MOD03_paths) and len(MOD02_paths) == len(MOD35_paths):
-        for count, (i,j,k) in enumerate(zip(MOD02_paths, MOD03_paths, MOD35_paths)):
+        total = len(MOD02_paths)
+        count_DNE = 0
+        for i,j,k in zip(MOD02_paths, MOD03_paths, MOD35_paths):
             if not os.path.exists(i):
                 print(count, i, ' DNE')
+                count_DNE += 1
             if not os.path.exists(j):
                 print(count, j, ' DNE')
+                count_DNE += 1
             if not os.path.exists(k):
                 print(count, k, ' DNE')
-        print(count)
+                count_DNE += 1
+        print(count_DNE, total)
+
 
         return MOD02_paths, MOD03_paths, MOD35_paths
     else:
