@@ -529,9 +529,9 @@ def get_test_determination(observable_level_parameter, observable_data,\
             TA  = OLP[not_fillVal_idx[0], 3][0]
             DOY = OLP[not_fillVal_idx[0], 5][0]
 
-            #put 0 index where OLP is equal to -999 to not raise an index error
+            #put 0 index where OLP is < 0 to not raise an index error
             #then we will go back and mask the invalid thresholds as -999
-            fillVal_idx = np.where(OLP==-999)
+            fillVal_idx = np.where(OLP < 0)
             OLP[fillVal_idx] = 0
 
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
