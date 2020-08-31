@@ -18,7 +18,7 @@ def make_SID_MCM_rdy(home_og, home):
     for i, sfc_ID_path in enumerate(sfc_ID_paths):
         with Dataset(home_og + sfc_ID_path, 'r') as nc_sfc_ID:
             sfc_IDs[:,:,i] = nc_sfc_ID.variables['surface_ID'][:,:]
-            print(sfc_IDs[:,:,i].max())
+            # print(sfc_IDs[:,:,i].max())
 
     # 0 - Water
     # 1 - Coastline
@@ -40,10 +40,10 @@ def make_SID_MCM_rdy(home_og, home):
     #set water (0) to 12
     sfc_IDs_mod[sfc_IDs == 0] = 12
 
-    im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='jet', vmax=11)
-    im.cmap.set_over('k')
-    plt.show()
-    sys.exit()
+    # im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='jet', vmax=11)
+    # im.cmap.set_over('k')
+    # plt.show()
+    # sys.exit()
 
     #copy files into new destination
     os.system('cp {}/* {}/'.format(home_og, home))
