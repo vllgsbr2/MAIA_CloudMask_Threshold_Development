@@ -37,6 +37,8 @@ def make_SID_MCM_rdy(home_og, home):
     sfc_IDs_mod[sfc_IDs == 2] = np.nan
     #set coastline to 11
     sfc_IDs_mod[sfc_IDs == 1] = 11
+    #set water (0) to 12
+    sfc_IDs_mod[sfc_IDs == 0] = 12
 
     im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='jet', vmax=11)
     im.cmap.set_over('k')
