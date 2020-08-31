@@ -286,6 +286,7 @@ if __name__ == '__main__':
     import mpi4py.MPI as MPI
     import configparser
     import tables
+    from get_MOD_02_03_35_paths import get_MODIS_file_paths
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
@@ -303,24 +304,37 @@ if __name__ == '__main__':
             PTA      = config['current PTA']['PTA']
             PTA_path = config['PTAs'][PTA]
 
-            MODXX      = config['supporting directories']['MODXX']
-            MOD02_path = '{}/{}{}'.format(PTA_path, MODXX, '02')
-            MOD03_path = '{}/{}{}'.format(PTA_path, MODXX, '03')
-            MOD35_path = '{}/{}{}'.format(PTA_path, MODXX, '35')
+            if PTA == 'LosAngeles':
+                MODXX      = config['supporting directories']['MODXX']
+                MOD02_path = '{}/{}{}'.format(PTA_path, MODXX, '02')
+                MOD03_path = '{}/{}{}'.format(PTA_path, MODXX, '03')
+                MOD35_path = '{}/{}{}'.format(PTA_path, MODXX, '35')
 
-            #grab files names for PTA and sort them
-            filename_MOD_02 = np.sort(np.array(os.listdir(MOD02_path)))
-            filename_MOD_03 = np.sort(np.array(os.listdir(MOD03_path)))
-            filename_MOD_35 = np.sort(np.array(os.listdir(MOD35_path)))
+                #grab files names for PTA and sort them
+                filename_MOD_02 = np.sort(np.array(os.listdir(MOD02_path)))
+                filename_MOD_03 = np.sort(np.array(os.listdir(MOD03_path)))
+                filename_MOD_35 = np.sort(np.array(os.listdir(MOD35_path)))
 
-            #grab time stamp (YYYYDDD.HHMM) to name each group after the granule
-            #it comes from
-            filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
+                #grab time stamp (YYYYDDD.HHMM) to name each group after the granule
+                #it comes from
+                filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
 
-            #add full path to file
-            filename_MOD_02 = [MOD02_path + '/' + x for x in filename_MOD_02]
-            filename_MOD_03 = [MOD03_path + '/' + x for x in filename_MOD_03]
-            filename_MOD_35 = [MOD35_path + '/' + x for x in filename_MOD_35]
+                #add full path to file
+                filename_MOD_02 = [MOD02_path + '/' + x for x in filename_MOD_02]
+                filename_MOD_03 = [MOD03_path + '/' + x for x in filename_MOD_03]
+                filename_MOD_35 = [MOD35_path + '/' + x for x in filename_MOD_35]
+
+            else:
+
+                MODXX_home = PTA_path + '/' + config['supporting directories']['MODXX_paths_lists']
+                MOD02_txt = MODXX_home + '/MOD02_paths.txt'
+                MOD03_txt = MODXX_home + '/MOD03_paths.txt'
+                MOD35_txt = MODXX_home + '/MOD35_paths.txt'
+
+                filename_MOD_02,\
+                filename_MOD_03,\
+                filename_MOD_35 = get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt)
+
 
             #initialize global constants outside of the loop
             fieldname = ['EV_250_RefSB', 'EV_250_Aggr1km_RefSB',\

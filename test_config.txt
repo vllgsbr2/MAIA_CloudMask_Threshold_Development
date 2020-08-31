@@ -1,12 +1,12 @@
 [current PTA]
 #you can choose PTA from the PTAs section below
-PTA: LosAngeles
+PTA: Rome
 
 [home]
 home: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev
 
 [PTAs]
-LosAngeles          : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles
+LosAngeles  : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles
 Beijing     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Beijing
 Barcelona   : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Barcelona
 AddisAbaba  : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/AddisAbaba
@@ -21,6 +21,7 @@ Johannesburg: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Johannesbur
 
 [supporting directories]
 MODXX             : PTA_MODIS_files/MOD
+MODXX_paths_lists : PTA_MODIS_files/paths_lists
 Database          : Database
 Dataset_Diagnostic: Database_Diagnostics
 Surface_IDs       : Surface_IDs
@@ -36,7 +37,7 @@ conf_matx_group   : results/conf_matx_group
 scene_accuracy    : results/scene_accuracy
 
 [PTA lat/lon grid files]
-LosAngeles          : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_USA_LosAngeles.h5
+LosAngeles  : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_USA_LosAngeles.h5
 Beijing     : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_CHN_Beijing.h5
 Barcelona   : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ESP_Barcelona.h5
 AddisAbaba  : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ETH_AddisAbaba.h5
@@ -50,7 +51,7 @@ Boston      : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grid
 Johannesburg: /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_ZAF_Johannesburg.h5
 
 [Target Area Integer]
-LosAngeles          : 0
+LosAngeles  : 0
 Beijing     : 1
 Barcelona   : 2
 AddisAbaba  : 3
