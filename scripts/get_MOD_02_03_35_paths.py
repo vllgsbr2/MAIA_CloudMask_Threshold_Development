@@ -1,6 +1,6 @@
 def get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt):
     import numpy as np
-
+    import os
     with open(MOD02_txt, 'r') as txt_MOD02_files,\
          open(MOD03_txt, 'r') as txt_MOD03_files,\
          open(MOD35_txt, 'r') as txt_MOD35_files :
