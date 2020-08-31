@@ -74,8 +74,8 @@ if __name__ == '__main__':
     config.read(config_home_path+'/test_config.txt')
 
     PTA      = config['current PTA']['PTA']
-    PTA_path = config['PTAs'][PTA]
+    # PTA_path = config['PTAs'][PTA]
 
-    home = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/Rome/'
-    destination    = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/Rome/Surface_IDs/'
+    home        = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/{}/'.format(PTA)
+    destination = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/{}/Surface_IDs/'.format(PTA)
     make_SID_MCM_rdy(home, destination)
