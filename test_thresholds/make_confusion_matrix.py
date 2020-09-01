@@ -220,10 +220,11 @@ if __name__ == '__main__':
             PTA_path      = config['PTAs'][PTA]
             Target_Area_X = int(config['Target Area Integer'][PTA])
 
-            calc_scene_or_group_accur = True
+            calc_scene  = True
+            group_accur = True
             DOY_bin = rank
 
-            if calc_scene_or_group_accur:
+            if calc_scene:
                 #scene confusion matrix ****************************************
                 #define paths for the three databases
                 MOD_CM_path          = PTA_path + '/' + config['supporting directories']['MCM_Input']
@@ -232,7 +233,7 @@ if __name__ == '__main__':
 
                 scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_path)
 
-            else:
+            if group_accur:
                 #bin confusion matrix ******************************************
                 grouped_path   = PTA_path + '/' + config['supporting directories']['combined_group']
                 thresh_path    = PTA_path + '/' + config['supporting directories']['thresh']
