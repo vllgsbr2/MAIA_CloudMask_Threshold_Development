@@ -220,36 +220,36 @@ if __name__ == '__main__':
             PTA_path      = config['PTAs'][PTA]
             Target_Area_X = int(config['Target Area Integer'][PTA])
 
-            calc_scene_or_group_accur = False
+            # calc_scene_or_group_accur = False
             DOY_bin = rank
 
-            if calc_scene_or_group_accur:
-                #scene confusion matrix ****************************************
-                #define paths for the three databases
-                MOD_CM_path          = PTA_path
-                MAIA_CM_path         = PTA_path + '/' + config['supporting directories']['MCM_Output']
-                conf_matx_scene_path = PTA_path + '/' + config['supporting directories']['conf_matx_scene']
+            # if calc_scene_or_group_accur:
+            #scene confusion matrix ****************************************
+            #define paths for the three databases
+            MOD_CM_path          = PTA_path
+            MAIA_CM_path         = PTA_path + '/' + config['supporting directories']['MCM_Output']
+            conf_matx_scene_path = PTA_path + '/' + config['supporting directories']['conf_matx_scene']
 
-                scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_path)
+            scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_path)
 
-            else:
-                #bin confusion matrix ******************************************
-                grouped_path   = PTA_path + '/' + config['supporting directories']['combined_group']
-                thresh_path    = PTA_path + '/' + config['supporting directories']['thresh']
-                conf_matx_path = PTA_path + '/' + config['supporting directories']['conf_matx_group']
+            # else:
+            #bin confusion matrix ******************************************
+            grouped_path   = PTA_path + '/' + config['supporting directories']['combined_group']
+            thresh_path    = PTA_path + '/' + config['supporting directories']['thresh']
+            conf_matx_path = PTA_path + '/' + config['supporting directories']['conf_matx_group']
 
-                grouped_files   = [grouped_path   + '/' + x for x in np.sort(os.listdir(grouped_path))]
-                thresh_files    = [thresh_path    + '/' + x for x in np.sort(os.listdir(thresh_path))]
+            grouped_files   = [grouped_path   + '/' + x for x in np.sort(os.listdir(grouped_path))]
+            thresh_files    = [thresh_path    + '/' + x for x in np.sort(os.listdir(thresh_path))]
 
-                conf_matx_filepath  = '{}/conf_matx_group_DOY_bin_{:02d}'.format(conf_matx_path, DOY_bin)
+            conf_matx_filepath  = '{}/conf_matx_group_DOY_bin_{:02d}'.format(conf_matx_path, DOY_bin)
 
-                num_land_sfc_types = 12
+            num_land_sfc_types = 12
 
-                with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
-                     h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
-                     h5py.File(conf_matx_filepath     , 'w') as hf_confmatx:
+            with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
+                 h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
+                 h5py.File(conf_matx_filepath     , 'w') as hf_confmatx:
 
-                    group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin, Target_Area_X)
+                group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin, Target_Area_X)
 
 
 
