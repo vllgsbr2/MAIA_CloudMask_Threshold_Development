@@ -226,7 +226,7 @@ if __name__ == '__main__':
             if calc_scene_or_group_accur:
                 #scene confusion matrix ****************************************
                 #define paths for the three databases
-                MOD_CM_path          = PTA_path
+                MOD_CM_path          = PTA_path + '/' + config['supporting directories']['MCM_Input']
                 MAIA_CM_path         = PTA_path + '/' + config['supporting directories']['MCM_Output']
                 conf_matx_scene_path = PTA_path + '/' + config['supporting directories']['conf_matx_scene']
 
