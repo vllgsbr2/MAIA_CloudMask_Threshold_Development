@@ -161,16 +161,17 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
 
 
         #compare with CM; cloudy==0, clear==1
-        MOD_CM = cloud_mask
+        MOD_CM  = cloud_mask
         MAIA_CM = cloud_mask_MAIA
         #both return cloudy
         true      = np.where((MAIA_CM == 0) & (MOD_CM == 0))[0].sum()
         #both return clear
         false     = np.where((MAIA_CM == 1) & (MOD_CM != 0))[0].sum()
-        #MOD cloudy MAIA clear
-        false_neg = np.where((MAIA_CM == 1) & (MOD_CM == 0))[0].sum()
         #MOD clear MAIA cloudy
         false_pos = np.where((MAIA_CM == 0) & (MOD_CM != 0))[0].sum()
+        #MOD cloudy MAIA clear
+        false_neg = np.where((MAIA_CM == 1) & (MOD_CM == 0))[0].sum()
+
 
         #make result into confusion matrix; make nan into fill val -999
         conf_mat = np.array([true, false, false_pos, false_neg])
@@ -185,7 +186,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
 
         conf_mat_sum = conf_mat.sum()
         if conf_mat_sum != 0 and np.isnan(conf_mat_sum) == False:
-            accuracy[i] = (conf_mat[0]+conf_mat[1])/conf_mat.sum()
+            accuracy[i] = (conf_mat[0]+conf_mat[1])/conf_mat_sum
         else:
             accuracy[i] = np.nan
 
