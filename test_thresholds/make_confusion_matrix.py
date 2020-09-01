@@ -234,12 +234,14 @@ if __name__ == '__main__':
 
                 grouped_files   = [grouped_path   + '/' + x for x in np.sort(os.listdir(grouped_path))]
                 thresh_files    = [thresh_path    + '/' + x for x in np.sort(os.listdir(thresh_path))]
-                conf_matx_path  = [conf_matx_path + '/' + x for x in np.sort(os.listdir(conf_matx_path))]
+
+                conf_matx_filepath  = '{}_DOY_bin_{:02d}'.format(conf_matx_path, DOY_bin)
 
                 num_land_sfc_types = 12
+
                 with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
                      h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
-                     h5py.File(conf_matx_path[DOY_bin], 'w') as hf_confmatx:
+                     h5py.File(conf_matx_filepath     , 'w') as hf_confmatx:
 
                     group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin, Target_Area_X)
 
