@@ -183,7 +183,12 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
         except:
             hf_confmatx['confusion_matrix_{}'.format(bin_ID)][:] = conf_mat
 
-        accuracy[i] = (conf_mat[0]+conf_mat[1])/conf_mat.sum()
+        conf_mat_sum = conf_mat.sum()
+        if conf_mat_sum != 0 and np.isnan(conf_mat_sum) == False:
+            accuracy[i] = (conf_mat[0]+conf_mat[1])/conf_mat.sum()
+        else:
+            accuracy[i] = np.nan
+
         print('{},{},{},{}'.format(accuracy[i], conf_mat[0], conf_mat[1], conf_mat.sum()))
 
     # import matplotlib.pyplot as plt
