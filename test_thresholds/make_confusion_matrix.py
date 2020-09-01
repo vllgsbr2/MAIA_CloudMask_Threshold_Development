@@ -82,7 +82,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
     n   = 0
     OLP = np.zeros((num_groups, 4))
     for i, bins in enumerate(hf_group_keys):
-        #print(bins)
+        print(bins)
         OLP[i,:] = [int(bins[n+7:n+9])  ,\
                     int(bins[n+14:n+16]),\
                     int(bins[n+21:n+23]),\
