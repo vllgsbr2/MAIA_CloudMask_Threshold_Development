@@ -25,12 +25,12 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_p
     DOY_start   = DOY_end - 7
     time_stamps = [t for t in time_stamps if int(t[4:7]) >= DOY_start and int(t[4:7]) <= DOY_end]
 
-    with h5py.File('{}/conf_matx_scene_DOY_bin_{:02d}.HDF5'.format(conf_matx_scene_path, DOY_bin), 'w') as hf_scene_level_conf_matx:
+    with h5py.File('{}/conf_matx_scene_DOY_bin_{:02d}.h5'.format(conf_matx_scene_path, DOY_bin), 'w') as hf_scene_level_conf_matx:
 
         for time_stamp in time_stamps:
         #open file one at a time according to time stamp
-            with h5py.File('{}/test_JPL_data_{}.HDF5'.format(MOD_CM_path, time_stamp), 'r')  as hf_MOD_CM  ,\
-                 h5py.File('{}/{}/MCM_Output.HDF5'.format(MAIA_CM_path, time_stamp), 'r') as hf_MAIA_CM:
+            with h5py.File('{}/test_JPL_data_{}.h5'.format(MOD_CM_path, time_stamp), 'r')  as hf_MOD_CM  ,\
+                 h5py.File('{}/{}/MCM_Output.h5'.format(MAIA_CM_path, time_stamp), 'r') as hf_MAIA_CM:
 
                 MAIA_CM = hf_MAIA_CM['cloud_mask_output/final_cloud_mask'][()]#output files
                 MOD_CM  = hf_MOD_CM['MOD35_cloud_mask'][()]#input files
@@ -241,7 +241,7 @@ if __name__ == '__main__':
                 grouped_files   = [grouped_path   + '/' + x for x in np.sort(os.listdir(grouped_path))]
                 thresh_files    = [thresh_path    + '/' + x for x in np.sort(os.listdir(thresh_path))]
 
-                conf_matx_filepath  = '{}/conf_matx_group_DOY_bin_{:02d}'.format(conf_matx_path, DOY_bin)
+                conf_matx_filepath  = '{}/conf_matx_group_DOY_bin_{:02d}.h5'.format(conf_matx_path, DOY_bin)
 
                 num_land_sfc_types = 12
 
