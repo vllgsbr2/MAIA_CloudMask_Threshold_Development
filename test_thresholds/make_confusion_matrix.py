@@ -6,7 +6,7 @@ Purpose:
 Confusion matrix to evaluate the performance of the MAIA Cloud Mask
 '''
 
-def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
+def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_path):
     '''
     #now for a particular scene calculate the confusion matrix
     #Grab final cloud mask
@@ -19,14 +19,13 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
     #conf_matx_mask[MAIA_CM==-999] = -999
 
     #just some hous keeping to avoid redundent definitions
-    home        = MCM_Output_path
     time_stamps = os.listdir(MAIA_CM_path)
     #select time stamps in current DOY bin
     DOY_end     = (DOY_bin + 1)*8
     DOY_start   = DOY_end - 7
     time_stamps = [t for t in time_stamps if int(t[4:7]) >= DOY_start and int(t[4:7]) <= DOY_end]
 
-    with h5py.File('{}{}conf_matx_scene_DOY_bin_{:02d}.HDF5'.format(MCM_Output_path, 'conf_matx_scene_all_DOY/', DOY_bin), 'w') as hf_scene_level_conf_matx:
+    with h5py.File('{}/conf_matx_scene_DOY_bin_{:02d}.HDF5'.format(conf_matx_scene_path, DOY_bin), 'w') as hf_scene_level_conf_matx:
 
         for time_stamp in time_stamps:
         #open file one at a time according to time stamp
@@ -66,7 +65,7 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin):
                     hf_scene_level_conf_matx['confusion_matrix_table_{}'.format(time_stamp)][:] = conf_mat_table
                     hf_scene_level_conf_matx['confusion_matrix_mask_{}'.format(time_stamp)][:]  = conf_matx_mask
 
-def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin):
+def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin, Target_Area_X):
     '''
     need to grab bin to make olp from grouped data
     grab threshold for that bin; remember TA -> DOY -> (cos(SZA), VZA, RAZ, Scene_ID)
@@ -95,7 +94,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
     obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
     thresholds = np.empty((7,10,15,12,19))
     for i, obs_ in enumerate(obs_names):
-        path = 'TA_bin_01/DOY_bin_{:02d}/{}'.format(DOY_bin, obs_)
+        path = 'TA_bin_{}/DOY_bin_{:02d}/{}'.format(Target_Area_X, DOY_bin, obs_)
         thresholds[i] = hf_thresh[path][()]
 
     #define surface types by bin number
@@ -211,8 +210,9 @@ if __name__ == '__main__':
             config           = configparser.ConfigParser()
             config.read(config_home_path+'/test_config.txt')
 
-            PTA          = config['current PTA']['PTA']
-            PTA_path     = config['PTAs'][PTA]
+            PTA           = config['current PTA']['PTA']
+            PTA_path      = config['PTAs'][PTA]
+            Target_Area_X = int(config['Target Area Integer'][PTA])
 
             calc_scene_or_group_accur = False
             DOY_bin = rank
@@ -220,23 +220,14 @@ if __name__ == '__main__':
             if calc_scene_or_group_accur:
                 #scene confusion matrix ****************************************
                 #define paths for the three databases
-                # MOD_CM_path     = home + 'JPL_data_all_timestamps'#test_JPL_data_2018053.1740.HDF5
-                # MAIA_CM_path    = home + 'MCM_Output'#time stamp MCM_Output.HDF5
-                # MCM_Output_path = home
+                MOD_CM_path          = PTA_path
+                MAIA_CM_path         = PTA_path + '/' + config['MCM_Output']
+                conf_matx_scene_path = PTA_path + '/' + config['conf_matx_scene']
 
-                MOD_CM_path     = PTA_path
-                MAIA_CM_path    = PTA_path + '/' + config['MCM_Output']
-                MCM_Output_path = home
-
-                #fix these paths lol**************
-                scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, MCM_Output_path, DOY_bin)
+                scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_path)
 
             else:
                 #bin confusion matrix ******************************************
-                # grouped_path   = home + 'grouped_obs_and_CMs'
-                # thresh_path    = home + 'thresholds_all_DOY'
-                # conf_matx_path = home + 'conf_matx_group'
-
                 grouped_path   = PTA_path + '/' + config['combined_group']
                 thresh_path    = PTA_path + '/' + config['thresh']
                 conf_matx_path = PTA_path + '/' + config['conf_matx_group']
@@ -250,7 +241,7 @@ if __name__ == '__main__':
                      h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
                      h5py.File(conf_matx_path[DOY_bin], 'w') as hf_confmatx:
 
-                    group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin)
+                    group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types, DOY_bin, Target_Area_X)
 
 
 
