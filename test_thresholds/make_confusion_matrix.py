@@ -105,92 +105,95 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
 
     #iterate by group
     for i, bin_ID in enumerate(hf_group_keys):
-        #number of data points in current group/bin_ID
-        num_points = hf_group[bin_ID].shape[0]
+        #skip scene ID -9 since it has no threshold or validity as a group
+        if int(bins[n+45:n+47]) != -9:
 
-        #grab obs & CM of the current group
-        data = hf_group[bin_ID][()]
-        cloud_mask = data[:, 0]
-        obs        = data[:, 1:]
+            #number of data points in current group/bin_ID
+            num_points = hf_group[bin_ID].shape[0]
 
-        #calculate distance to threshold for all NDxI in the current group
-        DTT_NDxI = np.zeros((num_points, 2))
-        for j in range(1,3):
-            NDxI = obs[:,j]
-            T    = thresholds[j, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3]]
-            #put 0.001 instead of zero to avoid divide by zero error
-            if T==0:
-                T = 1e-3
-            DTT_NDxI[:,j-1] = (T - np.abs(NDxI)) / T
+            #grab obs & CM of the current group
+            data = hf_group[bin_ID][()]
+            cloud_mask = data[:, 0]
+            obs        = data[:, 1:]
 
-        #see if any obs trigger cloudy
-        #assume clear (i.e. 1), cloudy is 0
-        cloud_mask_MAIA = np.ones((num_points))
+            #calculate distance to threshold for all NDxI in the current group
+            DTT_NDxI = np.zeros((num_points, 2))
+            for j in range(1,3):
+                NDxI = obs[:,j]
+                T    = thresholds[j, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3]]
+                #put 0.001 instead of zero to avoid divide by zero error
+                if T==0:
+                    T = 1e-3
+                DTT_NDxI[:,j-1] = (T - np.abs(NDxI)) / T
 
-        #[WI_0, NDVI_1, NDSI_2, VIS_3, NIR_4, SVI_5, Cirrus_6]
-        #water = 12 / sunglint over water = 13/ snow =14 / land = 0-11
-        olp_temp = OLP[i,:]
-        thresh_temp = thresholds[:, olp_temp[0], olp_temp[1], olp_temp[2], olp_temp[3]]
-        for j in range(7):
-            for k in range(num_points):
-                #this is for whiteness since 0 is whiter than 1 and not applied over snow/ice or sunglint
-                if j==0 and thresh_temp[j] >= obs[k,0] and (olp_temp[3]!=snow and olp_temp[3]!=sun_glint):
-                    cloud_mask_MAIA[k] = 0
-                #DTT for NDxI. Must exceed 0
-                #NDVI everything but snow
-                elif j==1 and olp_temp[3] != snow and DTT_NDxI[k,0] >= 0:
-                    cloud_mask_MAIA[k] = 0
-                #NDSI only over snow
-                elif j==2 and olp_temp[3] ==snow and DTT_NDxI[k,1] >= 0:
-                    cloud_mask_MAIA[k] = 0
-                #VIS, NIR, Cirrus. Must exceed thresh
-                #VIS applied only over land
-                elif j==3 and olp_temp[3] < water and thresh_temp[j] <= obs[k,3]:
-                    cloud_mask_MAIA[k] = 0
-                #NIR only applied over water (no sunglint)
-                elif j==4 and olp_temp[3] == water and thresh_temp[j] <= obs[k,4]:
-                    cloud_mask_MAIA[k] = 0
-                #SVI applied over all surfaces when over 0. Must exceed thresh
-                elif j==5 and obs[k,5] >= 0.0 and thresh_temp[j] <= obs[k,5]:
-                    cloud_mask_MAIA[k] = 0
-                #j==6 for cirrus applied everywhere
-                elif j==6 and thresh_temp[j] <= obs[k,6]:
-                    cloud_mask_MAIA[k] = 0
-                else:
-                    pass
+            #see if any obs trigger cloudy
+            #assume clear (i.e. 1), cloudy is 0
+            cloud_mask_MAIA = np.ones((num_points))
 
-
-        #compare with CM; cloudy==0, clear==1
-        MOD_CM  = cloud_mask
-        MAIA_CM = cloud_mask_MAIA
-        #both return cloudy
-        true      = np.where((MAIA_CM == 0) & (MOD_CM == 0))[0].sum()
-        #both return clear
-        false     = np.where((MAIA_CM == 1) & (MOD_CM != 0))[0].sum()
-        #MOD clear MAIA cloudy
-        false_pos = np.where((MAIA_CM == 0) & (MOD_CM != 0))[0].sum()
-        #MOD cloudy MAIA clear
-        false_neg = np.where((MAIA_CM == 1) & (MOD_CM == 0))[0].sum()
+            #[WI_0, NDVI_1, NDSI_2, VIS_3, NIR_4, SVI_5, Cirrus_6]
+            #water = 12 / sunglint over water = 13/ snow =14 / land = 0-11
+            olp_temp = OLP[i,:]
+            thresh_temp = thresholds[:, olp_temp[0], olp_temp[1], olp_temp[2], olp_temp[3]]
+            for j in range(7):
+                for k in range(num_points):
+                    #this is for whiteness since 0 is whiter than 1 and not applied over snow/ice or sunglint
+                    if j==0 and thresh_temp[j] >= obs[k,0] and (olp_temp[3]!=snow and olp_temp[3]!=sun_glint):
+                        cloud_mask_MAIA[k] = 0
+                    #DTT for NDxI. Must exceed 0
+                    #NDVI everything but snow
+                    elif j==1 and olp_temp[3] != snow and DTT_NDxI[k,0] >= 0:
+                        cloud_mask_MAIA[k] = 0
+                    #NDSI only over snow
+                    elif j==2 and olp_temp[3] ==snow and DTT_NDxI[k,1] >= 0:
+                        cloud_mask_MAIA[k] = 0
+                    #VIS, NIR, Cirrus. Must exceed thresh
+                    #VIS applied only over land
+                    elif j==3 and olp_temp[3] < water and thresh_temp[j] <= obs[k,3]:
+                        cloud_mask_MAIA[k] = 0
+                    #NIR only applied over water (no sunglint)
+                    elif j==4 and olp_temp[3] == water and thresh_temp[j] <= obs[k,4]:
+                        cloud_mask_MAIA[k] = 0
+                    #SVI applied over all surfaces when over 0. Must exceed thresh
+                    elif j==5 and obs[k,5] >= 0.0 and thresh_temp[j] <= obs[k,5]:
+                        cloud_mask_MAIA[k] = 0
+                    #j==6 for cirrus applied everywhere
+                    elif j==6 and thresh_temp[j] <= obs[k,6]:
+                        cloud_mask_MAIA[k] = 0
+                    else:
+                        pass
 
 
-        #make result into confusion matrix; make nan into fill val -999
-        conf_mat = np.array([true, false, false_pos, false_neg])
-        conf_mat[np.isnan(conf_mat)==True] = -999
+            #compare with CM; cloudy==0, clear==1
+            MOD_CM  = cloud_mask
+            MAIA_CM = cloud_mask_MAIA
+            #both return cloudy
+            true      = np.where((MAIA_CM == 0) & (MOD_CM == 0))[0].sum()
+            #both return clear
+            false     = np.where((MAIA_CM == 1) & (MOD_CM != 0))[0].sum()
+            #MOD clear MAIA cloudy
+            false_pos = np.where((MAIA_CM == 0) & (MOD_CM != 0))[0].sum()
+            #MOD cloudy MAIA clear
+            false_neg = np.where((MAIA_CM == 1) & (MOD_CM == 0))[0].sum()
 
-        #save it back into group/threshold file
-        try:
-            dataset = hf_confmatx.create_dataset('confusion_matrix_{}'.format(bin_ID), data=conf_mat)
-        #dataset.attrs['label'] = ['both_cloudy, both_clear, MOD_cloud_MAIA_clear, MOD_clear_MAIA_cloudy']
-        except:
-            hf_confmatx['confusion_matrix_{}'.format(bin_ID)][:] = conf_mat
 
-        conf_mat_sum = conf_mat.sum()
-        if conf_mat_sum != 0 and np.isnan(conf_mat_sum) == False:
-            accuracy[i] = (conf_mat[0]+conf_mat[1])/conf_mat_sum
-        else:
-            accuracy[i] = np.nan
+            #make result into confusion matrix; make nan into fill val -999
+            conf_mat = np.array([true, false, false_pos, false_neg])
+            conf_mat[np.isnan(conf_mat)==True] = -999
 
-        print('{},{},{},{}'.format(accuracy[i], conf_mat[0], conf_mat[1], conf_mat.sum()))
+            #save it back into group/threshold file
+            try:
+                dataset = hf_confmatx.create_dataset('confusion_matrix_{}'.format(bin_ID), data=conf_mat)
+            #dataset.attrs['label'] = ['both_cloudy, both_clear, MOD_cloud_MAIA_clear, MOD_clear_MAIA_cloudy']
+            except:
+                hf_confmatx['confusion_matrix_{}'.format(bin_ID)][:] = conf_mat
+
+            conf_mat_sum = conf_mat.sum()
+            if conf_mat_sum != 0 and np.isnan(conf_mat_sum) == False:
+                accuracy[i] = (conf_mat[0]+conf_mat[1])/conf_mat_sum
+            else:
+                accuracy[i] = np.nan
+
+            print('{},{},{},{}'.format(accuracy[i], conf_mat[0], conf_mat[1], conf_mat_sum))
 
     # import matplotlib.pyplot as plt
     # plt.hist(accuracy, bins = 20)
