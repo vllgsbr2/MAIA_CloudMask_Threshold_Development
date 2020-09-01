@@ -221,16 +221,16 @@ if __name__ == '__main__':
                 #scene confusion matrix ****************************************
                 #define paths for the three databases
                 MOD_CM_path          = PTA_path
-                MAIA_CM_path         = PTA_path + '/' + config['MCM_Output']
-                conf_matx_scene_path = PTA_path + '/' + config['conf_matx_scene']
+                MAIA_CM_path         = PTA_path + '/' + config['supporting directories']['MCM_Output']
+                conf_matx_scene_path = PTA_path + '/' + config['supporting directories']['conf_matx_scene']
 
                 scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_path)
 
             else:
                 #bin confusion matrix ******************************************
-                grouped_path   = PTA_path + '/' + config['combined_group']
-                thresh_path    = PTA_path + '/' + config['thresh']
-                conf_matx_path = PTA_path + '/' + config['conf_matx_group']
+                grouped_path   = PTA_path + '/' + config['supporting directories']['combined_group']
+                thresh_path    = PTA_path + '/' + config['supporting directories']['thresh']
+                conf_matx_path = PTA_path + '/' + config['supporting directories']['conf_matx_group']
 
                 grouped_files   = [home + x for x in np.sort(os.listdir(grouped_path))]
                 thresh_files    = [home + x for x in np.sort(os.listdir(thresh_path))]
