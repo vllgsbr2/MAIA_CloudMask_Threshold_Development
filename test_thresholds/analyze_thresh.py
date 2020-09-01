@@ -250,7 +250,7 @@ def plot_thresh_vs_sfcID():
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
-    fill_val = -999
+    fill_val = -999.
 
     thresholds = []
     for i, obs in enumerate(thresh_dict):
@@ -282,7 +282,7 @@ def plot_thresh_vs_sfcID():
         boxplot_thresh_obs_i = []
         for sfcID_j in range(15):
             thresh_obs_i_sfcID_j = thresh_obs_i[sfcID_j, :]
-            filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[thresh_obs_i_sfcID_j >-10]#!= fill_val]
+            filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[thresh_obs_i_sfcID_j != fill_val]
             boxplot_thresh_obs_i.append(filtered_thresh_obs_i_sfcID_j)
             # if sfcID_j==13:
             #     print(boxplot_thresh_obs_i[sfcID_j])
