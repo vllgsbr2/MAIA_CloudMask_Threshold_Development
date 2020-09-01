@@ -232,9 +232,9 @@ if __name__ == '__main__':
                 thresh_path    = PTA_path + '/' + config['supporting directories']['thresh']
                 conf_matx_path = PTA_path + '/' + config['supporting directories']['conf_matx_group']
 
-                grouped_files   = [home + x for x in np.sort(os.listdir(grouped_path))]
-                thresh_files    = [home + x for x in np.sort(os.listdir(thresh_path))]
-                conf_matx_path  = [home + x for x in np.sort(os.listdir(conf_matx_path))]
+                grouped_files   = [PTA_path + '/' + x for x in np.sort(os.listdir(grouped_path))]
+                thresh_files    = [PTA_path + '/' + x for x in np.sort(os.listdir(thresh_path))]
+                conf_matx_path  = [PTA_path + '/' + x for x in np.sort(os.listdir(conf_matx_path))]
 
                 num_land_sfc_types = 12
                 with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
