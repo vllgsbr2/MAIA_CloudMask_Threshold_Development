@@ -83,10 +83,12 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
     OLP = np.zeros((num_groups, 4))
     for i, bins in enumerate(hf_group_keys):
         print(bins)
-        OLP[i,:] = [int(bins[n+7:n+9])  ,\
-                    int(bins[n+14:n+16]),\
-                    int(bins[n+21:n+23]),\
-                    int(bins[n+45:n+47]) ]
+        cosSZA   = int(bins[7:9])
+        VZA      = int(bins[14:16])
+        RAZ      = int(bins[21:23])
+        Scene_ID = int(bins[38:40])
+
+        OLP[i,:] = [cosSZA , VZA, RAZ, Scene_ID]
 
     OLP = OLP.astype(dtype=np.int)
 
@@ -106,7 +108,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
     #iterate by group
     for i, bin_ID in enumerate(hf_group_keys):
         #skip scene ID -9 since it has no threshold or validity as a group
-        if int(bins[n+45:n+47]) != -9:
+        if Scene_ID != -9:
 
             #number of data points in current group/bin_ID
             num_points = hf_group[bin_ID].shape[0]
@@ -225,6 +227,7 @@ if __name__ == '__main__':
 
             calc_scene  = True
             group_accur = True
+
             DOY_bin = rank
 
             if calc_scene:
