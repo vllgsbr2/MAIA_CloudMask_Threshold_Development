@@ -235,7 +235,7 @@ if __name__ == '__main__':
                 grouped_files   = [grouped_path   + '/' + x for x in np.sort(os.listdir(grouped_path))]
                 thresh_files    = [thresh_path    + '/' + x for x in np.sort(os.listdir(thresh_path))]
 
-                conf_matx_filepath  = '{}_DOY_bin_{:02d}'.format(conf_matx_path, DOY_bin)
+                conf_matx_filepath  = '{}/conf_matx_group_DOY_bin_{:02d}'.format(conf_matx_path, DOY_bin)
 
                 num_land_sfc_types = 12
 
