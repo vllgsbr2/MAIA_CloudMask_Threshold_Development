@@ -250,7 +250,7 @@ def plot_thresh_vs_sfcID():
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
-    fill_val = -999.
+    fill_val = -999.0
 
     thresholds = []
     for i, obs in enumerate(thresh_dict):
