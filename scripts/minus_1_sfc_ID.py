@@ -124,6 +124,6 @@ if __name__ == '__main__':
     # destination = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/{}/Surface_IDs/'.format(PTA)
     # make_SID_MCM_rdy(home, destination)
 
-    home        = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/{}/'.format(PTA)
-    destination = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/version1/'
+    home        = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/version1/'
+    destination = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/{}/Surface_IDs/'.format(PTA)
     make_SID_MCM_rdy_old(home, destination)
