@@ -30,7 +30,7 @@ def make_SID_MCM_rdy_old(home_og, home):
     sfc_IDs_mod[sfc_IDs ==-1]  = 12
 
     #copy files into new destination
-    os.system('cp {}/surfaceID* {}/'.format(home_og, home))
+    os.system('cp {}/surfaceID_Lo* {}/'.format(home_og, home))
 
     #edit copied surface IDs files with new surface ID
     sfc_ID_paths = np.sort(np.array(os.listdir(home)))
