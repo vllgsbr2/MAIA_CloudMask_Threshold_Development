@@ -168,8 +168,6 @@ def plot_thresh_hist():
             #choose kth surface type
             thresholds.append(check_thresh(obs)[:,:,:,k])
 
-            print(obs)#, len(t), len(t[t<0]))
-
             if i==0 or i>=3:
                 num_bins = num_bins_other
                 range_    = range_other
@@ -189,10 +187,13 @@ def plot_thresh_hist():
                 x1, x2   = range_ndxi
             x = np.arange(x1, x2, (x2-x1)/num_bins)
             a.plot(x, binned_thresholds[i], label='SID {:02d}'.format(k), c=color[k])
-            a.set_title('{}'.format(obs, k))
+            
+            if k==14:
+                a.set_title('{}'.format(obs, k))
+                a.legend()
 
-        #only 7 obs so lets turn 8th axis off
-        ax[1,3].axis('off')
+    #only 7 obs so lets turn 8th axis off
+    ax[1,3].axis('off')
     plt.legend()
     plt.show()
 
