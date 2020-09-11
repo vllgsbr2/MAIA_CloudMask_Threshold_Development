@@ -162,7 +162,8 @@ def plot_thresh_hist():
     num_SID = 15
     color    = cm.rainbow(np.linspace(0,1,num_SID))
 
-    for k in range(15):
+    for k in range(num_SID):
+        #collect thresholds for each obs for just 1 SID and bin them
         binned_thresholds = []
         for i, obs in enumerate(thresh_dict):
             #choose kth surface type
@@ -177,7 +178,7 @@ def plot_thresh_hist():
             binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
 
 
-
+        #plot thresh hist for each obs
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
             if i==0 or i>=3:
                 num_bins = num_bins_other
@@ -186,8 +187,8 @@ def plot_thresh_hist():
                 num_bins = num_bins_ndxi
                 x1, x2   = range_ndxi
             x = np.arange(x1, x2, (x2-x1)/num_bins)
-            a.plot(x, binned_thresholds[i], label='SID {:02d}'.format(k), c=color[k])
-            
+            a.plot(x, np.copy(binned_thresholds[i]), label='SID {:02d}'.format(k), c=color[k])
+
             if k==14:
                 a.set_title('{}'.format(obs, k))
                 a.legend()
