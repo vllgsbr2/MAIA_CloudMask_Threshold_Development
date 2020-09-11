@@ -182,7 +182,7 @@ def plot_thresh_hist():
                 x1, x2   = range_ndxi
             x = np.arange(x1, x2, (x2-x1)/num_bins)
             a.plot(x, binned_thresholds[i])
-            a.set_title(obs)
+            a.set_title('{} SID {:02d}'.format(obs, k))
 
         #only 7 obs so lets turn 8th axis off
         ax[1,3].axis('off')
