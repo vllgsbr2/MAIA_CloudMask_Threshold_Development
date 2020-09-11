@@ -155,7 +155,7 @@ def plot_thresh_hist():
     num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
                                      (range_ndxi[1]  - range_ndxi[0]))
 
-    for k in range(15):
+    for k in range(0,15):
         binned_thresholds = []
         for i, obs in enumerate(thresh_dict):
             #choose kth surface type
