@@ -88,8 +88,8 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
     for thresh_file in thresh_files:
         # print(thresh_file[-9:-3])
         with h5py.File(thresh_file, 'r') as hf_thresh:
-            DOY = list(hf_thresh['TA_bin_06'].keys())[0]
-            obs = list(hf_thresh['TA_bin_06/' + DOY].keys())
+            DOY = list(hf_thresh['TA_bin_00'].keys())[0]
+            obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
 
             thresh_path = '{}/{}/{}'.format('TA_bin_06', DOY,\
                                             obs[thresh_dict[which_thresh]])
@@ -486,9 +486,9 @@ if __name__ == '__main__':
 
     # check_neg_SVI_thresh()
     # check_neg_SVI_grouped()
-    # plot_thresh_hist()
+    plot_thresh_hist()
     # plot_thresh_vs_VZA()
-    plot_thresh_vs_sfcID()
+    # plot_thresh_vs_sfcID()
     # check_sunglint_thresh()
     # check_sunglint_flag_in_database()
     # check_sunglint_flag_in_grouped_cm_and_obs()
