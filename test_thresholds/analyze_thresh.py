@@ -95,11 +95,13 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
             thresh.append(hf_thresh[thresh_path][()])
 
     thresh = np.array(thresh)
-    thresh_no_DOY_dim = thresh[0]
-    for DOY in range(1, thresh.shape[0]):
-        thresh_no_DOY_dim = np.stack((thresh_no_DOY_dim, thresh[DOY]), axis=0)
 
-    return thresh_no_DOY_dim
+    return thresh #thresh (DOY, cos(SZA), VZA, RAZ, SID)
+    # thresh_no_DOY_dim = thresh[0]
+    # for DOY in range(1, thresh.shape[0]):
+    #     thresh_no_DOY_dim = np.stack((thresh_no_DOY_dim, thresh[DOY]), axis=0)
+
+    #return thresh_no_DOY_dim
 
             # if by_SFC_ID_or_nah:
             #     #axis 3 is sceneID. Store thresh when sceneID is valid for thresh
