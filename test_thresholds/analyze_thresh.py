@@ -100,7 +100,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
     for DOY in range(1, thresh.shape[0]):
         thresh_no_DOY_dim = np.concatenate((thresh_no_DOY_dim, thresh[DOY]), axis=0)
 
-    print('{} thresholds retrieved'.format(which_thresh))
+    # print('{} thresholds retrieved'.format(which_thresh))
 
 
 
