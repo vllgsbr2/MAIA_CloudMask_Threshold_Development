@@ -86,7 +86,6 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
 
     thresh = []
     for thresh_file in thresh_files:
-        # print(thresh_file[-9:-3])
         with h5py.File(thresh_file, 'r') as hf_thresh:
             DOY = list(hf_thresh['TA_bin_00'].keys())[0]
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
@@ -99,10 +98,6 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
     thresh_no_DOY_dim = thresh[0]
     for DOY in range(1, thresh.shape[0]):
         thresh_no_DOY_dim = np.concatenate((thresh_no_DOY_dim, thresh[DOY]), axis=0)
-
-    # print('{} thresholds retrieved'.format(which_thresh))
-
-
 
     return thresh_no_DOY_dim
 
@@ -148,7 +143,7 @@ def plot_thresh_hist():
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
-    thresholds     = []
+
     range_ndxi     = (-1.,1.)
     range_other    = (0. ,1.5)
     num_bins_ndxi  = 100
@@ -165,6 +160,7 @@ def plot_thresh_hist():
     for k in range(num_SID):
         #collect thresholds for each obs for just 1 SID and bin them
         binned_thresholds = []
+        thresholds        = []
         for i, obs in enumerate(thresh_dict):
             #choose kth surface type
             thresholds.append(check_thresh(obs)[:,:,:,k])
