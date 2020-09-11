@@ -155,6 +155,13 @@ def plot_thresh_hist():
     num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
                                      (range_ndxi[1]  - range_ndxi[0]))
 
+    #plot
+    f, ax = plt.subplots(ncols=4, nrows=2)
+    #get color cycle tool to plot rainbow ordered lines
+    from matplotlib.pyplot import cm
+    num_SID = 15
+    color    = cm.rainbow(np.linspace(0,1,num_SID))
+
     for k in range(15):
         binned_thresholds = []
         for i, obs in enumerate(thresh_dict):
@@ -171,7 +178,7 @@ def plot_thresh_hist():
                 range_    = range_ndxi
             binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
 
-        f, ax = plt.subplots(ncols=4, nrows=2)
+
 
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
             if i==0 or i>=3:
@@ -181,13 +188,13 @@ def plot_thresh_hist():
                 num_bins = num_bins_ndxi
                 x1, x2   = range_ndxi
             x = np.arange(x1, x2, (x2-x1)/num_bins)
-            a.plot(x, binned_thresholds[i])
-            a.set_title('{} SID {:02d}'.format(obs, k))
+            a.plot(x, binned_thresholds[i], label='SID {:02d}'.format(k), c=color[k])
+            a.set_title('{}'.format(obs, k))
 
         #only 7 obs so lets turn 8th axis off
         ax[1,3].axis('off')
-
-        plt.show()
+    plt.legend()
+    plt.show()
 
 def plot_thresh_vs_VZA():
     import matplotlib.pyplot as plt
