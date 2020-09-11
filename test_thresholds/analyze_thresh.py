@@ -155,7 +155,7 @@ def plot_thresh_hist():
     num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
                                      (range_ndxi[1]  - range_ndxi[0]))
 
-    for k in range(0,15):
+    for k in range(15):
         binned_thresholds = []
         for i, obs in enumerate(thresh_dict):
             #choose kth surface type
@@ -165,11 +165,11 @@ def plot_thresh_hist():
 
             if i==0 or i>=3:
                 num_bins = num_bins_other
-                range    = range_other
+                range_    = range_other
             else:
                 num_bins = num_bins_ndxi
-                range    = range_ndxi
-            binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range)[0])
+                range_    = range_ndxi
+            binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
 
         f, ax = plt.subplots(ncols=4, nrows=2)
 
