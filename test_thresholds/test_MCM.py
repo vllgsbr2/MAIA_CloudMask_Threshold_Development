@@ -24,7 +24,7 @@ sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories'
 # #old stuff
 # threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], 'old_SID_thresh/thresholds_DOY_113_to_120_bin_14.h5')
 # sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], 'old_SID/surfaceID_LosAngeles_120.nc')
-# Target_Area_X      = int(config['Target Area Integer'][PTA])
+Target_Area_X      = int(config['Target Area Integer'][PTA])
 #ROME
 # test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],'test_JPL_data_2010190.1020.h5')
 # threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], 'thresholds_DOY_185_to_192_bin_23.h5')
