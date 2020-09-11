@@ -97,7 +97,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
     thresh = np.array(thresh)
     thresh_no_DOY_dim = thresh[0]
     for DOY in range(1, thresh.shape[0]):
-        thresh_no_DOY_dim = np.concatenate((thresh_no_DOY_dim, thresh[DOY]), axis=1)
+        thresh_no_DOY_dim = np.stack((thresh_no_DOY_dim, thresh[DOY]), axis=0)
 
     return thresh_no_DOY_dim
 
@@ -163,7 +163,7 @@ def plot_thresh_hist():
         thresholds        = []
         for i, obs in enumerate(thresh_dict):
             #choose kth surface type
-            thresholds.append(check_thresh(obs)[:,:,:,k])
+            thresholds.append(check_thresh(obs)[:,:,:,:,k])
 
 
             if i==0 or i>=3:
