@@ -80,7 +80,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
 
     thresh_home  = config['supporting directories']['thresh']
     thresh_path = '{}/{}/'.format(PTA_path, thresh_home)
-    thresh_files = [thresh_path + x for x in os.listdir(thresh_path)]
+    thresh_files = [thresh_path + x for x in os.listdir(thresh_path) if x[:15]=='thresholds_DOY_']
 
     fill_val = -999
 
