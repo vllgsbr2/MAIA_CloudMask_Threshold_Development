@@ -174,10 +174,10 @@ def plot_thresh_hist():
                 num_bins = num_bins_ndxi
                 range_    = range_ndxi
             binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins)[0]) #, range=range_)[0])
-        print(np.shape(thresholds))
-        print(np.argwhere(np.array(thresholds) > 0.2))
+        # print(np.shape(thresholds))
+        # print(np.argwhere(np.array(thresholds) > 0.2))
 
-        temp_thresh = np.copy(binned_thresholds)
+        temp_thresh = binned_thresholds
         #plot thresh hist for each obs
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
             if i==0 or i>=3:
