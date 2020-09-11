@@ -91,7 +91,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
             DOY = list(hf_thresh['TA_bin_00'].keys())[0]
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
 
-            thresh_path = '{}/{}/{}'.format('TA_bin_06', DOY,\
+            thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY,\
                                             obs[thresh_dict[which_thresh]])
             thresh.append(hf_thresh[thresh_path][()])
 
