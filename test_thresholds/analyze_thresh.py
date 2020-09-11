@@ -164,7 +164,7 @@ def plot_thresh_hist():
         for i, obs in enumerate(thresh_dict):
             #choose kth surface type
             thresholds.append(check_thresh(obs)[:,:,:,k])
-            print(np.argwhere(thresholds > ))
+            print(np.argwhere(thresholds > 0.2))
 
             if i==0 or i>=3:
                 num_bins = num_bins_other
