@@ -155,37 +155,39 @@ def plot_thresh_hist():
     num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
                                      (range_ndxi[1]  - range_ndxi[0]))
 
-    binned_thresholds = []
-    for i, obs in enumerate(thresh_dict):
-        thresholds.append(check_thresh(obs)[:,:,:,12])#just take water type
+    for k in range(15):
+        binned_thresholds = []
+        for i, obs in enumerate(thresh_dict):
+            #choose kth surface type
+            thresholds.append(check_thresh(obs)[:,:,:,k])
 
-        print(obs)#, len(t), len(t[t<0]))
+            print(obs)#, len(t), len(t[t<0]))
 
-        if i==0 or i>=3:
-            num_bins = num_bins_other
-            range    = range_other
-        else:
-            num_bins = num_bins_ndxi
-            range    = range_ndxi
-        binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range)[0])
+            if i==0 or i>=3:
+                num_bins = num_bins_other
+                range    = range_other
+            else:
+                num_bins = num_bins_ndxi
+                range    = range_ndxi
+            binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range)[0])
 
-    f, ax = plt.subplots(ncols=4, nrows=2)
+        f, ax = plt.subplots(ncols=4, nrows=2)
 
-    for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-        if i==0 or i>=3:
-            num_bins = num_bins_other
-            x1, x2   = range_other
-        else:
-            num_bins = num_bins_ndxi
-            x1, x2   = range_ndxi
-        x = np.arange(x1, x2, (x2-x1)/num_bins)
-        a.plot(x, binned_thresholds[i])
-        a.set_title(obs)
+        for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+            if i==0 or i>=3:
+                num_bins = num_bins_other
+                x1, x2   = range_other
+            else:
+                num_bins = num_bins_ndxi
+                x1, x2   = range_ndxi
+            x = np.arange(x1, x2, (x2-x1)/num_bins)
+            a.plot(x, binned_thresholds[i])
+            a.set_title(obs)
 
-    #only 7 obs so lets turn 8th axis off
-    ax[1,3].axis('off')
+        #only 7 obs so lets turn 8th axis off
+        ax[1,3].axis('off')
 
-    plt.show()
+        plt.show()
 
 def plot_thresh_vs_VZA():
     import matplotlib.pyplot as plt
