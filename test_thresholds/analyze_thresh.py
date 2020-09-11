@@ -167,7 +167,6 @@ def plot_thresh_hist():
             #choose kth surface type
             thresholds.append(check_thresh(obs)[:,:,:,:,k])
 
-
             if i==0 or i>=3:
                 num_bins = num_bins_other
                 range_    = range_other
