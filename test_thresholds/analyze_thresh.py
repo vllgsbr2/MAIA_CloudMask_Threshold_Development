@@ -146,11 +146,7 @@ def plot_thresh_hist():
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
 
-    range_ndxi     = (-1.,1.)
-    range_other    = (0. ,1.5)
-    num_bins_ndxi  = 100
-    num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
-                                     (range_ndxi[1]  - range_ndxi[0]))
+
 
     #plot
     f, ax = plt.subplots(ncols=4, nrows=2)
@@ -167,6 +163,13 @@ def plot_thresh_hist():
             #choose kth surface type
             thresholds.append(check_thresh(obs)[:,:,:,:,k])
 
+            abs_max = np.max(np.abs(thresholds))
+            range_ndxi     = (-1*abs_max,abs_max)
+            range_other    = (0., abs_max)
+            num_bins_ndxi  = 100
+            num_bins_other = int(num_bins_ndxi * \
+            (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
+
             if i==0 or i>=3:
                 num_bins = num_bins_other
                 range_    = range_other
@@ -174,6 +177,7 @@ def plot_thresh_hist():
                 num_bins = num_bins_ndxi
                 range_    = range_ndxi
             binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
+
         # print(np.shape(thresholds))
         # print(np.argwhere(np.array(thresholds) > 0.2))
 
@@ -497,9 +501,9 @@ if __name__ == '__main__':
 
     # check_neg_SVI_thresh()
     # check_neg_SVI_grouped()
-    # plot_thresh_hist()
+    plot_thresh_hist()
     # plot_thresh_vs_VZA()
-    plot_thresh_vs_sfcID()
+    # plot_thresh_vs_sfcID()
     # check_sunglint_thresh()
     # check_sunglint_flag_in_database()
     # check_sunglint_flag_in_grouped_cm_and_obs()
