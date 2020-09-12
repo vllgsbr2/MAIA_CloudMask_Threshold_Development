@@ -20,17 +20,16 @@ def get_R(radiance, SZA, d, E_std_0b):
         2D narray -- BRF; same shape as radiance
     """
     #now filter out where cosSZA is too small or radiance is out of range
-    #with fill value
+    #with fill value (based on digital number)
     rad_min = 0
     rad_max = 32767
-    invalid_idx = np.where((np.cos(np.deg2rad(SZA)) <= 0.01) | \
-                         (radiance < rad_min) & (radiance > rad_max))
+    cosSZA = np.cos(np.deg2rad(SZA))
+    invalid_idx = np.where((cosSZA <= 0.01) | ((radiance < rad_min) & (radiance > rad_max)))
     radiance[invalid_idx] = -998
 
     #condition to not step on fill values when converting to BRF(R)
     valid_rad_idx = np.where((radiance >= rad_min) & (radiance <= rad_max))
-    radiance[valid_rad_idx] = ((np.pi * radiance * d**2)\
-                          / (np.cos(np.deg2rad(SZA)) * E_std_0b))[valid_rad_idx]
+    radiance[valid_rad_idx] = ((np.pi * radiance * d**2) / (cosSZA * E_std_0b))[valid_rad_idx]
     #just assign R to the memory of radiance to highlight conversion
     R = radiance
     return R

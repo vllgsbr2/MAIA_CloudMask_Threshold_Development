@@ -19,7 +19,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
     DOY_end   = (DOY_bin+1)*8
     DOY_start = DOY_end - 7
 
-    fill_val = -999
+    fill_val = -998
 
     num_samples_valid_hist = 0
 
@@ -51,13 +51,13 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
                 obs        = hf_group[bin_ID][:,1:]
 
-                clear_idx  = np.where((cloud_mask != 0) & (cloud_mask != -999))
+                clear_idx  = np.where((cloud_mask != 0) & (cloud_mask > fill_val))
                 clear_obs  = obs[clear_idx[0],:]
-                # clear_obs  = clear_obs[clear_obs != fill_val]
+                clear_obs  = clear_obs[clear_obs > fill_val]
 
-                cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask != -999))
+                cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask > fill_val))
                 cloudy_obs = obs[cloudy_idx[0],:]
-                # cloudy_obs = cloudy_obs[cloudy_obs != fill_val]
+                cloudy_obs = cloudy_obs[cloudy_obs > fill_val]
 
                 #if there isn't enough clear or cloudy obs, assign value to make threshold true
                 #if no clear, and need clear, assign threshold as least brightest cloudy
