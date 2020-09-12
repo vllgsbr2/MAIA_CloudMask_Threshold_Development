@@ -164,6 +164,7 @@ def plot_thresh_hist():
             thresholds.append(check_thresh(obs)[:,:,:,:,k])
 
             abs_max = np.max(np.abs(thresholds))
+            print(obs, np.min(thresholds),np.max(thresholds))
             range_ndxi     = (-1*abs_max,abs_max)
             range_other    = (0., abs_max)
             num_bins_ndxi  = 100
