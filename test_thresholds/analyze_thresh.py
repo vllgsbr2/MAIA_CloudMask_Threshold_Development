@@ -166,8 +166,12 @@ def plot_thresh_hist():
             temp_thresh = temp_thresh[temp_thresh > -998]
             thresholds.append(temp_thresh)
 
-            abs_max = np.max(np.abs(thresholds))
-            print(obs, np.min(thresholds),np.max(thresholds))
+            try:
+                abs_max = np.max(np.abs(thresholds))
+                print(obs, np.min(thresholds),np.max(thresholds))
+            except:
+                abs_max = 1
+
             range_ndxi     = (-1*abs_max,abs_max)
             range_other    = (0., abs_max)
             num_bins_ndxi  = 100
