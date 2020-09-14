@@ -162,7 +162,7 @@ def plot_thresh_hist():
         for i, obs in enumerate(thresh_dict):
             #choose kth surface type
             temp_thresh = check_thresh(obs)[:,:,:,:,k]
-            # temp_thresh[temp_thresh <= -998] = np.nan
+            temp_thresh[temp_thresh <= -998] = np.nan
             thresholds.append(temp_thresh)
 
             abs_max = np.max(np.abs(thresholds))
