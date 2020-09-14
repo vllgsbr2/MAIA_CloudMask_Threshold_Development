@@ -165,6 +165,7 @@ def plot_thresh_hist():
             # temp_thresh[temp_thresh <= -998] = np.nan
             # temp_thresh = temp_thresh[temp_thresh > -998]
             thresholds.append(temp_thresh)
+            print(temp_thresh[temp_thresh>-998])
 
             # try:
             #     abs_max = np.max(np.abs(thresholds))
