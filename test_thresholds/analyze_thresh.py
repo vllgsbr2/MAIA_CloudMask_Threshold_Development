@@ -194,7 +194,7 @@ def plot_thresh_hist():
         # print(np.shape(thresholds))
         # print(np.argwhere(np.array(thresholds) > 0.2))
 
-        temp_thresh = binned_thresholds
+        temp_thresh = binned_thresholds.reshape()
         land    = list(np.arange(11))
         water   = 12
         glint   = 13
@@ -205,15 +205,15 @@ def plot_thresh_hist():
             #edit hists based on applied obs applied as a func of sfc type
             print(i, np.shape(temp_thresh))
             if obs == 'WI':
-                temp_thresh = temp_thresh[land.append(water)]
+                temp_thresh = temp_thresh[i][land.append(water)]
             elif obs == 'NDVI':
-                temp_thresh = temp_thresh[land.append(water.append(glint))]
+                temp_thresh = temp_thresh[i][land.append(water.append(glint))]
             elif obs == 'NDSI':
-                temp_thresh = temp_thresh[snowice]
+                temp_thresh = temp_thresh[i][snowice]
             elif obs == 'VIS_Ref':
-                temp_thresh = temp_thresh[land]
+                temp_thresh = temp_thresh[i][land]
             elif obs == 'NIR_Ref':
-                temp_thresh = temp_thresh[water]
+                temp_thresh = temp_thresh[i][water]
             else:
                 pass
 
@@ -224,7 +224,7 @@ def plot_thresh_hist():
                 num_bins = num_bins_ndxi
                 x1, x2   = range_ndxi
             x = np.arange(x1, x2, (x2-x1)/num_bins)
-            a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=color[k])
+            a.plot(x, temp_thresh, label='SID {:02d}'.format(k), c=color[k])
 
             if k==14:
                 a.set_title('{}'.format(obs, k))
