@@ -195,13 +195,14 @@ def plot_thresh_hist():
         # print(np.argwhere(np.array(thresholds) > 0.2))
 
         temp_thresh = binned_thresholds
+        land    = list(np.arange(11))
+        water   = 12
+        glint   = 13
+        snowice = 14
+        
         #plot thresh hist for each obs
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
             #edit hists based on applied obs applied as a func of sfc type
-            land    = list(np.arange(11))
-            water   = 12
-            glint   = 13
-            snowice = 14
 
             if obs == 'WI':
                 temp_thresh = temp_thresh[land.append(water)]
