@@ -89,9 +89,11 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         np.nanpercentile(clean_clear_obs, 1)
 
                     #choose least white cloudy pixel as threshold if no clear obs
-                    else:
+                    elif clean_cloudy_obs.shape[0] > num_samples_valid_hist:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
                         clean_cloudy_obs.max()
+                    else:
+                        pass
 
                 #NDxI
                 #pick max from cloudy hist
@@ -112,7 +114,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                                         bin_idx[3]] = current_thresh
 
                     else:
-                        if clean_cloudy_obs.shape[0] > 0:
+                        if clean_cloudy_obs.shape[0] > num_samples_valid_hist:
                             current_thresh = clean_cloudy_obs.min()
                             hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                             bin_idx[3]] = current_thresh
