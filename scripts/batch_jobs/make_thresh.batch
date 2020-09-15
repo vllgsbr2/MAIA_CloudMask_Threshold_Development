@@ -11,8 +11,6 @@
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
 
-conda activate base_netcdf4
-
 echo run observable level parameter
 time mpirun -n 60 python calc_OLP.py >                 make_thresh_time_output.txt &
 
