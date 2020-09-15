@@ -163,7 +163,7 @@ def plot_thresh_hist():
             #choose kth surface type
             temp_thresh = check_thresh(obs)[:,:,:,:,k]
             # temp_thresh[temp_thresh <= -998] = np.nan
-            # temp_thresh = temp_thresh[temp_thresh > -998]
+            temp_thresh = temp_thresh[(temp_thresh > -998) & (temp_thresh < 32767)]
             thresholds.append(temp_thresh)
             # print(temp_thresh[temp_thresh>-998])
 
@@ -221,8 +221,6 @@ def plot_thresh_hist():
                 pass
 
             if to_plot_or_not_2_plot:
-                y = temp_thresh[i]
-                y = y[y > -998]
                 if i==0 or i>=3:
                     num_bins = num_bins_other
                     x1, x2   = range_other
