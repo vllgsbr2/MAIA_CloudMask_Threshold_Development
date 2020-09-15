@@ -194,7 +194,7 @@ def plot_thresh_hist():
         # print(np.shape(thresholds))
         # print(np.argwhere(np.array(thresholds) > 0.2))
 
-        temp_thresh = binned_thresholds.reshape()
+        temp_thresh = binned_thresholds
         land    = list(np.arange(11))
         water   = 12
         glint   = 13
