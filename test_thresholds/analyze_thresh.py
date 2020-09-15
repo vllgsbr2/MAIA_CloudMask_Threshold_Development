@@ -165,23 +165,23 @@ def plot_thresh_hist():
             # temp_thresh[temp_thresh <= -998] = np.nan
             # temp_thresh = temp_thresh[temp_thresh > -998]
             thresholds.append(temp_thresh)
-            print(temp_thresh[temp_thresh>-998])
+            # print(temp_thresh[temp_thresh>-998])
 
-            # try:
-            #     abs_max = np.max(np.abs(thresholds))
-            #     print(obs, np.min(thresholds),np.max(thresholds))
-            # except:
-            #     abs_max = 1
+            try:
+                abs_max = np.max(np.abs(thresholds))
+                print(obs, np.min(thresholds),np.max(thresholds))
+            except:
+                abs_max = 1
+
+            range_ndxi     = (-1*abs_max,abs_max)
+            range_other    = (0., abs_max)
+
+            # range_ndxi     = (-1, 1)
+            # range_other    = (0., 1.4)
             #
-            # range_ndxi     = (-1*abs_max,abs_max)
-            # range_other    = (0., abs_max)
-
-            range_ndxi     = (-1, 1)
-            range_other    = (0., 1.4)
-
-            num_bins_ndxi  = 100
-            num_bins_other = int(num_bins_ndxi * \
-            (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
+            # num_bins_ndxi  = 100
+            # num_bins_other = int(num_bins_ndxi * \
+            # (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
 
             if i==0 or i>=3:
                 num_bins = num_bins_other
@@ -197,6 +197,24 @@ def plot_thresh_hist():
         temp_thresh = binned_thresholds
         #plot thresh hist for each obs
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+            #edit hists based on applied obs applied as a func of sfc type
+            land = list(np.arange(11))
+            water = 12
+            glint =13
+            snowice = 14
+            if obs == 'WI':
+                temp_thresh = temp_thresh[land.append(water)]
+            elif obs == 'NDVI':
+                temp_thresh = temp_thresh[land.append(water.append(glint))]
+            elif obs == 'NDSI':
+                temp_thresh = temp_thresh[snowice]
+            elif obs == 'VIS_Ref':
+                temp_thresh = temp_thresh[land]
+            elif obs == 'NIR_Ref':
+                temp_thresh = temp_thresh[water]
+            else:
+                pass
+
             if i==0 or i>=3:
                 num_bins = num_bins_other
                 x1, x2   = range_other
