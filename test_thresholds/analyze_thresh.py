@@ -230,9 +230,9 @@ def plot_thresh_hist():
                 x = np.arange(x1, x2, (x2-x1)/num_bins)
                 a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=color[k])
 
-                if k==14:
-                    a.set_title('{}'.format(obs, k))
-                    a.legend()
+            if k==14:
+                a.set_title('{}'.format(obs))
+                a.legend()
 
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
