@@ -179,9 +179,9 @@ def plot_thresh_hist():
             # range_ndxi     = (-1, 1)
             # range_other    = (0., 1.4)
             #
-            # num_bins_ndxi  = 100
-            # num_bins_other = int(num_bins_ndxi * \
-            # (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
+            num_bins_ndxi  = 100
+            num_bins_other = int(num_bins_ndxi * \
+            (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
 
             if i==0 or i>=3:
                 num_bins = num_bins_other
