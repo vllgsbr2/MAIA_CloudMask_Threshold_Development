@@ -199,11 +199,11 @@ def plot_thresh_hist():
         water   = 12
         glint   = 13
         snowice = 14
-        
+
         #plot thresh hist for each obs
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
             #edit hists based on applied obs applied as a func of sfc type
-
+            print(i)
             if obs == 'WI':
                 temp_thresh = temp_thresh[land.append(water)]
             elif obs == 'NDVI':
