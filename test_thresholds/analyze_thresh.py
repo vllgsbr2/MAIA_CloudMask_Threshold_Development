@@ -196,39 +196,43 @@ def plot_thresh_hist():
 
         temp_thresh = binned_thresholds
         land    = list(np.arange(11))
-        water   = 12
-        glint   = 13
-        snowice = 14
+        water   = [12]
+        glint   = [13]
+        snowice = [14]
 
+        to_plot_or_not_2_plot = False
         #plot thresh hist for each obs
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
             #edit hists based on applied obs applied as a func of sfc type
             print(i, np.shape(temp_thresh))
-            if obs == 'WI':
-                temp_thresh = temp_thresh[i][land.append(water)]
-            elif obs == 'NDVI':
-                temp_thresh = temp_thresh[i][land.append(water.append(glint))]
-            elif obs == 'NDSI':
-                temp_thresh = temp_thresh[i][snowice]
-            elif obs == 'VIS_Ref':
-                temp_thresh = temp_thresh[i][land]
-            elif obs == 'NIR_Ref':
-                temp_thresh = temp_thresh[i][water]
+            if   obs == 'WI'      and (k in land or k in water):
+                to_plot_or_not_2_plot = True
+            elif obs == 'NDVI'    and (k in land or k in water or k in glint):
+                to_plot_or_not_2_plot = True
+            elif obs == 'NDSI'    and (k in snowice):
+                to_plot_or_not_2_plot = True
+            elif obs == 'VIS_Ref' and (k in land):
+                to_plot_or_not_2_plot = True
+            elif obs == 'NIR_Ref' and (k in water):
+
+            elif obs == 'Cirrus' or obs == 'SVI':
+                to_plot_or_not_2_plot = True
             else:
                 pass
 
-            if i==0 or i>=3:
-                num_bins = num_bins_other
-                x1, x2   = range_other
-            else:
-                num_bins = num_bins_ndxi
-                x1, x2   = range_ndxi
-            x = np.arange(x1, x2, (x2-x1)/num_bins)
-            a.plot(x, temp_thresh, label='SID {:02d}'.format(k), c=color[k])
+            if to_plot_or_not_2_plot:
+                if i==0 or i>=3:
+                    num_bins = num_bins_other
+                    x1, x2   = range_other
+                else:
+                    num_bins = num_bins_ndxi
+                    x1, x2   = range_ndxi
+                x = np.arange(x1, x2, (x2-x1)/num_bins)
+                a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=color[k])
 
-            if k==14:
-                a.set_title('{}'.format(obs, k))
-                a.legend()
+                if k==14:
+                    a.set_title('{}'.format(obs, k))
+                    a.legend()
 
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
