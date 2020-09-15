@@ -191,9 +191,6 @@ def plot_thresh_hist():
                 range_    = range_ndxi
             binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
 
-        # print(np.shape(thresholds))
-        # print(np.argwhere(np.array(thresholds) > 0.2))
-
         temp_thresh = binned_thresholds
         land    = list(np.arange(11))
         water   = [12]
@@ -204,7 +201,6 @@ def plot_thresh_hist():
         #plot thresh hist for each obs
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
             #edit hists based on applied obs applied as a func of sfc type
-            print(i, np.shape(temp_thresh))
             if   obs == 'WI'      and (k in land or k in water):
                 to_plot_or_not_2_plot = True
             elif obs == 'NDVI'    and (k in land or k in water or k in glint):
