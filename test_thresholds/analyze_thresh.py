@@ -203,7 +203,7 @@ def plot_thresh_hist():
         #plot thresh hist for each obs
         for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
             #edit hists based on applied obs applied as a func of sfc type
-            print(i)
+            print(i, np.shape(temp_thresh))
             if obs == 'WI':
                 temp_thresh = temp_thresh[land.append(water)]
             elif obs == 'NDVI':
