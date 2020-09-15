@@ -214,7 +214,7 @@ def plot_thresh_hist():
             elif obs == 'VIS_Ref' and (k in land):
                 to_plot_or_not_2_plot = True
             elif obs == 'NIR_Ref' and (k in water):
-
+                to_plot_or_not_2_plot = True
             elif obs == 'Cirrus' or obs == 'SVI':
                 to_plot_or_not_2_plot = True
             else:
