@@ -155,85 +155,87 @@ def plot_thresh_hist():
     num_SID = 15
     color    = cm.rainbow(np.linspace(0,1,num_SID))
 
-    for k in range(num_SID):
-        #collect thresholds for each obs for just 1 SID and bin them
-        binned_thresholds = []
-        thresholds        = []
-        for i, obs in enumerate(thresh_dict):
-            #choose kth surface type
-            temp_thresh = check_thresh(obs)[:,:,:,:,k]
-            # temp_thresh[temp_thresh <= -998] = np.nan
-            temp_thresh = temp_thresh[(temp_thresh > -998) & (temp_thresh < 32767)]
-            thresholds.append(temp_thresh)
-            # print(temp_thresh[temp_thresh>-998])
+    master_thrsh = check_thresh(obs)
+    for DOY_bin in range(46):
+        for k in range(num_SID):
+            #collect thresholds for each obs for just 1 SID and bin them
+            binned_thresholds = []
+            thresholds        = []
+            for i, obs in enumerate(thresh_dict):
+                #choose kth surface type
+                temp_thresh = master_thresh[DOY_bin,:,:,:,k]
+                # temp_thresh[temp_thresh <= -998] = np.nan
+                temp_thresh = temp_thresh[(temp_thresh > -998) & (temp_thresh < 32767)]
+                thresholds.append(temp_thresh)
+                # print(temp_thresh[temp_thresh>-998])
 
-            # try:
-            #     abs_max = np.max(np.abs(thresholds))
-            #     print(obs, np.min(thresholds),np.max(thresholds))
-            # except:
-            #     abs_max = 1
-            #
-            # range_ndxi     = (-1*abs_max,abs_max)
-            # range_other    = (0., abs_max)
+                # try:
+                #     abs_max = np.max(np.abs(thresholds))
+                #     print(obs, np.min(thresholds),np.max(thresholds))
+                # except:
+                #     abs_max = 1
+                #
+                # range_ndxi     = (-1*abs_max,abs_max)
+                # range_other    = (0., abs_max)
 
-            range_ndxi     = (-1, 1)
-            range_other    = (0., 1.4)
+                range_ndxi     = (-1, 1)
+                range_other    = (0., 1.4)
 
-            num_bins_ndxi  = 100
-            num_bins_other = int(num_bins_ndxi * \
-            (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
+                num_bins_ndxi  = 100
+                num_bins_other = int(num_bins_ndxi * \
+                (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
 
-            if i==0 or i>=3:
-                num_bins = num_bins_other
-                range_    = range_other
-            else:
-                num_bins = num_bins_ndxi
-                range_    = range_ndxi
-            binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
+                if i==0 or i>=3:
+                    num_bins = num_bins_other
+                    range_    = range_other
+                else:
+                    num_bins = num_bins_ndxi
+                    range_    = range_ndxi
+                binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
 
-        temp_thresh = binned_thresholds
-        land    = list(np.arange(11))
-        water   = [12]
-        glint   = [13]
-        snowice = [14]
+            temp_thresh = binned_thresholds
+            land    = list(np.arange(11))
+            water   = [12]
+            glint   = [13]
+            snowice = [14]
 
-        # to_plot_or_not_2_plot = False
-        #plot thresh hist for each obs
-        for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-            #edit hists based on applied obs applied as a func of sfc type
-            # if   obs == 'WI'      and (k in land or k in water):
-            #     to_plot_or_not_2_plot = True
-            # elif obs == 'NDVI'    and (k in land or k in water or k in glint):
-            #     to_plot_or_not_2_plot = True
-            # elif obs == 'NDSI'    and (k in snowice):
-            #     to_plot_or_not_2_plot = True
-            # elif obs == 'VIS_Ref' and (k in land):
-            #     to_plot_or_not_2_plot = True
-            # elif obs == 'NIR_Ref' and (k in water):
-            #     to_plot_or_not_2_plot = True
-            # elif obs == 'Cirrus' or obs == 'SVI':
-            #     to_plot_or_not_2_plot = True
-            # else:
-            #     pass
+            # to_plot_or_not_2_plot = False
+            #plot thresh hist for each obs
+            for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+                #edit hists based on applied obs applied as a func of sfc type
+                # if   obs == 'WI'      and (k in land or k in water):
+                #     to_plot_or_not_2_plot = True
+                # elif obs == 'NDVI'    and (k in land or k in water or k in glint):
+                #     to_plot_or_not_2_plot = True
+                # elif obs == 'NDSI'    and (k in snowice):
+                #     to_plot_or_not_2_plot = True
+                # elif obs == 'VIS_Ref' and (k in land):
+                #     to_plot_or_not_2_plot = True
+                # elif obs == 'NIR_Ref' and (k in water):
+                #     to_plot_or_not_2_plot = True
+                # elif obs == 'Cirrus' or obs == 'SVI':
+                #     to_plot_or_not_2_plot = True
+                # else:
+                #     pass
 
-            # if to_plot_or_not_2_plot:
-            if i==0 or i>=3:
-                num_bins = num_bins_other
-                x1, x2   = range_other
-            else:
-                num_bins = num_bins_ndxi
-                x1, x2   = range_ndxi
-            x = np.arange(x1, x2, (x2-x1)/num_bins)
-            a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=color[k])
+                # if to_plot_or_not_2_plot:
+                if i==0 or i>=3:
+                    num_bins = num_bins_other
+                    x1, x2   = range_other
+                else:
+                    num_bins = num_bins_ndxi
+                    x1, x2   = range_ndxi
+                x = np.arange(x1, x2, (x2-x1)/num_bins)
+                a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=color[k])
 
-            if k==14:
-                a.set_title('{}'.format(obs))
-                a.legend()
+                if k==14:
+                    a.set_title('{} DOY bin {:02d}'.format(obs, DOY_bin))
+                    a.legend()
 
-    #only 7 obs so lets turn 8th axis off
-    ax[1,3].axis('off')
-    plt.legend()
-    plt.show()
+        #only 7 obs so lets turn 8th axis off
+        ax[1,3].axis('off')
+        plt.legend()
+        plt.show()
 
 def plot_thresh_vs_VZA():
     import matplotlib.pyplot as plt
