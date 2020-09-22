@@ -56,17 +56,17 @@ for r in range(size):
                     if time_stamp == '2010197.1845':
                         print(high_cirrus_obs_idx)
                         # plt.imshow(cirrus_Ref, cmap='jet', vmin=0, vmax = 0.4)
-                        # plt.title(time_stamp+'1.38 microns BRF')
-                        # plt.title(time_stamp+'0.65 microns BRF')
+                        # plt.title(time_stamp+' 1.38 microns BRF')
+                        # plt.title(time_stamp+' 0.65 microns BRF')
                         # plt.imshow(vis_Ref, cmap='bone')
                         # plt.colorbar()
                         # plt.show()
 
                         f, ax = plt.subplots(ncols=2)
                         ax[0].imshow(cirrus_Ref, cmap='jet', vmin=0, vmax = 0.4)
-                        ax[0].title(time_stamp+'1.38 microns BRF')
+                        ax[0].set_title(time_stamp+' 1.38 microns BRF')
 
                         ax[1].imshow(cloud_Mask, cmap='binary')
-                        ax[1].title(time_stamp+'cloud mask')
+                        ax[1].set_title(time_stamp+' cloud mask')
 
                         plt.show()
