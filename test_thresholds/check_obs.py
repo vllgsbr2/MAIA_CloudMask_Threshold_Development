@@ -25,16 +25,16 @@ for r in range(size):
         time_stamps_high_ref = []
         # for obs_f in obs_files:
         obs_f = obs_files[r]
-            with h5py.File(obs_f, 'r') as hf_observables:
-                obs_keys = list(hf_observables.keys())
-                for time_stamp in obs_keys:
-                    cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
+        with h5py.File(obs_f, 'r') as hf_observables:
+            obs_keys = list(hf_observables.keys())
+            for time_stamp in obs_keys:
+                cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
 
-                    high_cirrus_obs_idx = np.where(cirrus_Ref > 0.7)
-                    cirrus_Ref          = cirrus_Ref[high_cirrus_obs_idx]
+                high_cirrus_obs_idx = np.where(cirrus_Ref > 0.7)
+                cirrus_Ref          = cirrus_Ref[high_cirrus_obs_idx]
 
-                    num_pix_high        = high_cirrus_obs_idx[0].shape[0]
-                    if num_pix_high > 0:
-                        high_ref_samples.append(cirrus_Ref)
-                        time_stamps_high_ref.append(time_stamp)
-                        print(time_stamp, num_pix_high)
+                num_pix_high        = high_cirrus_obs_idx[0].shape[0]
+                if num_pix_high > 0:
+                    high_ref_samples.append(cirrus_Ref)
+                    time_stamps_high_ref.append(time_stamp)
+                    print(time_stamp, num_pix_high)
