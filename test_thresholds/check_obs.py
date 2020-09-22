@@ -56,28 +56,35 @@ for r in range(size):
                         print(time_stamp, num_pix_high)
                     if time_stamp == '2010197.1845':
                         print(high_cirrus_obs_idx)
-                        # plt.imshow(cirrus_Ref, cmap='jet', vmin=0, vmax = 0.4)
-                        # plt.title(time_stamp+' 1.38 microns BRF')
-                        # plt.title(time_stamp+' 0.65 microns BRF')
-                        # plt.imshow(vis_Ref, cmap='bone')
-                        # plt.colorbar()
-                        # plt.show()
+
+                        import matplotlib.colors as matCol
+                        from matplotlib.colors import ListedColormap
+                        cmap = ListedColormap(['white', 'green', 'blue','black'])
+                        norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
 
                         f, ax = plt.subplots(ncols=2)
                         im0 = ax[0].imshow(cirrus_Ref, cmap='jet', vmin=0, vmax = 0.4)
                         ax[0].set_title(time_stamp+' 1.38 microns BRF')
                         im0.cmap.set_under('black')
 
-                        im1 = ax[1].imshow(cloud_Mask, cmap='binary')
+                        im1 = ax[1].imshow(cloud_Mask, cmap=cmap, norm=norm)
                         ax[1].set_title(time_stamp+' cloud mask')
+
+
 
                         divider0 = make_axes_locatable(ax[0])
                         cax0 = divider0.append_axes('right', size='5%', pad=0.05)
                         f.colorbar(im0, cax=cax0, orientation='vertical')
 
+
+
                         divider1 = make_axes_locatable(ax[1])
                         cax1 = divider1.append_axes('right', size='5%', pad=0.05)
-                        f.colorbar(im1, cax=cax1, orientation='vertical')
+                        cbar1 = f.colorbar(im1, cax=cax1, orientation='vertical')
+
+                        cbar1.set_ticks([0.5,1.5,2.5,3.5])
+                        cbar1.set_ticklabels(['cloudy', 'uncertain\nclear', \
+                                             'probably\nclear', 'confident\nclear'])
 
                         for a in ax:
                             a.set_yticks([])
