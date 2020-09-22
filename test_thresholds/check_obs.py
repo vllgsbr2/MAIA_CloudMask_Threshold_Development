@@ -24,7 +24,7 @@ for r in range(size):
         high_ref_samples = []
         time_stamps_high_ref = []
         # for obs_f in obs_files:
-        obs_f = obs_f[r]
+        obs_f = obs_files[r]
             with h5py.File(obs_f, 'r') as hf_observables:
                 obs_keys = list(hf_observables.keys())
                 for time_stamp in obs_keys:
