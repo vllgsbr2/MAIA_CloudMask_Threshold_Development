@@ -3,6 +3,7 @@ import mpi4py.MPI as MPI
 import os
 import numpy as np
 import configparser
+import matplotlib.pyplot as plt
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -31,11 +32,16 @@ for r in range(size):
                 cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
 
                 high_cirrus_obs_idx = np.where(cirrus_Ref > 0.4)
-                cirrus_Ref          = cirrus_Ref[high_cirrus_obs_idx]
+                cirrus_Ref_          = cirrus_Ref[high_cirrus_obs_idx]
 
                 num_pix_high        = high_cirrus_obs_idx[0].shape[0]
                 if num_pix_high > 0:
-                    high_ref_samples.append(cirrus_Ref)
+                    high_ref_samples.append(cirrus_Ref_)
                     time_stamps_high_ref.append(time_stamp)
                     # print(high_ref_samples)
                     print(time_stamp, num_pix_high)
+                if time_stamp == '2010192.1825'
+                    plt.imshow(cirrus_Ref, cmap='bone')
+                    plt.colorbar()
+                    plt.title(time_stamp, '1.38µm BRF')
+                    plt.show()
