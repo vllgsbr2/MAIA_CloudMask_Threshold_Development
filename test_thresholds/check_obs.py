@@ -63,10 +63,22 @@ for r in range(size):
                         # plt.show()
 
                         f, ax = plt.subplots(ncols=2)
-                        ax[0].imshow(cirrus_Ref, cmap='jet', vmin=0, vmax = 0.4)
+                        im0 = ax[0].imshow(cirrus_Ref, cmap='jet', vmin=0, vmax = 0.4)
                         ax[0].set_title(time_stamp+' 1.38 microns BRF')
 
-                        ax[1].imshow(cloud_Mask, cmap='binary')
+                        im1 = ax[1].imshow(cloud_Mask, cmap='binary')
                         ax[1].set_title(time_stamp+' cloud mask')
+
+                        divider0 = make_axes_locatable(ax[0])
+                        cax0 = divider0.append_axes('right', size='5%', pad=0.05)
+                        f.colorbar(im0, cax=cax0, orientation='vertical')
+
+                        divider1 = make_axes_locatable(ax[1])
+                        cax1 = divider1.append_axes('right', size='5%', pad=0.05)
+                        f.colorbar(im1, cax=cax1, orientation='vertical')
+
+                        for a in ax:
+                            a.set_yticks([])
+                            a.set_xticks([])
 
                         plt.show()
