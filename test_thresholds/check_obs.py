@@ -28,6 +28,6 @@ for r in range(size):
                 for time_stamp in obs_keys:
                     cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
 
-                    high_cirrus_obs_idx = np.where(cirrus_Ref > 0.2)
+                    high_cirrus_obs_idx = np.where(cirrus_Ref > 0.7)
                     if high_cirrus_obs_idx[0].shape[0] > 0:
                         print(time_stamp)
