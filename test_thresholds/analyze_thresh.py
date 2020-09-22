@@ -195,6 +195,8 @@ def plot_thresh_hist():
 
             # to_plot_or_not_2_plot = False
             #plot thresh hist for each obs
+            f, ax = plt.subplots(ncols=4, nrows=2)
+            
             for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
                 #edit hists based on applied obs applied as a func of sfc type
                 # if   obs == 'WI'      and (k in land or k in water):
@@ -220,7 +222,7 @@ def plot_thresh_hist():
                     num_bins = num_bins_ndxi
                     x1, x2   = range_ndxi
 
-                f, ax = plt.subplots(ncols=4, nrows=2)
+
                 x = np.arange(x1, x2, (x2-x1)/num_bins)
                 a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=color[k])
 
