@@ -29,5 +29,6 @@ for r in range(size):
                     cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
 
                     high_cirrus_obs_idx = np.where(cirrus_Ref > 0.7)
-                    if high_cirrus_obs_idx[0].shape[0] > 0:
-                        print(time_stamp)
+                    num_pix_high = high_cirrus_obs_idx[0].shape[0]
+                    if num_pix_high > 0:
+                        print(time_stamp, num_pix_high)
