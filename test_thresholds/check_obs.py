@@ -66,6 +66,7 @@ for r in range(size):
                         f, ax = plt.subplots(ncols=2)
                         im0 = ax[0].imshow(cirrus_Ref, cmap='jet', vmin=0, vmax = 0.4)
                         ax[0].set_title(time_stamp+' 1.38 microns BRF')
+                        im0.cmap.set_under('black')
 
                         im1 = ax[1].imshow(cloud_Mask, cmap='binary')
                         ax[1].set_title(time_stamp+' cloud mask')
