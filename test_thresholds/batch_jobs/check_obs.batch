@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH --job-name='cirrus'
+#SBATCH -p sesempi
+#SBATCH --time=00:10:00
+#SBATCH --mem-per-cpu=32gb
+#SBATCH -n 60
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=END
+#SBATCH --mail-user=vllgsbr2@illinois.edu
+#SBATCH --error='./slurm_check_obs.err'
+
+cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/scripts/
+mpirun -n 60 python check_obs.py
