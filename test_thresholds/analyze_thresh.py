@@ -161,7 +161,7 @@ def plot_thresh_hist():
     master_thresh = np.array(master_thresh)
 
     for DOY_bin in range(46):
-        f, ax = plt.subplots(ncols=4, nrows=2, figsize=(23,13))
+        f, ax = plt.subplots(ncols=4, nrows=2, figsize=(25,13))
         for k in range(num_SID):
             #collect thresholds for each obs for just 1 SID and bin them
             binned_thresholds = []
