@@ -58,6 +58,7 @@ for r in range(size):
                         print(high_cirrus_obs_idx)
 
                         plt.imshow(vis_Ref, cmap='binary_r')
+                        plt.colorbar()
                         plt.show()
 
                         import matplotlib.colors as matCol
