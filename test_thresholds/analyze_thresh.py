@@ -186,7 +186,7 @@ def plot_thresh_hist():
                 else:
                     num_bins = num_bins_ndxi
                     range_    = range_ndxi
-                binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
+                binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_, density=True)[0])
 
             temp_thresh = binned_thresholds
             land    = list(np.arange(11))
@@ -234,10 +234,10 @@ def plot_thresh_hist():
         #only 7 obs so lets turn 8th axis off
         ax[1,3].axis('off')
         home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
-        plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
+        # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
         print(DOY_bin)
         # plt.legend()
-        # plt.show()
+        plt.show()
         # plt.cla()
 
 
