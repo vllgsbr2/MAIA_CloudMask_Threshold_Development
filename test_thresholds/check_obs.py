@@ -30,11 +30,12 @@ for r in range(size):
             for time_stamp in obs_keys:
                 cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
 
-                high_cirrus_obs_idx = np.where(cirrus_Ref > 0.7)
+                high_cirrus_obs_idx = np.where(cirrus_Ref > 0.4)
                 cirrus_Ref          = cirrus_Ref[high_cirrus_obs_idx]
 
                 num_pix_high        = high_cirrus_obs_idx[0].shape[0]
                 if num_pix_high > 0:
                     high_ref_samples.append(cirrus_Ref)
                     time_stamps_high_ref.append(time_stamp)
+                    print(high_ref_samples)
                     print(time_stamp, num_pix_high)
