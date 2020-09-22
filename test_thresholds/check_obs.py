@@ -40,7 +40,7 @@ for r in range(size):
                     time_stamps_high_ref.append(time_stamp)
                     # print(high_ref_samples)
                     print(time_stamp, num_pix_high)
-                if time_stamp == '2010192.1825'
+                if time_stamp == '2010192.1825':
                     plt.imshow(cirrus_Ref, cmap='bone')
                     plt.colorbar()
                     plt.title(time_stamp, '1.38µm BRF')
