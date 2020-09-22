@@ -26,7 +26,7 @@ for r in range(size):
             with h5py.File(obs_f, 'r') as hf_observables:
                 obs_keys = list(hf_observables.keys())
                 for time_stamp in obs_keys:
-                    cirrus_Ref = hf_observables[time_stamp + '/cirrus']
+                    cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
 
                     high_cirrus_obs_idx = np.where(cirrus_Ref > 0.2)
                     if high_cirrus_obs_idx[0].shape[0] > 0:
