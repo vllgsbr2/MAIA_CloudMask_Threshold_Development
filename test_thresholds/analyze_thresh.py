@@ -159,7 +159,7 @@ def plot_thresh_hist():
     for i, obs in enumerate(thresh_dict):
         master_thresh.append(check_thresh(obs))
     master_thresh = np.array(master_thresh)
-        
+
     for DOY_bin in range(46):
         for k in range(num_SID):
             #collect thresholds for each obs for just 1 SID and bin them
@@ -168,19 +168,9 @@ def plot_thresh_hist():
             for i, obs in enumerate(thresh_dict):
                 #choose kth surface type
                 temp_thresh = master_thresh[i, DOY_bin,:,:,:,k]
-                # temp_thresh[temp_thresh <= -998] = np.nan
+
                 temp_thresh = temp_thresh[(temp_thresh > -998) & (temp_thresh < 32767)]
                 thresholds.append(temp_thresh)
-                # print(temp_thresh[temp_thresh>-998])
-
-                # try:
-                #     abs_max = np.max(np.abs(thresholds))
-                #     print(obs, np.min(thresholds),np.max(thresholds))
-                # except:
-                #     abs_max = 1
-                #
-                # range_ndxi     = (-1*abs_max,abs_max)
-                # range_other    = (0., abs_max)
 
                 range_ndxi     = (-1, 1)
                 range_other    = (0., 1.4)
@@ -240,6 +230,27 @@ def plot_thresh_hist():
         ax[1,3].axis('off')
         plt.legend()
         plt.show()
+        plt.cla()
+
+
+# import numpy as np
+# import matplotlib.pyplot as plt
+# import matplotlib.animation as animation
+#
+# n = 100
+# number_of_frames = 10
+# data = np.random.rand(n, number_of_frames)
+#
+# def update_hist(num, data):
+#     plt.cla()
+#     plt.hist(data[num])
+#
+# fig = plt.figure()
+# hist = plt.hist(data[0])
+#
+# animation = animation.FuncAnimation(fig, update_hist, number_of_frames, fargs=(data, ) )
+# plt.show()
+
 
 def plot_thresh_vs_VZA():
     import matplotlib.pyplot as plt
