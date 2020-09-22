@@ -45,5 +45,6 @@ for r in range(size):
                     # plt.imshow(cirrus_Ref, cmap='bone')
                     plt.imshow(vis_Ref, cmap='bone')
                     plt.colorbar()
-                    plt.title(time_stamp+'1.38 microns BRF')
+                    # plt.title(time_stamp+'1.38 microns BRF')
+                    plt.title(time_stamp+'0.65 microns BRF')
                     plt.show()
