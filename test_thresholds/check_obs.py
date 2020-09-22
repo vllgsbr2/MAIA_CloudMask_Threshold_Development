@@ -40,23 +40,23 @@ for r in range(size):
             for time_stamp in obs_keys:
                 Database_f = '{}/test_JPL_data_{}.h5'.format(input_home, time_stamp)
                 with h5py.File(Database_f, 'r') as hf_database:
-                cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
-                vis_Ref    = hf_observables[time_stamp + '/visRef'][()]
-                cloud_Mask = hf_database['MOD35_cloud_mask'][()]
+                    cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
+                    vis_Ref    = hf_observables[time_stamp + '/visRef'][()]
+                    cloud_Mask = hf_database['MOD35_cloud_mask'][()]
 
-                high_cirrus_obs_idx = np.where((cirrus_Ref > 0.4) & (cloud_Mask != 0))
-                cirrus_Ref_          = cirrus_Ref[high_cirrus_obs_idx]
+                    high_cirrus_obs_idx = np.where((cirrus_Ref > 0.4) & (cloud_Mask != 0))
+                    cirrus_Ref_          = cirrus_Ref[high_cirrus_obs_idx]
 
-                num_pix_high        = high_cirrus_obs_idx[0].shape[0]
-                if num_pix_high > 0:
-                    # high_ref_samples.append(cirrus_Ref_)
-                    # time_stamps_high_ref.append(time_stamp)
-                    # print(high_ref_samples)
-                    print(time_stamp, num_pix_high)
-                # if time_stamp == '2010192.1825':
-                #     # plt.imshow(cirrus_Ref, cmap='bone')
-                #     plt.imshow(vis_Ref, cmap='bone')
-                #     plt.colorbar()
-                #     # plt.title(time_stamp+'1.38 microns BRF')
-                #     plt.title(time_stamp+'0.65 microns BRF')
-                #     plt.show()
+                    num_pix_high        = high_cirrus_obs_idx[0].shape[0]
+                    if num_pix_high > 0:
+                        # high_ref_samples.append(cirrus_Ref_)
+                        # time_stamps_high_ref.append(time_stamp)
+                        # print(high_ref_samples)
+                        print(time_stamp, num_pix_high)
+                    # if time_stamp == '2010192.1825':
+                    #     # plt.imshow(cirrus_Ref, cmap='bone')
+                    #     plt.imshow(vis_Ref, cmap='bone')
+                    #     plt.colorbar()
+                    #     # plt.title(time_stamp+'1.38 microns BRF')
+                    #     plt.title(time_stamp+'0.65 microns BRF')
+                    #     plt.show()
