@@ -37,5 +37,5 @@ for r in range(size):
                 if num_pix_high > 0:
                     high_ref_samples.append(cirrus_Ref)
                     time_stamps_high_ref.append(time_stamp)
-                    print(high_ref_samples)
+                    # print(high_ref_samples)
                     print(time_stamp, num_pix_high)
