@@ -161,6 +161,7 @@ def plot_thresh_hist():
     master_thresh = np.array(master_thresh)
 
     for DOY_bin in range(46):
+        f, ax = plt.subplots(ncols=4, nrows=2)
         for k in range(num_SID):
             #collect thresholds for each obs for just 1 SID and bin them
             binned_thresholds = []
@@ -195,8 +196,8 @@ def plot_thresh_hist():
 
             # to_plot_or_not_2_plot = False
             #plot thresh hist for each obs
-            f, ax = plt.subplots(ncols=4, nrows=2)
-            
+
+
             for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
                 #edit hists based on applied obs applied as a func of sfc type
                 # if   obs == 'WI'      and (k in land or k in water):
