@@ -155,7 +155,11 @@ def plot_thresh_hist():
     num_SID = 15
     color    = cm.rainbow(np.linspace(0,1,num_SID))
 
-    master_thrsh = check_thresh(obs)
+    master_thresh = []
+    for i, obs in enumerate(thresh_dict):
+        master_thresh.append(check_thresh(obs))
+    master_thresh = np.array(master_thresh)
+        
     for DOY_bin in range(46):
         for k in range(num_SID):
             #collect thresholds for each obs for just 1 SID and bin them
@@ -163,7 +167,7 @@ def plot_thresh_hist():
             thresholds        = []
             for i, obs in enumerate(thresh_dict):
                 #choose kth surface type
-                temp_thresh = master_thresh[DOY_bin,:,:,:,k]
+                temp_thresh = master_thresh[i, DOY_bin,:,:,:,k]
                 # temp_thresh[temp_thresh <= -998] = np.nan
                 temp_thresh = temp_thresh[(temp_thresh > -998) & (temp_thresh < 32767)]
                 thresholds.append(temp_thresh)
