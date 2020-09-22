@@ -62,7 +62,7 @@ for r in range(size):
                         cmap = ListedColormap(['white', 'green', 'blue','black'])
                         norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
 
-                        f, ax = plt.subplots(ncols=2)
+                        f, ax = plt.subplots(ncols=2, sharex=True, sharey=True)
                         im0 = ax[0].imshow(cirrus_Ref, cmap='jet', vmin=0, vmax = 0.4)
                         ax[0].set_title(time_stamp+' 1.38 microns BRF')
                         im0.cmap.set_under('black')
