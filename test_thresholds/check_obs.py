@@ -57,7 +57,7 @@ for r in range(size):
                     if time_stamp == '2010197.1845':
                         print(high_cirrus_obs_idx)
 
-                        plt.imshow(vis_Ref, cmap='binary')
+                        plt.imshow(vis_Ref, cmap='binary_r')
                         plt.show()
 
                         import matplotlib.colors as matCol
