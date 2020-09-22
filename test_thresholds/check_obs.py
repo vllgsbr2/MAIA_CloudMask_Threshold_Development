@@ -43,5 +43,5 @@ for r in range(size):
                 if time_stamp == '2010192.1825':
                     plt.imshow(cirrus_Ref, cmap='bone')
                     plt.colorbar()
-                    plt.title(time_stamp, '1.38 microns BRF')
+                    plt.title(time_stamp+'1.38 microns BRF')
                     plt.show()
