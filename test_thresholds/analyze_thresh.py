@@ -149,7 +149,7 @@ def plot_thresh_hist():
 
 
     #plot
-    f, ax = plt.subplots(ncols=4, nrows=2)
+
     #get color cycle tool to plot rainbow ordered lines
     from matplotlib.pyplot import cm
     num_SID = 15
@@ -219,6 +219,8 @@ def plot_thresh_hist():
                 else:
                     num_bins = num_bins_ndxi
                     x1, x2   = range_ndxi
+
+                f, ax = plt.subplots(ncols=4, nrows=2)
                 x = np.arange(x1, x2, (x2-x1)/num_bins)
                 a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=color[k])
 
