@@ -57,6 +57,9 @@ for r in range(size):
                     if time_stamp == '2010197.1845':
                         print(high_cirrus_obs_idx)
 
+                        plt.imshow(vis_Ref, cmap='binary')
+                        plt.show()
+
                         import matplotlib.colors as matCol
                         from matplotlib.colors import ListedColormap
                         cmap = ListedColormap(['white', 'green', 'blue','black'])
