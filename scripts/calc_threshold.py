@@ -21,7 +21,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
     fill_val = -998
 
-    num_samples_valid_hist = 500
+    num_samples_valid_hist = 5000
 
     with h5py.File(group_file, 'r') as hf_group,\
          h5py.File(thresh_home + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
@@ -88,12 +88,12 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
                         np.nanpercentile(clean_clear_obs, 1)
 
-                    #choose least white cloudy pixel as threshold if no clear obs
-                    elif clean_cloudy_obs.shape[0] > num_samples_valid_hist:
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
-                        clean_cloudy_obs.max()
-                    else:
-                        pass
+                    # #choose least white cloudy pixel as threshold if no clear obs
+                    # elif clean_cloudy_obs.shape[0] > num_samples_valid_hist:
+                    #     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = \
+                    #     clean_cloudy_obs.max()
+                    # else:
+                    #     pass
 
                 #NDxI
                 #pick max from cloudy hist
@@ -102,9 +102,9 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         hist, bin_edges = np.histogram(clean_cloudy_obs, bins=128, range=(-1,1))
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                         bin_edges[1:][hist==hist.max()].min()
-                    #set default value of 1e-3 if no cloudy obs available
-                    else:
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
+                    # #set default value of 1e-3 if no cloudy obs available
+                    # else:
+                    #     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
 
                 #VIS/NIR/SVI/Cirrus
                 else:
@@ -113,13 +113,17 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                         bin_idx[3]] = current_thresh
 
-                    else:
-                        if clean_cloudy_obs.shape[0] > num_samples_valid_hist:
-                            current_thresh = clean_cloudy_obs.min()
-                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
-                                            bin_idx[3]] = current_thresh
+                    # else:
+                    #     if clean_cloudy_obs.shape[0] > num_samples_valid_hist:
+                    #         current_thresh = clean_cloudy_obs.min()
+                    #         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
+                    #                         bin_idx[3]] = current_thresh
 
-
+                current_thresh = hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]
+                if np.abs(current_thresh) > 2:
+                    debug_line = 'cos(SZA): {:02d} VZA: {:02d} RAA: {:02d} SID: {:02d} thresh: {:3.3f}'.\
+                              format(bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3], current_thresh)
+                    print(debug_line)
 if __name__ == '__main__':
 
     import h5py
