@@ -35,7 +35,8 @@ for r in range(size):
              h5py.File(Database_f, 'r') as hf_database:
             obs_keys = list(hf_observables.keys())
             database_keys = list(hf_database.keys())
-            print(obs_keys, database_keys)
+            print(obs_keys)
+            print(database_keys)
             for time_stamp in obs_keys:
                 cirrus_Ref = hf_observables[time_stamp + '/cirrus'][()]
                 vis_Ref    = hf_observables[time_stamp + '/visRef'][()]
