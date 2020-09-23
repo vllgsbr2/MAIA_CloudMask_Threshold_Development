@@ -54,17 +54,17 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
             #water can use 0 & 1 as cloudy since confidence should be good
             sfc_ID_bin = bin_idx[3]#12 is water no glint
             # if sfc_ID_bin != 12:
-            #     clear_idx  = np.where((cloud_mask != 0) & (cloud_mask > fill_val))
-            #     clear_obs  = obs[clear_idx[0],:]
-            #
-            #     cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask > fill_val))
-            #     cloudy_obs = obs[cloudy_idx[0],:]
-            # else:
-            clear_idx  = np.where((cloud_mask >= 2) & (cloud_mask > fill_val))
+            clear_idx  = np.where((cloud_mask != 0) & (cloud_mask > fill_val))
             clear_obs  = obs[clear_idx[0],:]
 
-            cloudy_idx = np.where((cloud_mask <= 1) & (cloud_mask > fill_val))
+            cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask > fill_val))
             cloudy_obs = obs[cloudy_idx[0],:]
+            # else:
+            #     clear_idx  = np.where((cloud_mask >= 2) & (cloud_mask > fill_val))
+            #     clear_obs  = obs[clear_idx[0],:]
+            #
+            #     cloudy_idx = np.where((cloud_mask <= 1) & (cloud_mask > fill_val))
+            #     cloudy_obs = obs[cloudy_idx[0],:]
 
             #if there isn't enough clear or cloudy obs, assign value to make threshold true
             #if no clear, and need clear, assign threshold as least brightest cloudy
