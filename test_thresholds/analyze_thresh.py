@@ -85,7 +85,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
     fill_val = -999
 
     thresh = []
-    for DOY, thresh_file in enumerate(thresh_files):
+    for DOY_, thresh_file in enumerate(thresh_files):
         with h5py.File(thresh_file, 'r') as hf_thresh:
             DOY = list(hf_thresh['TA_bin_00'].keys())[0]
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
@@ -95,8 +95,8 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
             current_thresh = hf_thresh[thresh_path][()]
             large_cirrus_thresh_idx = np.where(current_thresh > 0.1)
             for i, j, k, m in zip(large_cirrus_thresh_idx[0], large_cirrus_thresh_idx[1], large_cirrus_thresh_idx[2], large_cirrus_thresh_idx[3]):
-                i,j,k,m = int(i), int(j), int(k), int(m), int(DOY)
-                debug_print_str = 'thresh {:1.4f} cosSZA {:02d} VZA {:02d} RAA {:02d} SID {:02d} DOY {:02d}'.format(current_thresh[i,j,k,m], i, j, k, m, DOY)
+                
+                debug_print_str = 'thresh {:1.4f} cosSZA {:02d} VZA {:02d} RAA {:02d} SID {:02d} DOY {:02d}'.format(current_thresh[i,j,k,m], i, j, k, m, DOY_)
                 print(debug_print_str)
             thresh.append(current_thresh)
 
