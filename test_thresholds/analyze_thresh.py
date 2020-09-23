@@ -224,8 +224,14 @@ def plot_thresh_hist():
                     x1, x2   = range_ndxi
 
                 if k>=12:
+                    if k==12:
+                        col = 'r'
+                    elif k==13:
+                        col='blue'
+                    else:
+                        col='green'
                     x = np.arange(x1, x2, (x2-x1)/num_bins)
-                    a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=color[k])
+                    a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=col)#color[k])
 
                     if k==14:
                         a.set_title('{} DOY bin {:02d}'.format(obs, DOY_bin))
