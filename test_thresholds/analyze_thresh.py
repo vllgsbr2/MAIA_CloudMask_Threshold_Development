@@ -227,9 +227,9 @@ def plot_thresh_hist():
                     if k==12:
                         col = 'r'
                     elif k==13:
-                        col='blue'
+                        col='b-'
                     else:
-                        col='green'
+                        col='g+'
                     x = np.arange(x1, x2, (x2-x1)/num_bins)
                     a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=col)#color[k])
 
