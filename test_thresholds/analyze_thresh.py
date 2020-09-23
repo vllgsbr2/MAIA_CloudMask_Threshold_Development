@@ -227,7 +227,7 @@ def plot_thresh_hist():
                     if k==12:
                         col = 'r'
                     elif k==13:
-                        col='-b'
+                        col='b--'
                     else:
                         col='+g'
                     x = np.arange(x1, x2, (x2-x1)/num_bins)
