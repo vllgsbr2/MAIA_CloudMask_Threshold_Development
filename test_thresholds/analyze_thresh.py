@@ -159,7 +159,7 @@ def plot_thresh_hist():
     for i, obs in enumerate(thresh_dict):
         master_thresh.append(check_thresh(obs))
     master_thresh = np.array(master_thresh)
-    cosSZA_bin = 7
+    cosSZA_bin = 5
 
     for DOY_bin in range(46):
         f, ax = plt.subplots(ncols=4, nrows=2, figsize=(25,13))
@@ -169,7 +169,7 @@ def plot_thresh_hist():
             thresholds        = []
             for i, obs in enumerate(thresh_dict):
                 #choose kth surface type
-                temp_thresh = master_thresh[i, DOY_bin,cosSZA_bin,:,:,k]
+                temp_thresh = master_thresh[i, DOY_bin,:cosSZA_bin,:,:,k]
 
                 temp_thresh = temp_thresh[(temp_thresh > -998) & (temp_thresh < 32767)]
                 thresholds.append(temp_thresh)
