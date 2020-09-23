@@ -2,7 +2,7 @@
 #SBATCH --job-name='cirrus'
 #SBATCH -p sesempi
 #SBATCH --time=00:10:00
-#SBATCH --mem-per-cpu=32gb
+#SBATCH --mem-per-cpu=16gb
 #SBATCH -n 60
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
