@@ -243,10 +243,10 @@ def plot_thresh_hist():
         #only 7 obs so lets turn 8th axis off
         ax[1,3].axis('off')
         home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
-        # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
+        plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
         print(DOY_bin)
         # plt.legend()
-        plt.show()
+        # plt.show()
         # plt.cla()
 
 
