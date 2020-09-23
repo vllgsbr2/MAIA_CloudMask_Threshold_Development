@@ -223,7 +223,7 @@ def plot_thresh_hist():
                     num_bins = num_bins_ndxi
                     x1, x2   = range_ndxi
 
-                if k>=12:
+                if k>=12 and k<14:
                     if k==12:
                         col = 'r'
                     elif k==13:
