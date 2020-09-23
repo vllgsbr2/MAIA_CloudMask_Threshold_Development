@@ -231,7 +231,7 @@ def plot_thresh_hist():
                     else:
                         col='g'
                     x = np.arange(x1, x2, (x2-x1)/num_bins)
-                    a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=col)#color[k])
+                    a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c=col, linestyle='dashed')#color[k])
 
                     if k==13:
                         a.set_title('{} DOY bin {:02d}'.format(obs, DOY_bin))
