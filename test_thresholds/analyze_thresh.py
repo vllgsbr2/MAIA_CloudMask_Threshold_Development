@@ -159,7 +159,7 @@ def plot_thresh_hist():
     for i, obs in enumerate(thresh_dict):
         master_thresh.append(check_thresh(obs))
     master_thresh = np.array(master_thresh)
-    cosSZA_bin = 4
+    cosSZA_bin = 7
 
     for DOY_bin in range(46):
         f, ax = plt.subplots(ncols=4, nrows=2, figsize=(25,13))
