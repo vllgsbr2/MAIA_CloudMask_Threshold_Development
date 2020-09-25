@@ -59,6 +59,8 @@ for r in range(size):
                         #
                         # plt.imshow(vis_Ref, cmap='binary_r')
                         plt.imshow(cirrus_Ref, cmap='binary_r', vmin=0)
+                        plt.yticks([])
+                        plt.xticks([])
                         plt.colorbar()
                         plt.show()
 
