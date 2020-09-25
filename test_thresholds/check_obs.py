@@ -57,8 +57,8 @@ for r in range(size):
                     if time_stamp == '2010197.1845':
                         # print(high_cirrus_obs_idx)
                         #
-                        # plt.imshow(vis_Ref, cmap='binary_r')
-                        plt.imshow(cirrus_Ref, cmap='binary_r', vmin=0)
+                        plt.imshow(vis_Ref, cmap='binary_r')
+                        # plt.imshow(cirrus_Ref, cmap='binary_r', vmin=0)
                         plt.yticks([])
                         plt.xticks([])
                         plt.colorbar()
