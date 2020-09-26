@@ -546,7 +546,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             keys2 = list(hf_thresholds[keys1[0]].keys())
             keys3 = list(hf_thresholds[keys2[0]].keys())
             print(keys1, keys2, keys3)
-            database = hf_thresholds[path][()]
+            # database = hf_thresholds[path][()]
             # except Exception as e:
             #     print(e, path)
             #     # return observable_data, np.ones(shape)*-999
