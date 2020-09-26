@@ -20,6 +20,7 @@ home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2009048.1855.HDF5'
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2010197.1845.HDF5'
 test_scene = 'test_JPL_data_2019120.1920.h5'
+test_scene = 'test_JPL_data_2019085.1850.h5'
 DOY = int(test_scene[18:-8])
 DOY_bin = np.digitize(DOY, np.arange(8,376,8), right=True)
 DOY_end = (DOY_bin+1)*8
