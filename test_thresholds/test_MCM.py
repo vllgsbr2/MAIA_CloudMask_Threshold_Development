@@ -110,6 +110,7 @@ DTT_WI, DTT_NDVI, DTT_NDSI, DTT_VIS_Ref, DTT_NIR_Ref, DTT_SVI, DTT_Cirrus =\
                                                 DTT[:,:,6]
 #plotting*******************************************************************
 print('Commence Plotting Output')
+plt.rcParams['font.size'] = 18
 plt.figure(6)
 
 im_scene_ID = plt.imshow(scene_type_identifier, vmin=0)
