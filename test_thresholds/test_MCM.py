@@ -27,6 +27,7 @@ DOY_start = DOY_end - 1
 
 thresh_file = 'thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin)
 SID_file    = 'surfaceID_LosAngeles_{:03d}.nc'.format(DOY_end)
+print(test_scene, thresh_file, SID_file)
 
 test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],test_scene)
 threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], thresh_file)
