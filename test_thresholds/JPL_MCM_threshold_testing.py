@@ -526,7 +526,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
         if not(np.all(OLP[:,3] == -999)) and not(np.all(OLP[:,5] == -999)):
             #not -999 index; use to define target area and day of year for the granule
             not_fillVal_idx = np.where(OLP[:,3]!=-999)
-            TA  = OLP[not_fillVal_idx[0], 3][0]
+            TA  = 0#OLP[not_fillVal_idx[0], 3][0]
             DOY = OLP[not_fillVal_idx[0], 5][0]
 
             #put 0 index where OLP is < 0 to not raise an index error
