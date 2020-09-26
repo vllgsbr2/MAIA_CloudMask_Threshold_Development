@@ -19,7 +19,7 @@ home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2
 #LA
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2009048.1855.HDF5'
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2010197.1845.HDF5'
-test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2002051.1820.HDF5'
+test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2019283.1810.HDF5'
 threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], 'thresholds_DOY_049_to_056_bin_06.h5')
 sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], 'surfaceID_LosAngeles_056.nc')
 
