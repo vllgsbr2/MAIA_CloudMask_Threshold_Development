@@ -22,7 +22,8 @@ home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2
 test_scene = 'test_JPL_data_2019120.1920.h5' # ok general case
 test_scene = 'test_JPL_data_2018002.1850.h5' # cirrus event
 test_scene = 'test_JPL_data_2019148.1805.h5' # ok general case
-test_scene = 'test_JPL_data_2019139.1815.h5'
+test_scene = 'test_JPL_data_2019139.1815.h5' #good scene just cut off
+test_scene = 'test_JPL_data_2019137.1825.h5'
 DOY = int(test_scene[18:-8])
 DOY_bin = np.digitize(DOY, np.arange(8,376,8), right=True)
 DOY_end = (DOY_bin+1)*8
