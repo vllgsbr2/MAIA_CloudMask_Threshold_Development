@@ -23,7 +23,7 @@ test_scene = 'test_JPL_data_2019280.1920.h5'
 DOY = int(test_scene[18:-8])
 DOY_bin = DOY//8
 DOY_end = (DOY_bin+1)*8
-DOY_start = DOY_end - 1
+DOY_start = DOY_end - 7
 
 thresh_file = 'thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin)
 SID_file    = 'surfaceID_LosAngeles_{:03d}.nc'.format(DOY_end)
