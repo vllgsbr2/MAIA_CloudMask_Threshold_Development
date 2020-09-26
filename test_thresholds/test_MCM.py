@@ -167,7 +167,7 @@ im2.cmap.set_under('r')
 im3.cmap.set_under('r')
 im4.cmap.set_under('r')
 im5.cmap.set_under('r')
-im6.cmap.set_under('r')
+im6.cmap.set_under('k')
 
 cbar0 = f0.colorbar(im0, ax=ax0[0,0],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,WI.max()+0.2,0.2))
 cbar1 = f0.colorbar(im1, ax=ax0[0,1],fraction=0.046, pad=0.04)#)#, ticks = np.arange(-1,1.25,0.25))
