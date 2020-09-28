@@ -21,7 +21,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
     fill_val = -998
 
-    num_samples_valid_hist = 5000
+    num_samples_valid_hist = 0
 
     with h5py.File(group_file, 'r') as hf_group,\
          h5py.File(thresh_home + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
