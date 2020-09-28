@@ -971,7 +971,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     DTT_NDVI_old    = get_DTT_NDxI_Test(T[:,:,1] , observable_data[:,:,1], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    DTT_NDVI_new    = get_DTT_Ref_Test(T[:,:,1] , observable_data[:,:,1], \
+    DTT_NDVI_new    = get_DTT_White_Test(T[:,:,1] , observable_data[:,:,1], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
     #where NDVI is over water use DTT_NDVI_new, leave the rest
     DTT_NDVI = np.copy(DTT_NDVI_old)
