@@ -129,7 +129,7 @@ l,w, = 20,8
 f1, ax1 = plt.subplots(ncols=2, figsize=(l,w), sharex=True, sharey=True)
 
 im_cm = ax1[0].imshow(final_cloud_mask, cmap='Greys', vmax=1.01)
-ax1[0].set_title('final MAIA CLoud Mask')
+ax1[0].set_title('Final MAIA Cloud Mask')
 
 ax1[0].set_xticks([])
 ax1[0].set_yticks([])
@@ -170,22 +170,22 @@ im4.cmap.set_under('c')
 im5.cmap.set_under('c')
 im6.cmap.set_under('c')
 
-cbar0 = f0.colorbar(im0, ax=ax0[0,0],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,WI.max()+0.2,0.2))
-cbar1 = f0.colorbar(im1, ax=ax0[0,1],fraction=0.046, pad=0.04)#)#, ticks = np.arange(-1,1.25,0.25))
-cbar2 = f0.colorbar(im2, ax=ax0[0,2],fraction=0.046, pad=0.04)#)#, ticks = np.arange(-1,1.1,0.1))
-cbar3 = f0.colorbar(im3, ax=ax0[0,3],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
-cbar4 = f0.colorbar(im4, ax=ax0[1,0],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
-cbar5 = f0.colorbar(im5, ax=ax0[1,1],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,SVI.max()+0.1,0.05))
-cbar6 = f0.colorbar(im6, ax=ax0[1,2],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,1.2,0.2))
-
-font_size = 10 # Adjust as appropriate.
-cbar0.ax.tick_params(labelsize=font_size)
-cbar1.ax.tick_params(labelsize=font_size)
-cbar2.ax.tick_params(labelsize=font_size)
-cbar3.ax.tick_params(labelsize=font_size)
-cbar4.ax.tick_params(labelsize=font_size)
-cbar5.ax.tick_params(labelsize=font_size)
-cbar6.ax.tick_params(labelsize=font_size)
+# cbar0 = f0.colorbar(im0, ax=ax0[0,0],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,WI.max()+0.2,0.2))
+# cbar1 = f0.colorbar(im1, ax=ax0[0,1],fraction=0.046, pad=0.04)#)#, ticks = np.arange(-1,1.25,0.25))
+# cbar2 = f0.colorbar(im2, ax=ax0[0,2],fraction=0.046, pad=0.04)#)#, ticks = np.arange(-1,1.1,0.1))
+# cbar3 = f0.colorbar(im3, ax=ax0[0,3],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,VIS_Ref.max()+0.4,0.2))
+# cbar4 = f0.colorbar(im4, ax=ax0[1,0],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,NIR_Ref.max()+0.1,0.1))
+# cbar5 = f0.colorbar(im5, ax=ax0[1,1],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,SVI.max()+0.1,0.05))
+# cbar6 = f0.colorbar(im6, ax=ax0[1,2],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,1.2,0.2))
+#
+# font_size = 10 # Adjust as appropriate.
+# cbar0.ax.tick_params(labelsize=font_size)
+# cbar1.ax.tick_params(labelsize=font_size)
+# cbar2.ax.tick_params(labelsize=font_size)
+# cbar3.ax.tick_params(labelsize=font_size)
+# cbar4.ax.tick_params(labelsize=font_size)
+# cbar5.ax.tick_params(labelsize=font_size)
+# cbar6.ax.tick_params(labelsize=font_size)
 
 ax0[0,0].set_title('WI')
 ax0[0,1].set_title('NDVI')
@@ -230,8 +230,8 @@ ax[1,1].set_title('DTT_SVI')
 ax[1,2].set_title('DTT_Cirrus')
 ax[1,3].set_title('BRF RGB')
 
-cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
-cbar = f.colorbar(im, cax=cb_ax)
+# cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
+# cbar = f.colorbar(im, cax=cb_ax)
 
 for a in ax.flat:
     a.set_xticks([])
