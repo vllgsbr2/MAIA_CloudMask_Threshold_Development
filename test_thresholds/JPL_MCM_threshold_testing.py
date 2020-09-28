@@ -958,15 +958,25 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
         observable_names[i],\
         fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types, MOD03_sfctypes)
 
+    #retrive SID for return and DTT experiments
+    scene_type_identifier = add_sceneID(observable_level_parameter)
+    OLP_ = np.zeros((shape[0],shape[1],6))
+    OLP_[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
+    OLP_[:,:,4]  = scene_type_identifier             #scene_ID
+    OLP_[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
     #get DTT********************************************************************
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
-    # DTT_NDVI    = get_DTT_NDxI_Test(T[:,:,1] , observable_data[:,:,1], \
-    #            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    DTT_NDVI    = get_DTT_Ref_Test(T[:,:,1] , observable_data[:,:,1], \
+    DTT_NDVI_old    = get_DTT_NDxI_Test(T[:,:,1] , observable_data[:,:,1], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+    DTT_NDVI_new    = get_DTT_Ref_Test(T[:,:,1] , observable_data[:,:,1], \
+               Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+    #where NDVI is over water use DTT_NDVI_new, leave the rest
+    DTT_NDVI = np.copy(DTT_NDVI_old)
+    water_idx = np.where(scene_type_identifier == 12)
+    DTT_NDVI[water_idx] = DTT_NDVI_new[water_idx]
 
     DTT_NDSI    = get_DTT_NDxI_Test(T[:,:,2] , observable_data[:,:,2], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
@@ -1010,11 +1020,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     print('finished: ' , time.time() - start_time)
 
-    scene_type_identifier = add_sceneID(observable_level_parameter)
-    OLP_ = np.zeros((shape[0],shape[1],6))
-    OLP_[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
-    OLP_[:,:,4]  = scene_type_identifier             #scene_ID
-    OLP_[:,:,5] = observable_level_parameter[:,:,7]  #DOY
+
 
 
     return Sun_glint_exclusion_angle,\
