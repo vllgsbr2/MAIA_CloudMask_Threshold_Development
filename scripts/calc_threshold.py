@@ -100,8 +100,13 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 elif i==1 or i==2:
                     if clean_cloudy_obs.shape[0] > num_samples_valid_hist:
                         hist, bin_edges = np.histogram(clean_cloudy_obs, bins=128, range=(-1,1))
-                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                        bin_edges[1:][hist==hist.max()].min()
+                        thresh_current = bin_edges[1:][hist==hist.max()].min()
+                        if bin_idx[3] != 12:
+                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
+                            thresh_current
+                        elif clean_clear_obs.shape[0] > num_samples_valid_hist:
+                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
+                            np.nanpercentile(clean_clear_obs, 99)
                     # #set default value of 1e-3 if no cloudy obs available
                     # else:
                     #     hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] = 1e-3
