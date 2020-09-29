@@ -1026,9 +1026,9 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
-    DTT_NDVI = get_DTT_NDSI_Test(T[:,:,2] , observable_data[:,:,2], \
+    DTT_NDVI = get_DTT_NDSI_Test(T[:,:,1] , observable_data[:,:,1], \
            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    DTT_NDVI_over_water = get_DTT_NDVI_Test_over_water(T[:,:,2] , observable_data[:,:,2], \
+    DTT_NDVI_over_water = get_DTT_NDVI_Test_over_water(T[:,:,1] , observable_data[:,:,2], \
            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
     #where NDVI is over water use DTT_NDVI_new, leave the rest
     water_idx = np.where(scene_type_identifier == 12)
