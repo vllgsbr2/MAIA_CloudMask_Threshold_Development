@@ -649,7 +649,7 @@ def get_DTT_NDSI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     return DTT
 
 
-def get_DTT_NDVI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
+def get_DTT_NDVI_Test_over_water(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
                                                         fill_val_2, fill_val_3):
     """
     calculate the distance to threshold metric. This function is valid for
@@ -675,7 +675,7 @@ def get_DTT_NDVI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     T[T==0] = 1e-3
     # DTT = np.copy(NDxI)
 
-    #4 cases
+    #4 cases over water
     #NDxI > 0; T > 0
     obs_pos_T_pos_idx = np.where((T>=0) & (NDxI>=0))
     DTT_obs_pos_T_pos = (NDxI - T)/T
@@ -1026,16 +1026,14 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
-    # DTT_NDVI_old    = get_DTT_NDxI_Test(T[:,:,1] , observable_data[:,:,1], \
-    #            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    # DTT_NDVI_new    = get_DTT_White_Test(T[:,:,1] , observable_data[:,:,1], \
-    #            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    # #where NDVI is over water use DTT_NDVI_new, leave the rest
-    # DTT_NDVI = np.copy(DTT_NDVI_old)
-    # water_idx = np.where(scene_type_identifier == 12)
-    # DTT_NDVI[water_idx] = DTT_NDVI_new[water_idx]
-    DTT_NDVI = get_DTT_NDVI_Test(T[:,:,2] , observable_data[:,:,2], \
+    DTT_NDVI = get_DTT_NDSI_Test(T[:,:,2] , observable_data[:,:,2], \
            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+    DTT_NDVI_over_water = get_DTT_NDVI_Test_over_water(T[:,:,2] , observable_data[:,:,2], \
+           Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+    #where NDVI is over water use DTT_NDVI_new, leave the rest
+    water_idx = np.where(scene_type_identifier == 12)
+    DTT_NDVI[water_idx] = DTT_NDVI_over_water[water_idx]
+
     DTT_NDSI    = get_DTT_NDSI_Test(T[:,:,2] , observable_data[:,:,2], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
