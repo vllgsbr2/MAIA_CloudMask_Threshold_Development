@@ -611,12 +611,11 @@ def get_DTT_Ref_Test(T, Ref, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
 
     return DTT
 
-def get_DTT_NDxI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
+def get_DTT_NDSI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
                                                         fill_val_2, fill_val_3):
     """
     calculate the distance to threshold metric. This function is valid for
-    both near infra-red and for visible reflectance test, as well as for
-    spatial variability and cirrus tests.
+    NDSI test
 
     [Section 3.3.2.6]
 
@@ -639,6 +638,64 @@ def get_DTT_NDxI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
     T[T==0] = 1e-3
     DTT = np.copy(NDxI)
     DTT[NDxI > max_fill_val] = (100 * (T - np.abs(NDxI)) / T)[NDxI > max_fill_val]
+    #put upper bound on DTT (fill vals all negative)
+    DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
+    #put lower bound on DTT where observable is valid (fill vals all negative)
+    DTT[(DTT < Min_valid_DTT) & (NDxI > max_fill_val)] = Min_valid_DTT
+
+    #where T is -999 we should give a no retreival fill value (fill_val_3 = -127)
+    DTT[T==-999] = fill_val_3
+
+    return DTT
+
+
+def get_DTT_NDVI_Test(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val_1,\
+                                                        fill_val_2, fill_val_3):
+    """
+    calculate the distance to threshold metric. This function is valid for
+    NDVI test
+
+    [Section 3.3.2.6]
+
+    Arguments:
+        T {2D narray} -- Thresholds for observable
+        Ref {2D narray} -- observable; choose from NDVI, NDSI
+        Max_valid_DTT {float} -- from configuration file; upper bound of DTT
+        Min_valid_DTT {float} -- from configuration file; lower bound of DTT
+        fill_val_1 {integer} -- defined in congifg file; not applied due to surface type
+        fill_val_2 {integer} -- defined in congifg file; low quality radiance
+        fill_val_3 {integer} -- defined in congifg file; no data
+
+    Returns:
+        2D narray -- Distance to threshold calculated for one observable over
+                     the whole space.
+
+    """
+    max_fill_val = np.max(np.array([fill_val_1, fill_val_2, fill_val_3]))
+    T[T==0] = 1e-3
+    # DTT = np.copy(NDxI)
+
+    #4 cases
+    #NDxI > 0; T > 0
+    obs_pos_T_pos_idx = np.where((T>=0) & (NDxI>=0))
+    DTT_obs_pos_T_pos = (NDxI - T)/T
+    #NDxI < 0; T < 0
+    obs_neg_T_neg_idx = np.where((T<0) & (NDxI<0))
+    DTT_obs_neg_T_neg = (T - NDxI)/np.abs(T)
+    #NDxI > 0; T < 0
+    obs_pos_T_neg_idx = np.where((T<0) & (NDxI>=0))
+    DTT_obs_pos_T_neg = (NDxI - T)/np.abs(T)
+    #NDxI < 0; T > 0
+    obs_neg_T_pos_idx = np.where((T>=0) & (NDxI<0))
+    DTT_obs_neg_T_pos = -1*(T - NDxI)/T
+
+    DTT = np.zeros(np.shape(NDxI))
+
+    DTT[obs_pos_T_pos_idx] = DTT_obs_pos_T_pos[obs_pos_T_pos_idx]
+    DTT[obs_neg_T_neg_idx] = DTT_obs_neg_T_neg[obs_neg_T_neg_idx]
+    DTT[obs_pos_T_neg_idx] = DTT_obs_pos_T_neg[obs_pos_T_neg_idx]
+    DTT[obs_neg_T_pos_idx] = DTT_obs_neg_T_pos[obs_neg_T_pos_idx]
+
     #put upper bound on DTT (fill vals all negative)
     DTT[DTT > Max_valid_DTT]  = Max_valid_DTT
     #put lower bound on DTT where observable is valid (fill vals all negative)
@@ -969,16 +1026,16 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
-    DTT_NDVI_old    = get_DTT_NDxI_Test(T[:,:,1] , observable_data[:,:,1], \
-               Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    DTT_NDVI_new    = get_DTT_White_Test(T[:,:,1] , observable_data[:,:,1], \
-               Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    #where NDVI is over water use DTT_NDVI_new, leave the rest
-    DTT_NDVI = np.copy(DTT_NDVI_old)
-    water_idx = np.where(scene_type_identifier == 12)
-    DTT_NDVI[water_idx] = DTT_NDVI_new[water_idx]
+    # DTT_NDVI_old    = get_DTT_NDxI_Test(T[:,:,1] , observable_data[:,:,1], \
+    #            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+    # DTT_NDVI_new    = get_DTT_White_Test(T[:,:,1] , observable_data[:,:,1], \
+    #            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+    # #where NDVI is over water use DTT_NDVI_new, leave the rest
+    # DTT_NDVI = np.copy(DTT_NDVI_old)
+    # water_idx = np.where(scene_type_identifier == 12)
+    # DTT_NDVI[water_idx] = DTT_NDVI_new[water_idx]
 
-    DTT_NDSI    = get_DTT_NDxI_Test(T[:,:,2] , observable_data[:,:,2], \
+    DTT_NDSI    = get_DTT_NDSI_Test(T[:,:,2] , observable_data[:,:,2], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
     DTT_VIS_Ref = get_DTT_Ref_Test(T[:,:,3]  , observable_data[:,:,3], \
