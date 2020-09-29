@@ -1034,7 +1034,8 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     # DTT_NDVI = np.copy(DTT_NDVI_old)
     # water_idx = np.where(scene_type_identifier == 12)
     # DTT_NDVI[water_idx] = DTT_NDVI_new[water_idx]
-
+    DTT_NDVI = get_DTT_NDVI_Test(T[:,:,2] , observable_data[:,:,2], \
+           Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
     DTT_NDSI    = get_DTT_NDSI_Test(T[:,:,2] , observable_data[:,:,2], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
