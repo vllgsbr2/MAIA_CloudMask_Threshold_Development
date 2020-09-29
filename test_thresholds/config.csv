@@ -2,5 +2,4 @@ MAIA Level 2 Cloud Mask Algorithm Theoretical Basis JPL-103722
 section 3.4.1 table 7
 
 Sun-glint exclusion angle,Max RDQI,Max valid DTT,Min valid DTT,fill val 1,fill val 2,fill val 3,Min num of activated tests,activation val 1,activation val 2,activation val 3,activation val 4,activation val 5
-40, 0, 101, -101, -125, -126, -127, 1, 0, 0, 0, 0, 0
-
+40, 0, 101, -101, -125, -126, -127, 1, 10, 10, 10, 10, 10
