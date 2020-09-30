@@ -1050,7 +1050,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DTT_NDSI    = get_DTT_NDxI_Test(T[:,:,2] , observable_data[:,:,2], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
-    DTT_NDSI_SID_over_11 = get_DTT_NDVI_Test_over_water(T[:,:,2] , observable_data[:,:,2], \
+    DTT_NDSI_SID_over_11 = get_DTT_White_Test(T[:,:,2] , observable_data[:,:,2], \
            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
     DTT_NDSI_SID_under_12 = get_DTT_Ref_Test(T[:,:,2]  , observable_data[:,:,2], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
