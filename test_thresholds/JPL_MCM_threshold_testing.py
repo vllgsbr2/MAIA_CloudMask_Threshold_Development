@@ -683,16 +683,16 @@ def get_DTT_NDVI_Test_over_water(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val
     # DTT = np.copy(NDxI)
 
     #4 cases over water
-    #NDxI > 0; T > 0
+    #NDxI >= 0; T >= 0
     obs_pos_T_pos_idx = np.where((T>=0) & (NDxI>=0))
     DTT_obs_pos_T_pos = (NDxI - T)/T
     #NDxI < 0; T < 0
     obs_neg_T_neg_idx = np.where((T<0) & (NDxI<0))
     DTT_obs_neg_T_neg = (T - NDxI)/T
-    #NDxI > 0; T < 0
+    #NDxI >= 0; T < 0
     obs_pos_T_neg_idx = np.where((T<0) & (NDxI>=0))
     DTT_obs_pos_T_neg = (NDxI - T)/np.abs(T)
-    #NDxI < 0; T > 0
+    #NDxI < 0; T >= 0
     obs_neg_T_pos_idx = np.where((T>=0) & (NDxI<0))
     DTT_obs_neg_T_pos = -1*(T - NDxI)/T
 
