@@ -493,7 +493,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
         #                ((observable_data != fill_val_2)  &  \
         #                 (observable_data != fill_val_3)) ]  = fill_val_1
 
-        observable_data[(scene_type_identifier >7)          &\
+        observable_data[(scene_type_identifier >4)          &\
                         (scene_type_identifier !=sun_glint) &\
                         (scene_type_identifier !=water)     &\
                        ((observable_data != fill_val_2)     &\
