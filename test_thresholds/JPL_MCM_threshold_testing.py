@@ -493,7 +493,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
         #                ((observable_data != fill_val_2)  &  \
         #                 (observable_data != fill_val_3)) ]  = fill_val_1
 
-        observable_data[(scene_type_identifier >5)          &\
+        observable_data[(scene_type_identifier >6)          &\
                         (scene_type_identifier !=sun_glint) &\
                         (scene_type_identifier !=water)     &\
                        ((observable_data != fill_val_2)     &\
@@ -501,7 +501,12 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     elif observable_name == 'NDSI':
         #where snow_ice do not occur this test is not applied
-        observable_data[(scene_type_identifier != snow)   &  \
+        # observable_data[(scene_type_identifier != snow)   &  \
+        #                 ((observable_data != fill_val_2)  &  \
+        #                  (observable_data != fill_val_3)) ]  = fill_val_1
+
+        observable_data[(scene_type_identifier > 6)       &\
+                        (scene_type_identifier < water)   &\
                         ((observable_data != fill_val_2)  &  \
                          (observable_data != fill_val_3)) ]  = fill_val_1
     else:
@@ -1032,6 +1037,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
 
+    #special conditions for NDVI DTT formula
     DTT_NDVI = get_DTT_NDxI_Test(T[:,:,1] , observable_data[:,:,1], \
            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
     DTT_NDVI_over_water = get_DTT_NDVI_Test_over_water(T[:,:,1] , observable_data[:,:,1], \
@@ -1040,8 +1046,25 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     water_idx = np.where(scene_type_identifier == 12)
     DTT_NDVI[water_idx] = DTT_NDVI_over_water[water_idx]
 
+    #special conditions for NDSI DTT formula
     DTT_NDSI    = get_DTT_NDxI_Test(T[:,:,2] , observable_data[:,:,2], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+
+    DTT_NDSI_SID_over_11 = get_DTT_NDVI_Test_over_water(T[:,:,2] , observable_data[:,:,2], \
+           Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+    DTT_NDSI_SID_under_12 = get_DTT_Ref_Test(T[:,:,2]  , observable_data[:,:,2], \
+               Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
+    #Now combine
+    under_12_idx = np.where(scene_type_identifier < 12)
+    over_11_idx = np.where(scene_type_identifier > 11)
+    DTT_NDSI_SID_over_11[under_12_idx] = DTT_NDSI_SID_under_12[under_12_idx]
+    DTT_NDSI = DTT_NDSI_SID_over_11
+
+
+
+
+
+
 
     DTT_VIS_Ref = get_DTT_Ref_Test(T[:,:,3]  , observable_data[:,:,3], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
