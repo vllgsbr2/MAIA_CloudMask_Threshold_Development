@@ -1047,24 +1047,8 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     DTT_NDVI[water_idx] = DTT_NDVI_over_water[water_idx]
 
     #special conditions for NDSI DTT formula
-    DTT_NDSI    = get_DTT_NDxI_Test(T[:,:,2] , observable_data[:,:,2], \
+    DTT_NDSI    = get_DTT_White_Test(T[:,:,2] , observable_data[:,:,2], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-
-    DTT_NDSI_SID_over_11 = get_DTT_White_Test(T[:,:,2] , observable_data[:,:,2], \
-           Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    DTT_NDSI_SID_under_12 = get_DTT_Ref_Test(T[:,:,2]  , observable_data[:,:,2], \
-               Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
-    #Now combine
-    under_12_idx = np.where(scene_type_identifier < 12)
-    over_11_idx = np.where(scene_type_identifier > 11)
-    DTT_NDSI_SID_over_11[under_12_idx] = DTT_NDSI_SID_under_12[under_12_idx]
-    DTT_NDSI = DTT_NDSI_SID_over_11
-
-
-
-
-
-
 
     DTT_VIS_Ref = get_DTT_Ref_Test(T[:,:,3]  , observable_data[:,:,3], \
                Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
