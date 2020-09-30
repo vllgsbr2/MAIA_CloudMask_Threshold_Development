@@ -500,15 +500,11 @@ def get_test_determination(observable_level_parameter, observable_data,\
                         (observable_data != fill_val_3)) ]  = fill_val_1
 
     elif observable_name == 'NDSI':
-        #where snow_ice do not occur this test is not applied
-        # observable_data[(scene_type_identifier != snow)   &  \
-        #                 ((observable_data != fill_val_2)  &  \
-        #                  (observable_data != fill_val_3)) ]  = fill_val_1
-
-        observable_data[(scene_type_identifier > 6)       &\
-                        (scene_type_identifier < water)   &\
+        # where snow_ice do not occur this test is not applied
+        observable_data[(scene_type_identifier != snow)   &  \
                         ((observable_data != fill_val_2)  &  \
                          (observable_data != fill_val_3)) ]  = fill_val_1
+
     else:
         pass
 
@@ -664,7 +660,7 @@ def get_DTT_NDVI_Test_over_water(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val
                                                         fill_val_2, fill_val_3):
     """
     calculate the distance to threshold metric. This function is valid for
-    NDVI test
+    NDVI test over water.
 
     [Section 3.3.2.6]
 
@@ -692,7 +688,7 @@ def get_DTT_NDVI_Test_over_water(T, NDxI, Max_valid_DTT, Min_valid_DTT, fill_val
     DTT_obs_pos_T_pos = (NDxI - T)/T
     #NDxI < 0; T < 0
     obs_neg_T_neg_idx = np.where((T<0) & (NDxI<0))
-    DTT_obs_neg_T_neg = (T - NDxI)/np.abs(T)
+    DTT_obs_neg_T_neg = (T - NDxI)/T
     #NDxI > 0; T < 0
     obs_pos_T_neg_idx = np.where((T<0) & (NDxI>=0))
     DTT_obs_pos_T_neg = (NDxI - T)/np.abs(T)
