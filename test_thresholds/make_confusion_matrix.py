@@ -118,15 +118,15 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
             cloud_mask = data[:, 0]
             obs        = data[:, 1:]
 
-            #calculate distance to threshold for all NDxI in the current group
-            DTT_NDxI = np.zeros((num_points, 2))
-            for j in range(1,3):
-                NDxI = obs[:,j]
-                T    = thresholds[j, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3]]
+            #calculate distance to threshold NDVI in the current group
+            #NDVI is 1; only perform over non water
+            if OLP[i,3] != 12:
+                NDVI = obs[:,1]
+                T    = thresholds[1, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3]]
                 #put 0.001 instead of zero to avoid divide by zero error
                 if T==0:
                     T = 1e-3
-                DTT_NDxI[:,j-1] = (T - np.abs(NDxI)) / T
+                DTT_NDVI = (T - np.abs(NDVI)) / T
 
             #see if any obs trigger cloudy
             #assume clear (i.e. 1), cloudy is 0
@@ -139,24 +139,30 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
             for j in range(7):
                 for k in range(num_points):
                     #this is for whiteness since 0 is whiter than 1 and not applied over snow/ice or sunglint
-                    if j==0 and thresh_temp[j] >= obs[k,0] and (olp_temp[3]!=snow and olp_temp[3]!=sun_glint):
+                    if j==0 and thresh_temp[j] >= obs[k,j] and (olp_temp[3]!=snow and olp_temp[3]!=sun_glint):
                         cloud_mask_MAIA[k] = 0
                     #DTT for NDxI. Must exceed 0
                     #NDVI everything but snow
-                    elif j==1 and olp_temp[3] != snow and DTT_NDxI[k,0] >= 0:
-                        cloud_mask_MAIA[k] = 0
-                    #NDSI only over snow
-                    elif j==2 and olp_temp[3] ==snow and DTT_NDxI[k,1] >= 0:
+                    elif j==1 and olp_temp[3] != snow:
+                        #over non water use original DTT
+                        if olp_temp[3] != 12 and DTT_NDxI[k,0] >= 0:
+                            cloud_mask_MAIA[k] = 0
+                        #over water obs just needs to exceed the thresh
+                        elif thresh_temp[j] <= obs[k,j] and olp_temp[3] == 12:
+                            cloud_mask_MAIA[k] = 0
+
+                    #NDSI only over snow; just like whiteness test
+                    elif j==2 and olp_temp[3] == snow and thresh_temp[j] >= obs[k,j]:
                         cloud_mask_MAIA[k] = 0
                     #VIS, NIR, Cirrus. Must exceed thresh
                     #VIS applied only over land
-                    elif j==3 and olp_temp[3] < water and thresh_temp[j] <= obs[k,3]:
+                    elif j==3 and olp_temp[3] < water and thresh_temp[j] <= obs[k,j]:
                         cloud_mask_MAIA[k] = 0
                     #NIR only applied over water (no sunglint)
-                    elif j==4 and olp_temp[3] == water and thresh_temp[j] <= obs[k,4]:
+                    elif j==4 and olp_temp[3] == water and thresh_temp[j] <= obs[k,j]:
                         cloud_mask_MAIA[k] = 0
                     #SVI applied over all surfaces when over 0. Must exceed thresh
-                    elif j==5 and obs[k,5] >= 0.0 and thresh_temp[j] <= obs[k,5]:
+                    elif j==5 and obs[k,5] >= 0.0 and thresh_temp[j] <= obs[k,j]:
                         cloud_mask_MAIA[k] = 0
                     #j==6 for cirrus applied everywhere
                     elif j==6 and thresh_temp[j] <= obs[k,6]:
