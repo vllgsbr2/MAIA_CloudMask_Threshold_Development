@@ -145,7 +145,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
                     #NDVI everything but snow
                     elif j==1 and olp_temp[3] != snow:
                         #over non water use original DTT
-                        if olp_temp[3] != 12 and DTT_NDxI[k,0] >= 0:
+                        if olp_temp[3] != 12 and DTT_NDVI[k,0] >= 0:
                             cloud_mask_MAIA[k] = 0
                         #over water obs just needs to exceed the thresh
                         elif thresh_temp[j] <= obs[k,j] and olp_temp[3] == 12:
