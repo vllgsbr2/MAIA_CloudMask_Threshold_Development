@@ -94,7 +94,7 @@ if __name__ == '__main__':
     conf_matx_scene_files    = [conf_matx_scene_dir + '/' + x for x in os.listdir(conf_matx_scene_dir)]
 
     # DOY_bin = r
-    with h5py.File(scene_accuracy_save_file, 'r') as hf_scene_accur:
+    with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
         for i in range(46):
             MCM_accuracy, num_samples = scene_conf_matx_accur(conf_matx_scene_files[i])
 
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     # list all conf matx files
     conf_matx_group_files    = [conf_matx_group_dir + '/' + x for x in os.listdir(conf_matx_group_dir)]
 
-    with h5py.File(group_accuracy_save_file, 'r') as hf_group_accur:
+    with h5py.File(group_accuracy_save_file, 'w') as hf_group_accur:
         for i in range(46):
             accuracy_of_groups = group_conf_matx_accur(conf_matx_group_files[i])
 
