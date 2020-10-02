@@ -35,6 +35,7 @@ MCM_Output        : results/MCM_Output
 conf_matx_scene   : results/conf_matx_scene
 conf_matx_group   : results/conf_matx_group
 scene_accuracy    : results/scene_accuracy
+group_accuracy    : results/group_accuracy
 
 [PTA lat/lon grid files]
 LosAngeles  : /data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTA_lat_lon_grids/Grids_USA_LosAngeles.h5
