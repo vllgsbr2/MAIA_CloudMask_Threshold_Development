@@ -34,9 +34,11 @@ def scene_conf_matx_accur(conf_matx_path):
 
         #print(accuracy[:,:,0])
         #% of time mask is correct at each location, when data is present
-        if np.sum(num_samples, axis=2) == 0:
-            return -999,-999
-        MCM_accuracy = np.sum(accuracy[:,:,:2], axis=2) / np.sum(num_samples, axis=2)#num_samples[:,:,0]
+        total_sum = np.sum(num_samples, axis=2)
+        MCM_accuracy = np.sum(accuracy[:,:,:2], axis=2) / total_sum
+
+        #take care of inf values when dividing by zero if applicable
+        MCM_accuracy[total_sum == 0] = -999
 
         return MCM_accuracy, num_samples
 
