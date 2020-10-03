@@ -55,9 +55,10 @@ for i in range(46):
     s_temp = s_temp[s_temp>=0]
     s_list.append(np.mean(s_temp))
 
-plt.bar(np.arange(8,376,8), s_list)
+plt.scatter(np.arange(8,376,8), s_list)
+plt.plot(np.arange(8,376,8), s_list)
 plt.xticks(np.arange(8,376,8), rotation=45)
-plt.ylim([80,100])
+plt.ylim([85,100])
 plt.xlabel('Julian Day of Year')
 plt.ylabel('% Accuracy')
 
