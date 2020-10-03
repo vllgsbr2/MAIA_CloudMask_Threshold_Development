@@ -514,7 +514,7 @@ def make_obs_hist_by_group(obs):
         with h5py.File(gf, 'r') as hf_gf:
             bins = list(hf_gf.keys())
             # choose a random subset of 20
-            bins_subset = sample(bins, 20)
+            bins_subset = bins#sample(bins, 20)
 
             # cloud_mask = []
             # obs_x      = []
