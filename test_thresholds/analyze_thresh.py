@@ -516,8 +516,8 @@ def make_obs_hist_by_group(obs):
             # choose a random subset of 20
             # bins_subset = sample(bins, 20)
             bins_subset = [x for x in bins if x[-9:-7]==12]
-            # cloud_mask = []
-            # obs_x      = []
+            cloud_mask = []
+            obs_x      = []
 
             for bin_ in bins_subset:
                 data = hf_gf[bin_]
