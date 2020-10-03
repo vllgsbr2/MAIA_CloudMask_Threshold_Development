@@ -29,7 +29,7 @@ container = []
 with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
     DOY_bins = list(hf_scene_accur.keys())
     for i, DOY_bin in enumerate(DOY_bins):
-        scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy']*100
+        scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]*100
         image = ax.imshow(scene_accurs[:,:,i], cmap=cmap, vmin=0, vmax=100)
         DOY = (i + 1)*8
         title = ax.text(0.5,1.05,'Accuracy DOY {:03d}/365\nValid previous 8 days'.format(DOY),
