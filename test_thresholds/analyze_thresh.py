@@ -548,7 +548,7 @@ def make_obs_hist_by_group(obs):
 
             num_sample_clear = np.sum(hist_clear)
             num_sample_cloud = np.sum(hist_cloud)
-            if num_sample_clear > 5000 and num_sample_cloud >5000:
+            if num_sample_clear > 5000 and num_sample_cloud >5000 and bin[-9:-7]==12:
                 plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
                 plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
                 plt.legend()
