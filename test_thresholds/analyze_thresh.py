@@ -515,46 +515,45 @@ def make_obs_hist_by_group(obs):
             bins = list(hf_gf.keys())
             # choose a random subset of 20
             # bins_subset = sample(bins, 20)
-            bins_subset = [x for x in bins if x[-9:-7]==12]
-            cloud_mask = []
-            obs_x      = []
+            bins_subset = sample([x for x in bins if x[-9:-7]==12], 20)
 
+            fig, ax=plt.subplots(figsize=(10,10))
             for bin_ in bins_subset:
                 data = hf_gf[bin_]
                 #grab cloud mask and desired observable
                 cloud_mask = data[:,0]
                 obs_x      = data[:,obs_idx_dict[obs]]
 
-            #divide obs_x by clear and cloudy componants
-            obs_x_clear = obs_x[(cloud_mask != 0) & (obs_x!=-999) & (obs_x < 0.1)]
-            obs_x_cloud = obs_x[(cloud_mask == 0) & (obs_x!=-999) & (obs_x < 0.1)]
+                #divide obs_x by clear and cloudy componants
+                obs_x_clear = obs_x[(cloud_mask != 0) & (obs_x!=-999) & (obs_x < 0.1)]
+                obs_x_cloud = obs_x[(cloud_mask == 0) & (obs_x!=-999) & (obs_x < 0.1)]
 
-            #turn these into binned 1d arrays for plotting the histograms
-            # min, max = 0, .03
-            bin_num  = 128
-            # interval = np.abs(max-min)/bin_num
-            # bin_params = np.arange(min, max, interval)
-            # binned_obs_clear = np.digitize(obs_x_clear, bin_params)
-            # binned_obs_cloud = np.digitize(obs_x_cloud, bin_params)
+                #turn these into binned 1d arrays for plotting the histograms
+                # min, max = 0, .03
+                bin_num  = 128
+                # interval = np.abs(max-min)/bin_num
+                # bin_params = np.arange(min, max, interval)
+                # binned_obs_clear = np.digitize(obs_x_clear, bin_params)
+                # binned_obs_cloud = np.digitize(obs_x_cloud, bin_params)
 
-            hist_clear, bin_edges_clear = np.histogram(obs_x_clear,\
-                                bins=bin_num, density=False)
-            hist_cloud, bin_edges_cloud = np.histogram(obs_x_cloud,\
-                                bins=bin_num, density=False)
+                hist_clear, bin_edges_clear = np.histogram(obs_x_clear,\
+                                    bins=bin_num, density=False)
+                hist_cloud, bin_edges_cloud = np.histogram(obs_x_cloud,\
+                                    bins=bin_num, density=False)
 
-            #plot
-            fig, ax=plt.subplots(figsize=(10,10))
-            plt.rcParams['font.size'] = 16
+                #plot
 
-            num_sample_clear = np.sum(hist_clear)
-            num_sample_cloud = np.sum(hist_cloud)
-            if num_sample_clear > 5000 and num_sample_cloud >5000:
-                plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
-                plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
-                plt.legend()
-                title = 'obs: {}\nbin: {}\n#clear: {}, #cloud: {}'.format(obs, bin, num_sample_clear, num_sample_cloud)
-                plt.title(title)
-                plt.show()
+                plt.rcParams['font.size'] = 16
+
+                num_sample_clear = np.sum(hist_clear)
+                num_sample_cloud = np.sum(hist_cloud)
+                if num_sample_clear > 5000 and num_sample_cloud >5000:
+                    plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
+                    plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
+                    plt.legend()
+                    title = 'obs: {}\nbin: {}\n#clear: {}, #cloud: {}'.format(obs, bin, num_sample_clear, num_sample_cloud)
+                    plt.title(title)
+                    plt.show()
 
 
 
