@@ -514,8 +514,8 @@ def make_obs_hist_by_group(obs):
         with h5py.File(gf, 'r') as hf_gf:
             bins = list(hf_gf.keys())
             # choose a random subset of 20
-            bins_subset = bins#sample(bins, 20)
-
+            # bins_subset = sample(bins, 20)
+            bins_subset = [x for x in bins_subset if x[-9:-7]==12]
             # cloud_mask = []
             # obs_x      = []
 
@@ -548,8 +548,7 @@ def make_obs_hist_by_group(obs):
 
             num_sample_clear = np.sum(hist_clear)
             num_sample_cloud = np.sum(hist_cloud)
-            print(bin[-9:-7])
-            if num_sample_clear > 5000 and num_sample_cloud >5000 and bin[-9:-7]==12:
+            if num_sample_clear > 5000 and num_sample_cloud >5000:
                 plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
                 plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
                 plt.legend()
