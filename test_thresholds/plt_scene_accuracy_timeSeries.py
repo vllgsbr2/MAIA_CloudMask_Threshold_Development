@@ -57,7 +57,7 @@ for i in range(46):
 
 plt.scatter(np.arange(8,376,8), s_list)
 plt.plot(np.arange(8,376,8), s_list)
-plt.xticks(np.arange(8,376,8), rotation=45)
+plt.xticks(np.arange(8,376,8), rotation=315)
 plt.ylim([85,100])
 plt.xlabel('Julian Day of Year')
 plt.ylabel('% Accuracy')
