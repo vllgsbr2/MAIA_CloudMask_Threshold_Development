@@ -23,7 +23,7 @@ scene_accurs = np.zeros((400,300,46))
 # plt.style.use('dark_background')
 # fig, ax=plt.subplots(figsize=(10,10))
 # cmap = cm.get_cmap('plasma', 20)
-# plt.rcParams['font.size'] = 16
+plt.rcParams['font.size'] = 16
 # container = []
 
 with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
