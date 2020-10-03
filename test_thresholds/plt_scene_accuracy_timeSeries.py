@@ -49,7 +49,13 @@ cbar.set_ticklabels([str(x) for x in np.arange(0,105,5)])
 ani = animation.ArtistAnimation(fig, container, interval=700, blit=False,
                                 repeat=True)
 # ani.save('./MCM_Scene_Accuracy_all_DOY_new_grid.mp4')
+s_list = []
 for i in range(46):
-    print(np.mean(scene_accurs[:,:,i]))
+    s_temp = np.copy(scene_accurs[:,:,i])
+    s_temp = s_temp[s_temp>=0]
+    s_list.append(np.mean(s_temp))
+
+plt.bar(np.arange(8,376,8), s_list)
+
 
 plt.show()
