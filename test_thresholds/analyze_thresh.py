@@ -526,8 +526,8 @@ def make_obs_hist_by_group(obs):
                 obs_x      = data[:,obs_idx_dict[obs]]
 
             #divide obs_x by clear and cloudy componants
-            obs_x_clear = obs_x[cloud_mask != 0]
-            obs_x_cloud = obs_x[cloud_mask == 0]
+            obs_x_clear = obs_x[(cloud_mask != 0) & (obs_x!=-999)]
+            obs_x_cloud = obs_x[(cloud_mask == 0) & (obs_x!=-999)]
 
             #turn these into binned 1d arrays for plotting the histograms
             # min, max = 0, .03
