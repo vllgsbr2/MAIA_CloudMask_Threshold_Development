@@ -515,8 +515,8 @@ def make_obs_hist_by_group(obs):
             bins = list(hf_gf.keys())
             # choose a random subset of 20
             # bins_subset = sample(bins, 20)
-            print(bins[0])
-            bins_subset = sample([x for x in bins if x[-9:-7]==12], 20)
+
+            bins_subset = [x for x in bins if x[-9:-7]==12]
 
             fig, ax=plt.subplots(figsize=(10,10))
             for bin_ in bins_subset:
