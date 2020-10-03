@@ -519,8 +519,8 @@ def make_obs_hist_by_group(obs):
             # cloud_mask = []
             # obs_x      = []
 
-            for bin in bins_subset:
-                data = hf_gf[bin]
+            for bin_ in bins_subset:
+                data = hf_gf[bin_]
                 #grab cloud mask and desired observable
                 cloud_mask = data[:,0]
                 obs_x      = data[:,obs_idx_dict[obs]]
