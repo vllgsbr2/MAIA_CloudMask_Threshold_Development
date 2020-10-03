@@ -58,7 +58,7 @@ for i in range(46):
 plt.bar(np.arange(8,376,8), s_list)
 plt.xticks(np.arange(8,376,8))
 plt.xlabel('Julian Day of Year')
-plt.yabel('% Accuracy')
+plt.ylabel('% Accuracy')
 
 
 plt.show()
