@@ -548,12 +548,13 @@ def make_obs_hist_by_group(obs):
 
             num_sample_clear = np.sum(hist_clear)
             num_sample_cloud = np.sum(hist_cloud)
-            plt.plot(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
-            plt.plot(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
-            plt.legend()
-            title = 'obs: {}\nbin: {}\n#clear: {}, #cloud: {}'.format(obs, bin, num_sample_clear, num_sample_cloud)
-            plt.title(title)
-            plt.show()
+            if num_sample_clear > 500:
+                plt.bar(bin_edges_clear[:-1], hist_clear, 'b', label='clear')
+                plt.bar(bin_edges_cloud[:-1], hist_cloud, 'r', label='cloudy')
+                plt.legend()
+                title = 'obs: {}\nbin: {}\n#clear: {}, #cloud: {}'.format(obs, bin, num_sample_clear, num_sample_cloud)
+                plt.title(title)
+                plt.show()
 
 
 
