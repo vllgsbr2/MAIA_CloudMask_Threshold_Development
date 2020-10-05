@@ -192,6 +192,7 @@ def plot_thresh_hist_all_bins():
 
     #plot thresh hist for each obs
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+        print(len(binned_thresholds[i]))
         if i==0 or i>=3:
             num_bins = num_bins_other
             x1, x2   = range_other
@@ -200,7 +201,6 @@ def plot_thresh_hist_all_bins():
             x1, x2   = range_ndxi
 
             x = np.arange(x1, x2, (x2-x1)/num_bins)
-        print(len(binned_thresholds[i]))
 
             a.plot(x, binned_thresholds[i], c='blue')#color[k])
             a.set_title('{}'.format(obs))
