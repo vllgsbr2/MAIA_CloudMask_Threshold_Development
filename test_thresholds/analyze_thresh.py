@@ -155,6 +155,7 @@ def plot_thresh_hist_all_bins():
 
     master_thresh = []
     for i, obs in enumerate(thresh_dict):
+        print(i,obs)
         master_thresh.append(check_thresh(obs))
     master_thresh = np.array(master_thresh)
     # cosSZA_bin = -1
