@@ -127,7 +127,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #VIS/NIR/SVI/Cirrus
                 else:
                     if clean_clear_obs.shape[0] > num_samples_valid_hist:
-                        clean_clear_obs = clean_clear_obs[(clean_clear_obs>=0) & (clean_clear_obs < 1)]
+                        # clean_clear_obs = clean_clear_obs[(clean_clear_obs>=0) & (clean_clear_obs < 1)]
                         current_thresh = np.nanpercentile(clean_clear_obs, 99)
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                         bin_idx[3]] = current_thresh
