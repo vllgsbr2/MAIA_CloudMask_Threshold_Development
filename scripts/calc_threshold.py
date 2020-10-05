@@ -98,17 +98,18 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                 #NDVI
                 elif i==1:
                     #pick max from cloudy hist for non water
-                    if clean_cloudy_obs.shape[0] > num_samples_valid_hist:
-                            if bin_idx[3] != 12:
-                                hist, bin_edges = np.histogram(clean_cloudy_obs, bins=128, range=(-1,1))
-                                thresh_current = bin_edges[1:][hist==hist.max()].min()
+                    if clean_cloudy_obs.shape[0] > num_samples_valid_hist and bin_idx[3] != 12:
+                            hist, bin_edges = np.histogram(clean_cloudy_obs, bins=128, range=(-1,1))
+                            thresh_current = bin_edges[1:][hist==hist.max()].min()
 
-                                hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                                thresh_current
-                            #pick 99% clear for water since water gives negative values
-                            elif clean_clear_obs.shape[0] > num_samples_valid_hist:
-                                hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
-                                np.nanpercentile(clean_clear_obs, 99)
+                            hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
+                            thresh_current
+                    #pick 99% clear for water since water gives negative values
+                    elif clean_clear_obs.shape[0] > num_samples_valid_hist and bin_idx[3] == 12:
+                        hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
+                        np.nanpercentile(clean_clear_obs, 99)
+                    else:
+                        pass
 
                     # #set default value of 1e-3 if no cloudy obs available
                     # else:
