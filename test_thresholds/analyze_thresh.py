@@ -97,7 +97,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
             for i, j, k, m in zip(large_cirrus_thresh_idx[0], large_cirrus_thresh_idx[1], large_cirrus_thresh_idx[2], large_cirrus_thresh_idx[3]):
 
                 debug_print_str = 'thresh {:1.4f} cosSZA {:02d} VZA {:02d} RAA {:02d} SID {:02d} DOY {:02d}'.format(current_thresh[i,j,k,m], i, j, k, m, DOY_)
-                print(debug_print_str)
+                # print(debug_print_str)
             thresh.append(current_thresh)
 
     thresh = np.array(thresh)
@@ -157,10 +157,10 @@ def plot_thresh_hist_all_bins():
     for i, obs in enumerate(thresh_dict):
         master_thresh.append(check_thresh(obs))
     master_thresh = np.array(master_thresh)
-    cosSZA_bin = -1
-    VZA_bin    = -1
-    RAA_bin    = -1
-    SID_bin    = -1
+    # cosSZA_bin = -1
+    # VZA_bin    = -1
+    # RAA_bin    = -1
+    # SID_bin    = -1
 
     f, ax = plt.subplots(ncols=4, nrows=2, figsize=(25,13))
 
@@ -169,9 +169,10 @@ def plot_thresh_hist_all_bins():
     thresholds        = []
     for i, obs in enumerate(thresh_dict):
         #choose kth surface type
-        temp_thresh = master_thresh[i,:,:,:,:,:]
+        temp_thresh = master_thresh[i]
 
         temp_thresh = temp_thresh[(temp_thresh > -998) & (temp_thresh < 32767)]
+        print(len(temp_thresh))
         thresholds.append(temp_thresh)
 
         range_ndxi     = (-1, 1)
@@ -189,12 +190,6 @@ def plot_thresh_hist_all_bins():
             range_    = range_ndxi
         binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_, density=True)[0])
 
-    temp_thresh = binned_thresholds
-    land    = list(np.arange(11))
-    water   = [12]
-    glint   = [13]
-    snowice = [14]
-
     #plot thresh hist for each obs
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         if i==0 or i>=3:
@@ -206,13 +201,13 @@ def plot_thresh_hist_all_bins():
 
             x = np.arange(x1, x2, (x2-x1)/num_bins)
 
-            a.plot(x, temp_thresh[i], c='blue')#color[k])
+            a.plot(x, binned_thresholds[i], c='blue')#color[k])
             a.set_title('{}'.format(obs))
             a.legend()
 
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
-    home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
+    # home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
     # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
     # plt.legend()
     plt.show()
