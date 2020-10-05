@@ -91,8 +91,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
             print(obs)
 
-            thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY,\
-                                            obs[thresh_dict[which_thresh]])
+            thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY, which_thresh)
             current_thresh = hf_thresh[thresh_path][()]
             # large_cirrus_thresh_idx = np.where(current_thresh > 0.7)
             # for i, j, k, m in zip(large_cirrus_thresh_idx[0], large_cirrus_thresh_idx[1], large_cirrus_thresh_idx[2], large_cirrus_thresh_idx[3]):
