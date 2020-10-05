@@ -174,7 +174,8 @@ def plot_thresh_hist_all_bins():
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,:13])
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
-            # temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:7].flatten(), temp_thresh[:,:,:,:,11:14].flatten()))
+            print(temp_thresh.min(), temp_thresh.max())
+            temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:7].flatten(), temp_thresh[:,:,:,:,11:14].flatten()))
 
         elif obs == 'NDSI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,14])
