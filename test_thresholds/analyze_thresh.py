@@ -200,6 +200,7 @@ def plot_thresh_hist_all_bins():
             x1, x2   = range_ndxi
 
             x = np.arange(x1, x2, (x2-x1)/num_bins)
+        print(len(binned_thresholds[i]))
 
             a.plot(x, binned_thresholds[i], c='blue')#color[k])
             a.set_title('{}'.format(obs))
