@@ -186,7 +186,7 @@ def plot_thresh_hist_all_bins():
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,14])
             range_ = (0.3,1)
         elif obs == 'VIS_Ref':
-            temp_thresh = np.copy(master_thresh[i,:,:,:,:,:12])
+            temp_thresh = np.copy(master_thresh[i,:,:1,:,:,:12])
             range_ = (0,0.85)
         elif obs == 'NIR_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,12])
