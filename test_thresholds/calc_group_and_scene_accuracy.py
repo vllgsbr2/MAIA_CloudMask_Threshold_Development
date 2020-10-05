@@ -84,30 +84,30 @@ if __name__ == '__main__':
     PTA_path      = config['PTAs'][PTA]
     # Target_Area_X = int(config['Target Area Integer'][PTA])
 
-    # #file setup for group accuracy
-    # #where to store scene accur file
-    # scene_accuracy_dir  = config['supporting directories']['scene_accuracy']
-    # scene_accuracy_dir  = '{}/{}'.format(PTA_path, scene_accuracy_dir)
-    # #where to find scene confusion matricies
-    # conf_matx_scene_dir = config['supporting directories']['conf_matx_scene']
-    # conf_matx_scene_dir = '{}/{}'.format(PTA_path, conf_matx_scene_dir)
-    #
-    # #define file to save accur in
-    # scene_accuracy_save_file = '{}/{}'.format(scene_accuracy_dir, 'scene_ID_accuracy.h5')
-    # #list all conf matx files
-    # conf_matx_scene_files    = [conf_matx_scene_dir + '/' + x for x in os.listdir(conf_matx_scene_dir)]
-    #
-    # # DOY_bin = r
-    # with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
-    #     for i in range(46):
-    #         MCM_accuracy, num_samples = scene_conf_matx_accur(conf_matx_scene_files[i])
-    #
-    #         scene_current_group = 'DOY_bin_{:02d}'.format(i)
-    #         hf_scene_accur.create_group(scene_current_group)
-    #         hf_scene_accur[scene_current_group].create_dataset('MCM_accuracy', data=MCM_accuracy)
-    #         hf_scene_accur[scene_current_group].create_dataset('num_samples' , data=num_samples)
-    #
-    #         print('Scene DOY: {} done'.format(i))
+    #file setup for group accuracy
+    #where to store scene accur file
+    scene_accuracy_dir  = config['supporting directories']['scene_accuracy']
+    scene_accuracy_dir  = '{}/{}'.format(PTA_path, scene_accuracy_dir)
+    #where to find scene confusion matricies
+    conf_matx_scene_dir = config['supporting directories']['conf_matx_scene']
+    conf_matx_scene_dir = '{}/{}'.format(PTA_path, conf_matx_scene_dir)
+
+    #define file to save accur in
+    scene_accuracy_save_file = '{}/{}'.format(scene_accuracy_dir, 'scene_ID_accuracy.h5')
+    #list all conf matx files
+    conf_matx_scene_files    = [conf_matx_scene_dir + '/' + x for x in os.listdir(conf_matx_scene_dir)]
+
+    # DOY_bin = r
+    with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
+        for i in range(46):
+            MCM_accuracy, num_samples = scene_conf_matx_accur(conf_matx_scene_files[i])
+    
+            scene_current_group = 'DOY_bin_{:02d}'.format(i)
+            hf_scene_accur.create_group(scene_current_group)
+            hf_scene_accur[scene_current_group].create_dataset('MCM_accuracy', data=MCM_accuracy)
+            hf_scene_accur[scene_current_group].create_dataset('num_samples' , data=num_samples)
+
+            print('Scene DOY: {} done'.format(i))
 
     #****************************group******************************************
 
