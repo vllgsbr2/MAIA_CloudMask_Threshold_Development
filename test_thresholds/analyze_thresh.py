@@ -227,6 +227,7 @@ def plot_thresh_hist_all_bins():
         # else:
         #     num_bins = num_bins_ndxi
         #     x1, x2   = range_ndxi
+        x1, x2   = range_
 
         x = np.arange(x1, x2, (x2-x1)/num_bins)
 
