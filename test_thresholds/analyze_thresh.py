@@ -166,7 +166,7 @@ def plot_thresh_hist_all_bins():
 
     #collect thresholds for each obs
     binned_thresholds = []
-    thresholds        = []
+    # thresholds        = []
     for i, obs in enumerate(thresh_dict):
         if obs=='SVI' or obs=='Cirrus':
             temp_thresh = np.copy(master_thresh[i])
@@ -187,9 +187,9 @@ def plot_thresh_hist_all_bins():
 
 
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
-        if i==1:
-            print(temp_thresh)
-        thresholds.append(temp_thresh)
+        # if i==1:
+        #     print(temp_thresh)
+        # thresholds.append(temp_thresh)
 
         range_ndxi     = (-1, 1)
         range_other    = (0., 1.4)
@@ -204,7 +204,9 @@ def plot_thresh_hist_all_bins():
         else:
             num_bins = num_bins_ndxi
             range_    = range_ndxi
-        binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
+
+
+        binned_thresholds.append(np.histogram(temp_thresh, bins=num_bins, range=range_)[0])
 
     #plot thresh hist for each obs
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
