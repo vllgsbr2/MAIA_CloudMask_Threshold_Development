@@ -170,7 +170,8 @@ def plot_thresh_hist_all_bins():
     for i, obs in enumerate(thresh_dict):
         temp_thresh = np.copy(master_thresh[i])
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
-        thresholds.append(temp_thresh.flatten())
+        print(len(temp_thresh))
+        thresholds.append(temp_thresh)
 
         range_ndxi     = (-1, 1)
         range_other    = (0., 1.4)
