@@ -164,7 +164,7 @@ def plot_thresh_hist_all_bins():
 
     f, ax = plt.subplots(ncols=4, nrows=2, figsize=(25,13))
 
-    #collect thresholds for each obs for just 1 SID and bin them
+    #collect thresholds for each obs
     binned_thresholds = []
     thresholds        = []
     for i, obs in enumerate(thresh_dict):
@@ -189,34 +189,34 @@ def plot_thresh_hist_all_bins():
             range_    = range_ndxi
         binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_, density=True)[0])
 
-        temp_thresh = binned_thresholds
-        land    = list(np.arange(11))
-        water   = [12]
-        glint   = [13]
-        snowice = [14]
+    temp_thresh = binned_thresholds
+    land    = list(np.arange(11))
+    water   = [12]
+    glint   = [13]
+    snowice = [14]
 
-        #plot thresh hist for each obs
-        for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-            if i==0 or i>=3:
-                num_bins = num_bins_other
-                x1, x2   = range_other
-            else:
-                num_bins = num_bins_ndxi
-                x1, x2   = range_ndxi
+    #plot thresh hist for each obs
+    for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+        if i==0 or i>=3:
+            num_bins = num_bins_other
+            x1, x2   = range_other
+        else:
+            num_bins = num_bins_ndxi
+            x1, x2   = range_ndxi
 
-                x = np.arange(x1, x2, (x2-x1)/num_bins)
+            x = np.arange(x1, x2, (x2-x1)/num_bins)
 
-                a.plot(x, temp_thresh[i], c='blue')#color[k])
-                a.set_title('{}'.format(obs))
-                a.legend()
+            a.plot(x, temp_thresh[i], c='blue')#color[k])
+            a.set_title('{}'.format(obs))
+            a.legend()
 
-        #only 7 obs so lets turn 8th axis off
-        ax[1,3].axis('off')
-        home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
-        # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
-        # plt.legend()
-        plt.show()
-        # plt.cla()
+    #only 7 obs so lets turn 8th axis off
+    ax[1,3].axis('off')
+    home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
+    # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
+    # plt.legend()
+    plt.show()
+    # plt.cla()
 
 
 def plot_thresh_hist():
