@@ -175,6 +175,7 @@ def plot_thresh_hist_all_bins():
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
             temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:7].flatten(), temp_thresh[:,:,:,:,11:14].flatten()))
+
         elif obs == 'NDSI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,14])
         elif obs == 'VIS_Ref':
@@ -186,7 +187,8 @@ def plot_thresh_hist_all_bins():
 
 
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
-        print(len(temp_thresh))
+        if i==1:
+            print(temp_thresh)
         thresholds.append(temp_thresh)
 
         range_ndxi     = (-1, 1)
