@@ -202,9 +202,9 @@ def plot_thresh_hist_all_bins():
 
             x = np.arange(x1, x2, (x2-x1)/num_bins)
 
-            a.plot(x, binned_thresholds[i], c='blue')#color[k])
-            a.set_title('{}'.format(obs))
-            a.legend()
+        a.plot(x, binned_thresholds[i], c='blue')#color[k])
+        a.set_title('{}'.format(obs))
+        a.legend()
 
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
