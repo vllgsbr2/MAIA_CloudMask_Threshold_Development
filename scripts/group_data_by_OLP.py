@@ -139,6 +139,9 @@ if __name__ == '__main__':
                 hf_database_keys = list(hf_database.keys())
                 #grab only current DOY bin
                 hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
+                #grab only 15/18 years for a hold out set
+                #omit years 2004/2017/2010
+                hf_database_keys = [x for x in hf_database_keys if int(x[:4])!=2004 and int(x[:4])!=2010 and int(x[:4])!=2017]
                 #open file to write groups to
                 group_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['group_intermediate'])
                 hf_group_path = '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.h5'.format(group_path, DOY_start, DOY_end, DOY_bin, rank)
@@ -147,7 +150,7 @@ if __name__ == '__main__':
                 with h5py.File(hf_group_path, 'w') as hf_group:
                     for time_stamp in hf_database_keys:
 
-                        CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
+                        CM  = hf_database[time_stamp + '/cloud_mask/quality_screened_cloud_mask'][()]
                         OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
 
                         shape = CM.shape
