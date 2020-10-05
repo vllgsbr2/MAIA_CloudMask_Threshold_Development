@@ -26,10 +26,21 @@ scene_accurs = np.zeros((400,300,46))
 plt.rcParams['font.size'] = 16
 # container = []
 
+#get sfc IDs
+from netCDF4 import Dataset
+filepath_SID = PTA_path + '/' + config['supporting directories']['Surface_IDs']
+filepath_SID = [filepath_SID +'/'+ x for x in os.listdir(filepath_SID) if x[0]=='s']
+SID = np.zeros((400,300,46))
+for i in range(46):
+    with Dataset(filepath_SID[i],'r') as nc_sfcID:
+        SID[:,:,i] = nc_sfcID.variables['surface_ID'][:,:]
+
+
 with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
     DOY_bins = list(hf_scene_accur.keys())
     for i, DOY_bin in enumerate(DOY_bins):
         scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]*100
+
 #         image = ax.imshow(scene_accurs[:,:,i], cmap=cmap, vmin=0, vmax=100)
 #         DOY = (i + 1)*8
 #         title = ax.text(0.5,1.05,'Accuracy DOY {:03d}/365\nValid previous 8 days'.format(DOY),
@@ -52,7 +63,7 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
 s_list = []
 for i in range(46):
     s_temp = np.copy(scene_accurs[:,:,i])
-    s_temp = s_temp[s_temp>=0]
+    s_temp = s_temp[s_temp>=0 and SID[:,:,i] !=12]
     s_list.append(np.mean(s_temp))
 
 plt.scatter(np.arange(8,376,8), s_list)
