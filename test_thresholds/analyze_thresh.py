@@ -194,7 +194,7 @@ def plot_thresh_hist_all_bins():
         else:
             pass
 
-        print(np.argmax(temp_thresh, axis=1))
+        print(np.where(temp_thresh))
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
         print(obs, temp_thresh.min(), temp_thresh.max())
         # if i==1:
