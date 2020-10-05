@@ -93,11 +93,11 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
             thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY,\
                                             obs[thresh_dict[which_thresh]])
             current_thresh = hf_thresh[thresh_path][()]
-            large_cirrus_thresh_idx = np.where(current_thresh > 0.7)
-            for i, j, k, m in zip(large_cirrus_thresh_idx[0], large_cirrus_thresh_idx[1], large_cirrus_thresh_idx[2], large_cirrus_thresh_idx[3]):
-
-                debug_print_str = 'thresh {:1.4f} cosSZA {:02d} VZA {:02d} RAA {:02d} SID {:02d} DOY {:02d}'.format(current_thresh[i,j,k,m], i, j, k, m, DOY_)
-                # print(debug_print_str)
+            # large_cirrus_thresh_idx = np.where(current_thresh > 0.7)
+            # for i, j, k, m in zip(large_cirrus_thresh_idx[0], large_cirrus_thresh_idx[1], large_cirrus_thresh_idx[2], large_cirrus_thresh_idx[3]):
+            #
+            #     debug_print_str = 'thresh {:1.4f} cosSZA {:02d} VZA {:02d} RAA {:02d} SID {:02d} DOY {:02d}'.format(current_thresh[i,j,k,m], i, j, k, m, DOY_)
+            #     print(debug_print_str)
             thresh.append(current_thresh)
 
     thresh = np.array(thresh)
@@ -171,7 +171,7 @@ def plot_thresh_hist_all_bins():
         #choose kth surface type
         temp_thresh = master_thresh[i]
 
-        temp_thresh = temp_thresh[(temp_thresh > -998) & (temp_thresh < 32767)]
+        temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
         print(len(temp_thresh))
         thresholds.append(temp_thresh)
 
