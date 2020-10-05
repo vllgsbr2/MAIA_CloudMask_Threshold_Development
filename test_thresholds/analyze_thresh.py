@@ -227,6 +227,30 @@ def plot_thresh_hist_all_bins():
         # else:
         #     num_bins = num_bins_ndxi
         #     x1, x2   = range_ndxi
+        if obs=='SVI' or obs=='Cirrus':
+
+            if obs=='SVI':
+                range_ = (0,0.3)
+            else:
+                range_ = (0,0.15)
+        elif obs == 'WI':
+
+        elif obs == 'NDVI':
+
+
+            range_ = (-0.5,0.5)
+        elif obs == 'NDSI':
+
+            range_ = (0.3,1)
+        elif obs == 'VIS_Ref':
+
+            range_ = (0,0.85)
+        elif obs == 'NIR_Ref':
+            
+            range_ = (0,0.6)
+        else:
+            pass
+
         x1, x2   = range_
 
         x = np.arange(x1, x2, (x2-x1)/num_bins)
