@@ -168,6 +168,7 @@ def plot_thresh_hist_all_bins():
     binned_thresholds = []
     thresholds        = []
     for i, obs in enumerate(thresh_dict):
+        print(np.shape(master_thresh[i]))
         if obs=='SVI' or obs=='Cirrus':
             temp_thresh = np.copy(master_thresh[i])
         elif obs == 'WI':
