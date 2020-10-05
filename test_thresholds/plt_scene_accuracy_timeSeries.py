@@ -63,7 +63,7 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
 s_list = []
 for i in range(46):
     s_temp = np.copy(scene_accurs[:,:,i])
-    s_temp = s_temp[s_temp>=0 and SID[:,:,i] !=12]
+    s_temp = s_temp[(s_temp>=0) & (SID[:,:,i] !=12)]
     s_list.append(np.mean(s_temp))
 
 plt.scatter(np.arange(8,376,8), s_list)
