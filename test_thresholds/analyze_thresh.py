@@ -170,18 +170,25 @@ def plot_thresh_hist_all_bins():
     for i, obs in enumerate(thresh_dict):
         if obs=='SVI' or obs=='Cirrus':
             temp_thresh = np.copy(master_thresh[i])
+            if obs=='SVI':
+                range_ = (0,0.3)
+            else:
+                range_ = (0,0.15)
         elif obs == 'WI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,:13])
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
             temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:7].flatten(), temp_thresh[:,:,:,:,11:14].flatten()))
-
+            range_ = (-0.5,0.5)
         elif obs == 'NDSI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,14])
+            range_ = (0.3,1)
         elif obs == 'VIS_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,:12])
+            range_ = (0,0.85)
         elif obs == 'NIR_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,12])
+            range_ = (0,0.6)
         else:
             pass
 
@@ -192,22 +199,22 @@ def plot_thresh_hist_all_bins():
         #     print(temp_thresh)
         # thresholds.append(temp_thresh)
 
-        range_ndxi     = (-1, 1)
-        range_other    = (0., 1.4)
+        # range_ndxi     = (-1, 1)
+        # range_other    = (0., 1.4)
+        #
+        # num_bins_ndxi  = 70
+        # num_bins_other = int(num_bins_ndxi * \
+        # (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
+        #
+        # if i==0 or i>=3:
+        #     num_bins = num_bins_other
+        #     range_    = range_other
+        # else:
+        #     num_bins = num_bins_ndxi
+        #     range_    = range_ndxi
 
-        num_bins_ndxi  = 70
-        num_bins_other = int(num_bins_ndxi * \
-        (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
 
-        if i==0 or i>=3:
-            num_bins = num_bins_other
-            range_    = range_other
-        else:
-            num_bins = num_bins_ndxi
-            range_    = range_ndxi
-
-
-        binned_thresholds.append(np.histogram(temp_thresh, bins=num_bins, range=range_)[0])
+        binned_thresholds.append(np.histogram(temp_thresh, bins=50, range=range_)[0])
 
     #plot thresh hist for each obs
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
