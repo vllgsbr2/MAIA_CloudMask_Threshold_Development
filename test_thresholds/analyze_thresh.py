@@ -234,7 +234,7 @@ def plot_thresh_hist_all_bins():
             else:
                 range_ = (0,0.15)
         elif obs == 'WI':
-
+            pass
         elif obs == 'NDVI':
 
 
@@ -246,7 +246,7 @@ def plot_thresh_hist_all_bins():
 
             range_ = (0,0.85)
         elif obs == 'NIR_Ref':
-            
+
             range_ = (0,0.6)
         else:
             pass
