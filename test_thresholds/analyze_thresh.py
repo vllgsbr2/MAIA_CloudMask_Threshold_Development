@@ -187,6 +187,7 @@ def plot_thresh_hist_all_bins():
 
 
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
+        print(obs, temp_thresh.min(), temp_thresh.max())
         # if i==1:
         #     print(temp_thresh)
         # thresholds.append(temp_thresh)
