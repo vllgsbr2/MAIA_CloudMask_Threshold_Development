@@ -89,7 +89,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
         with h5py.File(thresh_file, 'r') as hf_thresh:
             DOY = list(hf_thresh['TA_bin_00'].keys())[0]
             obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
-            
+
             thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY, which_thresh)
             current_thresh = hf_thresh[thresh_path][()]
             # large_cirrus_thresh_idx = np.where(current_thresh > 0.7)
@@ -174,8 +174,6 @@ def plot_thresh_hist_all_bins():
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,:13])
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
-            print(i)
-            print(temp_thresh[temp_thresh >-998].min(), temp_thresh.max())
             temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:7].flatten(), temp_thresh[:,:,:,:,11:14].flatten()))
 
         elif obs == 'NDSI':
@@ -206,7 +204,7 @@ def plot_thresh_hist_all_bins():
         else:
             num_bins = num_bins_ndxi
             range_    = range_ndxi
-        binned_thresholds.append(np.histogram(thresholds[i].flatten(), bins=num_bins, range=range_)[0])
+        binned_thresholds.append(np.histogram(thresholds.flatten(), bins=num_bins, range=range_)[0])
 
     #plot thresh hist for each obs
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
