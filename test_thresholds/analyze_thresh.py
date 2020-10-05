@@ -169,7 +169,7 @@ def plot_thresh_hist_all_bins():
     thresholds        = []
     for i, obs in enumerate(thresh_dict):
         #choose kth surface type
-        temp_thresh = master_thresh[i]
+        temp_thresh = np.copy(master_thresh[i])
 
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
         print(len(temp_thresh))
