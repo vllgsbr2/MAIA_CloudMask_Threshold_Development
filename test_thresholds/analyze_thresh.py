@@ -168,12 +168,9 @@ def plot_thresh_hist_all_bins():
     binned_thresholds = []
     thresholds        = []
     for i, obs in enumerate(thresh_dict):
-        #choose kth surface type
         temp_thresh = np.copy(master_thresh[i])
-
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
-        print(len(temp_thresh))
-        thresholds.append(temp_thresh)
+        thresholds.append(temp_thresh.flatten())
 
         range_ndxi     = (-1, 1)
         range_other    = (0., 1.4)
