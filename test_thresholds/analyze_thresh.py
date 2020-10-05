@@ -206,8 +206,8 @@ def plot_thresh_hist_all_bins():
 
                 x = np.arange(x1, x2, (x2-x1)/num_bins)
 
-                a.plot(x, temp_thresh[i], label='SID {:02d}'.format(k), c='blue')#color[k])
-                a.set_title('{} DOY bin {:02d}'.format(obs, DOY_bin))
+                a.plot(x, temp_thresh[i], c='blue')#color[k])
+                a.set_title('{}'.format(obs))
                 a.legend()
 
         #only 7 obs so lets turn 8th axis off
