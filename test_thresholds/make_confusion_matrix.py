@@ -24,6 +24,8 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_p
     DOY_end     = (DOY_bin + 1)*8
     DOY_start   = DOY_end - 7
     time_stamps = [t for t in time_stamps if int(t[4:7]) >= DOY_start and int(t[4:7]) <= DOY_end]
+    #use years 2004/2018/2010 which are the test set
+    hf_database_keys = [x for x in hf_database_keys if int(x[:4])==2004 or int(x[:4])==2010 or int(x[:4])==2018]
 
     with h5py.File('{}/conf_matx_scene_DOY_bin_{:02d}.h5'.format(conf_matx_scene_path, DOY_bin), 'w') as hf_scene_level_conf_matx:
 
@@ -55,9 +57,10 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_p
                 conf_mat_table = np.array([conf_matx_mask[true].sum(), conf_matx_mask[false].sum(), conf_matx_mask[false_cloudy].sum(),\
                                            conf_matx_mask[false_clear].sum()], dtype=np.int)
 
+                print(time_stamp, conf_mat_table[:2].sum()/conf_mat_table.sum())
+
                 conf_matx_mask[MAIA_CM >= 2] = -999
 
-                print(time_stamp, conf_mat_table[:2].sum()/conf_mat_table.sum())
                 try:
                     hf_scene_level_conf_matx.create_dataset('confusion_matrix_table_{}'.format(time_stamp), data=conf_mat_table)
                     hf_scene_level_conf_matx.create_dataset('confusion_matrix_mask_{}'.format(time_stamp) , data=conf_matx_mask, compression='gzip')
