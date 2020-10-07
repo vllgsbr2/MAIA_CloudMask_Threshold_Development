@@ -59,7 +59,7 @@ dataset_names = data.files
 accuracy_SVG = data[dataset_names[0]]
 num_smaples_SVG = data[dataset_names[1]]
 
-print(accuracy_SVG.size, num_smaples_SVG.size)
+print(accuracy_SVG.shape, num_smaples_SVG.shape)
 
 # #-- Plot... ------------------------------------------------
 # fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
