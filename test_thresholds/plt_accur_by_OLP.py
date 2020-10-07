@@ -40,7 +40,7 @@ with h5py.File(filepath, 'r') as hf:
         s_list.append(np.nanmean(s_temp)*100)
         num_samples_list.append(np.nansum(num_samples))
 # print(s_list)
-# x = np.arange(0,1,0.1)
+x = np.arange(0,1,0.1)
 # plt.scatter(x, s_list)
 # plt.plot(x, s_list, label='accuracy')
 # plt.scatter(x, num_samples_list)
