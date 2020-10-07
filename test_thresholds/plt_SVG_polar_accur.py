@@ -59,14 +59,16 @@ dataset_names = data.files
 accuracy_SVG = data[dataset_names[0]] #contains accuracy for each SZA/VZA/RAA bin
 num_smaples_SVG = data[dataset_names[1]] # same as above but num samples to get accuracy
 
+# accuracy_SVG = np.moveaxis(accuracy_SVG, 0,1)
+# num_smaples_SVG = np.moveaxis(num_smaples_SVG, 0,1)
 # print(accuracy_SVG.shape, num_smaples_SVG.shape)
 
 #-- Plot... ------------------------------------------------
-fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
+fig, ax = plt.subplots(2,5, subplot_kw=dict(projection='polar'))
 im = ax.pcolormesh(theta, r, np.moveaxis(accuracy_SVG[:,5,:], 0, -1), cmap='plasma')
-ax.set_thetamax(180)
-ax.set_rticks(np.arange(0,75,5))
+ax[0,4].set_thetamax(180)
+ax[0,4].set_rticks(np.arange(0,75,5))
 cax = fig.add_axes([0.85, 0.1, 0.05, 0.5])#l,b,w,h
-ax.set_thetagrids(np.arange(0,192,12))
+ax[0,4].set_thetagrids(np.arange(0,192,12))
 fig.colorbar(im, cax=cax)
 plt.show()
