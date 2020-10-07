@@ -73,7 +73,7 @@ for a in ax.flat:
     a.set_thetamax(180)
     a.set_rticks(np.arange(0,75,5))
 
-cax = fig.add_axes([0.85, 0.1, 0.05, 0.5])#l,b,w,h
+cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
 fig.colorbar(im, cax=cax)
 
 plt.show()
