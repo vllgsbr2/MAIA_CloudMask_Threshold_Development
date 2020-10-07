@@ -65,10 +65,12 @@ num_smaples_SVG = data[dataset_names[1]] # same as above but num samples to get 
 
 #-- Plot... ------------------------------------------------
 fig, ax = plt.subplots(2,5, subplot_kw=dict(projection='polar'))
-im = ax[0,4].pcolormesh(theta, r, np.moveaxis(accuracy_SVG[:,5,:], 0, -1), cmap='plasma', vmin=0, vmax=100)
 
 
-for a in ax.flat:
+for i, a in enumerate(ax.flat):
+    im = a.pcolormesh(theta, r, np.moveaxis(accuracy_SVG[:,i,:], 0, -1),\
+                      cmap='plasma', vmin=0, vmax=100)
+
     a.set_thetagrids(np.arange(0,192,12))
     a.set_thetamax(180)
     a.set_rticks(np.arange(0,75,5))
