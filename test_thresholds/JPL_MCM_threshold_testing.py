@@ -489,16 +489,16 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     elif observable_name == 'NDVI': #this test hurts my friccin heaaaaaaaaaaaaaaaaaaaaaaaad
         #where snow_ice occurs this test is not applied
-        # observable_data[(scene_type_identifier == snow) &  \
-        #                ((observable_data != fill_val_2)  &  \
-        #                 (observable_data != fill_val_3)) ]  = fill_val_1
-
-        observable_data[(scene_type_identifier >6)          &\
-                        (scene_type_identifier !=11)          &\
-                        (scene_type_identifier !=sun_glint) &\
-                        (scene_type_identifier !=water)     &\
-                       ((observable_data != fill_val_2)     &\
+        observable_data[(scene_type_identifier == snow) &  \
+                       ((observable_data != fill_val_2)  &  \
                         (observable_data != fill_val_3)) ]  = fill_val_1
+
+        # observable_data[(scene_type_identifier >6)          &\
+        #                 (scene_type_identifier !=11)          &\
+        #                 (scene_type_identifier !=sun_glint) &\
+        #                 (scene_type_identifier !=water)     &\
+        #                ((observable_data != fill_val_2)     &\
+        #                 (observable_data != fill_val_3)) ]  = fill_val_1
 
     elif observable_name == 'NDSI':
         # where snow_ice do not occur this test is not applied
