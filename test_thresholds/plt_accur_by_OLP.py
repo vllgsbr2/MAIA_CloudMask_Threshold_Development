@@ -38,7 +38,7 @@ with h5py.File(filepath, 'r') as hf:
         num_samples_temp = np.array(num_samples)
         # s_temp = s_temp[s_temp>=0]
         s_list.append(np.nanmean(s_temp)*100)
-        num_samples_list.append(np.nansum(num_samples))
+        num_samples_list.append(np.nansum(np.array(num_samples)))
 # print(s_list)
 x = np.arange(0,1,0.1)
 # plt.scatter(x, s_list)
@@ -67,6 +67,7 @@ fig.suptitle('Accuracy by cos(SZA) bin LA PTA')
 color = 'tab:pink'
 ax.set_xlabel('cos(SZA)')
 ax.set_ylabel('% Accuracy', color=color)
+ax.set_ylim(75, 100)
 ax.scatter(x, s_list, color=color)
 ax.plot(x, s_list, color=color)
 ax.tick_params(axis='y', labelcolor=color)
