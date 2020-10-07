@@ -64,5 +64,6 @@ num_smaples_SVG = data[dataset_names[1]] # same as above but num samples to get 
 #-- Plot... ------------------------------------------------
 fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
 ax.contourf(theta, r, np.moveaxis(accuracy_SVG[:,5,:], 0, -1))
+ax.set_thetamax(180)
 
 plt.show()
