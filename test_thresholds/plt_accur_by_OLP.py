@@ -31,11 +31,11 @@ with h5py.File(filepath, 'r') as hf:
         for i, bin_ID in enumerate(bins):
             if int(bin_ID[24:26]) == j:
                 accuracy.append(hf[bin_ID+'/accuracy'][()])
-                print(accuracy[i])
+                print(hf[bin_ID+'/accuracy'][()])
                 num_samples.append(hf[bin_ID+'/num_samples'][()])
         s_temp = np.array(accuracy)
         # s_temp = s_temp[s_temp>=0]
-        s_list.append(np.mean(s_temp))
+        s_list.append(np.nanmean(s_temp))
 print(s_list)
 # x = np.arange(0,1,0.1)
 # plt.scatter(x, s_list)
