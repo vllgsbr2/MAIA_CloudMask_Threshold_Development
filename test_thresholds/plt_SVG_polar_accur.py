@@ -23,9 +23,9 @@ num_samples_list=np.zeros((10,12,15))
 with h5py.File(filepath, 'r') as hf:
     bins = list(hf.keys())
 
-    for VZA in range(15):
-        for SZA in range(10):
-            for RAA in range(12):
+    for SZA in range(10):
+        for RAA in range(12):
+            for VZA in range(15):
                 #place to store for each bin
                 accuracy =[]
                 num_samples=[]
@@ -40,8 +40,8 @@ with h5py.File(filepath, 'r') as hf:
                 s_temp = np.array(accuracy)
                 num_samples_temp = np.array(num_samples)
                 # s_temp = s_temp[s_temp>=0]
-                s_list[VZA,SZA,RAA] = np.nanmean(s_temp)*100
-                num_samples_list[VZA,SZA,RAA] = np.nansum(np.array(num_samples))
+                s_list[SZA,RAA,VZA] = np.nanmean(s_temp)*100
+                num_samples_list[SZA,RAA,VZA] = np.nansum(np.array(num_samples))
 np.savez('./SVG_accur_data.npz', accuracy=s_list, num_samples=num_samples_list)
 
 
