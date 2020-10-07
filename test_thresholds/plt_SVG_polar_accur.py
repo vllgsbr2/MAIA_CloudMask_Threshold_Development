@@ -76,6 +76,7 @@ for i, a in enumerate(ax.flat):
     a.set_thetagrids(np.arange(0,192,12))
     a.set_rticks(np.arange(0,75,5))
     a.set_thetamax(180)
+    a.set_thetagrids(np.arange(0,192,12))
 
 
 cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
