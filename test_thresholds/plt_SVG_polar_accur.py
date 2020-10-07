@@ -17,32 +17,32 @@ scene_accur_path = scene_accur_home + '/' + 'group_ID_accuracy.h5'
 filepath = scene_accur_path
 
 
-s_list = np.zeros((10,12,15))
-num_samples_list=np.zeros((10,12,15))
-
-with h5py.File(filepath, 'r') as hf:
-    bins = list(hf.keys())
-
-    for SZA in range(10):
-        for RAA in range(12):
-            for VZA in range(15):
-                #place to store for each bin
-                accuracy =[]
-                num_samples=[]
-                #find group names of bin combo in for loop step
-                bin_IDs = [x for x in bins if x[:40]=='confusion_matrix_cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}'.format(SZA,VZA,RAA)]
-                #cycle through all the unque SVG bins (DOY and SID may change ofcourse)
-                for i, bin_ID in enumerate(bin_IDs):
-                    # print(SZA,VZA,RAA,bin_ID)
-                    accuracy.append(hf[bin_ID+'/accuracy'][()])
-                    # print(hf[bin_ID+'/accuracy'][()])
-                    num_samples.append(hf[bin_ID+'/num_samples'][()])
-                s_temp = np.array(accuracy)
-                num_samples_temp = np.array(num_samples)
-                # s_temp = s_temp[s_temp>=0]
-                s_list[SZA,RAA,VZA] = np.nanmean(s_temp)*100
-                num_samples_list[SZA,RAA,VZA] = np.nansum(np.array(num_samples))
-np.savez('./SVG_accur_data.npz', accuracy=s_list, num_samples=num_samples_list)
+# s_list = np.zeros((10,12,15))
+# num_samples_list=np.zeros((10,12,15))
+#
+# with h5py.File(filepath, 'r') as hf:
+#     bins = list(hf.keys())
+#
+#     for SZA in range(10):
+#         for RAA in range(12):
+#             for VZA in range(15):
+#                 #place to store for each bin
+#                 accuracy =[]
+#                 num_samples=[]
+#                 #find group names of bin combo in for loop step
+#                 bin_IDs = [x for x in bins if x[:40]=='confusion_matrix_cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}'.format(SZA,VZA,RAA)]
+#                 #cycle through all the unque SVG bins (DOY and SID may change ofcourse)
+#                 for i, bin_ID in enumerate(bin_IDs):
+#                     # print(SZA,VZA,RAA,bin_ID)
+#                     accuracy.append(hf[bin_ID+'/accuracy'][()])
+#                     # print(hf[bin_ID+'/accuracy'][()])
+#                     num_samples.append(hf[bin_ID+'/num_samples'][()])
+#                 s_temp = np.array(accuracy)
+#                 num_samples_temp = np.array(num_samples)
+#                 # s_temp = s_temp[s_temp>=0]
+#                 s_list[SZA,RAA,VZA] = np.nanmean(s_temp)*100
+#                 num_samples_list[SZA,RAA,VZA] = np.nansum(np.array(num_samples))
+# np.savez('./SVG_accur_data.npz', accuracy=s_list, num_samples=num_samples_list)
 
 
 #-- Generate Data -----------------------------------------
@@ -76,7 +76,7 @@ for i, a in enumerate(ax.flat):
     SZA2 = np.rad2deg(np.arccos((i+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
     a.set_rticks(np.arange(0,75,5))
-    a.set_thetamax(180)
+    a.set_thetamax(192)
 
 
 cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
