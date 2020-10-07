@@ -26,7 +26,7 @@ num_samples_list=[]
 with h5py.File(filepath, 'r') as hf:
     bins = list(hf.keys())
 
-    for j in range(10):
+    for j in range(15):
         accuracy =[]
         num_samples=[]
         for i, bin_ID in enumerate(bins):
@@ -41,7 +41,7 @@ with h5py.File(filepath, 'r') as hf:
         s_list.append(np.nanmean(s_temp)*100)
         num_samples_list.append(np.nansum(np.array(num_samples)))
 # print(s_list)
-x = np.arange(0,1,0.1)
+x = np.arange(0,75,5)
 # plt.scatter(x, s_list)
 # plt.plot(x, s_list, label='accuracy')
 # plt.scatter(x, num_samples_list)
@@ -66,7 +66,7 @@ fig, ax = plt.subplots()
 fig.suptitle('Accuracy by cos(SZA) bin LA PTA')
 
 color = 'tab:pink'
-ax.set_xlabel('cos(SZA)')
+ax.set_xlabel('VZA [deg]')
 ax.set_ylabel('% Accuracy', color=color)
 ax.set_ylim(75, 100)
 ax.scatter(x, s_list, color=color)
