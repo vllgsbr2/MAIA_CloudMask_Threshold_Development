@@ -71,7 +71,7 @@ for i, a in enumerate(ax.flat):
     im = a.pcolormesh(theta, r, np.moveaxis(accuracy_SVG[:,i,:], 0, -1),\
                       cmap='plasma', vmin=0, vmax=100)
 
-    a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(np.arccos(i/10, (i+1)/10)))
+    a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(np.arccos(i/10), np.arccos((i+1)/10)))
     a.set_thetagrids(np.arange(0,192,12))
     a.set_thetamax(180)
     a.set_rticks(np.arange(0,75,5))
