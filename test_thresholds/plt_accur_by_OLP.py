@@ -32,8 +32,8 @@ with h5py.File(filepath, 'r') as hf:
             if int(bin_ID[24:26]) == j:
                 accuracy.append(hf[bin_ID+'/accuracy'][()])
                 num_samples.append(hf[bin_ID+'/num_samples'][()])
-        s_temp = np.copy(scene_accurs[:,:,j])
-        s_temp = s_temp[s_temp>=0]
+        s_temp = np.copy(accuracy)
+        # s_temp = s_temp[s_temp>=0]
         s_list.append(np.mean(s_temp))
 
 x = np.arange(0,1,0.1)
