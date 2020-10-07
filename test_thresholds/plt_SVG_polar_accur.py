@@ -48,7 +48,7 @@ filepath = scene_accur_path
 #-- Generate Data -----------------------------------------
 # Using linspace so that the endpoint of 360 is included...
 azimuths = np.radians(np.linspace(0, 192, 12))
-zeniths = np.arange(0, 70, 10)
+zeniths = np.arange(0, 75, 5)
 
 r, theta = np.meshgrid(zeniths, azimuths)
 # values = np.random.random((azimuths.size, zeniths.size))
@@ -56,13 +56,13 @@ r, theta = np.meshgrid(zeniths, azimuths)
 data = np.load('./SVG_accur_data.npz')
 dataset_names = data.files
 
-accuracy_SVG = data[dataset_names[0]]
-num_smaples_SVG = data[dataset_names[1]]
+accuracy_SVG = data[dataset_names[0]] #contains accuracy for each SZA/VZA/RAA bin
+num_smaples_SVG = data[dataset_names[1]] # same as above but num samples to get accuracy
 
-print(accuracy_SVG.shape, num_smaples_SVG.shape)
+# print(accuracy_SVG.shape, num_smaples_SVG.shape)
 
-# #-- Plot... ------------------------------------------------
-# fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
-# ax.contourf(theta, r, values)
-#
-# plt.show()
+#-- Plot... ------------------------------------------------
+fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
+ax.contourf(theta, r, accuracy_SVG[5,:,:])
+
+plt.show()
