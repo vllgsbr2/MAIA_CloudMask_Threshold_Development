@@ -42,3 +42,4 @@ with h5py.File(filepath, 'r') as hf:
                 # s_temp = s_temp[s_temp>=0]
                 s_list[VZA,SZA,RAA] = np.nanmean(s_temp)*100
                 num_samples_list[VZA,SZA,RAA] = np.nansum(np.array(num_samples))
+np.savez('./SVG_accur_data.npz', accuracy=s_list, num_samples=num_samples_list)
