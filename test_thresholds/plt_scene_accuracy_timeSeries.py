@@ -60,18 +60,23 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
 # ani = animation.ArtistAnimation(fig, container, interval=700, blit=False,
 #                                 repeat=True)
 # ani.save('./MCM_Scene_Accuracy_all_DOY_new_grid.mp4')
-s_list = []
-for i in range(46):
-    s_temp = np.copy(scene_accurs[:,:,i])
-    s_temp = s_temp[(s_temp>=0) & (SID[:,:,i] ==12)]
-    s_list.append(np.mean(s_temp))
+# s_list = []
+# for i in range(46):
+#     s_temp = np.copy(scene_accurs[:,:,i])
+#     s_temp = s_temp[(s_temp>=0) & (SID[:,:,i] ==12)]
+#     s_list.append(np.mean(s_temp))
+#
+# plt.scatter(np.arange(8,376,8), s_list)
+# plt.plot(np.arange(8,376,8), s_list)
+# plt.xticks(np.arange(8,376,8), rotation=295)
+# plt.ylim([85,100])
+# plt.xlabel('Julian Day of Year')
+# plt.ylabel('% Accuracy')
 
-plt.scatter(np.arange(8,376,8), s_list)
-plt.plot(np.arange(8,376,8), s_list)
-plt.xticks(np.arange(8,376,8), rotation=295)
-plt.ylim([85,100])
-plt.xlabel('Julian Day of Year')
-plt.ylabel('% Accuracy')
+composit_accuracy = np.mean(scene_accurs, axis=2)
+plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap='plasma')
+plt.title('Composite Accuracy for years 2004/2010/2018')
+plt.colorbar()
 
 
 plt.show()
