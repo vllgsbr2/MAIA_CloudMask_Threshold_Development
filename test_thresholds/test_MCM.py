@@ -153,12 +153,12 @@ ax1[1].set_title('BRF RGB')
 f0, ax0 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
 cmap='bone'
 im0 = ax0[0,0].imshow(WI     , cmap=cmap+'_r', vmin=0, vmax = 0.6 )
-im1 = ax0[0,1].imshow(NDVI   , cmap='PRGn'   , vmin=-0.6, vmax=0.6)
+im1 = ax0[0,1].imshow(NDVI   , cmap='PRGn'   , vmin=-0.4, vmax=0.4)
 im2 = ax0[0,2].imshow(NDSI   , cmap='PRGn'   , vmin=-0.5 , vmax=0.5)
 im3 = ax0[0,3].imshow(VIS_Ref, cmap=cmap     , vmin=0, vmax=0.8   )#, vmax=VIS_Ref.max())
 im4 = ax0[1,0].imshow(NIR_Ref, cmap=cmap     , vmin=0, vmax=0.8  )#, vmax=NIR_Ref.max())
-im5 = ax0[1,1].imshow(SVI    , cmap=cmap     , vmin=0   )#, vmax=SVI.max())
-im6 = ax0[1,2].imshow(Cirrus , cmap=cmap     , vmin=0   )#, vmax=1)
+im5 = ax0[1,1].imshow(SVI    , cmap=cmap     , vmin=0, vmax=0.25)#, vmax=SVI.max())
+im6 = ax0[1,2].imshow(Cirrus , cmap=cmap     , vmin=0, vmax=0.2   )#, vmax=1)
 
 ax0[1,3].imshow(RGB)
 
