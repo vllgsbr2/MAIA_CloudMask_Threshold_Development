@@ -74,8 +74,9 @@ for i, a in enumerate(ax.flat):
     SZA2 = np.rad2deg(np.arccos((i+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
     a.set_thetagrids(np.arange(0,192,12))
+    a.set_rticks(np.arange(0,75,5))
     a.set_thetamax(180)
-    a.set_rticks(np.arange(0,75,5), rotate=315)
+
 
 cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
 fig.colorbar(im, cax=cax)
