@@ -33,10 +33,10 @@ with h5py.File(filepath, 'r') as hf:
                 print(int(bin_ID[24:26]))
                 accuracy.append(hf[bin_ID+'/accuracy'][()])
                 num_samples.append(hf[bin_ID+'/num_samples'][()])
-        s_temp = np.copy(accuracy)
+        s_temp = np.array(accuracy)
         # s_temp = s_temp[s_temp>=0]
         s_list.append(np.mean(s_temp))
-
+print(s_list)
 x = np.arange(0,1,0.1)
 plt.scatter(x, s_list)
 plt.plot(x, s_list)
