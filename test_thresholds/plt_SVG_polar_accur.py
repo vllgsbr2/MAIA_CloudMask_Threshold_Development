@@ -33,7 +33,7 @@ with h5py.File(filepath, 'r') as hf:
                 bin_IDs = [x for x in bins if x[:40]=='confusion_matrix_cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}'.format(SZA,VZA,RAA)]
                 #cycle through all the unque SVG bins (DOY and SID may change ofcourse)
                 for i, bin_ID in enumerate(bin_IDs):
-                    print(SZA,VZA,RAA,bin_ID)
+                    # print(SZA,VZA,RAA,bin_ID)
                     accuracy.append(hf[bin_ID+'/accuracy'][()])
                     # print(hf[bin_ID+'/accuracy'][()])
                     num_samples.append(hf[bin_ID+'/num_samples'][()])
