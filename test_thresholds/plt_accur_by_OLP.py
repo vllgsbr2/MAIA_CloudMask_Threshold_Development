@@ -69,6 +69,7 @@ color = 'tab:pink'
 ax.set_xlabel('Surface Type')
 ax.set_ylabel('% Accuracy', color=color)
 ax.set_ylim(75, 100)
+ax.set_xticks(x)
 ax.scatter(x, s_list, color=color)
 ax.plot(x, s_list, color=color)
 ax.tick_params(axis='y', labelcolor=color)
