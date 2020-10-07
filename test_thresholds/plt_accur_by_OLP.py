@@ -31,7 +31,7 @@ with h5py.File(filepath, 'r') as hf:
         num_samples=[]
         for i, bin_ID in enumerate(bins):
             # print(bin_ID)
-            if int(bin_ID[-9:-7]) != -9:
+            if int(bin_ID[-9:-7]) == j :
                 accuracy.append(hf[bin_ID+'/accuracy'][()])
                 # print(hf[bin_ID+'/accuracy'][()])
                 num_samples.append(hf[bin_ID+'/num_samples'][()])
