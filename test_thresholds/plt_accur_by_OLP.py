@@ -30,7 +30,7 @@ with h5py.File(filepath, 'r') as hf:
         accuracy =[]
         num_samples=[]
         for i, bin_ID in enumerate(bins):
-            print(bin_ID)
+            # print(bin_ID)
             if int(bin_ID[24:26]) == j and int(bin_ID[-9:-7]) != -9:
                 accuracy.append(hf[bin_ID+'/accuracy'][()])
                 # print(hf[bin_ID+'/accuracy'][()])
