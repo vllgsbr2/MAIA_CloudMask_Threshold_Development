@@ -21,6 +21,7 @@ filepath = scene_accur_path
 plt.rcParams['font.size'] = 16
 
 s_list = []
+num_samples_list=[]
 
 with h5py.File(filepath, 'r') as hf:
     bins = list(hf.keys())
@@ -34,15 +35,45 @@ with h5py.File(filepath, 'r') as hf:
                 print(hf[bin_ID+'/accuracy'][()])
                 num_samples.append(hf[bin_ID+'/num_samples'][()])
         s_temp = np.array(accuracy)
+        num_samples_temp = np.array(num_samples)
         # s_temp = s_temp[s_temp>=0]
         s_list.append(np.nanmean(s_temp))
+        num_samples_list.append(np.nansum(num_samples))
 print(s_list)
 # x = np.arange(0,1,0.1)
 # plt.scatter(x, s_list)
-# plt.plot(x, s_list)
+# plt.plot(x, s_list, label='accuracy')
+# plt.scatter(x, num_samples_list)
+# plt.plot(x, num_samples_list)
 # plt.xticks(x)#, rotation=295)
 # plt.ylim([85,100])
 # plt.xlabel('cos(SZA)')
 # plt.ylabel('% Accuracy')
-
+#
 # plt.show()
+
+#now plot the histogram
+font = {'family': 'serif',
+        'color':  'darkred',
+        'weight': 'normal',
+        'size': 18,
+        }
+plt.rcParams['font.size'] = 18
+
+fig, ax = plt.subplots()
+
+fig.suptitle('Accuracy by cos(SZA) bin LA PTA')
+
+color = 'tab:pink'
+ax.set_xlabel('cos(SZA)')
+ax.set_ylabel('% Accuracy', color=color)
+ax.scatter(x, s_list, color=color)
+ax.plot(x, s_list, color=color)
+ax.tick_params(axis='y', labelcolor=color)
+
+ax1 = ax.twinx()  # instantiate a second axes that shares the same x-axis
+
+color = 'tab:cyan'
+ax1.set_ylabel('number of samples', color=color)  # we already handled the x-label with ax1
+ax1.bar(x, num_samples_list, color=color)
+ax1.tick_params(axis='y', labelcolor=color)
