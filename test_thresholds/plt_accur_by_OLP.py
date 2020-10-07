@@ -63,7 +63,9 @@ plt.rcParams['font.size'] = 18
 
 fig, ax = plt.subplots()
 
-fig.suptitle('Accuracy by cos(SZA) bin LA PTA')
+fig.suptitle('Accuracy by Surface Type LA PTA')
+
+x = [0,1,2,3,4,5,6,7,8,9,10,'coast','water', 'glint\nwater','snow'] 
 
 color = 'tab:pink'
 ax.set_xlabel('Surface Type')
@@ -73,6 +75,7 @@ ax.set_xticks(x)
 ax.scatter(x, s_list, color=color)
 ax.plot(x, s_list, color=color)
 ax.tick_params(axis='y', labelcolor=color)
+
 
 ax1 = ax.twinx()  # instantiate a second axes that shares the same x-axis
 
