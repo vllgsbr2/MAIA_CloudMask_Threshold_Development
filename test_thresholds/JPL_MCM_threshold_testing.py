@@ -468,46 +468,46 @@ def get_test_determination(observable_level_parameter, observable_data,\
     sun_glint = 13
     snow      = 14
 
-    #apply fill values according to input observable and surface type
-    if observable_name == 'VIS_Ref':
-        #where water or snow/ice occur this test is not applied
-        observable_data[(scene_type_identifier >= water) & \
-                        ((observable_data != fill_val_2)                & \
-                         (observable_data != fill_val_3)) ]  = fill_val_1
-
-    elif observable_name == 'NIR_Ref':
-        #where land/sunglint/snow_ice occur this test is not applied
-        observable_data[((scene_type_identifier < water) | (scene_type_identifier > water)) & \
-                        ((observable_data != fill_val_2)          & \
-                         (observable_data != fill_val_3))]   = fill_val_1
-
-    elif observable_name == 'WI':
-        #where sunglint/snow_ice occur this test is not applied
-        observable_data[(scene_type_identifier >= sun_glint)   & \
-                        ((observable_data != fill_val_2     )  & \
-                         (observable_data != fill_val_3     )) ] = fill_val_1
-
-    elif observable_name == 'NDVI': #this test hurts my friccin heaaaaaaaaaaaaaaaaaaaaaaaad
-        #where snow_ice occurs this test is not applied
-        # observable_data[(scene_type_identifier == snow) &  \
-        #                ((observable_data != fill_val_2)  &  \
-        #                 (observable_data != fill_val_3)) ]  = fill_val_1
-
-        observable_data[(scene_type_identifier >6)          &\
-                        (scene_type_identifier !=11)          &\
-                        (scene_type_identifier !=sun_glint) &\
-                        (scene_type_identifier !=water)     &\
-                       ((observable_data != fill_val_2)     &\
-                        (observable_data != fill_val_3)) ]  = fill_val_1
-
-    elif observable_name == 'NDSI':
-        # where snow_ice do not occur this test is not applied
-        observable_data[(scene_type_identifier != snow)   &  \
-                        ((observable_data != fill_val_2)  &  \
-                         (observable_data != fill_val_3)) ]  = fill_val_1
-
-    else:
-        pass
+    # #apply fill values according to input observable and surface type
+    # if observable_name == 'VIS_Ref':
+    #     #where water or snow/ice occur this test is not applied
+    #     observable_data[(scene_type_identifier >= water) & \
+    #                     ((observable_data != fill_val_2)                & \
+    #                      (observable_data != fill_val_3)) ]  = fill_val_1
+    #
+    # elif observable_name == 'NIR_Ref':
+    #     #where land/sunglint/snow_ice occur this test is not applied
+    #     observable_data[((scene_type_identifier < water) | (scene_type_identifier > water)) & \
+    #                     ((observable_data != fill_val_2)          & \
+    #                      (observable_data != fill_val_3))]   = fill_val_1
+    #
+    # elif observable_name == 'WI':
+    #     #where sunglint/snow_ice occur this test is not applied
+    #     observable_data[(scene_type_identifier >= sun_glint)   & \
+    #                     ((observable_data != fill_val_2     )  & \
+    #                      (observable_data != fill_val_3     )) ] = fill_val_1
+    #
+    # elif observable_name == 'NDVI': #this test hurts my friccin heaaaaaaaaaaaaaaaaaaaaaaaad
+    #     #where snow_ice occurs this test is not applied
+    #     # observable_data[(scene_type_identifier == snow) &  \
+    #     #                ((observable_data != fill_val_2)  &  \
+    #     #                 (observable_data != fill_val_3)) ]  = fill_val_1
+    #
+    #     observable_data[(scene_type_identifier >6)          &\
+    #                     (scene_type_identifier !=11)          &\
+    #                     (scene_type_identifier !=sun_glint) &\
+    #                     (scene_type_identifier !=water)     &\
+    #                    ((observable_data != fill_val_2)     &\
+    #                     (observable_data != fill_val_3)) ]  = fill_val_1
+    #
+    # elif observable_name == 'NDSI':
+    #     # where snow_ice do not occur this test is not applied
+    #     observable_data[(scene_type_identifier != snow)   &  \
+    #                     ((observable_data != fill_val_2)  &  \
+    #                      (observable_data != fill_val_3)) ]  = fill_val_1
+    #
+    # else:
+    #     pass
 
     #Now we need to get the threshold for each pixel for one observable;
     #therefore, final return should be shape (X,Y) w/thresholds stored inside
