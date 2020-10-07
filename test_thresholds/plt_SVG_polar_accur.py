@@ -63,8 +63,8 @@ num_smaples_SVG = data[dataset_names[1]] # same as above but num samples to get 
 
 #-- Plot... ------------------------------------------------
 fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
-ax.contourf(theta, r, np.moveaxis(accuracy_SVG[:,5,:], 0, -1))
+im = ax.contourf(theta, r, np.moveaxis(accuracy_SVG[:,5,:], 0, -1))
 ax.set_thetamax(180)
-ax.colorbar()
-
+cax = fig.add_axes([0.27, 0.8, 0.5, 0.05])
+fig.colorbar(im, cax=cax)
 plt.show()
