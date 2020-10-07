@@ -30,8 +30,8 @@ with h5py.File(filepath, 'r') as hf:
         num_samples=[]
         for i, bin_ID in enumerate(bins):
             if int(bin_ID[24:26]) == j:
-                print(int(bin_ID[24:26]))
                 accuracy.append(hf[bin_ID+'/accuracy'][()])
+                print(accuracy[i])
                 num_samples.append(hf[bin_ID+'/num_samples'][()])
         s_temp = np.array(accuracy)
         # s_temp = s_temp[s_temp>=0]
