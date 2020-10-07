@@ -1,6 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import configparser
 import h5py
+# 'scene_Accuracy_DOY_bin_{:02d}'.format(DOY_bin)
+
+config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+config           = configparser.ConfigParser()
+config.read(config_home_path+'/test_config.txt')
+
+PTA           = config['current PTA']['PTA']
+PTA_path      = config['PTAs'][PTA]
+Target_Area_X = int(config['Target Area Integer'][PTA])
+
+scene_accur_home = PTA_path + '/' + config['supporting directories']['group_accuracy']
+scene_accur_path = scene_accur_home + '/' + 'group_ID_accuracy.h5'
+filepath = scene_accur_path
+
 
 s_list = np.zeros((15,10,12))
 num_samples_list=np.zeros((15,10,12))
