@@ -105,11 +105,11 @@ if __name__ == '__main__':
     conf_matx_scene_files    = [conf_matx_scene_dir + '/' + x for x in os.listdir(conf_matx_scene_dir)]
 
     # DOY_bin = r
-    total_conf_matx = []
+    total_conf_matx = np.array([0,0,0,0])
     with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
         for i in range(46):
             MCM_accuracy, num_samples , conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i])
-            total_conf_matx.append(conf_matx_x)
+            total_conf_matx += conf_matx_x
             print(conf_matx_x)
             scene_current_group = 'DOY_bin_{:02d}'.format(i)
             hf_scene_accur.create_group(scene_current_group)
@@ -118,7 +118,7 @@ if __name__ == '__main__':
             hf_scene_accur[scene_current_group].create_dataset('total_conf_matx' , data=conf_matx_x)
 
             print('Scene DOY: {} done'.format(i))
-    total_conf_matx = np.sum(np.array(total_conf_matx), axis=1)
+            
     print(total_conf_matx)
 
     sys.exit()
