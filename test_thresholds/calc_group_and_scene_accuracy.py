@@ -32,6 +32,12 @@ def scene_conf_matx_accur(conf_matx_path):
 
             accuracy += mask
 
+        true_cloud  = np.sum(accuracy[:,:,0])
+        true_clear  = np.sum(accuracy[:,:,1])
+        false_clear = np.sum(accuracy[:,:,2])
+        false_cloud = np.sum(accuracy[:,:,3])
+
+        total_conf_matx = [true_cloud, true_clear, false_clear, false_cloud]
         #print(accuracy[:,:,0])
         #% of time mask is correct at each location, when data is present
         total_sum = np.sum(num_samples, axis=2)
@@ -40,7 +46,7 @@ def scene_conf_matx_accur(conf_matx_path):
         #take care of inf values when dividing by zero if applicable
         MCM_accuracy[total_sum == 0] = -999
 
-        return MCM_accuracy, num_samples
+        return MCM_accuracy, num_samples, total_conf_matx
 
 def group_conf_matx_accur(conf_matx_path):
     '''
@@ -65,6 +71,7 @@ if __name__ == '__main__':
 
     import h5py
     import os
+    import sys
     import numpy as np
     # import mpi4py.MPI as MPI
     import configparser
@@ -98,16 +105,22 @@ if __name__ == '__main__':
     conf_matx_scene_files    = [conf_matx_scene_dir + '/' + x for x in os.listdir(conf_matx_scene_dir)]
 
     # DOY_bin = r
+    total_conf_matx = []
     with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
         for i in range(46):
-            MCM_accuracy, num_samples = scene_conf_matx_accur(conf_matx_scene_files[i])
-    
+            MCM_accuracy, num_samples , conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i])
+            total_conf_matx.append(conf_matx_x)
             scene_current_group = 'DOY_bin_{:02d}'.format(i)
             hf_scene_accur.create_group(scene_current_group)
             hf_scene_accur[scene_current_group].create_dataset('MCM_accuracy', data=MCM_accuracy)
             hf_scene_accur[scene_current_group].create_dataset('num_samples' , data=num_samples)
+            hf_scene_accur[scene_current_group].create_dataset('total_conf_matx' , data=conf_matx_x)
 
             print('Scene DOY: {} done'.format(i))
+    total_conf_matx = np.sum(np.array(total_conf_matx), axis=1)
+    print(total_conf_matx)
+
+    sys.exit()
 
     #****************************group******************************************
 

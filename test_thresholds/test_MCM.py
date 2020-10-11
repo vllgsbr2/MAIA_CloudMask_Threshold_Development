@@ -111,7 +111,7 @@ plt.xticks([])
 plt.yticks([])
 
 
-plt.show()
+# plt.show()
 
 
 #reformat the return for plotting
