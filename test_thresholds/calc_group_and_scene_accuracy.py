@@ -110,6 +110,7 @@ if __name__ == '__main__':
         for i in range(46):
             MCM_accuracy, num_samples , conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i])
             total_conf_matx.append(conf_matx_x)
+            print(conf_matx_x)
             scene_current_group = 'DOY_bin_{:02d}'.format(i)
             hf_scene_accur.create_group(scene_current_group)
             hf_scene_accur[scene_current_group].create_dataset('MCM_accuracy', data=MCM_accuracy)
