@@ -92,6 +92,14 @@ make_output(Sun_glint_exclusion_angle,\
             SZA, VZA, VAA,SAA,\
             scene_type_identifier)
 
+#grab mod35 cm from input file
+with h5py.File(test_data_JPL_path, 'r') as hf_output:
+    mod35cm = hf_output['MOD35_cloud_mask'][()]
+plt.figure()
+plt.imshow(mod35cm)
+plt.show()
+
+
 #reformat the return for plotting
 WI, NDVI, NDSI, VIS_Ref, NIR_Ref, SVI, Cirrus = observable_data[:,:,0],\
                                                 observable_data[:,:,1],\
