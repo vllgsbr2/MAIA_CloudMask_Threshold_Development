@@ -96,8 +96,17 @@ make_output(Sun_glint_exclusion_angle,\
 #grab mod35 cm from input file
 with h5py.File(test_data_JPL_path, 'r') as hf_output:
     mod35cm = hf_output['MOD35_cloud_mask'][()]
+
+import matplotlib.colors as matCol
+from matplotlib.colors import ListedColormap
+cmap = ListedColormap(['white', 'green', 'blue','black'])
+norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
+cbar = plt.colorbar()
+cbar.set_ticks([0.5,1.5,2.5,3.5])
+cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
+                     'probably\nclear', 'confident\nclear'])
 plt.figure()
-plt.imshow(mod35cm)
+plt.imshow(mod35cm, cmap=cmap, norm=norm)
 plt.show()
 
 
