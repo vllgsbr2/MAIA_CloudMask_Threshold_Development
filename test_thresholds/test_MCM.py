@@ -107,6 +107,8 @@ cbar = plt.colorbar()
 cbar.set_ticks([0.5,1.5,2.5,3.5])
 cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
                      'probably\nclear', 'confident\nclear'])
+plt.xticks([])
+plt.yticks([])
 
 
 plt.show()
