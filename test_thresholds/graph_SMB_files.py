@@ -36,7 +36,12 @@ for i in range(cos_sza.shape[0]):
     print(i)
 
 max_BRF_by_SVC = max_BRF_by_SVC.reshape(10*15*12)
-max_BRF_by_SVC = np.sort(max_BRF_by_SVC)
+# max_BRF_by_SVC = np.sort(max_BRF_by_SVC)
+
+idx   = np.argsort(max_BRF_by_SVC)
+
+max_BRF_by_SVC = np.array(max_BRF_by_SVC)[idx]
+max_BRF_by_SVC_boxplot = np.array(max_BRF_by_SVC_boxplot)[idx]
 
 #every time the next SVGC is more than 5% bigger than the last draw a thresh
 #first get the gradient
