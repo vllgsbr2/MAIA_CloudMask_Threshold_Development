@@ -41,3 +41,5 @@ ax.plot(np.arange(10*15*12), max_BRF_by_SVC)
 ax.scatter(np.arange(10*15*12), max_BRF_by_SVC)
 ax.set_xlabel('Sun View Geometry Combinations 0-1799')
 ax.set_ylabel('Mean BRDF for SVGC')
+
+plt.show()
