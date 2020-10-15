@@ -43,7 +43,7 @@ def grad(arr, step_size):
     temp_arr   = np.zeros(arr.shape)
     # where_grad = np.zeros(arr.shape)
     for i in range(len(arr)):
-        elements_left = len(arr) - i
+        elements_left = (len(arr)-1) - i
         if elements_left < step_size:
             temp_arr[i] = arr[i+elements_left] - arr[i] / elements_left
 
