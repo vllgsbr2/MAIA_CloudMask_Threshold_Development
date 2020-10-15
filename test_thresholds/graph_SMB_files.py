@@ -39,7 +39,7 @@ max_BRF_by_SVC = np.sort(max_BRF_by_SVC)
 f, ax = plt.subplots(ncols=1,nrows=1)
 
 ax.plot(np.arange(10*15*12), max_BRF_by_SVC)
-ax.scatter(np.arange(10*15*12), max_BRF_by_SVC, s=0.1)
+ax.scatter(np.arange(10*15*12), max_BRF_by_SVC, s=0.1, c='r')
 ax.set_xlabel('Sun View Geometry Combinations 0-1799')
 ax.set_ylabel('Mean BRDF for SVGC')
 
