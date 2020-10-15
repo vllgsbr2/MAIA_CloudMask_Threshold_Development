@@ -51,7 +51,8 @@ def grad(arr, step_size):
             temp_arr[i] = arr[i+step_size] - arr[i] / step_size
     return temp_arr
 
-max_BRF_by_SVC_grad = grad(max_BRF_by_SVC, 50)
+# max_BRF_by_SVC_grad = grad(max_BRF_by_SVC, 50)
+max_BRF_by_SVC_grad = np.gradient(max_BRF_by_SVC)
 
 
 f, ax = plt.subplots(ncols=1,nrows=1)
