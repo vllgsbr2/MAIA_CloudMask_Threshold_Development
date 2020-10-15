@@ -19,10 +19,10 @@ SMB_file_x = SMB_files[0]
 
 with Dataset(SMB_file_x, 'r') as nc_SMB:
     #holds max_BRF with dims (x, y, cos_sza, vza, raz) -> (400,300,10,15,12)
-    max_BRF = nc_SMB.varaibles['max_BRF'][:]
-    cos_sza = nc_SMB.varaibles['cos_sza'][:]
-    vza = nc_SMB.varaibles['vza'][:]
-    raz = nc_SMB.varaibles['raz'][:]
+    max_BRF = nc_SMB.variables['max_BRF'][:]
+    cos_sza = nc_SMB.variables['cos_sza'][:]
+    vza = nc_SMB.variables['vza'][:]
+    raz = nc_SMB.variables['raz'][:]
 
 max_BRF_flat = max_BRF.reshape((400*300,10,15,12))
 max_BRF_by_SVC = np.zeros((10,15,12))
