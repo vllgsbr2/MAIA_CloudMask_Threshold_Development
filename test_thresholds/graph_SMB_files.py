@@ -27,10 +27,12 @@ with Dataset(SMB_file_x, 'r') as nc_SMB:
 max_BRF_flat = max_BRF.reshape((400*300,10,15,12))
 max_BRF_flat[max_BRF_flat<0] = np.nan
 max_BRF_by_SVC = np.zeros((10,15,12))
+max_BRF_by_SVC_boxplot = []
 for i in range(cos_sza.shape[0]):
     for j in range(vza.shape[0]):
         for k in range(raz.shape[0]):
             max_BRF_by_SVC[i,j,k] = np.nanmean(max_BRF_flat[:,i,j,k])
+            max_BRF_by_SVC_boxplot.append(max_BRF_flat[:,i,j,k])
     print(i)
 
 max_BRF_by_SVC = max_BRF_by_SVC.reshape(10*15*12)
@@ -38,20 +40,6 @@ max_BRF_by_SVC = np.sort(max_BRF_by_SVC)
 
 #every time the next SVGC is more than 5% bigger than the last draw a thresh
 #first get the gradient
-def grad(arr, step_size):
-
-    temp_arr   = np.zeros(arr.shape)
-    # where_grad = np.zeros(arr.shape)
-    for i in range(len(arr)):
-        elements_left = (len(arr)-1) - i
-        if elements_left < step_size:
-            temp_arr[i] = arr[i+elements_left] - arr[i] / elements_left
-
-        else:
-            temp_arr[i] = arr[i+step_size] - arr[i] / step_size
-    return temp_arr
-
-# max_BRF_by_SVC_grad = grad(max_BRF_by_SVC, 50)
 max_BRF_by_SVC_grad = np.gradient(max_BRF_by_SVC)
 
 
@@ -64,6 +52,7 @@ ax.tick_params(axis='y', labelcolor='tab:red')
 
 ax1 = ax.twinx()
 ax1.plot(np.arange(10*15*12), max_BRF_by_SVC, c='b', label='BRDF')
+ax1.boxplot(max_BRF_by_SVC_boxplot)
 ax1.tick_params(axis='y', labelcolor='tab:blue')
 ax1.set_xlabel('Sun View Geometry Combinations 0-1799')
 ax1.set_ylabel('Mean BRDF for SVGC')
