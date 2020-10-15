@@ -31,15 +31,21 @@ for i in range(cos_sza.shape[0]):
     for j in range(vza.shape[0]):
         for k in range(raz.shape[0]):
             max_BRF_by_SVC[i,j,k] = np.nanmean(max_BRF_flat[:,i,j,k])
+    print(i)
 
 max_BRF_by_SVC = max_BRF_by_SVC.reshape(10*15*12)
 max_BRF_by_SVC = np.sort(max_BRF_by_SVC)
 
+#every time the next SVGC is more than 5% bigger than the last draw a thresh
+#first get the gradient
+max_BRF_by_SVC_grad = np.gradient(max_BRF_by_SVC)
+
 
 f, ax = plt.subplots(ncols=1,nrows=1)
 
-ax.plot(np.arange(10*15*12), max_BRF_by_SVC)
-ax.scatter(np.arange(10*15*12), max_BRF_by_SVC, s=0.1, c='r')
+ax.plot(np.arange(10*15*12), max_BRF_by_SVC, c='b', label='BRDF')
+ax.plot(np.arange(10*15*12), max_BRF_by_SVC_grad, c='r', label='gradient')
+# ax.scatter(np.arange(10*15*12), max_BRF_by_SVC, s=0.1, c='r')
 ax.set_xlabel('Sun View Geometry Combinations 0-1799')
 ax.set_ylabel('Mean BRDF for SVGC')
 
