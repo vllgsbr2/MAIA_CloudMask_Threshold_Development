@@ -57,7 +57,7 @@ ax.tick_params(axis='y', labelcolor='tab:red')
 
 ax1 = ax.twinx()
 ax1.plot(np.arange(10*15*12), max_BRF_by_SVC, c='b', label='BRDF')
-ax1.boxplot(max_BRF_by_SVC_boxplot)
+# ax1.boxplot(max_BRF_by_SVC_boxplot)
 ax1.tick_params(axis='y', labelcolor='tab:blue')
 ax1.set_xlabel('Sun View Geometry Combinations 0-1799')
 ax1.set_ylabel('Mean BRDF for SVGC')
