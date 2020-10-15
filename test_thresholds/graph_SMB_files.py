@@ -25,11 +25,12 @@ with Dataset(SMB_file_x, 'r') as nc_SMB:
     raz = nc_SMB.variables['raz'][:]
 
 max_BRF_flat = max_BRF.reshape((400*300,10,15,12))
+max_BRF_flat[max_BRF_flat<0] = np.nan
 max_BRF_by_SVC = np.zeros((10,15,12))
 for i in range(cos_sza.shape[0]):
     for j in range(vza.shape[0]):
         for k in range(raz.shape[0]):
-            max_BRF_by_SVC[i,j,k] = max_BRF_flat[:,i,j,k].mean()
+            max_BRF_by_SVC[i,j,k] = max_BRF_flat[:,i,j,k].nanmean()
 
 max_BRF_by_SVC = max_BRF_by_SVC.reshape(10*15*12)
 max_BRF_by_SVC = np.sort(max_BRF_by_SVC)
