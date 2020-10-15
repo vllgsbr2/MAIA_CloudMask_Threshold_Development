@@ -44,7 +44,7 @@ max_BRF_by_SVC_grad = np.gradient(max_BRF_by_SVC)
 f, ax = plt.subplots(ncols=1,nrows=1)
 
 
-ax.bar(np.arange(10*15*12), max_BRF_by_SVC_grad, c='r', label='gradient', alpha=0.3)
+ax.bar(np.arange(10*15*12), max_BRF_by_SVC_grad, color='r', label='gradient', alpha=0.3)
 ax.set_ylabel('Gradient')
 ax.tick_params(axis='y', labelcolor='tab:red')
 
