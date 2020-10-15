@@ -38,7 +38,7 @@ max_BRF_by_SVC = np.sort(max_BRF_by_SVC)
 
 #every time the next SVGC is more than 5% bigger than the last draw a thresh
 #first get the gradient
-max_BRF_by_SVC_grad = np.gradient(max_BRF_by_SVC)
+max_BRF_by_SVC_grad = np.gradient(max_BRF_by_SVC, 50)
 
 
 f, ax = plt.subplots(ncols=1,nrows=1)
