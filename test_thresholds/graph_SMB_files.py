@@ -43,33 +43,15 @@ max_BRF_by_SVC_grad = np.gradient(max_BRF_by_SVC)
 
 f, ax = plt.subplots(ncols=1,nrows=1)
 
-ax.plot(np.arange(10*15*12), max_BRF_by_SVC, c='b', label='BRDF')
-ax.tick_params(axis='y', labelcolor='tab:blue')
 
-#####
-# fig.suptitle('Ordered Scene Type Accuracy LA PTA')
-#
-# color = 'tab:pink'
-# ax.set_xlabel('bin ID')
-# ax.set_ylabel('% Accuracy', color=color)
-# ax.plot(bins_new, accuracy, color=color)
-# ax.tick_params(axis='y', labelcolor=color)
-#
-# ax1 = ax.twinx()  # instantiate a second axes that shares the same x-axis
-#
-# color = 'tab:cyan'
-# ax1.set_ylabel('number of samples', color=color)  # we already handled the x-label with ax1
-# ax1.bar(bins_new, num_samples, color=color)
-# ax1.tick_params(axis='y', labelcolor=color)
-#
-# plt.show()
-#####
+ax.bar(np.arange(10*15*12), max_BRF_by_SVC_grad, c='r', label='gradient', alpha=0.3)
+ax.set_ylabel('Gradient')
+ax.tick_params(axis='y', labelcolor='tab:red')
+
 ax1 = ax.twinx()
-ax1.plot(np.arange(10*15*12), max_BRF_by_SVC_grad, c='r', label='gradient')
-ax1.set_ylabel('Gradient')
-ax1.tick_params(axis='y', labelcolor='tab:red')
-# ax.scatter(np.arange(10*15*12), max_BRF_by_SVC, s=0.1, c='r')
-ax.set_xlabel('Sun View Geometry Combinations 0-1799')
-ax.set_ylabel('Mean BRDF for SVGC')
+ax1.plot(np.arange(10*15*12), max_BRF_by_SVC, c='b', label='BRDF')
+ax1.tick_params(axis='y', labelcolor='tab:blue')
+ax1.set_xlabel('Sun View Geometry Combinations 0-1799')
+ax1.set_ylabel('Mean BRDF for SVGC')
 
 plt.show()
