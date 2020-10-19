@@ -29,8 +29,8 @@ home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2
 test_scene = 'test_JPL_data_2018365.1830.h5' #this is it!!
 
 #test some Guangyu scenes
-test_scene = 'test_JPL_data_2019285.1800.h5'
-# test_scene = 'test_JPL_data_2019276.1805.h5'
+# test_scene = 'test_JPL_data_2019285.1800.h5'
+test_scene = 'test_JPL_data_2019276.1805.h5'
 
 # test_scene = 'test_JPL_data_2019089.1825.h5'
 DOY = int(test_scene[18:-8])
