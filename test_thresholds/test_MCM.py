@@ -32,7 +32,7 @@ home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2
 test_scene = 'test_JPL_data_2019276.1805.h5'
 guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
 # threshold_filepath = guangyu_home + 'thresholds_DOY_273_to_280_bin_34.h5'
-threshold_filepath = guangyu_home + 'OBthresholds_DOY_273_to_280_bin_34.h5'
+# threshold_filepath = guangyu_home + 'OBthresholds_DOY_273_to_280_bin_34.h5'
 # test_scene = 'test_JPL_data_2019276.1805.h5'
 
 # test_scene = 'test_JPL_data_2019089.1825.h5'
@@ -46,7 +46,7 @@ SID_file    = 'surfaceID_LosAngeles_{:03d}.nc'.format(DOY_end)
 print(test_scene, thresh_file, SID_file)
 
 test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],test_scene)
-# threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], thresh_file)
+threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], thresh_file)
 sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], SID_file)
 
 # test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],'test_JPL_data_2003114.1845.h5')
