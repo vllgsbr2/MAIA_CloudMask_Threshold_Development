@@ -30,7 +30,7 @@ home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2
 
 #test some Guangyu scenes
 test_scene = 'test_JPL_data_2019276.1805.h5'
-threshold_filepath = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/thresholds_DOY_273_to_280_bin_34.h'
+threshold_filepath = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/thresholds_DOY_273_to_280_bin_34.h5'
 # test_scene = 'test_JPL_data_2019276.1805.h5'
 
 # test_scene = 'test_JPL_data_2019089.1825.h5'
