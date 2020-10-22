@@ -420,9 +420,9 @@ def add_sceneID(observable_level_parameter):
         sfc_ID_bins = observable_level_parameter[:,:,6]
         scene_type_identifier = sfc_ID_bins
 
-        scene_type_identifier[land_water_bins == 0]     = 12
+        # scene_type_identifier[land_water_bins == 0]     = 12
         scene_type_identifier[(sun_glint_bins == 0) & \
-                              (land_water_bins == 0)]   = 13
+                              (scene_type_identifier == 12)]   = 13
         scene_type_identifier[snow_ice_bins == 0]       = 14
 
         return scene_type_identifier
