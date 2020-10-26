@@ -5,29 +5,83 @@ def get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt):
          open(MOD03_txt, 'r') as txt_MOD03_files,\
          open(MOD35_txt, 'r') as txt_MOD35_files :
 
+        #sort paths; path[:-1] is to get rid of hidden new line character
         MOD02_paths = np.sort([path[:-1] for path in txt_MOD02_files])
         MOD03_paths = np.sort([path[:-1] for path in txt_MOD03_files])
         MOD35_paths = np.sort([path[:-1] for path in txt_MOD35_files])
 
-    if len(MOD02_paths) == len(MOD03_paths) and len(MOD02_paths) == len(MOD35_paths):
-        total = len(MOD02_paths)
-        count_DNE = 0
-        for i,j,k in zip(MOD02_paths, MOD03_paths, MOD35_paths):
-            if not os.path.exists(i):
-                print(count, i, ' DNE')
-                count_DNE += 1
-            if not os.path.exists(j):
-                print(count, j, ' DNE')
-                count_DNE += 1
-            if not os.path.exists(k):
-                print(count, k, ' DNE')
-                count_DNE += 1
-        # print(count_DNE, total)
+        #grab time stamps of each file
+        MOD02_time_stamps = [path[-34:-22] for path in MOD02_paths]
+        MOD03_time_stamps = [path[-34:-22] for path in MOD03_paths]
+        MOD35_time_stamps = [path[-34:-22] for path in MOD35_paths]
 
-
+    #if all the time stamps match nothing to do
+    if MOD02_time_stamps == MOD03_time_stamps and MOD03_time_stamps == MOD35_time_stamps:
         return MOD02_paths, MOD03_paths, MOD35_paths
+    #otherwise find the intercetion of 3 file types and only return those
     else:
-        print("files don't match up")
+        #convert to set to find intersect of all 3
+        MOD02_time_stamp_set = set(MOD02_time_stamps)
+        MOD03_time_stamp_set = set(MOD03_time_stamps)
+        MOD35_time_stamp_set = set(MOD35_time_stamps)
+
+        MOD02_MOD03_time_stamp_intersect = MOD02_time_stamp_set.intersect(MOD03_time_stamp_set)
+        MOD02_MOD03_MOD35_time_stamp_intersect = MOD02_MOD03_time_stamp_intersect.intersect(MOD35_time_stamp_set)
+
+        #only save paths in the intersection of 3 sets of file paths
+        MOD02_paths = [path for path in MOD02_paths if path[-34:-22] in MOD02_MOD03_MOD35_time_stamp_intersect]
+        MOD03_paths = [path for path in MOD03_paths if path[-34:-22] in MOD02_MOD03_MOD35_time_stamp_intersect]
+        MOD35_paths = [path for path in MOD35_paths if path[-34:-22] in MOD02_MOD03_MOD35_time_stamp_intersect]
+
+        #Now if the time stamps match we can return themm. Else no return
+        MOD02_time_stamps = [path[-34:-22] for path in MOD02_paths]
+        MOD03_time_stamps = [path[-34:-22] for path in MOD03_paths]
+        MOD35_time_stamps = [path[-34:-22] for path in MOD35_paths]
+
+        if MOD02_time_stamps == MOD03_time_stamps and MOD03_time_stamps == MOD35_time_stamps:
+            return MOD02_paths, MOD03_paths, MOD35_paths
+        else:
+            print('failed due to file time stamps not matching across MOD02/03/35')
+            return
+
+def get_MODIS_file_paths_no_list(MOD02_paths, MOD03_paths, MOD35_paths):
+    import numpy as np
+    import os
+
+    #grab time stamps of each file
+    MOD02_time_stamps = [path[-34:-22] for path in MOD02_paths]
+    MOD03_time_stamps = [path[-34:-22] for path in MOD03_paths]
+    MOD35_time_stamps = [path[-34:-22] for path in MOD35_paths]
+
+    #if all the time stamps match nothing to do
+    if MOD02_time_stamps == MOD03_time_stamps and MOD03_time_stamps == MOD35_time_stamps:
+        return MOD02_paths, MOD03_paths, MOD35_paths
+    #otherwise find the intercetion of 3 file types and only return those
+    else:
+        #convert to set to find intersect of all 3
+        MOD02_time_stamp_set = set(MOD02_time_stamps)
+        MOD03_time_stamp_set = set(MOD03_time_stamps)
+        MOD35_time_stamp_set = set(MOD35_time_stamps)
+
+        MOD02_MOD03_time_stamp_intersect = MOD02_time_stamp_set.intersect(MOD03_time_stamp_set)
+        MOD02_MOD03_MOD35_time_stamp_intersect = MOD02_MOD03_time_stamp_intersect.intersect(MOD35_time_stamp_set)
+
+        #only save paths in the intersection of 3 sets of file paths
+        MOD02_paths = [path for path in MOD02_paths if path[-34:-22] in MOD02_MOD03_MOD35_time_stamp_intersect]
+        MOD03_paths = [path for path in MOD03_paths if path[-34:-22] in MOD02_MOD03_MOD35_time_stamp_intersect]
+        MOD35_paths = [path for path in MOD35_paths if path[-34:-22] in MOD02_MOD03_MOD35_time_stamp_intersect]
+
+        #Now if the time stamps match we can return themm. Else no return
+        MOD02_time_stamps = [path[-34:-22] for path in MOD02_paths]
+        MOD03_time_stamps = [path[-34:-22] for path in MOD03_paths]
+        MOD35_time_stamps = [path[-34:-22] for path in MOD35_paths]
+
+        if MOD02_time_stamps == MOD03_time_stamps and MOD03_time_stamps == MOD35_time_stamps:
+            return MOD02_paths, MOD03_paths, MOD35_paths
+        else:
+            print('failed due to file time stamps not matching across MOD02/03/35')
+            return
+
 
 if __name__ == '__main__':
     import configparser
@@ -35,7 +89,6 @@ if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read(config_home_path+'/test_config.txt')
 
-    #home     = config['home']['home']
     PTA      = config['current PTA']['PTA']
     PTA_path = config['PTAs'][PTA]
 

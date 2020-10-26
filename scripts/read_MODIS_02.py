@@ -127,8 +127,8 @@ def get_radiance_or_reflectance(data_raw, data_field, rad_or_ref, scale_factor=T
     if not scale_factor:
         return data_corrected_total.reshape((num_bands, num_horizontal, num_vertical))
     else:
-        scale_factor_rad, offset = get_scale_and_offset(data_field, True)
-        scale_factor_ref, offset = get_scale_and_offset(data_field, False)
+        scale_factor_rad, offset_rad = get_scale_and_offset(data_field, True)
+        scale_factor_ref, offset_ref = get_scale_and_offset(data_field, False)
         return data_corrected_total.reshape((num_bands, num_horizontal, num_vertical)),\
                scale_factor_rad, scale_factor_ref
 

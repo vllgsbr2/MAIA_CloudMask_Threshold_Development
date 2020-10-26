@@ -61,24 +61,17 @@ def add_sceneID(observable_level_parameter):
                          serve as the indicies to select a threshold based off
                          surface type.
         """
-        # land_water_bins {2D narray} -- land (1) water(0)
         # sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
         # snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
 
-        #over lay water/glint/snow_ice onto sfc_ID to create a scene_type_identifier
-        land_water_bins = observable_level_parameter[:,:, 4]
+        #over glint/snow_ice onto sfc_ID to create a scene_type_identifier
         sun_glint_bins  = observable_level_parameter[:,:,-1]
         snow_ice_bins   = observable_level_parameter[:,:, 5]
 
-        sfc_ID_bins = observable_level_parameter[:,:,6]
-        scene_type_identifier = sfc_ID_bins
+        scene_type_identifier = observable_level_parameter[:,:,6]
 
-        #water = 12
-        #sunglint over water = 13
-        #snow = 14
-        scene_type_identifier[ land_water_bins == 0]    = 12
         scene_type_identifier[(sun_glint_bins  == 0) & \
-                              (land_water_bins == 0) ]  = 13
+                              (scene_type_identifier == 12) ]  = 13
         scene_type_identifier[ snow_ice_bins   == 0]    = 14
 
         shape = observable_level_parameter.shape
@@ -216,7 +209,7 @@ if __name__ == '__main__':
                         TA  = int(config['Target Area Integer'][PTA])
                         LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
-                        DOY = time_stamp[4:7]
+                        DOY = int(time_stamp[4:7])
                         SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, LWM)
                         #num_land_sfc_types = 12 #read from config file later
                         #MOD03_sfctypes     = hf_database[time_stamp+'/MOD03_LandSeaMask'][()]

@@ -38,7 +38,7 @@ def save_crop(subgroup, dataset_name, cropped_data, compress=True):
     except:
         subgroup[dataset_name][:] = cropped_data
 
-def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, hf, \
+def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
                     group_name, fieldname, target_lat, target_lon):
     '''
     INPUT:
@@ -47,8 +47,7 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
         filename_MOD_35 - str   - filepath to MOD35
         PTA_lat         - float - lat of projected target area
         PTA_lon         - float - lon of projected target area
-        hf_path         - str   - file path to previously created hdf5 file to
-                                  store it in. (1 HDF5 file)/PTA
+        hf              - h5py file object - file object to database file
         group_name      - str   - time stamp of granule to name subgroup
     RETURN:
         saves all calculated fields into hdf 5 file structure
@@ -58,11 +57,6 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     radiance_250_Aggr1km, scale_factor_rad_250m, scale_factor_ref_250m    = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
     radiance_500_Aggr1km, scale_factor_rad_500m, scale_factor_ref_500m    = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
     radiance_1KM, scale_factor_rad_1km, scale_factor_ref_1km              = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
-
-    rad_or_ref              = False
-    reflectance_250_Aggr1km, scale_factor_rad_250m, scale_factor_ref_250m = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
-    reflectance_500_Aggr1km, scale_factor_rad_500m, scale_factor_ref_500m = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
-    reflectance_1KM, scale_factor_rad_1km, scale_factor_ref_1km           = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
 
     #grab scale factors for MODIS bands 3,4,1,2,6,26 (MAIA bands 4,5,6,9,12,13)
     band_index = {'1':0,
@@ -131,15 +125,11 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     #grab earth sun distance
     earth_sun_dist = get_earth_sun_dist(filename_MOD_02)
 
-    #get MOD03 surface types
-    MOD03_LandSeaMask = get_LandSeaMask(filename_MOD_03)
-
     hdf_file.end()
 
     #ceate structure in hdf file
     group                       = hf.create_group(group_name)
     subgroup_radiance           = group.create_group('radiance')
-    #subgroup_reflectance        = group.create_group('reflectance')
     subgroup_scale_factors      = group.create_group('scale_factors')
     subgroup_geolocation        = group.create_group('geolocation')
     subgroup_sunView_geometry   = group.create_group('sunView_geometry')
@@ -164,14 +154,18 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
                                          np.copy(target_lon),\
                                          np.copy(col_mesh).astype(np.float64)).astype(np.int)
 
+    #if no data was regridded skip recording the scene
+    if ( regrid_row_idx[regrid_row_idx >=0].size  <= 0  ) |\
+       (regrid_col_idx[regrid_col_idx >=0].size <= 0 ):
+        return
     #grab -999 fill values in regrid col/row idx
     #use these positions to write fill values when regridding the rest of the data
     fill_val = -999
-    fill_val_idx = np.where((regrid_row_idx == fill_val) | \
-                            (regrid_col_idx == fill_val)   )
+    fill_val_idx = np.where((regrid_row_idx < 0) | \
+                            (regrid_col_idx < 0)   )
 
-    regrid_row_idx[fill_val_idx] = regrid_row_idx[0,0]
-    regrid_col_idx[fill_val_idx] = regrid_col_idx[0,0]
+    regrid_row_idx[fill_val_idx] = regrid_row_idx[regrid_row_idx >= 0][0]
+    regrid_col_idx[fill_val_idx] = regrid_col_idx[regrid_col_idx >= 0][0]
 
     #crop and save the datasets*************************************************
 
@@ -181,7 +175,7 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
     #save earth sun distance
     save_crop(group, 'earth_sun_distance', earth_sun_dist, compress=False)
 
-    #reflectance and radiance
+    #reflectance and radiance; dont calc reflectance
 
     for band, index in band_index.items():
         if band=='1' or band=='2':
@@ -190,27 +184,21 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
-            #crop_reflectance[fill_val_idx] = fill_val
 
         elif band=='3' or band=='4' or band=='6':
             crop_radiance = radiance_500_Aggr1km[index][regrid_row_idx, regrid_col_idx]
-            #crop_reflectance = reflectance_500_Aggr1km[index][regrid_row_idx, regrid_col_idx]
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
-            #crop_reflectance[fill_val_idx] = fill_val
 
         else:
             crop_radiance = radiance_1KM[index][regrid_row_idx, regrid_col_idx]
-            #crop_reflectance = reflectance_1KM[index][regrid_row_idx, regrid_col_idx]
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
-            #crop_reflectance[fill_val_idx] = fill_val
 
         #group_name is granule, radiance is subgroup, band_1 is dataset, then the data
         save_crop(subgroup_radiance, 'band_{}'.format(band), crop_radiance)
-        #save_crop(subgroup_reflectance, 'band_{}'.format(band), crop_reflectance)
 
     #*******************************************************************************
     #Sun view geometry
@@ -258,12 +246,6 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf_path, 
         save_crop(subgroup_cloud_mask, cm_key, crop_cm)
 
     #*******************************************************************************
-    #add in MOD03 surface types
-    crop_MOD03_LandSeaMask = MOD03_LandSeaMask[regrid_row_idx, regrid_col_idx]
-    #put in main group since it is not compatible in a sub group
-    save_crop(group, 'MOD03_LandSeaMask', crop_MOD03_LandSeaMask)
-
-    #*******************************************************************************
 
     #cloud mask tests
     #cm test vals set to 9 are bad data
@@ -300,7 +282,6 @@ if __name__ == '__main__':
             config = configparser.ConfigParser()
             config.read(config_home_path+'/test_config.txt')
 
-            #home     = config['home']['home']
             PTA      = config['current PTA']['PTA']
             PTA_path = config['PTAs'][PTA]
 
@@ -315,14 +296,17 @@ if __name__ == '__main__':
                 filename_MOD_03 = np.sort(np.array(os.listdir(MOD03_path)))
                 filename_MOD_35 = np.sort(np.array(os.listdir(MOD35_path)))
 
-                #grab time stamp (YYYYDDD.HHMM) to name each group after the granule
-                #it comes from
-                filename_MOD_02_timeStamp = [x[10:22] for x in filename_MOD_02]
-
                 #add full path to file
                 filename_MOD_02 = [MOD02_path + '/' + x for x in filename_MOD_02]
                 filename_MOD_03 = [MOD03_path + '/' + x for x in filename_MOD_03]
                 filename_MOD_35 = [MOD35_path + '/' + x for x in filename_MOD_35]
+
+                filename_MOD_02,\
+                filename_MOD_03,\
+                filename_MOD_35 = get_MODIS_file_paths_no_list(filename_MOD_02,\
+                                             filename_MOD_03, filename_MOD_35)
+
+                filename_MOD_02_timeStamp = [x[-34:-22] for x in filename_MOD_02]
 
             else:
 
@@ -335,6 +319,8 @@ if __name__ == '__main__':
                 filename_MOD_03,\
                 filename_MOD_35 = get_MODIS_file_paths(MOD02_txt, MOD03_txt, MOD35_txt)
 
+                #time stamp is relative to MOD021KM standard file name
+                #notice it counts from the end
                 filename_MOD_02_timeStamp = [x[-34:-22] for x in filename_MOD_02]
 
 
@@ -345,8 +331,8 @@ if __name__ == '__main__':
 
             #grab target lat/lon from Guangyu h5 files (new JPL grids)
             PTA_grid_file_path = config['PTA lat/lon grid files'][PTA]
-            filepath_latlon = '{}'.format(PTA_grid_file_path)
-            with h5py.File(filepath_latlon, 'r') as hf_latlon:
+
+            with h5py.File(PTA_grid_file_path, 'r') as hf_latlon:
                 target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
                 target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
 
@@ -364,8 +350,12 @@ if __name__ == '__main__':
 
             #create/open file
             #open file to write status of algorithm to
+
+            #base path for database file
             database_loc = '{}/{}'.format(PTA_path, config['supporting directories']['Database'])
+            #complete database file path
             hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
+            #diagnostic file path
             output_path = '{}/Database_Diagnostics/diagnostics_{:02d}.txt'.format(PTA_path, rank)
 
             with h5py.File(hf_path, 'w') as hf, open(output_path, 'w') as output:
@@ -379,9 +369,10 @@ if __name__ == '__main__':
                     # print('{}\n{}\n{}\n{}\n{}'.format(i, MOD02, MOD03, MOD35, time_MOD02))
 
                     try:
-                        build_data_base(MOD02, MOD03, MOD35, hf_path, hf,\
+                        build_data_base(MOD02, MOD03, MOD35, hf,\
                                     time_MOD02, fieldname, target_lat,\
                                     target_lon)
+
 
                         output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
                         print(i, time_MOD02, '\n')

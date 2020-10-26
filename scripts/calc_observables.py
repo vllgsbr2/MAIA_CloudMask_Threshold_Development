@@ -28,7 +28,7 @@ def get_R(radiance, SZA, d, E_std_0b):
     radiance[invalid_idx] = -998
 
     #condition to not step on fill values when converting to BRF(R)
-    valid_rad_idx = np.where((cosSZA > 0.01) | (radiance >= rad_min) & (radiance <= rad_max))
+    valid_rad_idx = np.where((cosSZA > 0.01) & (radiance >= rad_min) & (radiance <= rad_max))
     radiance[valid_rad_idx] = ((np.pi * radiance * d**2) / (cosSZA * E_std_0b))[valid_rad_idx]
     #just assign R to the memory of radiance to highlight conversion
     R = radiance
@@ -312,7 +312,7 @@ if __name__ == '__main__':
                             R_band_12 = get_R(rad_band_12, SZA, d, E_std_0b[4])
                             R_band_13 = get_R(rad_band_13, SZA, d, E_std_0b[5])
 
-                            sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag'][()]
+                            # sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag'][()]
 
                             whiteness_index           = get_whiteness_index(R_band_6, R_band_5, R_band_4)
                             NDVI                      = get_NDVI(R_band_6, R_band_9)
