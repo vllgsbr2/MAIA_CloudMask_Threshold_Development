@@ -268,7 +268,7 @@ if __name__ == '__main__':
     import mpi4py.MPI as MPI
     import configparser
     import tables
-    from get_MOD_02_03_35_paths import get_MODIS_file_paths
+    from get_MOD_02_03_35_paths import get_MODIS_file_paths, get_MODIS_file_paths_no_list
     tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
