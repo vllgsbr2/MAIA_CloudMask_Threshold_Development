@@ -27,34 +27,34 @@ wait
 
 for num_SIDs in {5..30}
 do
+    echo run observable level parameter
+    mpirun -n 60 python calc_OLP.py $num_SIDs &
 
-  echo run observable level parameter
-  mpirun -n 60 python calc_OLP.py $num_SIDs &
+    wait
 
-  wait
+    echo group data by OLP and combine with obs
+    for i in {0..45}
+    do
+        echo $i
+        mpirun -n 60 python group_data_by_OLP.py $i $test_set &
+        wait
+    done
 
-  echo group data by OLP and combine with obs
-  for i in {0..45}
-  do
-      echo $i
-      mpirun -n 60 python group_data_by_OLP.py $i $test_set &
-      wait
-  done
+    echo combine grouped files by DOY
+    mpirun -n 46 python combine_grouped_files.py &
 
+    wait
 
-
-  echo combine grouped files by DOY
-  mpirun -n 46 python combine_grouped_files.py &
-
-  wait
-
-  echo  run thresholds
-  mpirun -n 46 python calc_threshold.py $num_SIDs
-
-  if [$num_SIDs -ne 30]
-  then
-  wait
-  fi
+    if [$num_SIDs -ne 30]
+    then
+        echo  run thresholds
+        mpirun -n 46 python calc_threshold.py $num_SIDs &
+        wait
+    else
+    then
+      echo  run thresholds
+      mpirun -n 46 python calc_threshold.py $num_SIDs
+    fi
 
 done
 
