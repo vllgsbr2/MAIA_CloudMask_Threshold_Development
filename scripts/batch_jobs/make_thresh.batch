@@ -51,6 +51,11 @@ do
   echo  run thresholds
   mpirun -n 46 python calc_threshold.py $num_SIDs
 
+  if [$num_SIDs -ne 30]
+  then
+  wait
+  fi
+
 done
 
 exit 0
