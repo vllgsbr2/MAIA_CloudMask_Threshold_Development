@@ -143,7 +143,7 @@ if __name__ == '__main__':
                 # #omit years 2004/2018/2010
                 # hf_database_keys = [x for x in hf_database_keys if int(x[:4])!=2004 and int(x[:4])!=2010 and int(x[:4])!=2018]
                 #use years 2004/2018/2010 which are the test set
-                hf_database_keys = [x for x in hf_database_keys if int(x[:4])==2004 or int(x[:4])==2010 or int(x[:4])==2018]
+                # hf_database_keys = [x for x in hf_database_keys if int(x[:4])==2004 or int(x[:4])==2010 or int(x[:4])==2018]
                 #open file to write groups to
                 group_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['group_intermediate'])
                 hf_group_path = '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.h5'.format(group_path, DOY_start, DOY_end, DOY_bin, rank)
