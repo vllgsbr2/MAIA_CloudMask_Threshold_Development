@@ -2,7 +2,7 @@
 #SBATCH --job-name='MPI_CD.py'
 #SBATCH -p sesempi
 #SBATCH --time=3:00:00
-#SBATCH --mem-per-cpu=620gb
+#SBATCH --mem-per-cpu=320gb
 #SBATCH -N 3
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-type=END
