@@ -127,16 +127,6 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
 
     hdf_file.end()
 
-    #ceate structure in hdf file
-    group                       = hf.create_group(group_name)
-    subgroup_radiance           = group.create_group('radiance')
-    subgroup_scale_factors      = group.create_group('scale_factors')
-    subgroup_geolocation        = group.create_group('geolocation')
-    subgroup_sunView_geometry   = group.create_group('sunView_geometry')
-    subgroup_cloud_mask         = group.create_group('cloud_mask')
-    #subgroup_cloud_mask_test    = group.create_group('cloud_mask_tests')
-
-
     nx, ny = np.shape(lat)
     rows = np.arange(nx)
     cols = np.arange(ny)
@@ -168,6 +158,15 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
     regrid_col_idx[fill_val_idx] = regrid_col_idx[regrid_col_idx >= 0][0]
 
     #crop and save the datasets*************************************************
+
+    #ceate structure in hdf file
+    group                       = hf.create_group(group_name)
+    subgroup_radiance           = group.create_group('radiance')
+    # subgroup_scale_factors      = group.create_group('scale_factors')
+    subgroup_geolocation        = group.create_group('geolocation')
+    subgroup_sunView_geometry   = group.create_group('sunView_geometry')
+    subgroup_cloud_mask         = group.create_group('cloud_mask')
+    #subgroup_cloud_mask_test    = group.create_group('cloud_mask_tests')
 
     #save band weighted solar irradiance
     save_crop(group, 'band_weighted_solar_irradiance', E_std_0)
