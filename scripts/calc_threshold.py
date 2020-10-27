@@ -1,7 +1,7 @@
 import numpy as np
 import h5py
 
-def calc_thresh(thresh_home, group_file, DOY_bin, TA):
+def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
     '''
     Objective:
         Takes in grouped_obs_and_CM.hdf5 file. Inside are a datasets for
@@ -21,18 +21,20 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
 
     fill_val = -998
 
-    num_samples_valid_hist = 5000
+    num_samples_valid_hist = 100
+
+    thresh_file = thresh_home + \
+                  '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'\
+                  .format(DOY_start, DOY_end, DOY_bin, num_land_SID)
 
     with h5py.File(group_file, 'r') as hf_group,\
-         h5py.File(thresh_home + '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin), 'w') as hf_thresh:
+         h5py.File(thresh_file, 'w') as hf_thresh:
 
         #cosSZA_00_VZA_00_RAZ_00_TA_00_sceneID_00_DOY_00
         TA_group  = hf_thresh.create_group('TA_bin_{:02d}'.format(TA))
         DOY_group = TA_group.create_group('DOY_bin_{:02d}'.format(DOY_bin))
 
-        num_sfc_types = 15
-
-        master_thresholds = np.ones((10*15*12*num_sfc_types)).reshape((10,15,12,num_sfc_types))*-999
+        master_thresholds = np.ones((10*15*12*num_sfc_types)).reshape((10,15,12,num_land_SID))*-999
         obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
         for obs in obs_names:
             DOY_group.create_dataset(obs, data=master_thresholds)
@@ -44,9 +46,10 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
 
-            # #only calc a thresh when valid surface ID is available
-            # #invalid is -9
-            # if bin_idx[3] != -9:
+            #only calc a thresh when valid surface ID is available
+            #invalid is -9
+            if bin_idx[3] == -9:
+                continue
 
             cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
             obs        = hf_group[bin_ID][:,1:]
@@ -138,11 +141,11 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA):
                     #         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                     #                         bin_idx[3]] = current_thresh
 
-                current_thresh = hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]
-                if np.abs(current_thresh) > 2:
-                    debug_line = 'cos(SZA): {:02d} VZA: {:02d} RAA: {:02d} SID: {:02d} thresh: {:3.3f}'.\
-                              format(bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3], current_thresh)
-                    print(debug_line)
+                # current_thresh = hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]]
+                # if np.abs(current_thresh) > 2:
+                #     debug_line = 'cos(SZA): {:02d} VZA: {:02d} RAA: {:02d} SID: {:02d} thresh: {:3.3f}'.\
+                #               format(bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3], current_thresh)
+                #     print(debug_line)
 if __name__ == '__main__':
 
     import h5py
@@ -179,4 +182,6 @@ if __name__ == '__main__':
             grouped_file_path = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.\
                                 format(grouped_home, DOY_start, DOY_end, DOY_bin)
 
-            calc_thresh(thresh_home, grouped_file_path, DOY_bin, TA)
+            num_land_SID = sys.argv[1]
+
+            calc_thresh(thresh_home, grouped_file_path, DOY_bin, TA, num_land_SID)

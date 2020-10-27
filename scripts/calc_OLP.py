@@ -44,7 +44,7 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
 
     return sun_glint_mask
 
-def add_sceneID(observable_level_parameter):
+def add_sceneID(observable_level_parameter, num_land_SID):
 
         """
         helper function to combine water/sunglint/snow-ice mask/sfc_ID into
@@ -70,9 +70,11 @@ def add_sceneID(observable_level_parameter):
 
         scene_type_identifier = observable_level_parameter[:,:,6]
 
-        scene_type_identifier[(sun_glint_bins  == 0) & \
-                              (scene_type_identifier == 12) ]  = 13
-        scene_type_identifier[ snow_ice_bins   == 0]    = 14
+        #water is equal to num_land_SID
+
+        scene_type_identifier[(sun_glint_bins        == 0) & \
+                              (scene_type_identifier == 12)] = num_land_SID + 1
+        scene_type_identifier[snow_ice_bins == 0]            = num_land_SID + 2
 
         shape = observable_level_parameter.shape
         OLP = np.zeros((shape[0], shape[1], 6))
@@ -83,7 +85,7 @@ def add_sceneID(observable_level_parameter):
         return OLP
 
 def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area, sfc_ID_path,\
-          land_water_mask, snow_ice_mask, DOY, sun_glint_mask, time_stamp):
+          land_water_mask, snow_ice_mask, DOY, sun_glint_mask, time_stamp, num_land_SID):
 
     """
     Objective:
@@ -148,7 +150,7 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area, sfc_ID_path,
                                             binned_DOY     ,\
                                             sun_glint_mask))
 
-    observable_level_parameter = add_sceneID(observable_level_parameter)
+    observable_level_parameter = add_sceneID(observable_level_parameter, num_land_SID)
 
     #find where there is missing data, use SZA as proxy, and give fill val
     missing_idx = np.where(SZA==-999)
@@ -162,11 +164,10 @@ if __name__ == '__main__':
 
     import h5py
     import mpi4py.MPI as MPI
-    import tables
     from netCDF4 import Dataset
     import os
     import configparser
-    tables.file._open_files.close_all()
+    import sys
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
@@ -182,6 +183,8 @@ if __name__ == '__main__':
             home     = config['home']['home']
             PTA      = config['current PTA']['PTA']
             PTA_path = config['PTAs'][PTA]
+
+            num_land_SID = sys.argv[1]
 
             #open database to read
             database_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
@@ -220,15 +223,20 @@ if __name__ == '__main__':
                         DOY_end    = (binned_DOY+1)*8
                         DOY_end    = '{:03d}'.format(DOY_end)
 
-                        sfc_ID_path  = config['supporting directories']['Surface_IDs']
-                        sfc_ID_path  = '{}/{}/'.format(PTA_path, sfc_ID_path)
+                        # sfc_ID_path  = config['supporting directories']['Surface_IDs']
+                        # sfc_ID_path  = '{}/{}/{}/'.format(PTA_path, sfc_ID_path)
+
+                        #for testing with many SIDs
+                        sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
+                        sfc_ID_path  = '{}/{}/'.format(sfc_ID_path, num_land_SID)
+
                         sfc_ID_paths = os.listdir(sfc_ID_path)
                         #find correct sfc ID path for DOY bin
                         sfc_ID_path  = [sfc_ID_path + x for x in sfc_ID_paths \
                                                              if DOY_end in x][0]
 
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
-                                TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp)
+                                TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp, num_land_SID)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)
