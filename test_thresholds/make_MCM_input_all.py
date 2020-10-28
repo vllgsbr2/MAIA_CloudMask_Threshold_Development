@@ -26,9 +26,9 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 VAA                = hf_database[time_stamp + '/sunView_geometry/sensorAzimuth'][()]
                 modcm              = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
                 snow_ice_mask      = hf_database[time_stamp + '/cloud_mask/Snow_Ice_Background_Flag'][()]
-                water_mask         = hf_database[time_stamp + '/cloud_mask/Land_Water_Flag'][()]
+                # water_mask         = hf_database[time_stamp + '/cloud_mask/Land_Water_Flag'][()]
                 earth_sun_distance = hf_database[time_stamp + '/earth_sun_distance'][()]
-                MOD03_LandSeaMask  = hf_database[time_stamp + '/MOD03_LandSeaMask'][()]
+                # MOD03_LandSeaMask  = hf_database[time_stamp + '/MOD03_LandSeaMask'][()]
                 #bad values are -998; use in RDQI
                 QA_cloud_mask      = hf_database[time_stamp + '/cloud_mask/quality_screened_cloud_mask'][()]
 
@@ -49,10 +49,10 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 ARP_DOY            = ARP.create_group('Day_of_year')
                 ARP_TA             = ARP.create_group('Target_Area')
                 ARP_ESD            = ARP.create_group('Earth_Sun_Distance')
-                ARP_LSM            = ARP.create_group('MOD03_LandSeaMask')
+                # ARP_LSM            = ARP.create_group('MOD03_LandSeaMask')
 
                 AGP     = hf.create_group('Anicillary_Geometric_Product')
-                AGP_LWM = AGP.create_group('Land_Water_Mask')
+                # AGP_LWM = AGP.create_group('Land_Water_Mask')
                 AGP_SIM = AGP.create_group('Snow_Ice_Mask')
 
                 #RDQI will be based on MOD35 QA and MOD02 radiance fill vals
@@ -85,11 +85,11 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
 
                 DOY = int(time_stamp[4:7])
 
-                #0 for water and 1 for land
-                water_mask[water_mask >= 2] = 1
-                water_mask[water_mask !=1] = 0
-
-                land_water_mask = water_mask
+                # #0 for water and 1 for land
+                # water_mask[water_mask >= 2] = 1
+                # water_mask[water_mask !=1] = 0
+                #
+                # land_water_mask = water_mask
 
                 #assign data to groups
                 ARP_rad.create_dataset('rad_band_4' , data=rad_b4 , dtype='f', compression='gzip')
@@ -119,9 +119,9 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
 
                 ARP_TA.create_dataset('Target_Area', data=TA)
 
-                ARP_LSM.create_dataset('MOD03_LandSeaMask', data=MOD03_LandSeaMask)
+                # ARP_LSM.create_dataset('MOD03_LandSeaMask', data=MOD03_LandSeaMask)
 
-                AGP_LWM.create_dataset('Land_Water_Mask', data=land_water_mask, dtype='i4', compression='gzip')
+                # AGP_LWM.create_dataset('Land_Water_Mask', data=land_water_mask, dtype='i4', compression='gzip')
                 AGP_SIM.create_dataset('Snow_Ice_Mask', data=snow_ice_mask, dtype='i4', compression='gzip')
 
                 #add cloud mask for later purposes
