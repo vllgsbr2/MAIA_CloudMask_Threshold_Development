@@ -182,6 +182,6 @@ if __name__ == '__main__':
             grouped_file_path = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.\
                                 format(grouped_home, DOY_start, DOY_end, DOY_bin)
 
-            num_land_SID = sys.argv[1]
+            num_land_SID = int(sys.argv[1])
 
             calc_thresh(thresh_home, grouped_file_path, DOY_bin, TA, num_land_SID)
