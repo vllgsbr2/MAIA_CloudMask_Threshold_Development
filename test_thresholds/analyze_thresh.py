@@ -148,7 +148,7 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
     # return thresh
 
 
-def plot_thresh_hist_all_bins():
+def plot_thresh_hist_all_bins(num_land_SID):
     import matplotlib.pyplot as plt
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
@@ -171,6 +171,9 @@ def plot_thresh_hist_all_bins():
     # thresholds        = []
     range_ = (0,1)
     num_bins  = 70
+    water =num_land_SID
+    glint=num_land_SID+1
+    snow=num_land_SID+2
     for i, obs in enumerate(thresh_dict):
         if obs=='SVI' or obs=='Cirrus':
             temp_thresh = np.copy(master_thresh[i])
@@ -179,19 +182,19 @@ def plot_thresh_hist_all_bins():
             else:
                 range_ = (0,0.15)
         elif obs == 'WI':
-            temp_thresh = np.copy(master_thresh[i,:,:,:,:,:13])
+            temp_thresh = np.copy(master_thresh[i,:,:,:,:,:glint])
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
-            temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:7].flatten(), temp_thresh[:,:,:,:,11:14].flatten()))
+            temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:water].flatten(), temp_thresh[:,:,:,:,water:snow].flatten()))
             range_ = (-0.5,0.5)
         elif obs == 'NDSI':
-            temp_thresh = np.copy(master_thresh[i,:,:,:,:,14])
+            temp_thresh = np.copy(master_thresh[i,:,:,:,:,snow])
             range_ = (0.3,1)
         elif obs == 'VIS_Ref':
-            temp_thresh = np.copy(master_thresh[i,:,:,:,:,:12])
+            temp_thresh = np.copy(master_thresh[i,:,:,:,:,:water])
             range_ = (0,0.85)
         elif obs == 'NIR_Ref':
-            temp_thresh = np.copy(master_thresh[i,:,:,:,:,12])
+            temp_thresh = np.copy(master_thresh[i,:,:,:,:,water])
             range_ = (0,0.6)
         else:
             pass
@@ -707,7 +710,8 @@ if __name__ == '__main__':
     # check_sunglint_flag_in_database()
     # check_sunglint_flag_in_grouped_cm_and_obs()
     # make_obs_hist_by_group('SVI')
-    plot_thresh_hist_all_bins()
+    num_land_SID=12
+    plot_thresh_hist_all_bins(num_land_SID)
 
 
 
