@@ -957,10 +957,6 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     #retrive SID for return and DTT experiments
     scene_type_identifier = observable_level_parameter[:,:,4]
-    OLP_ = np.zeros((shape[0],shape[1],6))
-    OLP_[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
-    OLP_[:,:,4]  = scene_type_identifier             #scene_ID
-    OLP_[:,:,5] = observable_level_parameter[:,:,7]  #DOY
 
     #get DTT********************************************************************
     DTT_WI      = get_DTT_White_Test(T[:,:,0], observable_data[:,:,0], \
