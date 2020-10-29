@@ -66,7 +66,7 @@ for r in range(size):
 
                 #for testing with many SIDs
                 sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
-                sfc_ID_path  = '{}/{}/'.format(sfc_ID_path, num_land_SID)
+                sfc_ID_path  = '{}/{}'.format(sfc_ID_path, num_land_SID)
                 sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_path, PTA, DOY_end)
 
                 print(Target_Area_X, threshold_filepath, sfc_ID_filepath)
