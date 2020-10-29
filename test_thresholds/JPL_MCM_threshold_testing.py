@@ -417,13 +417,6 @@ def get_test_determination(observable_level_parameter, observable_data,\
     observable_data[observable_data == -998] = fill_val_2
     observable_data[observable_data == -999] = fill_val_3
 
-    observable_level_parameter = np.dstack((binned_cos_SZA ,\
-                                            binned_VZA     ,\
-                                            binned_RAZ     ,\
-                                            Target_Area    ,\
-                                            sfc_ID         ,\
-                                            binned_DOY     ))
-
     scene_type_identifier = observable_level_parameter[:,:,4]
 
     # sceneID_test_configuration = np.load('./sceneID_configuration.npz')['x']#(7,21) - (tests, sceneIDs) 0 dont apply; 1 apply
