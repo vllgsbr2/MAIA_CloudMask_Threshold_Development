@@ -933,7 +933,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     #calculate sunglint mask****************************************************
     sun_glint_mask = get_sun_glint_mask(SZA[:], VZA[:], SAA[:], VAA[:],\
-                                Sun_glint_exclusion_angle, sfc_ID)
+                                Sun_glint_exclusion_angle, sfc_ID, num_land_sfc_types)
 
     #calculate observables******************************************************
     #0.86, 1.61, 1.88 micrometers -> bands 9, 12, 13
