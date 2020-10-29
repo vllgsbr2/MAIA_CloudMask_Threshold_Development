@@ -54,15 +54,10 @@ def get_JPL_data(test_data_JPL_path):
     #5830 University Research Court, College Park, MD 20740, USA
     snow_ice_mask = JPL_file['Anicillary_Geometric_Product/Snow_Ice_Mask/Snow_Ice_Mask']
 
-    #land/water mask
-    #0 for water and 1 for land
-    land_water_mask = JPL_file['Anicillary_Geometric_Product/Land_Water_Mask/Land_Water_Mask']
-
     DOY = JPL_file.get('Anicillary_Radiometric_Product/Day_of_year/Day_of_year')[()]
 
     Target_Area = JPL_file.get('Anicillary_Radiometric_Product/Target_Area/Target_Area')[()]
 
-    MOD03_SFCTYPES = JPL_file.get('Anicillary_Radiometric_Product/MOD03_LandSeaMask/MOD03_LandSeaMask')[()]
 
 
 
@@ -71,10 +66,10 @@ def get_JPL_data(test_data_JPL_path):
            SZA, VZA, SAA, VAA,\
            d,\
            E_std_0,\
-           snow_ice_mask, land_water_mask,\
+           snow_ice_mask,\
            DOY,\
-           Target_Area,\
-           MOD03_SFCTYPES
+           Target_Area
+
 
 
 #retrieve UIUC ancillary datasets**************************************
