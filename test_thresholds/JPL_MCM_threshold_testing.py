@@ -484,10 +484,14 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #observable_level_parameter contains bins to query threshold database
 
     shape = observable_data.shape
+    OLP = np.zeros((shape[0],shape[1],6))
+    OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
+    OLP[:,:,4]  = scene_type_identifier             #scene_ID
+    OLP[:,:,5] = observable_level_parameter[:,:,5]  #DOY
 
     #pick threshold for each pixel in x by y grid
     with h5py.File(threshold_path, 'r') as hf_thresholds:
-        OLP = observable_level_parameter.reshape((shape[0]*shape[1], 6)).astype(dtype=np.int)
+        OLP = OLP.reshape((shape[0]*shape[1], 6)).astype(dtype=np.int)
         #DOY and TA is same for all pixels in granule
         if not(np.all(OLP[:,3] == -999)) and not(np.all(OLP[:,5] == -999)):
             #not -999 index; use to define target area and day of year for the granule
@@ -510,7 +514,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             #reshape to original dimensions
             thresholds = np.array(thresholds).reshape(shape)
             #mask SID -9 values as -999
-            OLP = OLP.reshape((shape[0],shape[1], 6))
+            # OLP = OLP.reshape((shape[0],shape[1], 6))
             thresholds[OLP[:,:,4] == -9] = -999
 
             return observable_data, thresholds
