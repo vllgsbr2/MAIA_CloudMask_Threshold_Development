@@ -12,7 +12,6 @@ size = comm.Get_size()
 
 for r in range(size):
     if rank==r:
-        print(1)
 
         config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
         config = configparser.ConfigParser()
@@ -30,6 +29,7 @@ for r in range(size):
 
         #assign subset of files to current rank
         end               = len(test_data_JPL_paths)
+        print(end)
         processes_per_cpu = end // (size-1)
         start             = rank * processes_per_cpu
 
