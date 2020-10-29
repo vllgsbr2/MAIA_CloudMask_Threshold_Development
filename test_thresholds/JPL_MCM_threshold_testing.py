@@ -485,6 +485,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     shape = observable_data.shape
     print(observable_level_parameter.shape)
+    print(shape)
 
     #pick threshold for each pixel in x by y grid
     with h5py.File(threshold_path, 'r') as hf_thresholds:
