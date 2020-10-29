@@ -40,10 +40,9 @@ for r in range(size):
 
         test_data_JPL_paths = test_data_JPL_paths[start:end]
         time_stamps = time_stamps[start:end]
-        print(len(time_stamps))
 
         for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
-
+            print(time_stamp)
             output_home = '{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'])
             directory_name = '{}/{}'.format(output_home, time_stamp)
             if not(os.path.exists(directory_name)):
