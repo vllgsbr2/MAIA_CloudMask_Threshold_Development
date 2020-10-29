@@ -9,7 +9,7 @@ import sys
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
-
+print(2)
 for r in range(size):
     if rank==r:
 
