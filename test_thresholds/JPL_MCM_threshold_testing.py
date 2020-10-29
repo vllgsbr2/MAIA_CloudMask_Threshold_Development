@@ -484,8 +484,6 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #observable_level_parameter contains bins to query threshold database
 
     shape = observable_data.shape
-    print(observable_level_parameter.shape)
-    print(shape)
 
     #pick threshold for each pixel in x by y grid
     with h5py.File(threshold_path, 'r') as hf_thresholds:
@@ -509,6 +507,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             print('thresh status: ',DOY == DOY_bin_thresh)
 
             database = hf_thresholds[path][()]
+            print(database.shape)
 
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
             thresholds[fillVal_idx[0]] = -999
