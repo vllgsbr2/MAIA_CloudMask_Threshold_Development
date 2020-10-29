@@ -960,7 +960,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
         observables[:,:,i],\
         threshold_filepath,\
         observable_names[i],\
-        fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types, MOD03_sfctypes)
+        fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types)
 
     #retrive SID for return and DTT experiments
     scene_type_identifier = add_sceneID(observable_level_parameter)
