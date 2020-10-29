@@ -487,7 +487,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
     #pick threshold for each pixel in x by y grid
     with h5py.File(threshold_path, 'r') as hf_thresholds:
-        OLP = observable_level_parameter.reshape((shape[0]*shape[1], 6))
+        OLP = observable_level_parameter.reshape((shape[0]*shape[1], 6)).astype(dtype=np.int)
         #DOY and TA is same for all pixels in granule
         if not(np.all(OLP[:,3] == -999)) and not(np.all(OLP[:,5] == -999)):
             #not -999 index; use to define target area and day of year for the granule
@@ -503,7 +503,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
             print(path)
             database = hf_thresholds[path][()]
-            
+
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
 
             thresholds[fillVal_idx[0]] = -999
