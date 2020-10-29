@@ -12,6 +12,7 @@ size = comm.Get_size()
 
 for r in range(size):
     if rank==r:
+        print(1)
 
         config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
         config = configparser.ConfigParser()
