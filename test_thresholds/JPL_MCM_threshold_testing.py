@@ -353,7 +353,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
 
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
-    sfc_ID         = sfc_ID
 
     #these datafields' raw values serve as the bins, so no modification needed:
     #Target_Area, land_water_mask, snow_ice_mask, sun_glint_mask, sfc_ID
@@ -361,21 +360,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     #put into array form to serve the whole space
     binned_DOY  = np.ones(shape) * binned_DOY
     Target_Area = np.ones(shape) * Target_Area
-
-    # observable_level_parameter = np.dstack((binned_cos_SZA ,\
-    #                                         binned_VZA     ,\
-    #                                         binned_RAZ     ,\
-    #                                         Target_Area    ,\
-    #                                         snow_ice_mask  ,\
-    #                                         sfc_ID         ,\
-    #                                         binned_DOY     ,\
-    #                                         sun_glint_mask))
-
-    #find where there is missing data, use SZA as proxy, and give fill val
-    missing_idx = np.where(SZA==-999)
-    observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
-
-
 
     #combine glint and snow-ice mask into sfc_ID
     water = num_land_sfc_types
@@ -388,6 +372,10 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
                                             Target_Area    ,\
                                             sfc_ID         ,\
                                             binned_DOY     ))
+
+    #find where there is missing data, use SZA as proxy, and give fill val
+    missing_idx = np.where(SZA==-999)
+    observable_level_parameter[missing_idx[0], missing_idx[1], :] = -999
 
     observable_level_parameter = observable_level_parameter.astype(dtype=np.int)
 
