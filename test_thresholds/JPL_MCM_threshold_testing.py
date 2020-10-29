@@ -805,7 +805,7 @@ def get_cm_confidence(DTT, activation, N, fill_val_2, fill_val_3):
     return final_cm
 
 def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
-                sfc_ID_filepath, config_filepath):
+                sfc_ID_filepath, config_filepath, num_land_sfc_types):
     """
     simply executes function to get the final cloud mask
 
@@ -883,8 +883,6 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     fill_val_3,\
     Min_num_of_activated_tests,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
-
-    num_land_sfc_types = 12 #read in from special config file
 
     #now put data through algorithm flow****************************************
 

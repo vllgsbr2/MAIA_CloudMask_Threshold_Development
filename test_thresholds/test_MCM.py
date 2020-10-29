@@ -16,6 +16,8 @@ config.read(config_home_path+'/test_config.txt')
 PTA          = config['current PTA']['PTA']
 PTA_path     = config['PTAs'][PTA]
 
+num_land_sfc_types = 12
+
 #LA
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2009048.1855.HDF5'
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2010197.1845.HDF5'
@@ -82,7 +84,7 @@ SZA, VZA, VAA,SAA,\
 scene_type_identifier,\
 T = \
              MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
-                             sfc_ID_filepath, config_filepath)
+                             sfc_ID_filepath, config_filepath, num_land_sfc_types)
 
 #save output
 make_output(Sun_glint_exclusion_angle,\

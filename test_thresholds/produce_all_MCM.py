@@ -4,6 +4,7 @@ import mpi4py.MPI as MPI
 import os
 import numpy as np
 import configparser
+import sys
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -18,6 +19,8 @@ for r in range(size):
 
         PTA          = config['current PTA']['PTA']
         PTA_path     = config['PTAs'][PTA]
+
+        num_land_sfc_types = int(sys.argv[1])
 
         data_home = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
         test_data_JPL_paths = os.listdir(data_home)
@@ -58,8 +61,14 @@ for r in range(size):
                 thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
                 threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
 
-                sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
-                sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_home, PTA, DOY_end)
+                # sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
+                # sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_home, PTA, DOY_end)
+
+                #for testing with many SIDs
+                num_land_SID = int(sys.argv[1])
+                sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
+                sfc_ID_path  = '{}/{}/'.format(sfc_ID_path, num_land_SID)
+                sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_path, PTA, DOY_end)
 
                 #run MCM
                 Sun_glint_exclusion_angle,\
@@ -78,7 +87,7 @@ for r in range(size):
                 scene_type_identifier,\
                 T = \
                 MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
-                                             sfc_ID_filepath, config_filepath)
+                                             sfc_ID_filepath, config_filepath, num_land_sfc_types)
 
                 #save output
                 #create directory for time stamp
