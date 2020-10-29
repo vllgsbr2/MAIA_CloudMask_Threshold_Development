@@ -484,11 +484,11 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #observable_level_parameter contains bins to query threshold database
 
     shape = observable_data.shape
-    OLP = np.zeros((shape[0],shape[1],6))
-    OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
-    OLP[:,:,4]  = scene_type_identifier             #scene_ID
-    OLP[:,:,5] = observable_level_parameter[:,:,5]  #DOY
-
+    # OLP = np.zeros((shape[0],shape[1],6))
+    # OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
+    # OLP[:,:,4]  = scene_type_identifier             #scene_ID
+    # OLP[:,:,5] = observable_level_parameter[:,:,5]  #DOY
+    OLP = observable_level_parameter
     #pick threshold for each pixel in x by y grid
     with h5py.File(threshold_path, 'r') as hf_thresholds:
         OLP = OLP.reshape((shape[0]*shape[1], 6)).astype(dtype=np.int)
