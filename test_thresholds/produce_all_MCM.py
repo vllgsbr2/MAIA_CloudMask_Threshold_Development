@@ -42,7 +42,6 @@ for r in range(size):
         time_stamps = time_stamps[start:end]
 
         for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
-            print(time_stamp)
             output_home = '{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'])
             directory_name = '{}/{}'.format(output_home, time_stamp)
             if not(os.path.exists(directory_name)):
@@ -89,7 +88,7 @@ for r in range(size):
                 scene_type_identifier,\
                 T = \
                 MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
-                                             sfc_ID_filepath, config_filepath, num_land_sfc_types)
+                                             sfc_ID_filepath, config_filepath, num_land_SID)
 
                 #save output
                 #create directory for time stamp
