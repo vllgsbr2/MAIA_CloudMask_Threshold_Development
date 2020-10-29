@@ -510,6 +510,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             print(database.shape)
 
             thresholds =np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
+            print('hello')
             thresholds[fillVal_idx[0]] = -999
             #reshape to original dimensions
             thresholds = np.array(thresholds).reshape(shape)
