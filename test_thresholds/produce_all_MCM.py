@@ -20,7 +20,7 @@ for r in range(size):
         PTA          = config['current PTA']['PTA']
         PTA_path     = config['PTAs'][PTA]
 
-        num_land_sfc_types = int(sys.argv[1])
+        num_land_SID = int(sys.argv[1])
 
         data_home = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
         test_data_JPL_paths = os.listdir(data_home)
@@ -59,16 +59,18 @@ for r in range(size):
 
                 print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
                 thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
-                threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(thresh_home, DOY_start, DOY_end, DOY_bin)
+                threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'\
+                                     .format(thresh_home, DOY_start, DOY_end, DOY_bin, num_land_SID)
 
                 # sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
                 # sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_home, PTA, DOY_end)
 
                 #for testing with many SIDs
-                num_land_SID = int(sys.argv[1])
                 sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
                 sfc_ID_path  = '{}/{}/'.format(sfc_ID_path, num_land_SID)
                 sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_path, PTA, DOY_end)
+
+                print(Target_Area_X, threshold_filepath, sfc_ID_filepath)
 
                 #run MCM
                 Sun_glint_exclusion_angle,\
