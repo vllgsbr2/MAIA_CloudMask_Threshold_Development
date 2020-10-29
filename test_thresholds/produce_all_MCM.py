@@ -29,7 +29,6 @@ for r in range(size):
 
         #assign subset of files to current rank
         end               = len(test_data_JPL_paths)
-        print(end)
         processes_per_cpu = end // (size-1)
         start             = rank * processes_per_cpu
 
@@ -41,6 +40,7 @@ for r in range(size):
 
         test_data_JPL_paths = test_data_JPL_paths[start:end]
         time_stamps = time_stamps[start:end]
+        print(len(time_stamps))
 
         for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
 
