@@ -904,6 +904,8 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     Min_num_of_activated_tests,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
 
+    num_land_sfc_types = 12 #read in from special config file
+
     #now put data through algorithm flow****************************************
 
     #mark bad radiance**********************************************************
@@ -951,7 +953,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     #SVI[SVI<0] = 0
     #Cirrus[Cirrus>2] = -998
     #get observable level parameter*********************************************
-    num_land_sfc_types = 12 #read in from special config file
+
     observable_level_parameter = get_observable_level_parameter(SZA[:],\
                 VZA[:], SAA[:], VAA[:], Target_Area,\
                 snow_ice_mask[:], sfc_ID[:], DOY, sun_glint_mask[:], num_land_sfc_types)
