@@ -956,7 +956,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
         fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types)
 
     #retrive SID for return and DTT experiments
-    scene_type_identifier = add_sceneID(observable_level_parameter)
+    scene_type_identifier = observable_level_parameter[:,:,4]
     OLP_ = np.zeros((shape[0],shape[1],6))
     OLP_[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
     OLP_[:,:,4]  = scene_type_identifier             #scene_ID
