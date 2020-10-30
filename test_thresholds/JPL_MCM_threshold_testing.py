@@ -127,13 +127,13 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
     theta_r[sfc_ID != water] = 1
 
     sun_glint_mask = theta_r
-    #import matplotlib.pyplot as plt
-    #from matplotlib import cm
-    #cmap = cm.get_cmap('PiYG', 15)
-    #plt.figure(5)
-    #plt.imshow(sensorZenith,cmap=cmap)
-    #plt.colorbar()
-    #plt.show()
+    import matplotlib.pyplot as plt
+    from matplotlib import cm
+    cmap = cm.get_cmap('PiYG', 15)
+    plt.figure(5)
+    plt.imshow(sensorZenith,cmap=cmap)
+    plt.colorbar()
+    plt.show()
     return sun_glint_mask
 
 #calculate observables**********************************************************
@@ -431,9 +431,9 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #                         (observable_data  != fill_val_3)) ]  = fill_val_1
 
 
-    water     = num_land_sfc_types + 1
-    sun_glint = num_land_sfc_types + 2
-    snow      = num_land_sfc_types + 3
+    water     = num_land_sfc_types
+    sun_glint = num_land_sfc_types + 1
+    snow      = num_land_sfc_types + 2
 
     #apply fill values according to input observable and surface type
     if observable_name == 'VIS_Ref':
