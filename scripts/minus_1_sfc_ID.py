@@ -97,5 +97,6 @@ if __name__ == '__main__':
     #cycle through all the directories 5 to 30
     for numSID in range(5,31):
         home = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles/{}/'.format(numSID)
+        print(numSID)
 
         make_SID_MCM_rdy(home, destination)
