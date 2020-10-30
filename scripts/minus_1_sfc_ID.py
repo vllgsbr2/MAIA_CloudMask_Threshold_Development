@@ -44,7 +44,7 @@ def make_SID_MCM_rdy(home_og, home):
     #set water (0) to num_KMeans_IDs + 2
     sfc_IDs_mod[sfc_IDs == 0] = num_KMeans_IDs + 2
 
-    im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='cool_r', vmin=0, vmax=num_KMeans_IDs + 2)
+    im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='cool', vmin=0, vmax=num_KMeans_IDs + 2)
     im.cmap.set_under('k')
     plt.colorbar()
     plt.show()
