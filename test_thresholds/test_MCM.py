@@ -16,8 +16,6 @@ config.read(config_home_path+'/test_config.txt')
 PTA          = config['current PTA']['PTA']
 PTA_path     = config['PTAs'][PTA]
 
-num_land_sfc_types = 12
-
 #LA
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2009048.1855.HDF5'
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2010197.1845.HDF5'
@@ -31,6 +29,7 @@ num_land_sfc_types = 12
 
 #test some Guangyu scenes
 test_scene = 'test_JPL_data_2019276.1805.h5'
+num_Kmeans_sfc_types = 11
 # guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
 # threshold_filepath = guangyu_home + 'thresholds_DOY_273_to_280_bin_34.h5'
 # threshold_filepath = guangyu_home + 'OBthresholds_DOY_273_to_280_bin_34.h5'
@@ -42,8 +41,8 @@ DOY_bin = np.digitize(DOY, np.arange(8,376,8), right=True)
 DOY_end = (DOY_bin+1)*8
 DOY_start = DOY_end - 7
 
-thresh_file = 'thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin, 12)
-SID_file    = 'surfaceID_LosAngeles_{:03d}.nc'.format(DOY_end)
+thresh_file = 'thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin, num_Kmeans_sfc_types)
+SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(num_Kmeans_sfc_types, DOY_end)
 print(test_scene, thresh_file, SID_file)
 
 test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],test_scene)

@@ -817,6 +817,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
         threshold_filepath {string} -- ancillary threshold dataset filepath
         sfc_ID_filepath {string} -- ancillary surface ID dataset filepath
         config_filepath {string} -- ancillary configuration file filepath
+        num_land_sfc_types {int} -- number of Kmeans land surface types; add 1 for coast
 
 
     Returns:
@@ -912,8 +913,9 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
                       R_band_13))
 
     #calculate sunglint mask****************************************************
+    num_land_sfc_types_plus_coast = num_land_sfc_types+1
     sun_glint_mask = get_sun_glint_mask(SZA[:], VZA[:], SAA[:], VAA[:],\
-                                Sun_glint_exclusion_angle, sfc_ID, num_land_sfc_types)
+                                Sun_glint_exclusion_angle, sfc_ID, num_land_sfc_types_plus_coast)
 
     #calculate observables******************************************************
     #0.86, 1.61, 1.88 micrometers -> bands 9, 12, 13
@@ -934,7 +936,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     observable_level_parameter = get_observable_level_parameter(SZA[:],\
                 VZA[:], SAA[:], VAA[:], Target_Area,\
-                snow_ice_mask[:], sfc_ID[:], DOY, sun_glint_mask[:], num_land_sfc_types)
+                snow_ice_mask[:], sfc_ID[:], DOY, sun_glint_mask[:], num_land_sfc_types_plus_coast)
 
     #get test determination*****************************************************
     #combine observables into one array along third dimesnion
@@ -950,7 +952,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
         observables[:,:,i],\
         threshold_filepath,\
         observable_names[i],\
-        fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types)
+        fill_val_1, fill_val_2, fill_val_3, num_land_sfc_types_plus_coast)
 
     #retrive SID for return and DTT experiments
     scene_type_identifier = observable_level_parameter[:,:,4]
