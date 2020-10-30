@@ -143,8 +143,8 @@ if __name__ == '__main__':
             PTA_path = config['PTAs'][PTA]
 
             num_land_SID = int(sys.argv[1])
-            print(num_land_SID)
-
+            #to add coast land type for sun glint mask and OLP funcs
+            num_land_SID_plus_coast = num_land_SID + 1
             #open database to read
             database_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
             database_files   = np.sort(os.listdir(database_path))
@@ -188,11 +188,10 @@ if __name__ == '__main__':
                         with Dataset(sfc_ID_path, 'r', format='NETCDF4') as sfc_ID_file:
                             sfc_ID = sfc_ID_file.variables['surface_ID'][:,:]
 
-                        #add one for coast land type (non k Means lan type)
-                        num_land_SID += 1
-                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, sfc_ID, num_land_SID)
+
+                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, sfc_ID, num_land_SID_plus_coast)
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
-                                TA, SIM, sfc_ID, DOY, SGM, num_land_SID)
+                                TA, SIM, sfc_ID, DOY, SGM, num_land_SID_plus_coast)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)
