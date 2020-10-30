@@ -83,7 +83,7 @@ SZA, VZA, VAA,SAA,\
 scene_type_identifier,\
 T = \
              MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
-                             sfc_ID_filepath, config_filepath, num_land_sfc_types)
+                             sfc_ID_filepath, config_filepath, num_Kmeans_sfc_types)
 
 #save output
 make_output(Sun_glint_exclusion_angle,\
