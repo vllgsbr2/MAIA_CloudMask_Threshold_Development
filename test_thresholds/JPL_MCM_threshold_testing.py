@@ -431,9 +431,9 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #                         (observable_data  != fill_val_3)) ]  = fill_val_1
 
 
-    water     = num_land_sfc_types
-    sun_glint = num_land_sfc_types + 1
-    snow      = num_land_sfc_types + 2
+    water     = num_land_sfc_types + 1
+    sun_glint = num_land_sfc_types + 2
+    snow      = num_land_sfc_types + 3
 
     #apply fill values according to input observable and surface type
     if observable_name == 'VIS_Ref':
