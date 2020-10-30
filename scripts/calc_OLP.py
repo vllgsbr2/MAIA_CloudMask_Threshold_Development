@@ -189,9 +189,6 @@ if __name__ == '__main__':
                         #add one for coast land type (non k Means lan type)
                         num_land_SID += 1
                         SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, sfc_ID, num_land_SID)
-                        get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
-                                  snow_ice_mask, sfc_ID, DOY, sun_glint_mask,\
-                                  num_land_sfc_types)
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
                                 TA, SIM, sfc_ID, DOY, SGM, num_land_SID)
 
