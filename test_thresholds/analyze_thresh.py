@@ -174,6 +174,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
     water =num_land_SID+1
     glint=num_land_SID+2
     snow=num_land_SID+3
+    print(master_thresh.shape)
     for i, obs in enumerate(thresh_dict):
         if obs=='SVI' or obs=='Cirrus':
             temp_thresh = np.copy(master_thresh[i])
