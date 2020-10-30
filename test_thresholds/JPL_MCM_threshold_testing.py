@@ -132,7 +132,7 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
     # cmap = cm.get_cmap('PiYG', 15)
     cmap='binary'
     plt.figure(5)
-    plt.imshow(theta_r,cmap=cmap)
+    plt.imshow(sun_glint_mask,cmap=cmap)
     plt.colorbar()
     plt.show()
     return sun_glint_mask
