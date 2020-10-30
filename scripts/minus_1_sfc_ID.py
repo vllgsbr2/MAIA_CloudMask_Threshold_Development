@@ -29,7 +29,7 @@ def make_SID_MCM_rdy(home_og, home):
     # .
     # N- Brightest
 
-    N = sfc_IDs.max()
+    N = int(sfc_IDs.max())
     num_KMeans_IDs = N-3
     # print(N)
 
