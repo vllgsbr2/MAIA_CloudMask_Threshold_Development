@@ -351,7 +351,6 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
     binned_cos_SZA = np.digitize(cos_SZA, bin_cos_SZA, right=True)
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
-
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
 
     #these datafields' raw values serve as the bins, so no modification needed:
@@ -410,6 +409,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
        fill_val_1 {integer} -- defined in congifg file; not applied due to surface type
        fill_val_2 {integer} -- defined in congifg file; low quality radiance
        fill_val_3 {integer} -- defined in congifg file; no data
+       num_land_sfc_types {integer} -- number of kmeans land types + coast type
     Returns:
        2D narray -- observable_data with fill values applied
        2D narray -- the threshold needed at each pixel for that observable
