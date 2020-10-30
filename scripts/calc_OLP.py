@@ -1,7 +1,7 @@
 import numpy as np
 
 def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
-                       sun_glint_exclusion_angle, land_water_mask):
+                       sun_glint_exclusion_angle, sfc_ID, num_land_sfc_types):
     """
     Calculate sun-glint flag.
 
@@ -39,53 +39,16 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
     theta_r[sun_glint_idx]    = 0
     theta_r[no_sun_glint_idx] = 1
     #turn off glint calculated over land
-    theta_r[land_water_mask == 1] = 1
+    water = num_land_sfc_types
+    theta_r[sfc_ID != water] = 1
+
     sun_glint_mask = theta_r
 
     return sun_glint_mask
 
-def add_sceneID(observable_level_parameter, num_land_SID):
-
-        """
-        helper function to combine water/sunglint/snow-ice mask/sfc_ID into
-        one mask. This way the threhsolds can be retrieved with less queries.
-        [Section N/A]
-        Arguments:
-            observable_level_parameter {3D int narray} -- return from func get_observable_level_parameter()
-            num_land_sfc_types {int} -- number of land surface types from max BRF clusters
-            MOD03_sfctypes {2D int narray} -- 0-7 water (1 land type) surface types from MOD03 MODIS TERRA product
-        Returns:
-            2D narray -- scene ID. Values 0-28 inclusive are land types; values
-                         29, 30, 31 are water, water with sun glint, snow/ice
-                         respectively. Is the size of the granule. These integers
-                         serve as the indicies to select a threshold based off
-                         surface type.
-        """
-        # sun_glint_bins {2D narray} -- no glint (1) sunglint (0)
-        # snow_ice_bins {2D narray} -- no snow/ice (1) snow/ice (0)
-
-        #over glint/snow_ice onto sfc_ID to create a scene_type_identifier
-        sun_glint_bins  = observable_level_parameter[:,:,-1]
-        snow_ice_bins   = observable_level_parameter[:,:, 5]
-
-        scene_type_identifier = observable_level_parameter[:,:,6]
-
-        #water is equal to num_land_SID
-
-        scene_type_identifier[(sun_glint_bins        == 0) & \
-                              (scene_type_identifier == 12)] = num_land_SID + 1
-        scene_type_identifier[snow_ice_bins == 0]            = num_land_SID + 2
-
-        shape = observable_level_parameter.shape
-        OLP = np.zeros((shape[0], shape[1], 6))
-        OLP[:,:,:4] = observable_level_parameter[:,:,:4]#cosSZA, VZA, RAZ, TA
-        OLP[:,:,4]  = scene_type_identifier             #scene_ID
-        OLP[:,:,5] = observable_level_parameter[:,:,7]  #DOY
-
-        return OLP
-
-def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area, sfc_ID_path,\
-          land_water_mask, snow_ice_mask, DOY, sun_glint_mask, time_stamp, num_land_SID):
+def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
+          snow_ice_mask, sfc_ID, DOY, sun_glint_mask,\
+          num_land_sfc_types):
 
     """
     Objective:
@@ -119,19 +82,14 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area, sfc_ID_path,
     #bin each input, then dstack them. return this result
     #define bins for each input
     bin_cos_SZA = np.arange(0.1, 1.1 , 0.1)
-    bin_VZA     = np.arange(5 , 75 , 5) #start at 5.0 to 0-index bin left of 5.0
-    bin_RAZ     = np.arange(15, 195, 15)
-    bin_DOY     = np.arange(8 , 376, 8)
+    bin_VZA     = np.arange(5. , 75. , 5.) #start at 5.0 to 0-index bin left of 5.0
+    bin_RAZ     = np.arange(15., 195., 15.)
+    bin_DOY     = np.arange(8. , 376., 8.0)
 
     binned_cos_SZA = np.digitize(cos_SZA, bin_cos_SZA, right=True)
     binned_VZA     = np.digitize(VZA    , bin_VZA, right=True)
     binned_RAZ     = np.digitize(RAZ    , bin_RAZ, right=True)
-
     binned_DOY     = np.digitize(DOY    , bin_DOY, right=True)
-    DOY_end = (binned_DOY+1)*8
-
-    # sfc_ID_path = home + 'LA_surface_types/surfaceID_LA_{:03d}.nc'.format(DOY_end)
-    sfc_ID = Dataset(sfc_ID_path, 'r').variables['surface_ID'][:,:]
 
     #these datafields' raw values serve as the bins, so no modification needed:
     #Target_Area, land_water_mask, snow_ice_mask, sun_glint_mask, sfc_ID
@@ -140,17 +98,17 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area, sfc_ID_path,
     binned_DOY  = np.ones(shape) * binned_DOY
     Target_Area = np.ones(shape) * Target_Area
 
+    #combine glint and snow-ice mask into sfc_ID
+    water = num_land_sfc_types
+    sfc_ID[(sun_glint_mask == 0) & (sfc_ID == water)] = num_land_sfc_types + 1
+    sfc_ID[snow_ice_mask   == 0]                      = num_land_sfc_types + 2
+
     observable_level_parameter = np.dstack((binned_cos_SZA ,\
                                             binned_VZA     ,\
                                             binned_RAZ     ,\
                                             Target_Area    ,\
-                                            land_water_mask,\
-                                            snow_ice_mask  ,\
                                             sfc_ID         ,\
-                                            binned_DOY     ,\
-                                            sun_glint_mask))
-
-    observable_level_parameter = add_sceneID(observable_level_parameter, num_land_SID)
+                                            binned_DOY     ))
 
     #find where there is missing data, use SZA as proxy, and give fill val
     missing_idx = np.where(SZA==-999)
@@ -210,13 +168,8 @@ if __name__ == '__main__':
                         VAA = hf_database[time_stamp+'/sunView_geometry/sensorAzimuth'][()]
                         SAA = hf_database[time_stamp+'/sunView_geometry/solarAzimuth'][()]
                         TA  = int(config['Target Area Integer'][PTA])
-                        LWM = hf_database[time_stamp+'/cloud_mask/Land_Water_Flag'][()]
                         SIM = hf_database[time_stamp+'/cloud_mask/Snow_Ice_Background_Flag'][()]
                         DOY = int(time_stamp[4:7])
-                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, LWM)
-                        #num_land_sfc_types = 12 #read from config file later
-                        #MOD03_sfctypes     = hf_database[time_stamp+'/MOD03_LandSeaMask'][()]
-
 
                         bin_DOY    = np.arange(8, 376, 8)
                         binned_DOY = np.digitize(DOY, bin_DOY, right=True)
@@ -232,8 +185,9 @@ if __name__ == '__main__':
                                                              if DOY_end in x][0]
                         #add one for coast land type (non k Means lan type)
                         num_land_SID += 1
+                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, num_land_SID)
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
-                                TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp, num_land_SID)
+                                TA, sfc_ID_path, SIM, DOY, SGM, time_stamp, num_land_SID)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)
