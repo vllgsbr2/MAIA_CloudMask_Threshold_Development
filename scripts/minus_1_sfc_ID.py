@@ -51,7 +51,7 @@ def make_SID_MCM_rdy(home_og, home):
     # sys.exit()
 
     #create destination directory for SID if not already made
-    destination += 'num_Kmeans_SID_{:02d}/'.format(num_KMeans_IDs)
+    home += 'num_Kmeans_SID_{:02d}/'.format(num_KMeans_IDs)
     if not(os.path.exists(destination)):
         os.mkdir(destination)
 
