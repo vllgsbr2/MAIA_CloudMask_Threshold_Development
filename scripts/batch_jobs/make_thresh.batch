@@ -25,7 +25,7 @@ test_set="False"
 ##make thresholds for SID with 5,6,...,30 land clusters
 ##calc_OLP.py & calc_thresh.py will need to ingest number of surface types
 
-for num_SIDs in {5..6}
+for num_SIDs in {11..12}
 do
     echo run observable level parameter
     mpirun -n 60 python calc_OLP.py $num_SIDs &
