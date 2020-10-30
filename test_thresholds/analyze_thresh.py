@@ -199,7 +199,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
         # else:
         #     pass
 
-        temp_thresh = master_thresh
+        temp_thresh = master_thresh[i]
 
         print(np.where(temp_thresh==temp_thresh.max()))
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
