@@ -25,36 +25,61 @@ test_set="False"
 ##make thresholds for SID with 5,6,...,30 land clusters
 ##calc_OLP.py & calc_thresh.py will need to ingest number of surface types
 
-for num_SIDs in {11..12}
+num_SIDs=11
+echo run observable level parameter
+mpirun -n 60 python calc_OLP.py $num_SIDs &
+
+wait
+
+echo group data by OLP and combine with obs
+for i in {0..45}
 do
-    echo run observable level parameter
-    mpirun -n 60 python calc_OLP.py $num_SIDs &
-
+    echo $i
+    mpirun -n 60 python group_data_by_OLP.py $i $test_set &
     wait
-
-    echo group data by OLP and combine with obs
-    for i in {0..45}
-    do
-        echo $i
-        mpirun -n 60 python group_data_by_OLP.py $i $test_set &
-        wait
-    done
-
-    echo combine grouped files by DOY
-    mpirun -n 46 python combine_grouped_files.py &
-
-    wait
-
-    if [$num_SIDs -ne 30]
-    then
-        echo  run thresholds
-        mpirun -n 46 python calc_threshold.py $num_SIDs &
-        wait
-    else
-      echo  run thresholds
-      mpirun -n 46 python calc_threshold.py $num_SIDs
-    fi
-
 done
+
+echo combine grouped files by DOY
+mpirun -n 46 python combine_grouped_files.py &
+wait
+
+
+echo  run thresholds
+mpirun -n 46 python calc_threshold.py $num_SIDs
+
+
+
+
+# for num_SIDs in {3..28}
+# do
+#     echo run observable level parameter
+#     mpirun -n 60 python calc_OLP.py $num_SIDs &
+#
+#     wait
+#
+#     echo group data by OLP and combine with obs
+#     for i in {0..45}
+#     do
+#         echo $i
+#         mpirun -n 60 python group_data_by_OLP.py $i $test_set &
+#         wait
+#     done
+#
+#     echo combine grouped files by DOY
+#     mpirun -n 46 python combine_grouped_files.py &
+#
+#     wait
+#
+#     if [$num_SIDs -ne 30]
+#     then
+#         echo  run thresholds
+#         mpirun -n 46 python calc_threshold.py $num_SIDs &
+#         wait
+#     else
+#       echo  run thresholds
+#       mpirun -n 46 python calc_threshold.py $num_SIDs
+#     fi
+#
+# done
 
 exit 0

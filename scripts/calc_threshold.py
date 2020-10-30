@@ -42,6 +42,11 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
         # [n+3] .... snow
         num_SID = num_land_SID+3
 
+        coast = num_land_SID
+        water = num_land_SID + 1
+        glint = num_land_SID + 2
+        snow  = num_land_SID + 3
+
         master_thresholds = np.ones((10*15*12*num_SID)).reshape((10,15,12,num_SID))*-999
         obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
         for obs in obs_names:
@@ -62,9 +67,6 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
             cloud_mask = hf_group[bin_ID][:,0].astype(dtype=np.int)
             obs        = hf_group[bin_ID][:,1:]
 
-            #water can use 0 & 1 as cloudy since confidence should be good
-            sfc_ID_bin = bin_idx[3]#12 is water no glint
-            # if sfc_ID_bin != 12:
             clear_idx  = np.where((cloud_mask != 0) & (cloud_mask > fill_val))
             clear_obs  = obs[clear_idx[0],:]
 
@@ -109,14 +111,14 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
                 #NDVI
                 elif i==1:
                     #pick max from cloudy hist for non water
-                    if clean_cloudy_obs.shape[0] > num_samples_valid_hist and bin_idx[3] != 12:
+                    if clean_cloudy_obs.shape[0] > num_samples_valid_hist and bin_idx[3] != water:
                             hist, bin_edges = np.histogram(clean_cloudy_obs, bins=128, range=(-1,1))
                             thresh_current = bin_edges[1:][hist==hist.max()].min()
 
                             hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                             thresh_current
                     #pick 99% clear for water since water gives negative values
-                    elif clean_clear_obs.shape[0] > num_samples_valid_hist and bin_idx[3] == 12:
+                    elif clean_clear_obs.shape[0] > num_samples_valid_hist and bin_idx[3] == water:
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                         np.nanpercentile(clean_clear_obs, 99)
                     else:
@@ -130,7 +132,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
                 elif i==2:
                     #pick 1% clear for snow since snow gives > 0.4 NDSI
                     if clean_clear_obs.shape[0] > num_samples_valid_hist:
-                        if bin_idx[3] == 14:
+                        if bin_idx[3] == snow:
                             hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3]] =\
                             np.nanpercentile(clean_clear_obs, 1)
                         else:
