@@ -31,7 +31,7 @@ def make_SID_MCM_rdy(home_og, home):
 
     N = sfc_IDs.max()
     num_KMeans_IDs = N-3
-    print(N)
+    # print(N)
 
     #modify the surface ID in memory
     sfc_IDs_mod = np.copy(sfc_IDs)
@@ -44,14 +44,14 @@ def make_SID_MCM_rdy(home_og, home):
     #set water (0) to num_KMeans_IDs + 2
     sfc_IDs_mod[sfc_IDs == 0] = num_KMeans_IDs + 2
 
-    im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='cool', vmin=0, vmax=num_KMeans_IDs + 2)
-    im.cmap.set_under('k')
-    plt.colorbar()
-    plt.show()
-    sys.exit()
+    # im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='cool', vmin=0, vmax=num_KMeans_IDs + 2)
+    # im.cmap.set_under('k')
+    # plt.colorbar()
+    # plt.show()
+    # sys.exit()
 
     #create destination directory for SID if not already made
-    destination += str(num_KMeans_IDs) + '/'
+    destination += 'num_Kmeans_SID_{:02d}/'.format(num_KMeans_IDs)
     if not(os.path.exists(destination)):
         os.mkdir(destination)
 
