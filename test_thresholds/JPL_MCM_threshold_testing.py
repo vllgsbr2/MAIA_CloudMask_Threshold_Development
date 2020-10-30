@@ -127,14 +127,14 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
     theta_r[sfc_ID != water] = 1
 
     sun_glint_mask = theta_r
-    import matplotlib.pyplot as plt
-    from matplotlib import cm
+    # import matplotlib.pyplot as plt
+    # from matplotlib import cm
     # cmap = cm.get_cmap('PiYG', 15)
-    cmap='binary'
-    plt.figure(5)
-    plt.imshow(sun_glint_mask,cmap=cmap)
-    plt.colorbar()
-    plt.show()
+    # cmap='binary'
+    # plt.figure(5)
+    # plt.imshow(sun_glint_mask,cmap=cmap)
+    # plt.colorbar()
+    # plt.show()
     return sun_glint_mask
 
 #calculate observables**********************************************************
