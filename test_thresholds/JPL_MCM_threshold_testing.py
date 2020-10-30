@@ -438,15 +438,15 @@ def get_test_determination(observable_level_parameter, observable_data,\
     #apply fill values according to input observable and surface type
     if observable_name == 'VIS_Ref':
         #where water or snow/ice occur this test is not applied
-        observable_data[(scene_type_identifier >= water) & \
-                        ((observable_data != fill_val_2)                & \
+        observable_data[(scene_type_identifier >= water)     & \
+                        ((observable_data != fill_val_2)     & \
                          (observable_data != fill_val_3)) ]  = fill_val_1
 
     elif observable_name == 'NIR_Ref':
         #where land/sunglint/snow_ice occur this test is not applied
-        observable_data[((scene_type_identifier < water) | (scene_type_identifier > water)) & \
-                        ((observable_data != fill_val_2)          & \
-                         (observable_data != fill_val_3))]   = fill_val_1
+        observable_data[(scene_type_identifier != water)     & \
+                        ( (observable_data != fill_val_2)    & \
+                          (observable_data != fill_val_3) )] = fill_val_1
 
     elif observable_name == 'WI':
         #where sunglint/snow_ice occur this test is not applied
