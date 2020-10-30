@@ -143,6 +143,7 @@ if __name__ == '__main__':
             PTA_path = config['PTAs'][PTA]
 
             num_land_SID = int(sys.argv[1])
+            print(num_land_SID)
 
             #open database to read
             database_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
