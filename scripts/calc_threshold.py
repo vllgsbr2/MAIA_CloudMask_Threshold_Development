@@ -47,7 +47,9 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
         glint = num_land_SID + 2
         snow  = num_land_SID + 3
 
-        master_thresholds = np.ones((10*15*12*num_SID)).reshape((10,15,12,num_SID+1))*-999
+        total_num_SID = num_SID + 1
+
+        master_thresholds = np.ones((10*15*12*total_num_SID)).reshape((10,15,12,total_num_SID))*-999
         obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
         for obs in obs_names:
             DOY_group.create_dataset(obs, data=master_thresholds)
