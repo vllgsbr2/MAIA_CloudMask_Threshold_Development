@@ -129,7 +129,8 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
     sun_glint_mask = theta_r
     import matplotlib.pyplot as plt
     from matplotlib import cm
-    cmap = cm.get_cmap('PiYG', 2)
+    # cmap = cm.get_cmap('PiYG', 15)
+    cmap='binary'
     plt.figure(5)
     plt.imshow(theta_r,cmap=cmap)
     plt.colorbar()
