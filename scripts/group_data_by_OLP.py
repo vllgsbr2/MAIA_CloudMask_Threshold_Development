@@ -171,7 +171,7 @@ if __name__ == '__main__':
 
                         group_data(OLP, np.array(obs_data, dtype=np.float), CM, hf_group)
 
-                        print(time_stamp)
+                        # print(time_stamp)
 
                 # except:
                 #     with h5py.File(hf_group_path, 'r+')  as hf_group:

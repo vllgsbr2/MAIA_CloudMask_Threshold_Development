@@ -223,18 +223,15 @@ if __name__ == '__main__':
                         DOY_end    = (binned_DOY+1)*8
                         DOY_end    = '{:03d}'.format(DOY_end)
 
-                        # sfc_ID_path  = config['supporting directories']['Surface_IDs']
-                        # sfc_ID_path  = '{}/{}/{}/'.format(PTA_path, sfc_ID_path)
-
-                        #for testing with many SIDs
-                        sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
-                        sfc_ID_path  = '{}/{}/'.format(sfc_ID_path, num_land_SID)
+                        sfc_ID_path  = config['supporting directories']['Surface_IDs']
+                        sfc_ID_path  = '{}/{}/num_Kmeans_SID_{:02d}/'.format(PTA_path, sfc_ID_path, num_land_SID)
 
                         sfc_ID_paths = os.listdir(sfc_ID_path)
                         #find correct sfc ID path for DOY bin
                         sfc_ID_path  = [sfc_ID_path + x for x in sfc_ID_paths \
                                                              if DOY_end in x][0]
-
+                        #add one for coast land type (non k Means lan type)
+                        num_land_SID += 1
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
                                 TA, sfc_ID_path, LWM, SIM, DOY, SGM, time_stamp, num_land_SID)
 

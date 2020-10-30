@@ -34,7 +34,14 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
         TA_group  = hf_thresh.create_group('TA_bin_{:02d}'.format(TA))
         DOY_group = TA_group.create_group('DOY_bin_{:02d}'.format(DOY_bin))
 
-        num_SID = num_land_SID+2
+        #add 3 for coast/water/glint/snow
+        # [0,n-1] .. land
+        # [n] ...... coast
+        # [n+1] .... water
+        # [n+2] .... glint
+        # [n+3] .... snow
+        num_SID = num_land_SID+3
+
         master_thresholds = np.ones((10*15*12*num_SID)).reshape((10,15,12,num_SID))*-999
         obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
         for obs in obs_names:
