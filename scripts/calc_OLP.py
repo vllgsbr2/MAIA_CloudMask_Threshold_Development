@@ -183,11 +183,17 @@ if __name__ == '__main__':
                         #find correct sfc ID path for DOY bin
                         sfc_ID_path  = [sfc_ID_path + x for x in sfc_ID_paths \
                                                              if DOY_end in x][0]
+                        with Dataset(sfc_ID_path, 'r', format='NETCDF4') as sfc_ID_file:
+                            sfc_ID = sfc_ID_file.variables['surface_ID'][:,:]
+
                         #add one for coast land type (non k Means lan type)
                         num_land_SID += 1
-                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, num_land_SID)
+                        SGM = get_sun_glint_mask(SZA, VZA, SAA, VAA, 40, sfc_ID, num_land_SID)
+                        get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
+                                  snow_ice_mask, sfc_ID, DOY, sun_glint_mask,\
+                                  num_land_sfc_types)
                         OLP = get_observable_level_parameter(SZA, VZA, SAA, VAA,\
-                                TA, sfc_ID_path, SIM, DOY, SGM, time_stamp, num_land_SID)
+                                TA, SIM, sfc_ID, DOY, SGM, num_land_SID)
 
                         try:
                             group = hf_OLP.create_group(time_stamp)
