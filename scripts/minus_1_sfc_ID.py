@@ -31,6 +31,7 @@ def make_SID_MCM_rdy(home_og, home):
 
     N = sfc_IDs.max()
     num_KMeans_IDs = N-3
+    print(N)
 
     #modify the surface ID in memory
     sfc_IDs_mod = np.copy(sfc_IDs)
@@ -43,8 +44,9 @@ def make_SID_MCM_rdy(home_og, home):
     #set water (0) to N+2
     sfc_IDs_mod[sfc_IDs == 0] = N+2
 
-    im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='jet', vmax=11)
-    im.cmap.set_over('k')
+    im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='jet', vmax=N+2)
+    # im.cmap.set_over('k')
+    plt.colorbar()
     plt.show()
     sys.exit()
 
