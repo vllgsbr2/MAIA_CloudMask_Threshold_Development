@@ -39,12 +39,12 @@ def make_SID_MCM_rdy(home_og, home):
     sfc_IDs_mod[sfc_IDs >=3]  = sfc_IDs_mod[sfc_IDs >=3] - 3
     #set invalid to -999
     sfc_IDs_mod[sfc_IDs == 2] = -9
-    #set coastline to N+1
-    sfc_IDs_mod[sfc_IDs == 1] = N+1
-    #set water (0) to N+2
-    sfc_IDs_mod[sfc_IDs == 0] = N+2
+    #set coastline to num_KMeans_IDs + 1
+    sfc_IDs_mod[sfc_IDs == 1] = num_KMeans_IDs + 1
+    #set water (0) to num_KMeans_IDs + 2
+    sfc_IDs_mod[sfc_IDs == 0] = num_KMeans_IDs + 2
 
-    im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='jet', vmax=N+2)
+    im=plt.imshow(sfc_IDs_mod[:,:,0], cmap='jet', vmax=num_KMeans_IDs + 2)
     # im.cmap.set_over('k')
     plt.colorbar()
     plt.show()
