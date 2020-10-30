@@ -179,6 +179,7 @@ if __name__ == '__main__':
 
                         sfc_ID_path  = config['supporting directories']['Surface_IDs']
                         sfc_ID_path  = '{}/{}/num_Kmeans_SID_{:02d}/'.format(PTA_path, sfc_ID_path, num_land_SID)
+                        print(sfc_ID_path)
 
                         sfc_ID_paths = os.listdir(sfc_ID_path)
                         #find correct sfc ID path for DOY bin
