@@ -21,7 +21,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
 
     fill_val = -998
 
-    num_samples_valid_hist = 0
+    num_samples_valid_hist = 100
 
     thresh_file = thresh_home + \
                   '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'\
