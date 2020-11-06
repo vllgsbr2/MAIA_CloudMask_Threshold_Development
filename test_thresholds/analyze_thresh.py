@@ -206,7 +206,6 @@ def plot_thresh_hist_all_bins(num_land_SID):
 
         # binned_thresholds.append(np.histogram(temp_thresh, bins=num_bins)[0])
 
-        x1, x2   = range_
         x = np.arange(x1, x2, (x2-x1)/num_bins)
 
         # a.plot(x, binned_thresholds[i], c='blue')#color[k])
