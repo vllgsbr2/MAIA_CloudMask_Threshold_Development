@@ -168,9 +168,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
 
     #collect thresholds for each obs
     binned_thresholds = []
-    thresholds        = []
-    range_ = (0,1)
-    num_bins  = 70
+
     water =num_land_SID+1
     glint=num_land_SID+2
     snow=num_land_SID+3
@@ -180,64 +178,39 @@ def plot_thresh_hist_all_bins(num_land_SID):
         if obs=='SVI' or obs=='Cirrus':
             temp_thresh = np.copy(master_thresh[i])
             if obs=='SVI':
-                # range_ = (0,0.3)
                 pass
-
             else:
                 bin_width = 0.001
-                # range_ = (0,0.15)
         elif obs == 'WI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,:glint])
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
             temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:water].flatten(), temp_thresh[:,:,:,:,water:snow].flatten()))
-            # range_ = (-0.5,0.5)
         elif obs == 'NDSI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,snow])
-            # range_ = (0.3,1)
         elif obs == 'VIS_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,:water])
-            # range_ = (0,0.85)
         elif obs == 'NIR_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,water])
-            # range_ = (0,0.6)
         else:
             pass
 
-        # temp_thresh = master_thresh[i]
-
-        # print(np.where(temp_thresh==temp_thresh.max()))
-        temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
+        temp_thresh = temp_thresh[(temp_thresh > -998)]
         try:
             print(obs, temp_thresh.min(), temp_thresh.max())
         except:
             pass
 
-        thresholds.append(temp_thresh)
-
-        # range_ndxi     = (-1, 1)
-        # range_other    = (0., 1.4)
-        #
-        # num_bins_ndxi  = 70
-        # num_bins_other = int(num_bins_ndxi * \
-        # (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
-        #
-        # if i==0 or i>=3:
-        #     num_bins = num_bins_other
-        #     range_    = range_other
-        # else:
-        #     num_bins = num_bins_ndxi
-        #     range_    = range_ndxi
-
         x1, x2 = temp_thresh.min(), temp_thresh.max()
         num_bins = int((x2 - x1) / bin_width) + 1
 
-        binned_thresholds.append(np.histogram(temp_thresh, bins=num_bins)[0])
+        # binned_thresholds.append(np.histogram(temp_thresh, bins=num_bins)[0])
 
         x1, x2   = range_
         x = np.arange(x1, x2, (x2-x1)/num_bins)
 
-        a.plot(x, binned_thresholds[i], c='blue')#color[k])
+        # a.plot(x, binned_thresholds[i], c='blue')#color[k])
+        a.hist(x, temp_thresh, bins=num_bins,c='blue')
         a.set_title('{}'.format(obs))
         a.legend()
 
