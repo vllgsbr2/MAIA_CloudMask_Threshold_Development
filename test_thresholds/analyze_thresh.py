@@ -173,7 +173,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
     glint=num_land_SID+2
     snow=num_land_SID+3
     #parameter to inspect SID brighter than x
-    darkest_land = 6
+    darkest_land = 0
     print(master_thresh.shape)
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         if obs=='SVI' or obs=='Cirrus':
