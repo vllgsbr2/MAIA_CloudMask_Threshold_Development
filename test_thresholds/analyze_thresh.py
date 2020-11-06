@@ -200,7 +200,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
         else:
             pass
 
-        temp_thresh = master_thresh[i]
+        # temp_thresh = master_thresh[i]
 
         # print(np.where(temp_thresh==temp_thresh.max()))
         temp_thresh = temp_thresh[(temp_thresh > -998)]# & (temp_thresh < 32767)]
@@ -208,8 +208,8 @@ def plot_thresh_hist_all_bins(num_land_SID):
             print(obs, temp_thresh.min(), temp_thresh.max())
         except:
             pass
-        if i==1:
-            print(temp_thresh)
+        # if i==1:
+        #     print(temp_thresh)
         thresholds.append(temp_thresh)
 
         range_ndxi     = (-1, 1)
@@ -245,10 +245,8 @@ def plot_thresh_hist_all_bins(num_land_SID):
             else:
                 range_ = (0,0.15)
         elif obs == 'WI':
-            pass
+            range_ = (0,1)
         elif obs == 'NDVI':
-
-
             range_ = (-0.5,0.5)
         elif obs == 'NDSI':
 
