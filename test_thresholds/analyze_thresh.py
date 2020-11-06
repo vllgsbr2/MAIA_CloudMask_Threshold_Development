@@ -209,7 +209,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
         # x = np.arange(x1, x2, (x2-x1)/num_bins)
 
         # a.plot(x, binned_thresholds[i], c='blue')#color[k])
-        a.hist(temp_thresh, bins=num_bins,c='blue')
+        a.hist(temp_thresh, bins=num_bins)
         a.set_title('{}'.format(obs))
         a.legend()
 
