@@ -229,47 +229,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
 
         binned_thresholds.append(np.histogram(temp_thresh, bins=num_bins, range=range_)[0])
 
-    #plot thresh hist for each obs
-    for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
-        # print(binned_thresholds[i])
-        range_ndxi     = (-1, 1)
-        range_other    = (0., 1.4)
-
-        num_bins_ndxi  = 70
-        num_bins_other = int(num_bins_ndxi * \
-        (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
-
-        if i==0 or i>=3:
-            num_bins = num_bins_other
-            x1, x2   = range_other
-        else:
-            num_bins = num_bins_ndxi
-            x1, x2   = range_ndxi
-            
-        if obs=='SVI' or obs=='Cirrus':
-
-            if obs=='SVI':
-                range_ = (0,0.3)
-            else:
-                range_ = (0,0.15)
-        elif obs == 'WI':
-            range_ = (0,1)
-        elif obs == 'NDVI':
-            range_ = (-0.5,0.5)
-        elif obs == 'NDSI':
-
-            range_ = (0.3,1)
-        elif obs == 'VIS_Ref':
-
-            range_ = (0,0.85)
-        elif obs == 'NIR_Ref':
-
-            range_ = (0,0.6)
-        else:
-            pass
-
         x1, x2   = range_
-
         x = np.arange(x1, x2, (x2-x1)/num_bins)
 
         a.plot(x, binned_thresholds[i], c='blue')#color[k])
@@ -283,6 +243,61 @@ def plot_thresh_hist_all_bins(num_land_SID):
     # plt.legend()
     plt.show()
     # plt.cla()
+
+    # #plot thresh hist for each obs
+    # for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
+    #     # print(binned_thresholds[i])
+    #     range_ndxi     = (-1, 1)
+    #     range_other    = (0., 1.4)
+    #
+    #     num_bins_ndxi  = 70
+    #     num_bins_other = int(num_bins_ndxi * \
+    #     (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
+    #
+    #     if i==0 or i>=3:
+    #         num_bins = num_bins_other
+    #         x1, x2   = range_other
+    #     else:
+    #         num_bins = num_bins_ndxi
+    #         x1, x2   = range_ndxi
+    #
+    #     if obs=='SVI' or obs=='Cirrus':
+    #
+    #         if obs=='SVI':
+    #             range_ = (0,0.3)
+    #         else:
+    #             range_ = (0,0.15)
+    #     elif obs == 'WI':
+    #         range_ = (0,1)
+    #     elif obs == 'NDVI':
+    #         range_ = (-0.5,0.5)
+    #     elif obs == 'NDSI':
+    #
+    #         range_ = (0.3,1)
+    #     elif obs == 'VIS_Ref':
+    #
+    #         range_ = (0,0.85)
+    #     elif obs == 'NIR_Ref':
+    #
+    #         range_ = (0,0.6)
+    #     else:
+    #         pass
+    #
+    #     x1, x2   = range_
+    #
+    #     x = np.arange(x1, x2, (x2-x1)/num_bins)
+    #
+    #     a.plot(x, binned_thresholds[i], c='blue')#color[k])
+    #     a.set_title('{}'.format(obs))
+    #     a.legend()
+    #
+    # #only 7 obs so lets turn 8th axis off
+    # ax[1,3].axis('off')
+    # # home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
+    # # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
+    # # plt.legend()
+    # plt.show()
+    # # plt.cla()
 
 
 def plot_thresh_hist():
