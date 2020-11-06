@@ -168,7 +168,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
 
     #collect thresholds for each obs
     binned_thresholds = []
-    # thresholds        = []
+    thresholds        = []
     range_ = (0,1)
     num_bins  = 70
     water =num_land_SID+1
@@ -257,7 +257,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
 
             range_ = (0,0.85)
         elif obs == 'NIR_Ref':
-    
+
             range_ = (0,0.6)
         else:
             pass
