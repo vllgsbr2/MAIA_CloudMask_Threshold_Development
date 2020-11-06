@@ -173,26 +173,29 @@ def plot_thresh_hist_all_bins(num_land_SID):
     glint=num_land_SID+2
     snow=num_land_SID+3
     print(master_thresh.shape)
-    bin_width = 0.01
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         if obs=='SVI' or obs=='Cirrus':
             temp_thresh = np.copy(master_thresh[i])
             if obs=='SVI':
-                pass
+                bin_width = 0.01
             else:
                 bin_width = 0.001
         elif obs == 'WI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,:glint])
+            bin_width = 0.01
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
             temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:water].flatten(), temp_thresh[:,:,:,:,water:snow].flatten()))
             bin_width = 0.05
         elif obs == 'NDSI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,snow])
+            bin_width = 0.01
         elif obs == 'VIS_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,:water])
+            bin_width = 0.01
         elif obs == 'NIR_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,water])
+            bin_width = 0.01
         else:
             pass
 
