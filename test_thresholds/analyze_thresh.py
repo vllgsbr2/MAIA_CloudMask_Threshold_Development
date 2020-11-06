@@ -172,6 +172,8 @@ def plot_thresh_hist_all_bins(num_land_SID):
     water =num_land_SID+1
     glint=num_land_SID+2
     snow=num_land_SID+3
+    #parameter to inspect SID brighter than x
+    darkest_land = 6
     print(master_thresh.shape)
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         if obs=='SVI' or obs=='Cirrus':
@@ -181,17 +183,17 @@ def plot_thresh_hist_all_bins(num_land_SID):
             else:
                 bin_width = 0.001
         elif obs == 'WI':
-            temp_thresh = np.copy(master_thresh[i,:,:,:,:,:glint])
+            temp_thresh = np.copy(master_thresh[i,:,:,:,:,darkest_land:glint])
             bin_width = 0.01
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
-            temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:water].flatten(), temp_thresh[:,:,:,:,water:snow].flatten()))
+            temp_thresh = np.concatenate((temp_thresh[:,:,:,:,darkest_land:water].flatten(), temp_thresh[:,:,:,:,water:snow].flatten()))
             bin_width = 0.05
         elif obs == 'NDSI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,snow])
             bin_width = 0.01
         elif obs == 'VIS_Ref':
-            temp_thresh = np.copy(master_thresh[i,:,:,:,:,:water])
+            temp_thresh = np.copy(master_thresh[i,:,:,:,:,darkest_land:water])
             bin_width = 0.01
         elif obs == 'NIR_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,water])
