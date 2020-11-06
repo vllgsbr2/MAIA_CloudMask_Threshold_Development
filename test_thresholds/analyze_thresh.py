@@ -177,7 +177,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
     print(master_thresh.shape)
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         if obs=='SVI' or obs=='Cirrus':
-            temp_thresh = np.copy(master_thresh[i])
+            temp_thresh = np.copy(master_thresh[i,:,:,:,:,darkest_land:])
             if obs=='SVI':
                 bin_width = 0.01
             else:
