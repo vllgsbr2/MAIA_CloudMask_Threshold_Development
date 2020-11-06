@@ -186,6 +186,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
         elif obs == 'NDVI':
             temp_thresh = np.copy(master_thresh[i])
             temp_thresh = np.concatenate((temp_thresh[:,:,:,:,:water].flatten(), temp_thresh[:,:,:,:,water:snow].flatten()))
+            bin_width = 0.05
         elif obs == 'NDSI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,snow])
         elif obs == 'VIS_Ref':
@@ -203,10 +204,6 @@ def plot_thresh_hist_all_bins(num_land_SID):
 
         x1, x2 = temp_thresh.min(), temp_thresh.max()
         num_bins = int((x2 - x1) / bin_width) + 1
-
-        # binned_thresholds.append(np.histogram(temp_thresh, bins=num_bins)[0])
-
-        # x = np.arange(x1, x2, (x2-x1)/num_bins)
 
         # a.plot(x, binned_thresholds[i], c='blue')#color[k])
         a.hist(temp_thresh, bins=num_bins)
