@@ -232,12 +232,20 @@ def plot_thresh_hist_all_bins(num_land_SID):
     #plot thresh hist for each obs
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         # print(binned_thresholds[i])
+        range_ndxi     = (-1, 1)
+        range_other    = (0., 1.4)
+
+        num_bins_ndxi  = 70
+        num_bins_other = int(num_bins_ndxi * \
+        (range_other[1] - range_other[0]) / (range_ndxi[1]  - range_ndxi[0]))
+
         if i==0 or i>=3:
             num_bins = num_bins_other
             x1, x2   = range_other
         else:
             num_bins = num_bins_ndxi
             x1, x2   = range_ndxi
+            
         if obs=='SVI' or obs=='Cirrus':
 
             if obs=='SVI':
