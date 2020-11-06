@@ -208,10 +208,9 @@ def plot_thresh_hist_all_bins(num_land_SID):
         x1, x2 = temp_thresh.min(), temp_thresh.max()
         num_bins = int((x2 - x1) / bin_width) + 1
 
-        # a.plot(x, binned_thresholds[i], c='blue')#color[k])
         a.hist(temp_thresh, bins=num_bins)
+        a.xlabel('{} Thresholds\n bin width: {}'.format(obs, bin_width))
         a.set_title('{}'.format(obs))
-        a.legend()
 
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
