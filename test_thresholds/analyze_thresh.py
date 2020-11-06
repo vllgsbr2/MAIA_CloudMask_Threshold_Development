@@ -230,7 +230,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
         #     range_    = range_ndxi
 
         x1, x2 = temp_thresh.min(), temp_thresh.max()
-        num_bins = (x2 - x1) / bin_width
+        num_bins = int((x2 - x1) / bin_width)
 
         binned_thresholds.append(np.histogram(temp_thresh, bins=num_bins)[0])
 
