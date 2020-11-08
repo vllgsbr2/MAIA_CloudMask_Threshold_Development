@@ -47,6 +47,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
         glint = num_land_SID + 2
         snow  = num_land_SID + 3
 
+        #add 1 because zero index python behavior
         total_num_SID = num_SID + 1
 
         master_thresholds = np.ones((10*15*12*total_num_SID)).reshape((10,15,12,total_num_SID))*-999
@@ -142,7 +143,6 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
                 #VIS/NIR/SVI/Cirrus
                 else:
                     if clean_clear_obs.shape[0] > num_samples_valid_hist:
-                        # clean_clear_obs = clean_clear_obs[(clean_clear_obs>=0) & (clean_clear_obs < 1)]
                         current_thresh = np.nanpercentile(clean_clear_obs, 99)
                         hf_thresh[path][bin_idx[0], bin_idx[1], bin_idx[2],\
                                         bin_idx[3]] = current_thresh
