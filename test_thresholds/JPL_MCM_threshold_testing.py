@@ -970,7 +970,6 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
            Max_valid_DTT, Min_valid_DTT, fill_val_1, fill_val_2, fill_val_3)
     #where NDVI is over water use DTT_NDVI_over_water, leave the rest
     water_SID = num_land_sfc_types_plus_coast
-    print('hello this is water sid: ', water_SID)
     water_idx = np.where(scene_type_identifier == water_SID)
     DTT_NDVI[water_idx] = DTT_NDVI_over_water[water_idx]
 
