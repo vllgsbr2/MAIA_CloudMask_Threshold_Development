@@ -16,39 +16,11 @@ cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Developme
 ##False: create training set groups for thresholds
 test_set="False"
 
-##only need to run this once outside the loop to test lots of surface IDs
-## echo run observables
-## mpirun -n 60 python calc_observables.py &
-##
-## wait
+#only need to run this once outside the loop to test lots of surface IDs
+echo run observables
+mpirun -n 60 python calc_observables.py &
 
-##make thresholds for SID with 5,6,...,30 land clusters
-##calc_OLP.py & calc_thresh.py will need to ingest number of surface types
-
-# num_SIDs=11
-# echo run observable level parameter
-# mpirun -n 60 python calc_OLP.py $num_SIDs &
-#
-# wait
-#
-# echo group data by OLP and combine with obs
-# for i in {0..45}
-# do
-#     echo $i
-#     mpirun -n 60 python group_data_by_OLP.py $i $test_set &
-#     wait
-# done
-#
-# echo combine grouped files by DOY
-# mpirun -n 46 python combine_grouped_files.py &
-# wait
-
-
-# echo  run thresholds
-# mpirun -n 46 python calc_threshold.py $num_SIDs
-
-
-
+wait
 
 for num_SIDs in {4..29}
 do
@@ -83,3 +55,28 @@ do
 done
 
 exit 0
+
+##make thresholds for SID with 5,6,...,30 land clusters
+##calc_OLP.py & calc_thresh.py will need to ingest number of surface types
+
+# num_SIDs=11
+# echo run observable level parameter
+# mpirun -n 60 python calc_OLP.py $num_SIDs &
+#
+# wait
+#
+# echo group data by OLP and combine with obs
+# for i in {0..45}
+# do
+#     echo $i
+#     mpirun -n 60 python group_data_by_OLP.py $i $test_set &
+#     wait
+# done
+#
+# echo combine grouped files by DOY
+# mpirun -n 46 python combine_grouped_files.py &
+# wait
+
+
+# echo  run thresholds
+# mpirun -n 46 python calc_threshold.py $num_SIDs
