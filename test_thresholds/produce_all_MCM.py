@@ -93,7 +93,7 @@ for r in range(size):
                 #save output
                 #create directory for time stamp
                 output_home = '{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'])
-                directory_name = '{}/{}'.format(output_home, time_stamp)
+                directory_name = '{}/{}/numKmeansSID_{:02d}'.format(output_home, time_stamp, num_land_SID)
                 if not(os.path.exists(directory_name)):
                     os.mkdir(directory_name)
                 #save path for MCM output file
