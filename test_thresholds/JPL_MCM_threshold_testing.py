@@ -503,23 +503,25 @@ def get_test_determination(observable_level_parameter, observable_data,\
             fillVal_idx = np.where((OLP == -999))# | (OLP == -9))
             OLP[fillVal_idx] = 0
 
+            #put 0 where -9 SID appears
+            invalid_SID_idx = np.where(OLP[:,4]==-9)
+            OLP[invalid_SID_idx] = 0
+
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
             print(path)
             database = hf_thresholds[path][()]
 
-            #put 0 where -9 SID appears
-            invalid_SID_idx = np.where(OLP[:,:,4]==-9)
-            OLP[invalid_SID_idx] = 0
-
             thresholds = np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
 
             thresholds[fillVal_idx[0]] = -999
+            #mask over invalid SID with -999 in threshold array
+            thresholds[invalid_SID_idx[0], invalid_SID_idx[1],4] = -999
+            
             #reshape to original dimensions
             thresholds = np.array(thresholds).reshape(shape)
             #mask SID -9 values as -999
             OLP = OLP.reshape((shape[0],shape[1], 6))
-            #mask over invalid SID with -999 in threshold array
-            thresholds[invalid_SID_idx[0], invalid_SID_idx[1],4] = -999
+
 
             return observable_data, thresholds
 
