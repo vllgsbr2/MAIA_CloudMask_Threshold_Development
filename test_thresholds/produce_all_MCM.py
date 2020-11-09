@@ -27,6 +27,9 @@ for r in range(size):
         time_stamps         = [x[14:26] for x in test_data_JPL_paths]
         test_data_JPL_paths = [data_home + x for x in test_data_JPL_paths]
 
+        print(len(test_data_JPL_paths))
+        sys.exit()
+
         #assign subset of files to current rank
         end               = len(test_data_JPL_paths)
         processes_per_cpu = end // (size-1)
