@@ -64,7 +64,7 @@ for r in range(size):
                 sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
                 # sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_home, PTA, DOY_end)
                 SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(num_land_SID, DOY_end)
-                sfc_ID_filepath    = '{}/{}}'.format(sfc_ID_home, SID_file)
+                sfc_ID_filepath    = '{}/{}'.format(sfc_ID_home, SID_file)
 
                 # #for testing with many SIDs
                 # sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
