@@ -12,10 +12,10 @@
 ##goto working directory
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/
 
-for num_SIDs in {5..30}
+for num_SIDs in {4..29}
 do
 
-    if [$num_SIDs -ne 30]
+    if [$num_SIDs -ne 29]
     then
       echo "producing MCM for all scenes"
       mpirun -n 200 python produce_all_MCM.py $num_SIDs &
