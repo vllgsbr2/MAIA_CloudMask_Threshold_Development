@@ -61,13 +61,15 @@ for r in range(size):
                 threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'\
                                      .format(thresh_home, DOY_start, DOY_end, DOY_bin, num_land_SID)
 
-                # sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
+                sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
                 # sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_home, PTA, DOY_end)
+                SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(num_Kmeans_sfc_types, DOY_end)
+                sfc_ID_filepath    = '{}/{}}'.format(sfc_ID_home, SID_file)
 
-                #for testing with many SIDs
-                sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
-                sfc_ID_path  = '{}/{}'.format(sfc_ID_path, num_land_SID)
-                sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_path, PTA, DOY_end)
+                # #for testing with many SIDs
+                # sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
+                # sfc_ID_path  = '{}/{}'.format(sfc_ID_path, num_land_SID)
+                # sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_path, PTA, DOY_end)
 
                 print(Target_Area_X, threshold_filepath, sfc_ID_filepath)
 
