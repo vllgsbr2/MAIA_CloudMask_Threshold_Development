@@ -1,0 +1,41 @@
+#!/bin/bash
+#SBATCH --job-name='MCM_SID_4_to_29'
+#SBATCH -p sesebig
+#SBATCH --time=40:00:00
+#SBATCH --mem-per-cpu=16gb
+#SBATCH -N 10
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-type=END
+#SBATCH --mail-user=vllgsbr2@illinois.edu
+#SBATCH --error='MCM_SID_5_to_30.err'
+
+##goto working directory
+cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/
+
+for num_SIDs in {5..30}
+do
+
+    if [$num_SIDs -ne 30]
+    then
+      echo "producing MCM for all scenes"
+      mpirun -n 200 python produce_all_MCM.py $num_SIDs &
+      wait
+    else
+      echo "producing MCM for all scenes"
+      mpirun -n 200 python produce_all_MCM.py $num_SIDs &
+
+    fi
+
+done
+
+exit 0
+
+# echo "producing confusion matricies MCM v.s. MOD35 for each scene"
+# mpirun -n 46 python make_confusion_matrix.py $num_SIDs &
+# wait
+#
+# echo "calculating avg accuracy of scenes by DOY"
+# python calc_group_and_scene_accuracy.py $num_SIDs &
+# wait
+#
+# echo ""
