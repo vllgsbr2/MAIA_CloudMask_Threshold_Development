@@ -246,7 +246,7 @@ if __name__ == '__main__':
                 #define paths for the three databases
                 MOD_CM_path          = PTA_path + '/' + config['supporting directories']['MCM_Input']
                 #modify for dynamic SID number
-                MAIA_CM_path         = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'], num_Kmeans_SID)
+                MAIA_CM_path         = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['MCM_Output'], num_Kmeans_SID)
                 conf_matx_scene_path = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['conf_matx_scene'], num_Kmeans_SID)
 
                 if not(os.path.exists(conf_matx_scene_path)):
