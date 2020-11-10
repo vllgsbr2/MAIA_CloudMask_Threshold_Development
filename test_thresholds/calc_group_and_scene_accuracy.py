@@ -28,7 +28,7 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID):
             mask[no_data_idx]      = 0
             mask[no_KmeansSID_idx] = 0
             #add count to num samples where data is present
-            present_data_idx = np.where((mask != -999) & (SID < numKmeansSID))
+            present_data_idx = np.where((mask != -999) & (SID < numKmeansSID) & (mask != 0))
             num_samples[present_data_idx] += 1
 
             accuracy += mask
