@@ -113,7 +113,7 @@ if __name__ == '__main__':
     total_conf_matx = np.array([0.,0.,0.,0.])
     with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
         for i in range(46):
-            MCM_accuracy, num_samples , conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i])
+            MCM_accuracy, num_samples, conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i])
             total_conf_matx += conf_matx_x
             print(conf_matx_x)
             scene_current_group = 'DOY_bin_{:02d}'.format(i)
