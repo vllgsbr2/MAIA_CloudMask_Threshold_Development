@@ -32,6 +32,7 @@ for numKmeansSID in range(4,30):
 
     scene_accurs = np.mean(np.flatten(scene_accurs))
     SID_accur.append(scene_accurs)
+    print('SID: ',numKmeansSID)
 
 plt.plot(np.arange(4,30), SID_accur)
 plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
