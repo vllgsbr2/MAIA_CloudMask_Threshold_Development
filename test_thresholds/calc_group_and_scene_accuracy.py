@@ -91,16 +91,21 @@ if __name__ == '__main__':
     PTA_path      = config['PTAs'][PTA]
     # Target_Area_X = int(config['Target Area Integer'][PTA])
 
-    #file setup for group accuracy
+    numKmeansSID = int(sys.argv[1])
+
+    #file setup for scene accuracy
     #where to store scene accur file
     scene_accuracy_dir  = config['supporting directories']['scene_accuracy']
     scene_accuracy_dir  = '{}/{}'.format(PTA_path, scene_accuracy_dir)
     #where to find scene confusion matricies
     conf_matx_scene_dir = config['supporting directories']['conf_matx_scene']
-    conf_matx_scene_dir = '{}/{}'.format(PTA_path, conf_matx_scene_dir)
+    conf_matx_scene_dir = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, conf_matx_scene_dir, numKmeansSID)
 
     #define file to save accur in
-    scene_accuracy_save_file = '{}/{}'.format(scene_accuracy_dir, 'scene_ID_accuracy.h5')
+    scene_accuracy_save_dir = '{}/numKmeansSID_{:02d}'.format(scene_accuracy_dir, numKmeansSID)
+    scene_accuracy_save_file = '{}/numKmeansSID_{:02d}/{}'.format(scene_accuracy_dir, numKmeansSID,'scene_ID_accuracy.h5')
+    if not(os.path.exists(scene_accuracy_save_dir)):
+        os.mkdir(scene_accuracy_save_dir)
     #list all conf matx files
     conf_matx_scene_files    = [conf_matx_scene_dir + '/' + x for x in os.listdir(conf_matx_scene_dir)]
 
