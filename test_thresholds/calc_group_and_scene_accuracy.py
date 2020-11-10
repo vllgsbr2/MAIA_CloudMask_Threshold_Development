@@ -110,11 +110,16 @@ if __name__ == '__main__':
     #list all conf matx files
     conf_matx_scene_files    = [conf_matx_scene_dir + '/' + x for x in os.listdir(conf_matx_scene_dir)]
 
+    #define SID file base path
+    sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
+
     # DOY_bin = r
     total_conf_matx = np.array([0.,0.,0.,0.])
     with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
         for i in range(46):
-            with Dataset(, 'r') as nc_SID:
+            SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(numKmeansSID, DOY_end)
+            sfc_ID_filepath    = '{}/{}'.format(sfc_ID_home, SID_file)
+            with Dataset(sfc_ID_filepath, 'r') as nc_SID:
                 SID = nc_SID.variables['surface_ID'][:,:]
             MCM_accuracy, num_samples, conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i], SID, numKmeansSID)
             total_conf_matx += conf_matx_x
