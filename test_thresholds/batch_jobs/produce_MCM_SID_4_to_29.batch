@@ -27,13 +27,3 @@ do
 done
 
 exit 0
-
-# echo "producing confusion matricies MCM v.s. MOD35 for each scene"
-# mpirun -n 46 python make_confusion_matrix.py $num_SIDs &
-# wait
-#
-# echo "calculating avg accuracy of scenes by DOY"
-# python calc_group_and_scene_accuracy.py $num_SIDs &
-# wait
-#
-# echo ""
