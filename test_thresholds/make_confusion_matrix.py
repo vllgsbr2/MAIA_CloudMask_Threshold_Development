@@ -15,10 +15,7 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_p
     #record into MCM output
     '''
 
-    #conf_matx_mask = np.zeros((1000,1000,4), dtype=np.int)
-    #conf_matx_mask[MAIA_CM==-999] = -999
-
-    #just some hous keeping to avoid redundent definitions
+    #just some house keeping to avoid redundent definitions
     time_stamps = os.listdir(MAIA_CM_path)
     #select time stamps in current DOY bin
     DOY_end     = (DOY_bin + 1)*8
@@ -59,7 +56,9 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_p
 
                 print(time_stamp, conf_mat_table[:2].sum()/conf_mat_table.sum())
 
-                conf_matx_mask[MAIA_CM >= 2] = -999
+                MAIA_CM_invalid_idx = np.where(MAIA_CM >= 2)
+                for i in range(4):
+                    conf_matx_mask[MAIA_CM_invalid_idx[0], MAIA_CM_invalid_idx[1], i] = -999
 
                 try:
                     hf_scene_level_conf_matx.create_dataset('confusion_matrix_table_{}'.format(time_stamp), data=conf_mat_table)
