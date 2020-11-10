@@ -217,6 +217,7 @@ if __name__ == '__main__':
     import os
     import numpy as np
     import configparser
+    import sys
     import mpi4py.MPI as MPI
 
     comm = MPI.COMM_WORLD
@@ -235,7 +236,8 @@ if __name__ == '__main__':
             Target_Area_X = int(config['Target Area Integer'][PTA])
 
             calc_scene  = True
-            group_accur = True
+            group_accur = False
+            num_Kmeans_SID = sys.argv[1]
 
             DOY_bin = rank
 
@@ -243,8 +245,13 @@ if __name__ == '__main__':
                 #scene confusion matrix ****************************************
                 #define paths for the three databases
                 MOD_CM_path          = PTA_path + '/' + config['supporting directories']['MCM_Input']
-                MAIA_CM_path         = PTA_path + '/' + config['supporting directories']['MCM_Output']
-                conf_matx_scene_path = PTA_path + '/' + config['supporting directories']['conf_matx_scene']
+                #modify for dynamic SID number
+                MAIA_CM_path         = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'], num_Kmeans_SID)
+                conf_matx_scene_path = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['conf_matx_scene'])
+
+                if not(os.path.exists(conf_matx_scene_path)):
+                    os.mkdir(conf_matx_scene_path)
+
 
                 scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_path)
 
@@ -259,7 +266,7 @@ if __name__ == '__main__':
 
                 conf_matx_filepath  = '{}/conf_matx_group_DOY_bin_{:02d}.h5'.format(conf_matx_path, DOY_bin)
 
-                num_land_sfc_types = 12
+                num_land_sfc_types = num_Kmeans_SID+1 #plus one for coast
 
                 with h5py.File(grouped_files[DOY_bin] , 'r') as hf_group,\
                      h5py.File(thresh_files[DOY_bin]  , 'r') as hf_thresh,\
