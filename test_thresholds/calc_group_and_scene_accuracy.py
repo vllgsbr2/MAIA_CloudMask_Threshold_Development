@@ -1,5 +1,5 @@
 
-def scene_conf_matx_accur(conf_matx_path):
+def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID):
     '''
     calculate accuracy using confusion matrix files for a scene
     '''
@@ -9,7 +9,7 @@ def scene_conf_matx_accur(conf_matx_path):
         time_stamps   = [x[-12:] for x in confmatx_keys]
         masks         = [x for x in confmatx_keys if x[:-13] == 'confusion_matrix_mask']
         tables        = [x for x in confmatx_keys if x[:-13] == 'confusion_matrix_table']
-        #print(masks)
+
         #pixel by pixel accuracy
         shape = hf_confmatx[masks[0]][()].shape
         accuracy = np.zeros(shape)
@@ -18,17 +18,18 @@ def scene_conf_matx_accur(conf_matx_path):
         num_samples = np.zeros(shape)
 
         for i, mask in enumerate(masks):
-            # print(mask[-12:])
+
             mask = hf_confmatx[mask][()]
+            #marl present and missing data
             present_data_idx = np.where((mask != -999) & (mask != 0))
             no_data_idx    = np.where(mask == -999)
-            #set mask to zero for no data so it doesnt contribute to accuracy
-            mask[no_data_idx] = 0
+            #eliminate SID not from Kmeans alg.
+            no_KmeansSID_idx = np.where(SID >= numKmeansSID)
+            #set mask to zero so it doesnt contribute to accuracy
+            mask[no_data_idx]      = 0
+            mask[no_KmeansSID_idx] = 0
             #add count to num samples where data is present
             num_samples[present_data_idx] += 1
-
-            # xx = np.shape(present_data_idx)[1]/1e6
-            # print(time_stamps[i], xx)
 
             accuracy += mask
 
@@ -38,7 +39,6 @@ def scene_conf_matx_accur(conf_matx_path):
         false_cloud = np.sum(accuracy[:,:,3])
 
         total_conf_matx = [true_cloud, true_clear, false_clear, false_cloud]
-        #print(accuracy[:,:,0])
         #% of time mask is correct at each location, when data is present
         total_sum = np.sum(num_samples, axis=2)
         MCM_accuracy = np.sum(accuracy[:,:,:2], axis=2) / total_sum
@@ -75,6 +75,7 @@ if __name__ == '__main__':
     import numpy as np
     # import mpi4py.MPI as MPI
     import configparser
+    from netCDF4 import Dataset
 
     # comm = MPI.COMM_WORLD
     # rank = comm.Get_rank()
@@ -113,7 +114,9 @@ if __name__ == '__main__':
     total_conf_matx = np.array([0.,0.,0.,0.])
     with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
         for i in range(46):
-            MCM_accuracy, num_samples, conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i])
+            with Dataset(, 'r') as nc_SID:
+                SID = nc_SID.variables['surface_ID'][:,:]
+            MCM_accuracy, num_samples, conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i], SID, numKmeansSID)
             total_conf_matx += conf_matx_x
             print(conf_matx_x)
             scene_current_group = 'DOY_bin_{:02d}'.format(i)
