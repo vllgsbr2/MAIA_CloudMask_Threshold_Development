@@ -21,8 +21,8 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID):
 
             mask = hf_confmatx[mask][()]
             #marl present and missing data
-            present_data_idx = np.where((mask != -999) & (mask != 0))
-            no_data_idx    = np.where(mask == -999)
+            present_data_idx = np.where((mask != -999) & (mask != 0) & (SID < numKmeansSID))
+            no_data_idx      = np.where(mask == -999)
             #eliminate SID not from Kmeans alg.
             no_KmeansSID_idx = np.where(SID >= numKmeansSID)
             #set mask to zero so it doesnt contribute to accuracy
