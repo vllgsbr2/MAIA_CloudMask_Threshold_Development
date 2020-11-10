@@ -117,7 +117,8 @@ if __name__ == '__main__':
     total_conf_matx = np.array([0.,0.,0.,0.])
     with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
         for i in range(46):
-            SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(numKmeansSID, i)
+            DOY_end = (i+1)*8
+            SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(numKmeansSID, DOY_end)
             sfc_ID_filepath    = '{}/{}'.format(sfc_ID_home, SID_file)
             with Dataset(sfc_ID_filepath, 'r') as nc_SID:
                 SID = nc_SID.variables['surface_ID'][:,:]
