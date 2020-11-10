@@ -237,7 +237,7 @@ if __name__ == '__main__':
 
             calc_scene  = True
             group_accur = False
-            num_Kmeans_SID = sys.argv[1]
+            num_Kmeans_SID = int(sys.argv[1])
 
             DOY_bin = rank
 
