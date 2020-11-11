@@ -154,8 +154,11 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
     fill_val_idx = np.where((regrid_row_idx < 0) | \
                             (regrid_col_idx < 0)   )
 
-    regrid_row_idx[fill_val_idx] = regrid_row_idx[regrid_row_idx >= 0][0]
-    regrid_col_idx[fill_val_idx] = regrid_col_idx[regrid_col_idx >= 0][0]
+    # regrid_row_idx[fill_val_idx] = regrid_row_idx[regrid_row_idx >= 0][0]
+    # regrid_col_idx[fill_val_idx] = regrid_col_idx[regrid_col_idx >= 0][0]
+
+    regrid_row_idx[fill_val_idx] = regrid_row_idx[0,0]
+    regrid_col_idx[fill_val_idx] = regrid_col_idx[0,0]
 
     #crop and save the datasets*************************************************
 
