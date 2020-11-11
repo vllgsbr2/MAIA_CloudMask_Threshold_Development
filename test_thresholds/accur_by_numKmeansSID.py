@@ -32,9 +32,9 @@ for numKmeansSID in range(4,30):
             scene_accurs[:,:,i] = data*100
 
     scene_accurs[scene_accurs < 0] = np.nan
-    plt.imshow(scene_accurs[:,:,0])
-    plt.colorbar()
-    plt.show()
+    # plt.imshow(scene_accurs[:,:,0])
+    # plt.colorbar()
+    # plt.show()
     scene_accurs                   = np.nanmean(scene_accurs.flatten())
     print(scene_accurs)
     SID_accur.append(scene_accurs)
