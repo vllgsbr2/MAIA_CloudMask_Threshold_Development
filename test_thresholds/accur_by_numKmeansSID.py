@@ -31,8 +31,7 @@ for numKmeansSID in range(4,30):
             data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
             scene_accurs[:,:,i] = data*100
 
-    scene_accurs[scene_accurs < 0] = np.nan
-    print(scene_accurs.min()*100)
+    scene_accurs[scene_accurs < 0] = 100
     scene_accurs                   = np.nanmean(scene_accurs.flatten())
     print(scene_accurs)
     SID_accur.append(scene_accurs)
