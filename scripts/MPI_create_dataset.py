@@ -144,10 +144,10 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
                                          np.copy(target_lon),\
                                          np.copy(col_mesh).astype(np.float64)).astype(np.int)
 
-    #if no data was regridded skip recording the scene
-    if ( regrid_row_idx[regrid_row_idx >=0].size  <= 0  ) |\
-       (regrid_col_idx[regrid_col_idx >=0].size <= 0 ):
-        return
+    # #if no data was regridded skip recording the scene
+    # if ( regrid_row_idx[regrid_row_idx >=0].size  <= 0  ) |\
+    #    (regrid_col_idx[regrid_col_idx >=0].size <= 0 ):
+    #     return
     #grab -999 fill values in regrid col/row idx
     #use these positions to write fill values when regridding the rest of the data
     fill_val = -999
@@ -353,7 +353,9 @@ if __name__ == '__main__':
             #base path for database file
             database_loc = '{}/{}'.format(PTA_path, config['supporting directories']['Database'])
             #complete database file path
-            hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
+            #add in a foler to make a seperate databse that doesn eleiminate empty granules
+            # hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
+            hf_path = '{}/{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc,'fullDB', PTA, rank)
             #diagnostic file path
             output_path = '{}/Database_Diagnostics/diagnostics_{:02d}.txt'.format(PTA_path, rank)
 
