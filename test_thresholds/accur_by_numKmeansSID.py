@@ -29,7 +29,7 @@ for numKmeansSID in range(4,30):
         DOY_bins = list(hf_scene_accur.keys())
         for i, DOY_bin in enumerate(DOY_bins):
             data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
-            # print(data)
+            print(data.min()*100)
             scene_accurs[:,:,i] = data*100
 
     scene_accurs[scene_accurs < 0] = np.nan
