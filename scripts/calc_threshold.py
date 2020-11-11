@@ -1,7 +1,8 @@
-import numpy as np
-import h5py
-
 def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
+    import numpy as np
+    import h5py
+    from scipy.spatial import KDTree
+    import numpy.ma as ma
     '''
     Objective:
         Takes in grouped_obs_and_CM.hdf5 file. Inside are a datasets for
@@ -21,7 +22,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
 
     fill_val = -998
 
-    num_samples_valid_hist = 100
+    num_samples_valid_hist = 0
 
     thresh_file = thresh_home + \
                   '/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'\
@@ -158,6 +159,44 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
                 #     debug_line = 'cos(SZA): {:02d} VZA: {:02d} RAA: {:02d} SID: {:02d} thresh: {:3.3f}'.\
                 #               format(bin_idx[0], bin_idx[1], bin_idx[2], bin_idx[3], current_thresh)
                 #     print(debug_line)
+
+        #fill in no retrieval thresholds with nearghest neighboor in sun-view
+        #geometry space
+
+        # #First create a 3D array representing bins of sun-view geometry which is
+        # #equivalent to the indices of the array
+        # cosSZA_bins = np.arange(10)
+        # VZA_bins = np.arange(15)
+        # RAA_bins = np.arange(12)
+        # #create coordinate grid for each of three sun-view geometries
+        # s, v, r = np.meshgrid(cosSZA_bins, VZA_bins, RAA_bins, indexing='ij')
+        # #find nearest neighboor thresholds
+        # for obs in obs_names:
+        #     #read in calculated thresholds into memory and mask -999 values
+        #     path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY_bin , obs)
+        #     thresholds        = hf_thresh[path][()]
+        #     thresholds_masked = ma.masked_array(thresholds, thresholds==-999)
+        #
+        #     #find nearest neighboor threshold independently of SID
+        #     #since it doesn't make sense to assume thresholds are valid when SID changes
+        #     #for example from snow to glint water, or coast to non-glint water
+        #     for numSID in range(total_num_SID):
+        #         #isolate thresholds for numSID and read in its
+        #         thresh_numSID_x = thresholds[:,:,:,numSID]
+        #         thresh_ma       = thresh_numSID_x.mask
+        #         svr_good = np.array((s[~thresh_ma],\
+        #                              v[~thresh_ma],\
+        #                              r[~thresh_ma]))
+        #
+        #         svr_bad  = np.array((s[thresh_ma],\
+        #                              v[thresh_ma],\
+        #                              r[thresh_ma]))
+        #
+        #         thresh_numSID_x[thresh_ma] = \
+        #         thresh_numSID_x[~thresh_ma][KDTree(svr_good).query(svr_bad)[1]]
+        #         hf_thresh[path][:,:,:,numSID] = thresh_numSID_x
+
+
 if __name__ == '__main__':
 
     import h5py
