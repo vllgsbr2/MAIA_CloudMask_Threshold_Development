@@ -29,7 +29,7 @@ test_scene = 'test_JPL_data_2018365.1830.h5' #this is it!!
 
 #test some Guangyu scenes
 # test_scene = 'test_JPL_data_2019276.1805.h5'
-num_Kmeans_sfc_types = 20
+num_Kmeans_sfc_types = 29
 # guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
 # threshold_filepath = guangyu_home + 'thresholds_DOY_273_to_280_bin_34.h5'
 # threshold_filepath = guangyu_home + 'OBthresholds_DOY_273_to_280_bin_34.h5'
