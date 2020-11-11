@@ -24,7 +24,7 @@ def get_R(radiance, SZA, d, E_std_0b):
     rad_min = 0
     rad_max = 32767
     cosSZA = np.cos(np.deg2rad(SZA))
-    invalid_idx = np.where((cosSZA <= 0.01) | ((radiance < rad_min) & (radiance > rad_max)))
+    invalid_idx = np.where((cosSZA <= 0.01) | (radiance < rad_min) | (radiance > rad_max))
     radiance[invalid_idx] = -998
 
     #condition to not step on fill values when converting to BRF(R)
@@ -274,7 +274,7 @@ if __name__ == '__main__':
             #open database to read
             database_path  = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
             database_files = os.listdir(database_path)
-            database_files = [database_path + filename for filename in database_files]
+            database_files = [database_path + filename for filename in database_files if filename[-4:]=='hdf5']
             database_files = np.sort(database_files)
             if r < len(database_files):
                 hf_database_path = database_files[r]
