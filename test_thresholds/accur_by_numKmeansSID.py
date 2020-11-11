@@ -62,7 +62,7 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
 
 scene_accurs[scene_accurs < 0] = np.nan
 scene_accurs *= 100
-plt.hist(scene_accurs.flatten(), bins=80)
+plt.hist(scene_accurs.flatten(), bins=40)
 
 scene_accurs                   = np.nanmean(scene_accurs.flatten())
 print(scene_accurs)
