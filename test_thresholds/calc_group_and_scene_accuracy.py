@@ -23,7 +23,7 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID):
             #mark missing data
             no_data_idx      = np.where(mask == -999)
             #eliminate SID not from Kmeans alg.
-            no_KmeansSID_idx = np.where((SID >= numKmeansSID) & (SID == -9))
+            no_KmeansSID_idx = np.where((SID >= numKmeansSID) | (SID == -9))
             #set mask to zero so it doesnt contribute to accuracy
             mask[no_data_idx]      = 0
             mask[no_KmeansSID_idx] = 0
