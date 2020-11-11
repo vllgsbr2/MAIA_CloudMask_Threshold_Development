@@ -28,8 +28,10 @@ for numKmeansSID in range(4,30):
     with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
         DOY_bins = list(hf_scene_accur.keys())
         for i, DOY_bin in enumerate(DOY_bins):
-            scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]*100
-            
+            data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
+            print(data)
+            scene_accurs[:,:,i] = data*100
+
     scene_accurs[scene_accurs < 0] = np.nan
     scene_accurs                   = np.nanmean(scene_accurs.flatten())
     SID_accur.append(scene_accurs)
