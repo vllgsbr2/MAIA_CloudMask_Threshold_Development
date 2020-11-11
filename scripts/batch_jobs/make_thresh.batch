@@ -17,12 +17,12 @@ cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Developme
 test_set="False"
 
 #only need to run this once outside the loop to test lots of surface IDs
-# echo run observables
-# mpirun -n 60 python calc_observables.py &
-#
-# wait
+echo run observables
+mpirun -n 60 python calc_observables.py &
 
-##make thresholds for SID with 5,6,...,30 land clusters
+wait
+
+##make thresholds for SID with 4,5,...,29 land clusters
 ##calc_OLP.py & calc_thresh.py will need to ingest number of surface types
 
 for num_SIDs in {4..29}
