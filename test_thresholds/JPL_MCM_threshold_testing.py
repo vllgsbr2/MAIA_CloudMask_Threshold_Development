@@ -893,14 +893,30 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     Min_num_of_activated_tests,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
 
-    # import matplotlib.pyplot as plt
-    # im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types , cmap='terrain')
-    # im_scene_ID.cmap.set_under('red')
-    # im_scene_ID.cmap.set_over('aqua')
-    # plt.colorbar()
+    import matplotlib.pyplot as plt
+    cmap = cm.get_cmap('terrain', len(olp_ticks[n]))
+    im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types , cmap=cmap)
+    im_scene_ID.cmap.set_under('red')
+    im_scene_ID.cmap.set_over('aqua')
+    plt.colorbar()
+    plt.xticks([])
+    plt.yticks([])
+    plt.show()
+    import sys
+    sys.exit()
+
+    # import matplotlib.colors as matCol
+    # from matplotlib.colors import ListedColormap
+    # plt.figure()
+    # cmap = cm.get_cmap('jet', len(olp_ticks[n]))
+    # norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
+    # plt.imshow(mod35cm, cmap=cmap, norm=norm)
+    # cbar = plt.colorbar()
+    # cbar.set_ticks([0.5,1.5,2.5,3.5])
+    # cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
+    #                      'probably\nclear', 'confident\nclear'])
     # plt.xticks([])
     # plt.yticks([])
-    # plt.show()
     # import sys
     # sys.exit()
 
