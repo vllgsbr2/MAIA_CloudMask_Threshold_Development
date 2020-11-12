@@ -894,6 +894,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
 
     import matplotlib.pyplot as plt
+    import matplotlib.cm as cm
     cmap = cm.get_cmap('terrain', len(olp_ticks[n]))
     im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types , cmap=cmap)
     im_scene_ID.cmap.set_under('red')
