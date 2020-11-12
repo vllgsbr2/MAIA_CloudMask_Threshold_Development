@@ -146,7 +146,7 @@ if __name__ == '__main__':
             #to add coast land type for sun glint mask and OLP funcs
             num_land_SID_plus_coast = num_land_SID + 1
             #open database to read
-            database_path    = '{}/{}/{}/'.format(PTA_path, config['supporting directories']['Database'],'fullDB')
+            database_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
             database_files   = np.sort(os.listdir(database_path))
             database_files   = [database_path + filename for filename in database_files if filename[-4:]=='hdf5']
             hf_database_path = database_files[r]

@@ -272,7 +272,7 @@ if __name__ == '__main__':
 
 
             #open database to read
-            database_path  = '{}/{}/{}/'.format(PTA_path, config['supporting directories']['Database'],'fullDB')
+            database_path  = '{}/{}/'.format(PTA_path, config['supporting directories']['Database'])
             database_files = os.listdir(database_path)
             database_files = [database_path + filename for filename in database_files if filename[-4:]=='hdf5']
             database_files = np.sort(database_files)

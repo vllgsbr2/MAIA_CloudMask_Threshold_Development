@@ -358,7 +358,7 @@ if __name__ == '__main__':
             #complete database file path
             #add in a foler to make a seperate databse that doesn eleiminate empty granules
             # hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
-            hf_path = '{}/{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc,'fullDB', PTA, rank)
+            hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
             #diagnostic file path
             output_path = '{}/Database_Diagnostics/diagnostics_{:02d}.txt'.format(PTA_path, rank)
 
