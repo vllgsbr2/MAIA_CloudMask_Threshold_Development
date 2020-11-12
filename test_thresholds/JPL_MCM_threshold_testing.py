@@ -900,7 +900,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     # cmap = ListedColormap(['white', 'green', 'blue','black'])
     # norm = matCol.BoundaryNorm(np.arange(0,13), cmap.N)
-    cmap = cm.get_cmap('terrain', 14)
+    cmap = cm.get_cmap('terrain', 13)
     im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types+2 , cmap=cmap)# , norm=norm)
     im_scene_ID.cmap.set_under('red')
     # im_scene_ID.cmap.set_over('black')
