@@ -910,6 +910,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     plt.xticks([])
     plt.yticks([])
     plt.title('Kmeans Surface ID DOY\nValid DOY 361-365')
+    plt.rcParams['font.size'] = 18
     plt.show()
     import sys
     sys.exit()
