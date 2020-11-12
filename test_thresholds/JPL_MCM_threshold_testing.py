@@ -901,7 +901,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     im_scene_ID.cmap.set_over('black')
     cbar = plt.colorbar()
     cbar.set_ticks(np.arange(0.5,11.5,1))
-    cbar.set_ticklabels(np.arange(11))
+    cbar.set_ticklabels([1,2,3,4,5,6,7,8,9,10,'Coast'])
     plt.xticks([])
     plt.yticks([])
     plt.title('Kmeans Surface ID DOY\nValid DOY 361-365')
