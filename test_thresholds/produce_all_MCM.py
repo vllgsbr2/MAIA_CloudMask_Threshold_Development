@@ -5,6 +5,7 @@ import os
 import numpy as np
 import configparser
 import sys
+from distribute_cores import distribute_processes
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -27,25 +28,13 @@ for r in range(size):
         time_stamps         = [x[14:26] for x in test_data_JPL_paths]
         test_data_JPL_paths = [data_home + x for x in test_data_JPL_paths]
 
-        print(len(test_data_JPL_paths))
-
-
         #assign subset of files to current rank
-        end               = len(test_data_JPL_paths)
-        processes_per_cpu = end // (size-1)
-        start             = rank * processes_per_cpu
+        num_processes = len(test_data_JPL_paths)
+        start, stop   = distribute_processes(size, num_processes)
+        start, stop   = start[rank], stop[rank]
 
-        if rank < (size-1):
-            end = (rank+1) * processes_per_cpu
-        elif rank==(size-1):
-            processes_per_cpu_last = end % (size-1)
-            end = (rank * processes_per_cpu) + processes_per_cpu_last
-
-        test_data_JPL_paths = test_data_JPL_paths[start:end]
-        time_stamps = time_stamps[start:end]
-
-        print(len(time_stamps))
-        sys.exit()
+        test_data_JPL_paths = test_data_JPL_paths[start:stop]
+        time_stamps         = time_stamps[start:stop]
 
         for test_data_JPL_path, time_stamp in zip(test_data_JPL_paths, time_stamps):
             output_home = '{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'])
@@ -124,4 +113,3 @@ for r in range(size):
                             SZA, VZA, VAA,SAA,\
                             scene_type_identifier,\
                             save_path=save_path)
-                # print(save_path)
