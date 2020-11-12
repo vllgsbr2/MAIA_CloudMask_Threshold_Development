@@ -37,15 +37,16 @@ def distribute_processes(size, num_processes):
 
   return start, stop
 
-#example sudo code
-#import mpi4py and set up the for loop for to cycle through the ranks
-#size refers to the number of allocated cores in the mpi4py convention
-size          = 200
-#num process simply refers to howmany processes must be completed by the cores
-num_processes = 9873
+if __name__=='__main__':
+    #example sudo code
+    #import mpi4py and set up the for loop for to cycle through the ranks
+    #size refers to the number of allocated cores in the mpi4py convention
+    size          = 200
+    #num process simply refers to howmany processes must be completed by the cores
+    num_processes = 9873
 
-#start stop are lists of indices that refer to the subset of processes each core should handle
-start, stop = distribute_processes(size, num_processes)
-#files_to_process = ['file1', 'file_2', 'file_3','file_n']
-#f2p = files_to_process[start[rank]:stop[rank]]
-#then call all your functions using subset of data calculated for each core 
+    #start stop are lists of indices that refer to the subset of processes each core should handle
+    start, stop = distribute_processes(size, num_processes)
+    #files_to_process = ['file1', 'file_2', 'file_3','file_n']
+    #f2p = files_to_process[start[rank]:stop[rank]]
+    #then call all your functions using subset of data calculated for each core 
