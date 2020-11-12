@@ -893,15 +893,16 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     Min_num_of_activated_tests,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
 
-    import matplotlib.pyplot as plt
-    im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types , cmap='terrain')
-    im_scene_ID.cmap.set_under('red')
-    im_scene_ID.cmap.set_over('aqua')
-    plt.xticks([])
-    plt.yticks([])
-    plt.show()
-    import sys
-    sys.exit()
+    # import matplotlib.pyplot as plt
+    # im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types , cmap='terrain')
+    # im_scene_ID.cmap.set_under('red')
+    # im_scene_ID.cmap.set_over('aqua')
+    # plt.colorbar()
+    # plt.xticks([])
+    # plt.yticks([])
+    # plt.show()
+    # import sys
+    # sys.exit()
 
     #now put data through algorithm flow****************************************
 
