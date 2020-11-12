@@ -893,28 +893,28 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     Min_num_of_activated_tests,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
 
-    import matplotlib.pyplot as plt
-    import matplotlib.cm as cm
-    import matplotlib.colors as matCol
-    from matplotlib.colors import ListedColormap
-
-    # cmap = ListedColormap(['white', 'green', 'blue','black'])
-    # norm = matCol.BoundaryNorm(np.arange(0,13), cmap.N)
-    cmap = cm.get_cmap('terrain', 13)
-    plt.rcParams['font.size'] = 18
-    im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types+2 , cmap=cmap)# , norm=norm)
-    im_scene_ID.cmap.set_under('red')
-    # im_scene_ID.cmap.set_over('black')
-    cbar = plt.colorbar()
-    cbar.set_ticks(np.arange(0.5,13.5,1))
-    cbar.set_ticklabels([0,1,2,3,4,5,6,7,8,9,10,'Coast', 'Water'])
-    plt.xticks([])
-    plt.yticks([])
-    plt.title('Kmeans Surface ID DOY\nValid DOY 137-144')
-
-    plt.show()
-    import sys
-    sys.exit()
+    # import matplotlib.pyplot as plt
+    # import matplotlib.cm as cm
+    # import matplotlib.colors as matCol
+    # from matplotlib.colors import ListedColormap
+    #
+    # # cmap = ListedColormap(['white', 'green', 'blue','black'])
+    # # norm = matCol.BoundaryNorm(np.arange(0,13), cmap.N)
+    # cmap = cm.get_cmap('terrain', 13)
+    # plt.rcParams['font.size'] = 18
+    # im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types+2 , cmap=cmap)# , norm=norm)
+    # im_scene_ID.cmap.set_under('red')
+    # # im_scene_ID.cmap.set_over('black')
+    # cbar = plt.colorbar()
+    # cbar.set_ticks(np.arange(0.5,13.5,1))
+    # cbar.set_ticklabels([0,1,2,3,4,5,6,7,8,9,10,'Coast', 'Water'])
+    # plt.xticks([])
+    # plt.yticks([])
+    # plt.title('Kmeans Surface ID DOY\nValid DOY 137-144')
+    #
+    # plt.show()
+    # import sys
+    # sys.exit()
 
     # import matplotlib.colors as matCol
     # from matplotlib.colors import ListedColormap
