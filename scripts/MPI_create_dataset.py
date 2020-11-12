@@ -266,9 +266,8 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
 if __name__ == '__main__':
     import mpi4py.MPI as MPI
     import configparser
-    import tables
     from get_MOD_02_03_35_paths import get_MODIS_file_paths, get_MODIS_file_paths_no_list
-    tables.file._open_files.close_all()
+    from distribute_cores import distribute_processes
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
@@ -335,17 +334,10 @@ if __name__ == '__main__':
                 target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
                 target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
 
-            #define start and end file for a particular rank
-            #(size - 1) so last processesor can take the modulus
-            end               = len(filename_MOD_02)
-            processes_per_cpu = end // (size-1)
-            start             = rank * processes_per_cpu
-
-            if rank < (size-1):
-                end = (rank+1) * processes_per_cpu
-            elif rank==(size-1):
-                processes_per_cpu_last = end % (size-1)
-                end = (rank * processes_per_cpu) + processes_per_cpu_last
+            #assign subset of files to current rank
+            num_processes = len(test_data_JPL_paths)
+            start, stop   = distribute_processes(size, num_processes)
+            start, stop   = start[rank], stop[rank]
 
             #create/open file
             #open file to write status of algorithm to
@@ -363,10 +355,10 @@ if __name__ == '__main__':
                 i=1
 
                 for MOD02, MOD03, MOD35, time_MOD02\
-                                   in zip(filename_MOD_02[start:end]          ,\
-                                          filename_MOD_03[start:end]          ,\
-                                          filename_MOD_35[start:end]          ,\
-                                          filename_MOD_02_timeStamp[start:end]):
+                                   in zip(filename_MOD_02[start:stop]          ,\
+                                          filename_MOD_03[start:stop]          ,\
+                                          filename_MOD_35[start:stop]          ,\
+                                          filename_MOD_02_timeStamp[start:stop]):
                     # print('{}\n{}\n{}\n{}\n{}'.format(i, MOD02, MOD03, MOD35, time_MOD02))
 
                     try:

@@ -18,10 +18,6 @@ def group_bins(group_dir, common_file, DOY_bin):
     grouped_files  = np.sort(os.listdir(group_dir))
     database_files = ['{}/{}'.format(group_dir, filename) for filename in grouped_files]
 
-    # if len(database_files) != 46:
-    #     print('group by OLP failed to produce all DOY bins')
-    #     sys.exit()
-
     #look through each file and find unique bin IDs. Add data to dictiionary
     #After looking through the entire data set, write to one common file
 
@@ -31,7 +27,7 @@ def group_bins(group_dir, common_file, DOY_bin):
     for i in range(60):
         group =  '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.h5'\
                         .format(group_dir, DOY_start, DOY_end, DOY_bin, i)
-        print(group)
+        # print(group)
         with h5py.File(group, 'r') as hf_group_:
             group_keys = list(hf_group_.keys())
 
@@ -43,9 +39,6 @@ def group_bins(group_dir, common_file, DOY_bin):
 
     # #keep trying to gain access until it is available
     # #once access is gained, it should write to file, and then exit while loop
-    # being_accessed = True
-    # while being_accessed:
-    #     try:
     with h5py.File(common_file, 'w') as hf_group:
         for key, val in group_dict.items():
             for arr in val:
@@ -56,11 +49,7 @@ def group_bins(group_dir, common_file, DOY_bin):
                     group_shape = hf_group[key].shape[0]
                     hf_group[key].resize(group_shape + np.array(arr).shape[0], axis=0)
                     hf_group[key][group_shape:, :] = np.array(arr)
-        #     being_accessed = False
-        # except Exception as e:
-        #     print(e)
-        #     being_accessed = True
-    #print('done')
+
 if __name__ == '__main__':
 
     import mpi4py.MPI as MPI

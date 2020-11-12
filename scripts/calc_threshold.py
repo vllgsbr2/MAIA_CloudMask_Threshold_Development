@@ -1,8 +1,4 @@
 def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
-    import numpy as np
-    import h5py
-    from scipy.spatial import KDTree
-    import numpy.ma as ma
     '''
     Objective:
         Takes in grouped_obs_and_CM.hdf5 file. Inside are a datasets for
@@ -11,11 +7,20 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
         threshold is then calculated for that dataset and saved into a
         threshold file.
     Arguments:
-        group_file {str} -- contains data points to calc threshold for
-        all bins in the file
+        thresh_home {str} -- home path for thresh file
+        group_file {str} -- contains data points to calc threshold for all bins in the file
+        DOY_bin {integer} -- 46 bins in 365 days every 8 days
+        TA {integer} -- Target area. See text config.txt for look up table
+        num_land_SID {integer} -- number of Kmeans land SIDs (no coast/water/glint/snow)
+
     Return:
         void
     '''
+
+    import numpy as np
+    import h5py
+    from scipy.spatial import KDTree
+    import numpy.ma as ma
 
     DOY_end   = (DOY_bin+1)*8
     DOY_start = DOY_end - 7
@@ -59,6 +64,7 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
         hf_keys    = list(hf_group.keys())
         num_points = len(hf_keys)
 
+        #loop through unique OLP combinations from combined group files
         for count, bin_ID in enumerate(hf_keys):
             #location in array to store threshold (cos(SZA), VZA, RAZ, Scene_ID)
             bin_idx = [int(bin_ID[7:9]), int(bin_ID[14:16]), int(bin_ID[21:23]), int(bin_ID[38:40])]
@@ -76,12 +82,6 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
 
             cloudy_idx = np.where((cloud_mask == 0) & (cloud_mask > fill_val))
             cloudy_obs = obs[cloudy_idx[0],:]
-            # else:
-            #     clear_idx  = np.where((cloud_mask >= 2) & (cloud_mask > fill_val))
-            #     clear_obs  = obs[clear_idx[0],:]
-            #
-            #     cloudy_idx = np.where((cloud_mask <= 1) & (cloud_mask > fill_val))
-            #     cloudy_obs = obs[cloudy_idx[0],:]
 
             #if there isn't enough clear or cloudy obs, assign value to make threshold true
             #if no clear, and need clear, assign threshold as least brightest cloudy
@@ -90,14 +90,13 @@ def calc_thresh(thresh_home, group_file, DOY_bin, TA, num_land_SID):
             for i in range(7):
                 #path to TA/DOY/obs threshold dataset
                 path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY_bin , obs_names[i])
-                # print(path)
 
                 #clean the obs for the thresh calculation
                 clean_clear_obs = clear_obs[:,i]
-                clean_clear_obs = clean_clear_obs[(clean_clear_obs > -998) & (clean_clear_obs <= 32767)]
+                clean_clear_obs = clean_clear_obs[(clean_clear_obs > -998)]
 
                 clean_cloudy_obs = cloudy_obs[:,i]
-                clean_cloudy_obs = clean_cloudy_obs[(clean_cloudy_obs > -998) & (clean_cloudy_obs <= 32767)]
+                clean_cloudy_obs = clean_cloudy_obs[(clean_cloudy_obs > -998)]
 
                 #WI
                 if i==0:
@@ -233,6 +232,7 @@ if __name__ == '__main__':
             grouped_file_path = '{}/grouped_obs_and_CM_{:03d}_to_{:03d}_bin_{:02d}.h5'.\
                                 format(grouped_home, DOY_start, DOY_end, DOY_bin)
 
+            #number of Kmeans land SIDs (no coast/water/glint/snow)
             num_land_SID = int(sys.argv[1])
 
             calc_thresh(thresh_home, grouped_file_path, DOY_bin, TA, num_land_SID)

@@ -15,7 +15,8 @@ def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
         solarAzimuth {2D narray} -- Solar azimuth angle in degree
         sensorAzimuth {2D narray} -- MAIA azimuth angle in degree
         sun_glint_exclusion_angle {float} -- maximum scattering angle (degree) for sun-glint
-        land_water_mask {2D binary narray} -- specify the pixel is water (0) or land (1)
+        num_land_sfc_types {integer} -- number of land surface types from Kmeans SID including coast
+        sfc_ID {2D narray} -- Kmeans sfcID; where [0,num_land_sfc_types) is land, num_land_sfc_types is water
 
     Returns:
         2D binary narray -- sunglint mask over granule same shape as solarZenith
@@ -60,11 +61,11 @@ def get_observable_level_parameter(SZA, VZA, SAA, VAA, Target_Area,\
         SAA {2D narray} -- solar azimuth angle in degrees
         VAA {2D narray} -- viewing (MAIA) azimuth angle in degrees
         Target_Area {integer} -- number assigned to target area
-        land_water_mask {2D narray} -- land (1) water(0)
         snow_ice_mask {2D narray} -- no snow/ice (1) snow/ice (0)
         sfc_ID {3D narray} -- surface ID anicillary dataset for target area
         DOY {integer} -- day of year in julian calendar
         sun_glint_mask {2D narray} -- no glint (1) sunglint (0)
+        num_land_sfc_types {integer} -- number of land surface types from Kmeans SID including coast
     Returns:
         3D narray -- 3rd axis contains 9 integers that act as indicies to query
                      the threshold database for every observable level parameter.
@@ -179,7 +180,7 @@ if __name__ == '__main__':
 
                         sfc_ID_path  = config['supporting directories']['Surface_IDs']
                         sfc_ID_path  = '{}/{}/num_Kmeans_SID_{:02d}/'.format(PTA_path, sfc_ID_path, num_land_SID)
-                        print(sfc_ID_path)
+                        # print(sfc_ID_path)
 
                         sfc_ID_paths = os.listdir(sfc_ID_path)
                         #find correct sfc ID path for DOY bin

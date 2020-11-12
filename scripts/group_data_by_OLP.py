@@ -8,15 +8,8 @@ def group_data(OLP, obs, CM, hf_group):
     Return:
         void
     """
-    # observable_level_parameter = np.dstack((binned_cos_SZA ,\
-    #                                         binned_VZA     ,\
-    #                                         binned_RAZ     ,\
-    #                                         Target_Area    ,\
-    #                                         land_water_mask,\
-    #                                         snow_ice_mask  ,\
-    #                                         sfc_ID         ,\
-    #                                         binned_DOY     ,\
-    #                                         sun_glint_mask))
+
+    #flatten arrays to make it process faster
     shape = CM.shape
     row_col_product = shape[0]*shape[1]
     OLP = OLP.reshape(row_col_product, 6)
@@ -44,6 +37,7 @@ def group_data(OLP, obs, CM, hf_group):
     # num_groups = 0
 
     #now for any OLP combo, make a group and save the data points into it
+    #cycle through all pixel
     for i in range(CM.shape[0]):
         #0 cosSZA
         #1 VZA
@@ -51,11 +45,15 @@ def group_data(OLP, obs, CM, hf_group):
         #3 TA
         #4 Scene_ID
         #5 DOY
+
+        #Grab on pixel and all OLP belonging to that pixel
         temp_OLP = OLP[i,:]
+        #create the group name of that pixel
         group = 'cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}_TA_{:02d}_sceneID_{:02d}_DOY_{:02d}'\
                 .format(temp_OLP[0], temp_OLP[1], temp_OLP[2],\
                         1, temp_OLP[4], temp_OLP[5])
 
+        #combine the cloud mask and obs of this pixel into one array
         data = np.array([CM[i]   ,\
                          obs[i,0],\
                          obs[i,1],\
@@ -65,21 +63,22 @@ def group_data(OLP, obs, CM, hf_group):
                          obs[i,5],\
                          obs[i,6] ])
 
-        #add key with empty list, then populate it.
+        #add group(key) with empty list, then populate it with data array above
         thresh_dict.setdefault(group, [])
         thresh_dict[group].append(data)
 
-    for key, val in thresh_dict.items():
+    for group, obs_and_CM_data in thresh_dict.items():
+        #try to create the dataset in the hdf5 file; if it fails, it must be
+        #created already then populate it
         try:
-            hf_group.create_dataset(key, data=np.array(val), maxshape=(None,8))
-            # num_groups += 1
+            hf_group.create_dataset(group, data=np.array(obs_and_CM_data), maxshape=(None,8))
+
         except:
 
-            group_shape = hf_group[key].shape[0]
-            hf_group[key].resize(group_shape + np.array(val).shape[0], axis=0)
-            hf_group[key][group_shape:, :] = np.array(val)
+            group_shape = hf_group[group].shape[0]
+            hf_group[group].resize(group_shape + np.array(obs_and_CM_data).shape[0], axis=0)
+            hf_group[group][group_shape:, :] = np.array(obs_and_CM_data)
 
-        # print(key[10:16])
 if __name__ == '__main__':
 
     import numpy as np
@@ -136,6 +135,7 @@ if __name__ == '__main__':
                  h5py.File(hf_database_path          , 'r') as hf_database   ,\
                  h5py.File(hf_OLP_path               , 'r') as hf_OLP        :
 
+                #grab timestamps from database file
                 hf_database_keys = list(hf_database.keys())
                 #grab only current DOY bin
                 hf_database_keys = [x for x in hf_database_keys if int(x[4:7])>=DOY_start and int(x[4:7])<=DOY_end]
@@ -156,13 +156,14 @@ if __name__ == '__main__':
                 group_path    = '{}/{}/'.format(PTA_path, config['supporting directories']['group_intermediate'])
                 hf_group_path = '{}/grouped_data_DOY_{:03d}_to_{:03d}_bin_{:02d}_rank_{:02d}.h5'.format(group_path, DOY_start, DOY_end, DOY_bin, rank)
 
-                # try:
                 with h5py.File(hf_group_path, 'w') as hf_group:
                     for time_stamp in hf_database_keys:
 
+                        #read in cloud mask and observable level parameter
                         CM  = hf_database[time_stamp + '/cloud_mask/quality_screened_cloud_mask'][()]
                         OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
 
+                        #read in observation data
                         shape = CM.shape
                         obs_data = np.empty((shape[0], shape[1], 7), dtype=np.float)
                         for i, obs in enumerate(observables):
@@ -170,18 +171,3 @@ if __name__ == '__main__':
                             obs_data[:,:,i] = hf_observables[data_path][()]
 
                         group_data(OLP, np.array(obs_data, dtype=np.float), CM, hf_group)
-
-                        # print(time_stamp)
-
-                # except:
-                #     with h5py.File(hf_group_path, 'r+')  as hf_group:
-                #         for time_stamp in hf_database_keys:
-                #
-                #             CM  = hf_database[time_stamp + '/cloud_mask/Unobstructed_FOV_Quality_Flag'][()]
-                #             OLP = hf_OLP[time_stamp + '/observable_level_paramter'][()]
-                #
-                #             obs_data = np.empty((1000,1000,7), dtype=np.float)
-                #             for i, obs in enumerate(observables):
-                #                 data_path = '{}/{}'.format(time_stamp, obs)
-                #                 obs_data[:,:,i] = hf_observables[data_path][()]
-                #             group_data(OLP, obs_data, CM, hf_group)

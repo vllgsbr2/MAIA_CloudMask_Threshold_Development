@@ -34,53 +34,6 @@ def get_R(radiance, SZA, d, E_std_0b):
     R = radiance
     return R
 
-#calculate sun-glint flag*******************************************************
-#section 3.3.2.3
-def get_sun_glint_mask(solarZenith, sensorZenith, solarAzimuth, sensorAzimuth,\
-                       sun_glint_exclusion_angle, land_water_mask):
-    """
-    Calculate sun-glint flag.
-
-    [Section 3.3.2.3]
-    Sun-glint water pixels are set to 0;
-    non-sun-glint water pixels and land pixels are set to 1.
-
-    Arguments:
-        solarZenith {2D narray} -- Solar zenith angle in degree
-        sensorZenith {2D narray} -- MAIA zenith angle in degree
-        solarAzimuth {2D narray} -- Solar azimuth angle in degree
-        sensorAzimuth {2D narray} -- MAIA azimuth angle in degree
-        sun_glint_exclusion_angle {float} -- maximum scattering angle (degree) for sun-glint
-        land_water_mask {2D binary narray} -- specify the pixel is water (0) or land (1)
-
-    Returns:
-        2D binary narray -- sunglint mask over granule same shape as solarZenith
-    """
-
-    solarZenith               = np.deg2rad(solarZenith)
-    sensorZenith              = np.deg2rad(sensorZenith)
-    solarAzimuth              = np.deg2rad(solarAzimuth)
-    sensorAzimuth             = np.deg2rad(sensorAzimuth)
-    sun_glint_exclusion_angle = np.deg2rad(sun_glint_exclusion_angle)
-
-    cos_theta_r = np.sin(sensorZenith) * np.sin(solarZenith) \
-                * np.cos(sensorAzimuth - solarAzimuth - np.pi) + np.cos(sensorZenith) \
-                * np.cos(solarZenith)
-    theta_r = np.arccos(cos_theta_r)
-
-    sun_glint_idx = np.where((theta_r >= 0) & \
-                             (theta_r <= sun_glint_exclusion_angle))
-    no_sun_glint_idx = np.where(~((theta_r >= 0) & \
-                                  (theta_r <= sun_glint_exclusion_angle)))
-    theta_r[sun_glint_idx]    = 0
-    theta_r[no_sun_glint_idx] = 1
-    #turn off glint calculated over land
-    theta_r[land_water_mask == 1] = 1
-
-    sun_glint_mask = theta_r
-
-    return sun_glint_mask
-
 #calculate observables**********************************************************
 #section 3.3.2.1.2
 #and band center wavelengths table 2 section 2.1
@@ -250,11 +203,9 @@ if __name__ == '__main__':
 
     import h5py
     import mpi4py.MPI as MPI
-    import tables
     import os
     import numpy as np
     import configparser
-    tables.file._open_files.close_all()
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
@@ -291,7 +242,7 @@ if __name__ == '__main__':
                     with h5py.File(hf_observables_path, 'w') as hf_observables:
                         for time_stamp in hf_database_keys:
 
-                            SZA     = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
+                            SZA = hf_database[time_stamp + '/sunView_geometry/solarZenith'][()]
 
                             rad_band_4  = hf_database[time_stamp + '/radiance/band_3' ][()]
                             rad_band_5  = hf_database[time_stamp + '/radiance/band_4' ][()]
@@ -305,14 +256,12 @@ if __name__ == '__main__':
                             E_std_0b = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
                             d        = hf_database[time_stamp + '/earth_sun_distance'][()]
 
-                            R_band_4  = get_R(rad_band_4, SZA, d, E_std_0b[2])
-                            R_band_5  = get_R(rad_band_5, SZA, d, E_std_0b[3])
-                            R_band_6  = get_R(rad_band_6, SZA, d, E_std_0b[0])
-                            R_band_9  = get_R(rad_band_9, SZA, d, E_std_0b[1])
+                            R_band_4  = get_R(rad_band_4 , SZA, d, E_std_0b[2])
+                            R_band_5  = get_R(rad_band_5 , SZA, d, E_std_0b[3])
+                            R_band_6  = get_R(rad_band_6 , SZA, d, E_std_0b[0])
+                            R_band_9  = get_R(rad_band_9 , SZA, d, E_std_0b[1])
                             R_band_12 = get_R(rad_band_12, SZA, d, E_std_0b[4])
                             R_band_13 = get_R(rad_band_13, SZA, d, E_std_0b[5])
-
-                            # sun_glint_mask            = hf_database[time_stamp + '/cloud_mask/Sun_glint_Flag'][()]
 
                             whiteness_index           = get_whiteness_index(R_band_6, R_band_5, R_band_4)
                             NDVI                      = get_NDVI(R_band_6, R_band_9)
@@ -335,4 +284,4 @@ if __name__ == '__main__':
                                         group.create_dataset(observables[i], data=data[:,:,i], compression='gzip')
                                     except:
                                         hf_observables[time_stamp+'/'+observables[i]][:] = data[:,:,i]
-                            print(time_stamp)
+                            # print(time_stamp)
