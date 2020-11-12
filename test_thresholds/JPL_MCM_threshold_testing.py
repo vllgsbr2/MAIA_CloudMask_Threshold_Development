@@ -895,7 +895,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     import matplotlib.pyplot as plt
     import matplotlib.cm as cm
-    cmap = cm.get_cmap('terrain', len(olp_ticks[n]))
+    cmap = cm.get_cmap('terrain', 11)
     im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types , cmap=cmap)
     im_scene_ID.cmap.set_under('red')
     im_scene_ID.cmap.set_over('aqua')
