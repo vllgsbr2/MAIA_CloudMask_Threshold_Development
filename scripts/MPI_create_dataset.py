@@ -335,7 +335,7 @@ if __name__ == '__main__':
                 target_lon = hf_latlon['Geolocation/Longitude'][()].astype(np.float64)
 
             #assign subset of files to current rank
-            num_processes = len(test_data_JPL_paths)
+            num_processes = len(filename_MOD_02)
             start, stop   = distribute_processes(size, num_processes)
             start, stop   = start[rank], stop[rank]
 
