@@ -898,7 +898,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     cmap = cm.get_cmap('terrain', 11)
     im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types , cmap=cmap)
     im_scene_ID.cmap.set_under('red')
-    im_scene_ID.cmap.set_over('aqua')
+    im_scene_ID.cmap.set_over('black')
     cbar = plt.colorbar()
     cbar.set_ticks(np.arange(0.5,11.5,1))
     cbar.set_ticklabels(np.arange(11))
