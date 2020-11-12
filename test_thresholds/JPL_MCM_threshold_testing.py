@@ -895,19 +895,38 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     import matplotlib.pyplot as plt
     import matplotlib.cm as cm
-    cmap = cm.get_cmap('terrain', 11)
-    im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types , cmap=cmap)
+    import matplotlib.colors as matCol
+    from matplotlib.colors import ListedColormap
+
+    # cmap = ListedColormap(['white', 'green', 'blue','black'])
+    # norm = matCol.BoundaryNorm(np.arange(0,13), cmap.N)
+    cmap = cm.get_cmap('terrain', 13)
+    im_scene_ID = plt.imshow(sfc_ID, vmin=0, vmax=num_land_sfc_types+1 , cmap=cmap)# , norm=norm)
     im_scene_ID.cmap.set_under('red')
-    im_scene_ID.cmap.set_over('black')
+    # im_scene_ID.cmap.set_over('black')
     cbar = plt.colorbar()
-    cbar.set_ticks(np.arange(0.5,11.5,1))
-    cbar.set_ticklabels([1,2,3,4,5,6,7,8,9,10,'Coast'])
+    cbar.set_ticks(np.arange(0.5,13.5,1))
+    cbar.set_ticklabels([0,1,2,3,4,5,6,7,8,9,10,'Coast', 'Water'])
     plt.xticks([])
     plt.yticks([])
     plt.title('Kmeans Surface ID DOY\nValid DOY 361-365')
     plt.show()
     import sys
     sys.exit()
+
+    # import matplotlib.colors as matCol
+    # from matplotlib.colors import ListedColormap
+    # plt.figure()
+    # cmap = ListedColormap(['white', 'green', 'blue','black'])
+    # norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
+    # plt.imshow(mod35cm, cmap=cmap, norm=norm)
+    # cbar = plt.colorbar()
+    # cbar.set_ticks([0.5,1.5,2.5,3.5])
+    # cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
+    #                      'probably\nclear', 'confident\nclear'])
+    # plt.xticks([])
+    # plt.yticks([])
+
 
     #now put data through algorithm flow****************************************
 
