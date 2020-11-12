@@ -905,7 +905,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     im_scene_ID.cmap.set_under('red')
     # im_scene_ID.cmap.set_over('black')
     cbar = plt.colorbar()
-    cbar.set_ticks(np.arange(0.5,13.5,1))
+    cbar.set_ticks(np.arange(0.5,14.5,1))
     cbar.set_ticklabels([0,1,2,3,4,5,6,7,8,9,10,'Coast', 'Water'])
     plt.xticks([])
     plt.yticks([])
