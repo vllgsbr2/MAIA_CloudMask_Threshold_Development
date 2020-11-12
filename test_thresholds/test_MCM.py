@@ -23,7 +23,7 @@ PTA_path     = config['PTAs'][PTA]
 # test_scene = 'test_JPL_data_2018002.1850.h5' # cirrus event
 # test_scene = 'test_JPL_data_2019148.1805.h5' # ok general case
 # test_scene = 'test_JPL_data_2019139.1815.h5' #good scene just cut off
-# test_scene = 'test_JPL_data_2019137.1825.h5' # great scene!! would like more water clouds
+test_scene = 'test_JPL_data_2019137.1825.h5' # great scene!! would like more water clouds
 # test_scene = 'test_JPL_data_2019096.1830.h5' #great scene no water clouds :(
 # test_scene = 'test_JPL_data_2018365.1830.h5' #this is it!!
 
@@ -33,7 +33,7 @@ num_Kmeans_sfc_types = 11
 # guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
 # threshold_filepath = guangyu_home + 'thresholds_DOY_273_to_280_bin_34.h5'
 # threshold_filepath = guangyu_home + 'OBthresholds_DOY_273_to_280_bin_34.h5'
-test_scene = 'test_JPL_data_2019276.1805.h5'
+# test_scene = 'test_JPL_data_2019276.1805.h5'
 
 # test_scene = 'test_JPL_data_2019089.1825.h5'
 DOY = int(test_scene[18:-8])
