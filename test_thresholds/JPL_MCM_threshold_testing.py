@@ -910,7 +910,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     cbar.set_ticklabels([0,1,2,3,4,5,6,7,8,9,10,'Coast', 'Water'])
     plt.xticks([])
     plt.yticks([])
-    plt.title('Kmeans Surface ID DOY\nValid DOY 361-365')
+    plt.title('Kmeans Surface ID DOY\nValid DOY 137-144')
 
     plt.show()
     import sys
