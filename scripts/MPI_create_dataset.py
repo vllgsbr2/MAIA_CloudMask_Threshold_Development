@@ -144,21 +144,18 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
                                          np.copy(target_lon),\
                                          np.copy(col_mesh).astype(np.float64)).astype(np.int)
 
-    # #if no data was regridded skip recording the scene
-    # if ( regrid_row_idx[regrid_row_idx >=0].size  <= 0  ) |\
-    #    (regrid_col_idx[regrid_col_idx >=0].size <= 0 ):
-    #     return
+    #if no data was regridded skip recording the scene
+    if (regrid_row_idx[regrid_row_idx >=0].size <= 0) | \
+       (regrid_col_idx[regrid_col_idx >=0].size <= 0    ):
+        return
     #grab -999 fill values in regrid col/row idx
     #use these positions to write fill values when regridding the rest of the data
     fill_val = -999
     fill_val_idx = np.where((regrid_row_idx < 0) | \
                             (regrid_col_idx < 0)   )
 
-    # regrid_row_idx[fill_val_idx] = regrid_row_idx[regrid_row_idx >= 0][0]
-    # regrid_col_idx[fill_val_idx] = regrid_col_idx[regrid_col_idx >= 0][0]
-
-    regrid_row_idx[fill_val_idx] = regrid_row_idx[0,0]
-    regrid_col_idx[fill_val_idx] = regrid_col_idx[0,0]
+    regrid_row_idx[fill_val_idx] = regrid_row_idx[regrid_row_idx >= 0][0]
+    regrid_col_idx[fill_val_idx] = regrid_col_idx[regrid_col_idx >= 0][0]
 
     #crop and save the datasets*************************************************
 
