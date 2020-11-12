@@ -904,24 +904,10 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     cbar.set_ticklabels(np.arange(11))
     plt.xticks([])
     plt.yticks([])
+    plt.title('Kmeans Surface ID DOY\nValid DOY 361-365')
     plt.show()
     import sys
     sys.exit()
-
-    # import matplotlib.colors as matCol
-    # from matplotlib.colors import ListedColormap
-    # plt.figure()
-    # cmap = cm.get_cmap('jet', len(olp_ticks[n]))
-    # norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
-    # plt.imshow(mod35cm, cmap=cmap, norm=norm)
-    # cbar = plt.colorbar()
-    # cbar.set_ticks([0.5,1.5,2.5,3.5])
-    # cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
-    #                      'probably\nclear', 'confident\nclear'])
-    # plt.xticks([])
-    # plt.yticks([])
-    # import sys
-    # sys.exit()
 
     #now put data through algorithm flow****************************************
 
