@@ -18,7 +18,7 @@ PTA_path      = config['PTAs'][PTA]
 SID_accur = []
 
 f, ax = plt.subplots(nrows = 5, ncols=6)
-for i, a in enumerate(ax.flat:
+for i, a in enumerate(ax.flat):
     a.set_yticks([])
     a.set_yticks([])
     if i >= 5*6-4:
