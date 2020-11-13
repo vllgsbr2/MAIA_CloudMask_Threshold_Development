@@ -94,7 +94,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     a.text(left, bottom, label_graph,
         horizontalalignment='left',
         verticalalignment='bottom',
-        transform=ax.transAxes)
+        transform=a.transAxes)
 
     print(scene_accurs)
     SID_accur.append(scene_accurs)
