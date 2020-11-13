@@ -26,8 +26,8 @@ for i, a in enumerate(ax.flat):
         a.axis('off')
 
 # build a rectangle in axes coords
-left, width = .25, .5
-bottom, height = .25, .5
+left, width = 0., .5
+bottom, height = 0., .5
 right = left + width
 top = bottom + height
 
@@ -70,7 +70,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     scene_accurs = np.zeros((400,300,46))
     scene_accurs[scene_accurs == 0] = np.nan
 
-    plt.rcParams['font.size'] = 14
+    plt.rcParams['font.size'] = 8
 
     with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
         DOY_bins = list(hf_scene_accur.keys())
