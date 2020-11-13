@@ -20,7 +20,7 @@ SID_accur = []
 f, ax = plt.subplots(nrows = 5, ncols=6)
 for i, a in enumerate(ax.flat):
     a.set_yticks([])
-    a.set_yticks([])
+    a.set_xticks([])
     if i >= 5*6-4:
         a.axis('off')
 
@@ -30,7 +30,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
 
     scene_accurs = np.zeros((400,300,46))
 
-    plt.rcParams['font.size'] = 16
+    plt.rcParams['font.size'] = 8
 
     with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
         DOY_bins = list(hf_scene_accur.keys())
