@@ -17,7 +17,14 @@ PTA_path      = config['PTAs'][PTA]
 
 SID_accur = []
 
-for numKmeansSID in range(4,30):
+f, ax = plt.subplots(nrows = 5, ncols=6)
+for i, a in enumerate(ax.flat()):
+    a.set_yticks([])
+    a.set_yticks([])
+    if i >= 5*6-4:
+        a.axis('off')
+
+for a, numKmeansSID in zip(ax.flat,range(4,30)):
     scene_accur_home = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['scene_accuracy'], numKmeansSID)
     scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
 
@@ -33,19 +40,20 @@ for numKmeansSID in range(4,30):
 
     scene_accurs[scene_accurs < 0] = np.nan
     scene_accurs *= 100
-    # plt.imshow(scene_accurs[:,:,0])
-    # plt.colorbar()
+    a.imshow(scene_accurs[:,:,0], vmin=0, vmax=100)
     # # plt.hist(scene_accurs.flatten(), bins=20)
-    # plt.show()
-    scene_accurs                   = np.nanmean(scene_accurs.flatten())
+
+    scene_accurs = np.nanmean(scene_accurs.flatten())
+    a.set_title('num SID {:02d}\n{:2.2f} % accur'.format(numKmeansSID, scene_accurs))
     print(scene_accurs)
     SID_accur.append(scene_accurs)
     print('SID: ',numKmeansSID)
-
-plt.plot(np.arange(4,30), SID_accur)
-plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
-
 plt.show()
+
+# plt.plot(np.arange(4,30), SID_accur)
+# plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
+#
+# plt.show()
 
 # scene_accur_home = '{}/{}/'.format(PTA_path, config['supporting directories']['scene_accuracy'])
 # scene_accur_path = scene_accur_home + 'scene_ID_accuracy.h5'
