@@ -45,14 +45,14 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
 
             scene_accurs = np.nanmean(scene_accurs.flatten())
             a.set_title('SID {:02d};{:2.2f}'.format(numKmeansSID, scene_accurs))
-            print(scene_accurs)
-            SID_accur.append(scene_accurs)
-            print('SID: ',numKmeansSID)
+            # print(scene_accurs)
+            # SID_accur.append(scene_accurs)
+            # print('SID: ',numKmeansSID)
 
-            cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
-            cbar = f.colorbar(im, cax=cb_ax)
+        cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
+        cbar = f.colorbar(im, cax=cb_ax)
 
-            plt.show()
+        plt.show()
 
 # plt.plot(np.arange(4,30), SID_accur)
 # plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
