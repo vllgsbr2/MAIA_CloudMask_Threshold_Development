@@ -84,8 +84,11 @@ cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
 cbar = f.colorbar(im, cax=cb_ax)
 
 plt.figure(2)
-
-plt.plot(np.arange(4,30), SID_accur)
+x_axis = np.arange(4,30)
+plt.plot(x_axis, SID_accur, 'r')
+plt.scatter(x_axis, SID_accur, 'blue')
+plt.xticks(x_axis)
+plt.xticklabels(x_axis)
 plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
 
 plt.show()
