@@ -90,7 +90,8 @@ plt.scatter(x_axis, SID_accur, c='blue')
 plt.xticks(x_axis, x_axis)
 plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
 plt.grid()
-
+plt.xlabel('num Kmeans SID (not including snow/water/glint/coast)')
+plt.ylabel('% accuracy')
 plt.show()
 #*******************************************************************************
 
