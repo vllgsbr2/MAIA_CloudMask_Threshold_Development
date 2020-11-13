@@ -31,11 +31,7 @@ bottom, height = .25, .5
 right = left + width
 top = bottom + height
 
-# axes coordinates are 0,0 is bottom left and 1,1 is upper right
-p = patches.Rectangle(
-    (left, bottom), width, height,
-    fill=False, transform=ax.transAxes, clip_on=False
-    )
+
 
 for a, numKmeansSID in zip(ax.flat,range(4,30)):
 
@@ -90,6 +86,11 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     scene_accurs = np.nanmean(scene_accurs.flatten())
     label_graph = 'SID {:02d};{:2.2f}%'.format(numKmeansSID, scene_accurs)
 
+    # axes coordinates are 0,0 is bottom left and 1,1 is upper right
+    p = patches.Rectangle(
+        (left, bottom), width, height,
+        fill=False, transform=ax.transAxes, clip_on=False
+        )
     a.text(left, bottom, label_graph,
         horizontalalignment='left',
         verticalalignment='bottom',
