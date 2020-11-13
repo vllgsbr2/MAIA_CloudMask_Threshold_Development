@@ -61,7 +61,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     scene_accurs = np.zeros((400,300,46))
     scene_accurs[scene_accurs == 0] = np.nan
 
-    plt.rcParams['font.size'] = 8
+    plt.rcParams['font.size'] = 14
 
     with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
         DOY_bins = list(hf_scene_accur.keys())
