@@ -40,7 +40,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
 
     scene_accurs[scene_accurs < 0] = np.nan
     scene_accurs *= 100
-    im=a.imshow(scene_accurs[:,:,0], vmin=0, vmax=100)
+    im=a.imshow(np.nanmean(scene_accurs, axis=2), vmin=0, vmax=100)
     # # plt.hist(scene_accurs.flatten(), bins=20)
 
     scene_accurs = np.nanmean(scene_accurs.flatten())
