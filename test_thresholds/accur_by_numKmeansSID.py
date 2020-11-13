@@ -3,6 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib.animation as animation
+import matplotlib.patches as patches
 import configparser
 import h5py
 import sys
@@ -23,6 +24,18 @@ for i, a in enumerate(ax.flat):
     a.set_xticks([])
     if i >= 5*6-4:
         a.axis('off')
+
+# build a rectangle in axes coords
+left, width = .25, .5
+bottom, height = .25, .5
+right = left + width
+top = bottom + height
+
+# axes coordinates are 0,0 is bottom left and 1,1 is upper right
+p = patches.Rectangle(
+    (left, bottom), width, height,
+    fill=False, transform=ax.transAxes, clip_on=False
+    )
 
 for a, numKmeansSID in zip(ax.flat,range(4,30)):
 
@@ -75,10 +88,17 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     # # plt.hist(scene_accurs.flatten(), bins=20)
 
     scene_accurs = np.nanmean(scene_accurs.flatten())
-    a.set_title('SID {:02d};{:2.2f}%'.format(numKmeansSID, scene_accurs))
+    label_graph = 'SID {:02d};{:2.2f}%'.format(numKmeansSID, scene_accurs)
+
+    a.text(left, bottom, label_graph,
+        horizontalalignment='left',
+        verticalalignment='bottom',
+        transform=ax.transAxes)
+
     print(scene_accurs)
     SID_accur.append(scene_accurs)
     print('SID: ',numKmeansSID)
+
 
 cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
 cbar = f.colorbar(im, cax=cb_ax)
