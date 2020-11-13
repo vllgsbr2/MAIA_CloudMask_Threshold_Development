@@ -44,7 +44,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     # # plt.hist(scene_accurs.flatten(), bins=20)
 
     scene_accurs = np.nanmean(scene_accurs.flatten())
-    a.set_title('num SID {:02d}\n{:2.2f} % accur'.format(numKmeansSID, scene_accurs))
+    a.set_title('SID {:02d};{:2.2f}'.format(numKmeansSID, scene_accurs))
     print(scene_accurs)
     SID_accur.append(scene_accurs)
     print('SID: ',numKmeansSID)
