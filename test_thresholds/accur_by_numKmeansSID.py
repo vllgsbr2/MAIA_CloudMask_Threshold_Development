@@ -17,53 +17,53 @@ PTA_path      = config['PTAs'][PTA]
 
 SID_accur = []
 
-# for numKmeansSID in range(4,30):
-#     scene_accur_home = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['scene_accuracy'], numKmeansSID)
-#     scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
-#
-#     scene_accurs = np.zeros((400,300,46))
-#
-#     plt.rcParams['font.size'] = 16
-#
-#     with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
-#         DOY_bins = list(hf_scene_accur.keys())
-#         for i, DOY_bin in enumerate(DOY_bins):
-#             data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
-#             scene_accurs[:,:,i] = data
-#
-#     scene_accurs[scene_accurs < 0] = np.nan
-#     scene_accurs *= 100
-#     plt.imshow(scene_accurs[:,:,0])
-#     plt.colorbar()
-#     # plt.hist(scene_accurs.flatten(), bins=20)
-#     plt.show()
-#     scene_accurs                   = np.nanmean(scene_accurs.flatten())
-#     print(scene_accurs)
-#     SID_accur.append(scene_accurs)
-#     print('SID: ',numKmeansSID)
-#
-# plt.plot(np.arange(4,30), SID_accur)
-# plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
-#
-# plt.show()
+for numKmeansSID in range(4,30):
+    scene_accur_home = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['scene_accuracy'], numKmeansSID)
+    scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
 
-scene_accur_home = '{}/{}/'.format(PTA_path, config['supporting directories']['scene_accuracy'])
-scene_accur_path = scene_accur_home + 'scene_ID_accuracy.h5'
+    scene_accurs = np.zeros((400,300,46))
 
-scene_accurs = np.zeros((400,300,46))
+    plt.rcParams['font.size'] = 16
 
-plt.rcParams['font.size'] = 16
+    with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
+        DOY_bins = list(hf_scene_accur.keys())
+        for i, DOY_bin in enumerate(DOY_bins):
+            data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
+            scene_accurs[:,:,i] = data
 
-with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
-    DOY_bins = list(hf_scene_accur.keys())
-    for i, DOY_bin in enumerate(DOY_bins):
-        data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
-        scene_accurs[:,:,i] = data
+    scene_accurs[scene_accurs < 0] = np.nan
+    scene_accurs *= 100
+    plt.imshow(scene_accurs[:,:,0])
+    plt.colorbar()
+    # plt.hist(scene_accurs.flatten(), bins=20)
+    plt.show()
+    scene_accurs                   = np.nanmean(scene_accurs.flatten())
+    print(scene_accurs)
+    SID_accur.append(scene_accurs)
+    print('SID: ',numKmeansSID)
 
-scene_accurs[scene_accurs < 0] = np.nan
-scene_accurs *= 100
-plt.hist(scene_accurs.flatten(), bins=40)
+plt.plot(np.arange(4,30), SID_accur)
+plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
 
-scene_accurs                   = np.nanmean(scene_accurs.flatten())
-print(scene_accurs)
 plt.show()
+
+# scene_accur_home = '{}/{}/'.format(PTA_path, config['supporting directories']['scene_accuracy'])
+# scene_accur_path = scene_accur_home + 'scene_ID_accuracy.h5'
+#
+# scene_accurs = np.zeros((400,300,46))
+#
+# plt.rcParams['font.size'] = 16
+#
+# with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
+#     DOY_bins = list(hf_scene_accur.keys())
+#     for i, DOY_bin in enumerate(DOY_bins):
+#         data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
+#         scene_accurs[:,:,i] = data
+#
+# scene_accurs[scene_accurs < 0] = np.nan
+# scene_accurs *= 100
+# plt.hist(scene_accurs.flatten(), bins=40)
+#
+# scene_accurs                   = np.nanmean(scene_accurs.flatten())
+# print(scene_accurs)
+# plt.show()
