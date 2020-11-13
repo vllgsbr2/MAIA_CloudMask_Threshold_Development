@@ -89,7 +89,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     # axes coordinates are 0,0 is bottom left and 1,1 is upper right
     p = patches.Rectangle(
         (left, bottom), width, height,
-        fill=False, transform=ax.transAxes, clip_on=False
+        fill=False, transform=a.transAxes, clip_on=False
         )
     a.text(left, bottom, label_graph,
         horizontalalignment='left',
