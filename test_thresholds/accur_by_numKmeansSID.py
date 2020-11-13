@@ -40,7 +40,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
 
     scene_accurs[scene_accurs < 0] = np.nan
     scene_accurs *= 100
-    a.imshow(scene_accurs[:,:,0], vmin=0, vmax=100)
+    im=a.imshow(scene_accurs[:,:,0], vmin=0, vmax=100)
     # # plt.hist(scene_accurs.flatten(), bins=20)
 
     scene_accurs = np.nanmean(scene_accurs.flatten())
@@ -48,6 +48,10 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     print(scene_accurs)
     SID_accur.append(scene_accurs)
     print('SID: ',numKmeansSID)
+
+cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
+cbar = f.colorbar(im, cax=cb_ax)
+
 plt.show()
 
 # plt.plot(np.arange(4,30), SID_accur)
