@@ -260,8 +260,8 @@ ax[1,1].set_title('DTT_SVI')
 ax[1,2].set_title('DTT_Cirrus')
 ax[1,3].set_title('BRF RGB')
 
-# cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
-# cbar = f.colorbar(im, cax=cb_ax)
+cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
+cbar = f.colorbar(im, cax=cb_ax)
 
 for a in ax.flat:
     a.set_xticks([])
