@@ -17,18 +17,18 @@ PTA_path      = config['PTAs'][PTA]
 
 SID_accur = []
 
-f, ax = plt.subplots(nrows = 5, ncols=10)
+f, ax = plt.subplots(nrows = 5, ncols=6)
 for i, a in enumerate(ax.flat):
     a.set_yticks([])
     a.set_xticks([])
-    if i >= 46:
+    if i >= 5*6-4:
         a.axis('off')
 
 for a, numKmeansSID in zip(ax.flat,range(4,30)):
     scene_accur_home = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['scene_accuracy'], numKmeansSID)
     scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
 
-    scene_accurs = np.zeros((400,300,46))
+    scene_accurs = np.zeros((400,300,26))
 
     plt.rcParams['font.size'] = 8
 
@@ -36,23 +36,23 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
         DOY_bins = list(hf_scene_accur.keys())
         for i, DOY_bin in enumerate(DOY_bins):
             data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
-            data[data<0] == np.nan
-            scene_accurs[:,:,i] = data*100
+            scene_accurs[:,:,i] = data
 
+    scene_accurs[scene_accurs < 0] = np.nan
+    scene_accurs *= 100
+    im=a.imshow(np.nanmean(scene_accurs, axis=2), vmin=0, vmax=100)
+    # # plt.hist(scene_accurs.flatten(), bins=20)
 
-            im=a.imshow(scene_accurs[:,:,i], vmin=0, vmax=100)
-            # # plt.hist(scene_accurs.flatten(), bins=20)
+    scene_accurs = np.nanmean(scene_accurs.flatten())
+    a.set_title('SID {:02d};{:2.2f}'.format(numKmeansSID, scene_accurs))
+    print(scene_accurs)
+    SID_accur.append(scene_accurs)
+    print('SID: ',numKmeansSID)
 
-            scene_accurs = np.nanmean(scene_accurs.flatten())
-            a.set_title('SID {:02d};{:2.2f}'.format(numKmeansSID, scene_accurs))
-            # print(scene_accurs)
-            # SID_accur.append(scene_accurs)
-            # print('SID: ',numKmeansSID)
+cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
+cbar = f.colorbar(im, cax=cb_ax)
 
-        cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
-        cbar = f.colorbar(im, cax=cb_ax)
-
-        plt.show()
+plt.show()
 
 # plt.plot(np.arange(4,30), SID_accur)
 # plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
