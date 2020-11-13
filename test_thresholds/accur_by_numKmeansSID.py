@@ -29,6 +29,7 @@ for a, numKmeansSID in zip(ax.flat,range(4,30)):
     scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
 
     scene_accurs = np.zeros((400,300,26))
+    scene_accurs[scene_accurs == 0] = np.nan
 
     plt.rcParams['font.size'] = 8
 
