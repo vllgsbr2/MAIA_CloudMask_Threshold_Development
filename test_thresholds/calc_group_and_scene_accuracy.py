@@ -24,7 +24,7 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID, CF_bin):
                 scenes_gt_90_percent_intersect_L2_grid.append(time_stamp)
 
                 #get cloud fraction CF
-                CF = 100*(table_scne_x[0]+table_scne_x[2])/num_pixels_in_scene
+                CF = 100*(table_scne_x[0]+table_scne_x[3])/num_pixels_in_scene
                 for CF_key in scenes_by_CF:
                     if CF < int(CF_key) and CF >= int(CF_key) - 20:
                         scenes_by_CF[CF_key].append(time_stamp)
