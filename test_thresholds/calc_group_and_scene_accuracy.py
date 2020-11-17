@@ -100,6 +100,7 @@ if __name__ == '__main__':
     import sys
     import numpy as np
     import configparser
+    from netCDF4 import Dataset
 
     config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
     config           = configparser.ConfigParser()
