@@ -18,14 +18,13 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID, CF_bin):
         for time_stamp, table in zip(time_stamps, tables):
             table_scne_x        = hf_confmatx[table][()]
             L2_grid_size        = 400*300
-            print(table)
-            num_pixels_in_scene = table.sum()
+            num_pixels_in_scene = table_scne_x.sum()
 
             if num_pixels_in_scene / L2_grid_size >= 0.9:
                 scenes_gt_90_percent_intersect_L2_grid.append(time_stamp)
 
                 #get cloud fraction CF
-                CF = 100*(table[0]+table[2])/num_pixels_in_scene
+                CF = 100*(table_scne_x[0]+table_scne_x[2])/num_pixels_in_scene
                 for CF_key in scenes_by_CF:
                     if CF < int(CF_key) and CF >= int(CF_key) - 20:
                         scenes_by_CF[CF_key].append(time_stamp)
