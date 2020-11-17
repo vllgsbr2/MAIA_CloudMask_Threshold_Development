@@ -18,6 +18,7 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID, CF_bin):
         for time_stamp, table in zip(time_stamps, tables):
             table_scne_x        = hf_confmatx[table][()]
             L2_grid_size        = 400*300
+            print(table)
             num_pixels_in_scene = table.sum()
 
             if num_pixels_in_scene / L2_grid_size >= 0.9:
