@@ -28,6 +28,7 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID, CF_bin):
                 for CF_key in scenes_by_CF:
                     if CF < int(CF_key) and CF >= int(CF_key) - 20:
                         scenes_by_CF[CF_key].append(time_stamp)
+        print(scenes_by_CF)
 
         #pixel by pixel accuracy
         shape    = (400,300,4)
