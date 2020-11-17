@@ -36,7 +36,7 @@ plt.rcParams['font.size'] = 16
 #distionary to store SID accur for each CF
 SID_accur_by_CF = {'20':[], '40':[], '60':[], '80':[], '100':[]}
 
-for a, numKmeansSID in zip(ax.flat,range(4,30)):
+# for a, numKmeansSID in zip(ax.flat,range(4,30)):
 for numKmeansSID in range(4,30):
     for CF_key in SID_accur_by_CF:
         #now get accuracy by DOY
