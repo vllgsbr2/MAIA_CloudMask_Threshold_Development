@@ -43,6 +43,7 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID, CF_bin):
 
             #if scene is not more than 90 percent intersect with L2 grid
             #continue to next scene in loop
+            print(mask[21:], scenes_gt_90_percent_intersect_L2_grid[0])
             if mask[21:] not in scenes_gt_90_percent_intersect_L2_grid:
                 continue
             if mask[21:] not in scenes_by_CF[CF_bin]:
