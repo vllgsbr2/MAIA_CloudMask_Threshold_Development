@@ -37,6 +37,7 @@ plt.rcParams['font.size'] = 16
 SID_accur_by_CF = {'20':[], '40':[], '60':[], '80':[], '100':[]}
 
 for a, numKmeansSID in zip(ax.flat,range(4,30)):
+for numKmeansSID in range(4,30):
     for CF_key in SID_accur_by_CF:
         #now get accuracy by DOY
         scene_accur_home = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['scene_accuracy'], numKmeansSID)
