@@ -30,7 +30,7 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID, CF_bin):
                         scenes_by_CF[CF_key].append(time_stamp)
 
         #pixel by pixel accuracy
-        shape    = hf_confmatx[masks[0]][()].shape
+        shape    = (400,300)
         accuracy = np.zeros(shape)
         #number of samples that contributed to every evaluation type
         #needed since not all pixels in each scene have data, -999 instead
