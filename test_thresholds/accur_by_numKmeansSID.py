@@ -18,87 +18,62 @@ PTA_path      = config['PTAs'][PTA]
 
 SID_accur = []
 
-f, ax = plt.subplots(nrows = 5, ncols=6)
-for i, a in enumerate(ax.flat):
-    a.set_yticks([])
-    a.set_xticks([])
-    if i >= 5*6-4:
-        a.axis('off')
+# f, ax = plt.subplots(nrows = 5, ncols=6)
+# for i, a in enumerate(ax.flat):
+#     a.set_yticks([])
+#     a.set_xticks([])
+#     if i >= 5*6-4:
+#         a.axis('off')
+#
+# # build a rectangle in axes coords
+# left, width = 0., .5
+# bottom, height = 0., .5
+# right = left + width
+# top = bottom + height
 
-# build a rectangle in axes coords
-left, width = 0., .5
-bottom, height = 0., .5
-right = left + width
-top = bottom + height
+plt.rcParams['font.size'] = 16
 
-
+#distionary to store SID accur for each CF
+SID_accur_by_CF = {'20':[], '40':[], '60':[], '80':[], '100':[]}
 
 for a, numKmeansSID in zip(ax.flat,range(4,30)):
+    for CF_key in SID_accur_by_CF:
+        #now get accuracy by DOY
+        scene_accur_home = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['scene_accuracy'], numKmeansSID)
+        # scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
+        scene_accur_path = '{}/scene_ID_accuracy_CF_{:02d}_{:02d}_percent.h5'.format(scene_accur_home, int(CF_key)-20, int(CF_key))
 
-    # #where to find scene confusion matricies
-    # conf_matx_scene_dir = config['supporting directories']['conf_matx_scene']
-    # conf_matx_scene_dir = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, conf_matx_scene_dir, numKmeansSID)
-    # with h5py.File(conf_matx_scene_dir, 'r') as hf_confmatx:
-    #     confmatx_keys = np.array(list(hf_confmatx.keys()))
-    #     time_stamps   = [x[-12:] for x in confmatx_keys]
-    #     masks         = [x for x in confmatx_keys if x[:-13] == 'confusion_matrix_mask']
-    #     tables        = [x for x in confmatx_keys if x[:-13] == 'confusion_matrix_table']
-    #
-    #     #only take scenes with >=90% intersect with MAIA L2 grid
-    #     #then organize by cloud fraction
-    #     #record timestamps to use in accuracy graphs
-    #     scenes_gt_90_percent_intersect_L2_grid = []
-    #     scenes_by_CF = {'20':[], '40':[], '60':[], '80':[], '100':[]}
-    #     for time_stamp, table in zip(time_stamps, table):
-    #         table_scne_x = hf_confmatx[table][()]
-    #
-    #         L2_grid_size = 400*300
-    #         num_pixels_in_scene = table.sum()
-    #         if num_pixels_in_scene / L2_grid_size >= 0.9:
-    #             scenes_gt_90_percent_intersect_L2_grid.append(time_stamp)
-    #
-    #             #get cloud fraction CF
-    #             CF = table[:2].sum()/num_pixels_in_scene
-    #             for CF_key in scenes_by_CF:
-    #                 if CF <= int(CF_key):
-    #                     scenes_by_CF[CF_key].append(time_stamp)
+        scene_accurs = np.zeros((400,300,46))
+        scene_accurs[scene_accurs == 0] = np.nan
 
-    #now get accuracy by DOY
-    scene_accur_home = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['scene_accuracy'], numKmeansSID)
-    scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
+        with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
+            DOY_bins = list(hf_scene_accur.keys())
+            for i, DOY_bin in enumerate(DOY_bins):
+                data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
+                scene_accurs[:,:,i] = data
 
-    scene_accurs = np.zeros((400,300,46))
-    scene_accurs[scene_accurs == 0] = np.nan
+        scene_accurs[scene_accurs < 0] = np.nan
+        scene_accurs *= 100
+        # im=a.imshow(np.nanmean(scene_accurs, axis=2), vmin=0, vmax=100)
+        # # plt.hist(scene_accurs.flatten(), bins=20)
 
-    plt.rcParams['font.size'] = 8
+        scene_accurs = np.nanmean(scene_accurs.flatten())
+        # label_graph = 'SID {:02d};{:2.2f}%'.format(numKmeansSID, scene_accurs)
 
-    with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
-        DOY_bins = list(hf_scene_accur.keys())
-        for i, DOY_bin in enumerate(DOY_bins):
-            data = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
-            scene_accurs[:,:,i] = data
+        # axes coordinates are 0,0 is bottom left and 1,1 is upper right
+        # p = patches.Rectangle(
+        #     (left, bottom), width, height,
+        #     fill=False, transform=a.transAxes, clip_on=False
+        #     )
+        # a.text(left, bottom, label_graph,
+        #     horizontalalignment='left',
+        #     verticalalignment='bottom',
+        #     transform=a.transAxes)
 
-    scene_accurs[scene_accurs < 0] = np.nan
-    scene_accurs *= 100
-    im=a.imshow(np.nanmean(scene_accurs, axis=2), vmin=0, vmax=100)
-    # # plt.hist(scene_accurs.flatten(), bins=20)
-
-    scene_accurs = np.nanmean(scene_accurs.flatten())
-    label_graph = 'SID {:02d};{:2.2f}%'.format(numKmeansSID, scene_accurs)
-
-    # axes coordinates are 0,0 is bottom left and 1,1 is upper right
-    p = patches.Rectangle(
-        (left, bottom), width, height,
-        fill=False, transform=a.transAxes, clip_on=False
-        )
-    a.text(left, bottom, label_graph,
-        horizontalalignment='left',
-        verticalalignment='bottom',
-        transform=a.transAxes)
-
-    print(scene_accurs)
-    SID_accur.append(scene_accurs)
-    print('SID: ',numKmeansSID)
+        print(scene_accurs)
+        SID_accur_by_CF[CF_key].append(scene_accurs)
+        # SID_accur.append(scene_accurs)
+        print('SID: ',numKmeansSID)
 
 
 cb_ax = f.add_axes([0.93, 0.1, 0.02, 0.8])
@@ -106,10 +81,14 @@ cbar = f.colorbar(im, cax=cb_ax)
 
 plt.figure(2)
 x_axis = np.arange(4,30)
-plt.plot(x_axis, SID_accur, c='r')
-plt.scatter(x_axis, SID_accur, c='blue')
+colors = ['red', 'yellow', 'green', 'blue']
+for i, CF_key in enumerate(SID_accur_by_CF):
+    label='CF {:02d} - {:02d} %'.format(int(CF_key)-20, int(CF_key))
+    plt.plot(x_axis, SID_accur_by_CF[CF_key], c=colors[i], label=label)
+    plt.scatter(x_axis, SID_accur_by_CF[CF_key], c='black')
+
 plt.xticks(x_axis, x_axis)
-plt.title('Kmeans SID # vs Composite Accuracy\nYears 2004/2010/2018')
+plt.title('Kmeans SID # vs Composite Accuracy by CF\nYears 2002-2019')
 plt.grid()
 plt.xlabel('num Kmeans SID (not including snow/water/glint/coast)')
 plt.ylabel('% accuracy')
