@@ -1,5 +1,5 @@
 
-def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID):
+def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID, CF_bin):
     '''
     calculate accuracy using confusion matrix files for a scene
     '''
@@ -10,14 +10,40 @@ def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID):
         masks         = [x for x in confmatx_keys if x[:-13] == 'confusion_matrix_mask']
         tables        = [x for x in confmatx_keys if x[:-13] == 'confusion_matrix_table']
 
+        #only take scenes with >=90% intersect with MAIA L2 grid
+        #then organize by cloud fraction
+        #record timestamps to use in accuracy graphs
+        scenes_gt_90_percent_intersect_L2_grid = []
+        scenes_by_CF = {'20':[], '40':[], '60':[], '80':[], '100':[]}
+        for time_stamp, table in zip(time_stamps, tables):
+            table_scne_x        = hf_confmatx[table][()]
+            L2_grid_size        = 400*300
+            num_pixels_in_scene = table.sum()
+
+            if num_pixels_in_scene / L2_grid_size >= 0.9:
+                scenes_gt_90_percent_intersect_L2_grid.append(time_stamp)
+
+                #get cloud fraction CF
+                CF = 100*(table[0]+table[2])/num_pixels_in_scene
+                for CF_key in scenes_by_CF:
+                    if CF < int(CF_key) and CF >= int(CF_key) - 20:
+                        scenes_by_CF[CF_key].append(time_stamp)
+
         #pixel by pixel accuracy
-        shape = hf_confmatx[masks[0]][()].shape
+        shape    = hf_confmatx[masks[0]][()].shape
         accuracy = np.zeros(shape)
         #number of samples that contributed to every evaluation type
         #needed since not all pixels in each scene have data, -999 instead
         num_samples = np.zeros(shape)
 
         for i, mask in enumerate(masks):
+
+            #if scene is not more than 90 percent intersect with L2 grid
+            #continue to next scene in loop
+            if mask[21:] not in scenes_gt_90_percent_intersect_L2_grid:
+                continue
+            if mask[21:] not in scenes_by_CF[CF_bin]:
+                continue
 
             mask = hf_confmatx[mask][()]
             #mark missing data
@@ -73,16 +99,7 @@ if __name__ == '__main__':
     import os
     import sys
     import numpy as np
-    # import mpi4py.MPI as MPI
     import configparser
-    from netCDF4 import Dataset
-
-    # comm = MPI.COMM_WORLD
-    # rank = comm.Get_rank()
-    # size = comm.Get_size()
-
-    # for r in range(size):
-    #     if rank==r:
 
     config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
     config           = configparser.ConfigParser()
@@ -90,7 +107,6 @@ if __name__ == '__main__':
 
     PTA           = config['current PTA']['PTA']
     PTA_path      = config['PTAs'][PTA]
-    # Target_Area_X = int(config['Target Area Integer'][PTA])
 
     numKmeansSID = int(sys.argv[1])
 
@@ -102,38 +118,40 @@ if __name__ == '__main__':
     conf_matx_scene_dir = config['supporting directories']['conf_matx_scene']
     conf_matx_scene_dir = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, conf_matx_scene_dir, numKmeansSID)
 
-    #define file to save accur in
+    #define dir to save accur in
     scene_accuracy_save_dir = '{}/numKmeansSID_{:02d}'.format(scene_accuracy_dir, numKmeansSID)
-    scene_accuracy_save_file = '{}/numKmeansSID_{:02d}/{}'.format(scene_accuracy_dir, numKmeansSID,'scene_ID_accuracy.h5')
     if not(os.path.exists(scene_accuracy_save_dir)):
         os.mkdir(scene_accuracy_save_dir)
+
     #list all conf matx files
     conf_matx_scene_files    = [conf_matx_scene_dir + '/' + x for x in os.listdir(conf_matx_scene_dir)]
 
     #define SID file base path
     sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
 
-    # DOY_bin = r
-    total_conf_matx = np.array([0.,0.,0.,0.])
-    with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
-        for i in range(46):
-            DOY_end = (i+1)*8
-            SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(numKmeansSID, DOY_end)
-            sfc_ID_filepath    = '{}/{}'.format(sfc_ID_home, SID_file)
-            with Dataset(sfc_ID_filepath, 'r') as nc_SID:
-                SID = nc_SID.variables['surface_ID'][:,:]
-            MCM_accuracy, num_samples, conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i], SID, numKmeansSID)
-            total_conf_matx += conf_matx_x
-            print(conf_matx_x)
-            scene_current_group = 'DOY_bin_{:02d}'.format(i)
-            hf_scene_accur.create_group(scene_current_group)
-            hf_scene_accur[scene_current_group].create_dataset('MCM_accuracy', data=MCM_accuracy)
-            hf_scene_accur[scene_current_group].create_dataset('num_samples' , data=num_samples)
-            hf_scene_accur[scene_current_group].create_dataset('total_conf_matx' , data=conf_matx_x)
+    CF_bins = np.arange(20, 120, 20)
+    for CF_bin in CF_bins:
+        scene_accuracy_save_file = '{}/numKmeansSID_{:02d}/scene_ID_accuracy_CF_{:02d}_{:02d}_percent.h5'.format(scene_accuracy_dir, numKmeansSID, CF_bin-20, CF_bin)
+        total_conf_matx = np.array([0.,0.,0.,0.])
+        with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
+            for i in range(46):
+                DOY_end = (i+1)*8
+                SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(numKmeansSID, DOY_end)
+                sfc_ID_filepath    = '{}/{}'.format(sfc_ID_home, SID_file)
+                with Dataset(sfc_ID_filepath, 'r') as nc_SID:
+                    SID = nc_SID.variables['surface_ID'][:,:]
+                MCM_accuracy, num_samples, conf_matx_x = scene_conf_matx_accur(conf_matx_scene_files[i], SID, numKmeansSID, CF_bin)
+                total_conf_matx += conf_matx_x
+                # print(conf_matx_x)
+                scene_current_group = 'DOY_bin_{:02d}'.format(i)
+                hf_scene_accur.create_group(scene_current_group)
+                hf_scene_accur[scene_current_group].create_dataset('MCM_accuracy'    , data=MCM_accuracy)
+                hf_scene_accur[scene_current_group].create_dataset('num_samples'     , data=num_samples)
+                hf_scene_accur[scene_current_group].create_dataset('total_conf_matx' , data=conf_matx_x)
 
-            print('Scene DOY: {} done'.format(i))
+                print('Scene DOY: {} done'.format(i))
 
-    print(total_conf_matx)
+        # print(total_conf_matx)
 
     sys.exit()
 
