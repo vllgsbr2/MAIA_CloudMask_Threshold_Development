@@ -84,7 +84,7 @@ for numKmeansSID in range(4,30):
 plt.figure(2)
 x_axis = np.arange(4,30)
 colors = ['red', 'yellow', 'green', 'blue', 'purple']
-SID_accur_by_CF_AVG_ALL_CF = 0
+SID_accur_by_CF_AVG_ALL_CF = np.zeros((5))
 for i, CF_key in enumerate(SID_accur_by_CF):
     label='CF {:02d} - {:02d} %'.format(int(CF_key)-20, int(CF_key))
     data = SID_accur_by_CF[CF_key]
