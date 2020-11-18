@@ -84,10 +84,22 @@ for numKmeansSID in range(4,30):
 plt.figure(2)
 x_axis = np.arange(4,30)
 colors = ['red', 'yellow', 'green', 'blue', 'purple']
+SID_accur_by_CF_AVG_ALL_CF = 0
 for i, CF_key in enumerate(SID_accur_by_CF):
     label='CF {:02d} - {:02d} %'.format(int(CF_key)-20, int(CF_key))
-    plt.plot(x_axis, SID_accur_by_CF[CF_key], c=colors[i], label=label)
-    plt.scatter(x_axis, SID_accur_by_CF[CF_key], c='black')
+    data = SID_accur_by_CF[CF_key]
+    SID_accur_by_CF_AVG_ALL_CF += data
+    plt.plot(x_axis   , data, c=colors[i], label=label)
+    plt.scatter(x_axis, data, c='black')
+
+    #plot average of all CFs for each num SID
+    if i==4:
+        label='Avg all CF'
+        SID_accur_by_CF_AVG_ALL_CF /= 5
+        plt.plot(x_axis   , SID_accur_by_CF_AVG_ALL_CF, c='brown', label=label)
+        plt.scatter(x_axis, SID_accur_by_CF_AVG_ALL_CF, c='black')
+
+
 
 plt.xticks(x_axis, x_axis)
 plt.title('Kmeans SID # vs Composite Accuracy by CF\nYears 2002-2019')
