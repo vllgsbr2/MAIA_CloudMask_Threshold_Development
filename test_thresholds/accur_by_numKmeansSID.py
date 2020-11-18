@@ -43,7 +43,7 @@ for numKmeansSID in range(4,30):
 
     conf_matx_temp = conf_matx_master[numKmeansSID-4, :, :]
     SID_accur_temp = conf_matx_temp[:, :2].sum() / conf_matx_temp.sum()
-    SID_accur_by_CF_AVG_ALL_CF[numKmeansSID-4] = SID_accur_temp * 100
+    SID_accur_by_CF_AVG_ALL_CF[numKmeansSID-4] = SID_accur_temp
 
     print(SID_accur_by_CF_AVG_ALL_CF[numKmeansSID-4])
 
@@ -55,7 +55,7 @@ colors = ['red', 'yellow', 'green', 'blue', 'purple']
 
 for i, CF_key in enumerate(SID_accur_by_CF):
     label='CF {:02d} - {:02d} %'.format(int(CF_key)-20, int(CF_key))
-    data = SID_accur_by_CF[CF_key] * 100
+    data = SID_accur_by_CF[CF_key]
     plt.plot(x_axis   , data, c=colors[i], label=label)
     plt.scatter(x_axis, data, c='black')
 
