@@ -94,6 +94,7 @@ plt.title('Kmeans SID # vs Composite Accuracy by CF\nYears 2002-2019')
 plt.grid()
 plt.xlabel('num Kmeans SID (not including snow/water/glint/coast)')
 plt.ylabel('% accuracy')
+plt.legend()
 plt.show()
 #*******************************************************************************
 
