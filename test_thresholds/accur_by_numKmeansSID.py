@@ -18,7 +18,7 @@ PTA_path      = config['PTAs'][PTA]
 SID_accur = []
 
 #dictionary to store SID accur for each CF
-SID_accur_by_CF = {'20':[], '40':[], '60':[], '80':[], '100':[], 'All':[]}
+SID_accur_by_CF = {'20':[], '40':[], '60':[], '80':[], '100':[]}
 #confusion matrix table for each num SID and each CF
 conf_matx_master = np.zeros((26,6,4))
 SID_accur_by_CF_AVG_ALL_CF = np.zeros((26))
@@ -43,7 +43,7 @@ for numKmeansSID in range(4,30):
 
     conf_matx_temp = conf_matx_master[numKmeansSID-4, :, :]
     SID_accur_temp = conf_matx_temp[:, :2].sum() / conf_matx_temp.sum()
-    SID_accur_by_CF_AVG_ALL_CF[numKmeansSID-4] = SID_accur_temp
+    SID_accur_by_CF_AVG_ALL_CF[numKmeansSID-4] = SID_accur_temp * 100
 
     print(SID_accur_by_CF_AVG_ALL_CF[numKmeansSID-4])
 
@@ -55,14 +55,13 @@ colors = ['red', 'yellow', 'green', 'blue', 'purple']
 
 for i, CF_key in enumerate(SID_accur_by_CF):
     label='CF {:02d} - {:02d} %'.format(int(CF_key)-20, int(CF_key))
-    data = SID_accur_by_CF[CF_key]
+    data = SID_accur_by_CF[CF_key] * 100
     plt.plot(x_axis   , data, c=colors[i], label=label)
     plt.scatter(x_axis, data, c='black')
 
     #plot average of all CFs for each num SID
     if i==4:
-        label='Avg all CF'
-        SID_accur_by_CF_AVG_ALL_CF /= 5
+        label='All CF'
         plt.plot(x_axis   , SID_accur_by_CF_AVG_ALL_CF, c='brown', label=label)
         plt.scatter(x_axis, SID_accur_by_CF_AVG_ALL_CF, c='black')
 
