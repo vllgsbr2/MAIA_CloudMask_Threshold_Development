@@ -25,18 +25,18 @@ SID_accur_by_CF_AVG_ALL_CF = np.zeros((26))
 
 for numKmeansSID in range(4,30):
 
-    for i, CF_key in enumerate(SID_accur_by_CF):
+    for j, CF_key in enumerate(SID_accur_by_CF):
         #now get accuracy by DOY
         scene_accur_home = '{}/{}/numKmeansSID_{:02d}'.format(PTA_path, config['supporting directories']['scene_accuracy'], numKmeansSID)
         scene_accur_path = '{}/scene_ID_accuracy_CF_{:02d}_{:02d}_percent.h5'.format(scene_accur_home, int(CF_key)-20, int(CF_key))
 
         with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
             DOY_bins = list(hf_scene_accur.keys())
-            for i, DOY_bin in enumerate(DOY_bins):
+            for DOY_bin in DOY_bins:
                 #[true_cloud, true_clear, false_clear, false_cloud]
                 conf_matx_master[numKmeansSID-4, :] += hf_scene_accur[DOY_bin+'/total_conf_matx'][()]
 
-        conf_matx_temp = conf_matx_master[numKmeansSID-4, i, :]
+        conf_matx_temp = conf_matx_master[numKmeansSID-4, j, :]
         SID_accur_temp = np.sum(conf_matx_temp[:2]) / conf_matx_temp.sum()
         SID_accur_by_CF[CF_key].append(SID_accur_temp)
         print('SID: ',numKmeansSID, SID_accur_temp)
