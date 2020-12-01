@@ -50,13 +50,13 @@ def make_SID_MCM_rdy(home_og, home):
     # plt.show()
     # sys.exit()
 
-    #create destination directory for SID if not already made
-    home += 'num_Kmeans_SID_{:02d}/'.format(num_KMeans_IDs+1)#+1 because zero indexed
-    if not(os.path.exists(home)):
-        os.mkdir(home)
+    # #create destination directory for SID if not already made
+    # home += 'num_Kmeans_SID_{:02d}/'.format(num_KMeans_IDs+1)#+1 because zero indexed
+    # if not(os.path.exists(home)):
+    #     os.mkdir(home)
 
     #copy files into new destination
-    os.system('cp {}/surfaceID* {}/'.format(home_og, home))
+    os.system('cp {}/surfaceID_* {}/'.format(home_og, home))
 
     #edit copied surface IDs files with new surface ID
     sfc_ID_paths = np.sort(np.array(os.listdir(home)))
@@ -71,10 +71,10 @@ def make_SID_MCM_rdy(home_og, home):
         with Dataset(home + sfc_ID_path, 'r') as nc_sfc_ID:
             sfc_IDs_read_mod[:,:,i] = nc_sfc_ID.variables['surface_ID'][:,:]
 
-    # im=plt.imshow(sfc_IDs_read_mod[:,:,0], cmap='jet', vmin=0, vmax=11)
-    # im.cmap.set_over('k')
-    # im.cmap.set_under('pink')
-    # plt.show()
+        im=plt.imshow(sfc_IDs_read_mod[:,:,i], cmap='jet', vmin=0, vmax=11)
+        im.cmap.set_over('k')
+        im.cmap.set_under('pink')
+        plt.show()
     # sys.exit()
 
 
@@ -89,14 +89,14 @@ if __name__ == '__main__':
     PTA      = config['current PTA']['PTA']
     # PTA_path = config['PTAs'][PTA]
 
-    # home        = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/{}/'.format(PTA)
-    # destination = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/{}/Surface_IDs/'.format(PTA)
-    # make_SID_MCM_rdy(home, destination)
-
+    home        = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/{}/'.format(PTA)
     destination = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/{}/Surface_IDs/'.format(PTA)
-    #cycle through all the directories 5 to 30
-    for numSID in range(5,31):
-        home = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles/{}/'.format(numSID)
-        print(numSID-2)
+    make_SID_MCM_rdy(home, destination)
 
-        make_SID_MCM_rdy(home, destination)
+    # destination = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/{}/Surface_IDs/'.format(PTA)
+    # #cycle through all the directories 5 to 30
+    # for numSID in range(5,31):
+    #     home = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles/{}/'.format(numSID)
+    #     # print(numSID-2)
+    #
+    #     make_SID_MCM_rdy(home, destination)
