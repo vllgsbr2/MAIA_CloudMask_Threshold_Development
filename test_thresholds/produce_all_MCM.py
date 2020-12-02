@@ -23,7 +23,8 @@ for r in range(size):
 
         num_land_SID = int(sys.argv[1])
 
-        data_home = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
+        # data_home = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
+        data_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/MCM_Input/'
         test_data_JPL_paths = os.listdir(data_home)
         time_stamps         = [x[14:26] for x in test_data_JPL_paths]
         test_data_JPL_paths = [data_home + x for x in test_data_JPL_paths]
@@ -53,13 +54,15 @@ for r in range(size):
 
                 print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
                 thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
-                threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'\
-                                     .format(thresh_home, DOY_start, DOY_end, DOY_bin, num_land_SID)
+                threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'\
+                                     .format(thresh_home, DOY_start, DOY_end, DOY_bin)
+                # threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'\
+                #                      .format(thresh_home, DOY_start, DOY_end, DOY_bin, num_land_SID)
 
                 sfc_ID_home = '{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'])
-                # sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_home, PTA, DOY_end)
-                SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(num_land_SID, DOY_end)
-                sfc_ID_filepath    = '{}/{}'.format(sfc_ID_home, SID_file)
+                sfc_ID_filepath    = '{}/surfaceID_{}_{:03d}.nc'.format(sfc_ID_home, PTA, DOY_end)
+                # SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(num_land_SID, DOY_end)
+                # sfc_ID_filepath    = '{}/{}'.format(sfc_ID_home, SID_file)
 
                 # #for testing with many SIDs
                 # sfc_ID_path = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles'
@@ -90,14 +93,15 @@ for r in range(size):
                 #save output
                 #create directory for time stamp
                 output_home = '{}/{}'.format(PTA_path, config['supporting directories']['MCM_Output'])
-                directory_name = '{}/numKmeansSID_{:02d}'.format(output_home, num_land_SID)
-                if not(os.path.exists(directory_name)):
-                    os.mkdir(directory_name)
-                directory_name = '{}/numKmeansSID_{:02d}/{}'.format(output_home, num_land_SID, time_stamp)
-                if not(os.path.exists(directory_name)):
-                    os.mkdir(directory_name)
+                # directory_name = '{}/numKmeansSID_{:02d}'.format(output_home, num_land_SID)
+                # if not(os.path.exists(directory_name)):
+                #     os.mkdir(directory_name)
+                # directory_name = '{}/numKmeansSID_{:02d}/{}'.format(output_home, num_land_SID, time_stamp)
+                # if not(os.path.exists(directory_name)):
+                #     os.mkdir(directory_name)
                 #save path for MCM output file
-                save_path = '{}/MCM_Output.h5'.format(directory_name)
+                # save_path = '{}/MCM_Output.h5'.format(directory_name)
+                save_path = '{}/MCM_Output.h5'.format(output_home)
                 make_output(Sun_glint_exclusion_angle,\
                             Max_RDQI,\
                             Max_valid_DTT,\
