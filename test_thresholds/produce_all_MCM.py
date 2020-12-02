@@ -101,7 +101,10 @@ for r in range(size):
                 #     os.mkdir(directory_name)
                 #save path for MCM output file
                 # save_path = '{}/MCM_Output.h5'.format(directory_name)
-                save_path = '{}/MCM_Output.h5'.format(output_home)
+                directory_name = '{}/Guangyu_output_dec_1_2020/{}'.format(output_home, time_stamp)
+                if not(os.path.exists(directory_name)):
+                    os.mkdir(directory_name)
+                save_path = '{}/MCM_Output.h5'.format(directory_name)
                 make_output(Sun_glint_exclusion_angle,\
                             Max_RDQI,\
                             Max_valid_DTT,\
