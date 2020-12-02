@@ -510,6 +510,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
             print(path)
             database = hf_thresholds[path][()]
+            print(database[database != -999].size)
 
             thresholds = np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
 
@@ -519,7 +520,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
             #reshape to original dimensions
             thresholds = np.array(thresholds).reshape(shape)
-            print(thresholds[thresholds != -999].size)
+
             #mask SID -9 values as -999
             OLP = OLP.reshape((shape[0],shape[1], 6))
 
