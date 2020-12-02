@@ -519,6 +519,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
 
             #reshape to original dimensions
             thresholds = np.array(thresholds).reshape(shape)
+            print(thresholds[thresholds != -999].size)
             #mask SID -9 values as -999
             OLP = OLP.reshape((shape[0],shape[1], 6))
 
