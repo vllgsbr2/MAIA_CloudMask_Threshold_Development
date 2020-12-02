@@ -3,8 +3,8 @@ import numpy as np
 import h5py
 import os
 
-path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/thresh_dev/thresholds'
-thresh_files = [x for x in os.listdir(path) if x[0]=='t']
+path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/thresh_dev/thresholds/'
+thresh_files = [path+x for x in os.listdir(path) if x[0]=='t']
 
 for thresh in thresh_files:
     with h5py.File(thresh,'r')as hf_thresh:
