@@ -9,8 +9,8 @@ thresh_files = [path+x for x in os.listdir(path) if x[0]=='t']
 for thresh in thresh_files:
     with h5py.File(thresh,'r')as hf_thresh:
         TA = list(hf_thresh.keys())
-        DOY = list(TA[0].keys())
-        obs = list(DOY[0].keys())
+        DOY = list(hf_thresh[TA[0]].keys())
+        obs = list(hf_thresh[TA[0] + '/' + DOY[0]].keys())
         for ob in obs:
             obs_path = '{}/{}/{}'.format(TA,DOY,ob)
             thresh_temp = hf_thresh[obs_path][()]
