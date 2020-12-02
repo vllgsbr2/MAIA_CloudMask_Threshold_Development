@@ -14,4 +14,4 @@ for thresh in thresh_files:
         for ob in obs:
             obs_path = '{}/{}/{}'.format(TA[0],DOY[0],ob)
             thresh_temp = hf_thresh[obs_path][()]
-            print(thresh_temp[thresh_temp != -999].size)
+            print(obs_path, thresh_temp[thresh_temp != -999].size)
