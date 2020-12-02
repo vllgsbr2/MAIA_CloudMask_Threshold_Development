@@ -12,6 +12,6 @@ for thresh in thresh_files:
         DOY = list(hf_thresh[TA[0]].keys())
         obs = list(hf_thresh[TA[0] + '/' + DOY[0]].keys())
         for ob in obs:
-            obs_path = '{}/{}/{}'.format(TA,DOY,ob)
+            obs_path = '{}/{}/{}'.format(TA[0],DOY[0],ob)
             thresh_temp = hf_thresh[obs_path][()]
             print(thresh_temp[thresh_temp != -999].size)
