@@ -73,7 +73,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
             im = a.imshow(mod35cm, vmin=0, vmax=3, cmap=cmap, norm=norm)
             # cbar = plt.colorbar()
-            cbar = fig.colorbar(im)
+            cbar = f.colorbar(im)
             cbar.set_ticks([0.5,1.5,2.5,3.5])
             cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
                                  'probably\nclear', 'confident\nclear'])
