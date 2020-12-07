@@ -99,4 +99,5 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             im.cmap.set_under('r')
             im.cmap.set_over('r')
 
+    plt.tight_layout()
     plt.show()
