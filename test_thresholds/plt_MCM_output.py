@@ -45,6 +45,17 @@ for r in range(size):
         # print(xx)
         time_stamps, test_data_JPL_paths = time_stamps[start:stop], test_data_JPL_paths[start:stop]
 
+        #create figure instance
+        left   = 0.005
+        right  = 0.985
+        bottom = 0.110
+        top    = 0.880
+        wspace = 0.060
+        hspace = 0.090
+        f, ax = plt.subplots(nrows=2, ncols=6, figsize=(20, 10))
+        f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
+                          hspace=hspace, left=left)
+
         for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             output_file_path = MCM_output_home + time_stamp + '/MCM_Output.h5'
             with h5py.File(output_file_path, 'r') as hf_MCM_output:
@@ -71,15 +82,6 @@ for r in range(size):
             #plot
             #DTT_WI, DTT_NDVI, DTT_NDSI, DTT_VIS_Ref, DTT_NIR_Ref, DTT_SVI, DTT_Cirrus
             obs_namelist = ['WI', 'NDVI', 'NDSI', '0.65µm BRF', '0.86µm', 'SVI', 'Cirrus']
-            left   = 0.005
-            right  = 0.985
-            bottom = 0.110
-            top    = 0.880
-            wspace = 0.060
-            hspace = 0.090
-            f, ax = plt.subplots(nrows=2, ncols=6, figsize=(20, 10))
-            f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
-                              hspace=hspace, left=left)
 
             for i, a in enumerate(ax.flat):
 
