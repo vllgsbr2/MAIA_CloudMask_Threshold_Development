@@ -79,11 +79,11 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
                                  'probably\nclear', 'confident\nclear'])
 
         if i==9:
-            im = a.imshow(MCM, vmin=0, vmax=3)
-            a.set_title('RGB')
+            im = a.imshow(MCM, vmin=0, vmax=1, cmap='binary')
+            a.set_title('MCM')
         if i==10:
-            im = a.imshow(SID, vmin=0)
-            a.set_title('RGB')
+            im = a.imshow(SID, vmin=0, cmap='jet')
+            a.set_title('SID')
 
         im.cmap.set_under('r')
 
