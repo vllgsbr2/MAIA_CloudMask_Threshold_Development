@@ -73,7 +73,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             a.set_title('MOD35')
             cmap = ListedColormap(['white', 'green', 'blue','black'])
             norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
-            im = a.imshow(mod35cm, vmin=0, vmax=3, cmap=cmap, norm=norm)
+            im = a.imshow(mod35cm, vmin=0, cmap=cmap, norm=norm)
             divider = make_axes_locatable(a)
             cax = divider.append_axes('right', size='5%', pad=0.05)
             cbar = f.colorbar(im, cax=cax, orientation='vertical')
