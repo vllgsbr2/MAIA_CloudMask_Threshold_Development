@@ -44,9 +44,9 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             continue
         RGB = np.dstack((R_red, R_grn, R_blu))
         RGB = np.flip(RGB, 2)
-        print(RGB.shape)
         RGB[RGB==-999] = 0
-        RGB = get_enhanced_RGB(RGB).astype(np.int)
+        RGB = get_enhanced_RGB(RGB)
+        print(RGB)
 
 
     #grab mod35 cm from input file
