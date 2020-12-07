@@ -74,19 +74,26 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cmap = ListedColormap(['white', 'green', 'blue','black'])
             norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
             im = a.imshow(mod35cm, vmin=0, cmap=cmap, norm=norm)
-            divider = make_axes_locatable(a)
-            cax = divider.append_axes('right', size='5%', pad=0.05)
-            cbar = f.colorbar(im, cax=cax, orientation='vertical')
-            cbar.set_ticks([0.5,1.5,2.5,3.5])
-            cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
-                                 'probably\nclear', 'confident\nclear'])
+            # divider = make_axes_locatable(a)
+            # cax = divider.append_axes('right', size='5%', pad=0.05)
+            # cbar = f.colorbar(im, cax=cax, orientation='vertical')
+            # cbar.set_ticks([0.5,1.5,2.5,3.5])
+            # cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
+            #                      'probably\nclear', 'confident\nclear'])
 
         elif i==9:
             im = a.imshow(MCM, vmin=0, vmax=1, cmap='binary')
             a.set_title('MCM')
         elif i==10:
-            im = a.imshow(SID, vmin=0, cmap='jet')
+            cmap = cm.get_cmap('ocean', 15)
+            im = a.imshow(SID, vmin=0, cmap=cmap)
             a.set_title('SID')
+            divider = make_axes_locatable(a)
+            cax = divider.append_axes('right', size='5%', pad=0.05)
+            cbar = f.colorbar(im, cax=cax, orientation='vertical')
+            cbar.set_ticks(np.arange(15))
+            SID_cbar_labels = list(np.arange(11)).append(['coast', 'water', 'sunglint\nwater', 'snow\nice'])
+            cbar.set_ticklabels(SID_cbar_labels)
 
         #turn off unused axes
         else:
