@@ -42,6 +42,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         RGB = np.dstack((R_red, R_grn, R_blu))
         RGB[RGB==-999] = 0
         RGB = get_enhanced_RGB(RGB)
+        print(RGB.shape)
 
 
     #grab mod35 cm from input file
@@ -77,3 +78,4 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         #turn off unused axes
         if i >= 11:
             a.axis('off')
+    plt.show()
