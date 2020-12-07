@@ -6,6 +6,7 @@ import matplotlib.cm as cm
 import matplotlib
 import matplotlib.colors as matCol
 from matplotlib.colors import ListedColormap
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 import os
 import configparser
 
@@ -73,8 +74,9 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cmap = ListedColormap(['white', 'green', 'blue','black'])
             norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
             im = a.imshow(mod35cm, vmin=0, vmax=3, cmap=cmap, norm=norm)
-            # cbar = plt.colorbar()
-            cbar = f.colorbar(im)
+            divider = make_axes_locatable(a)
+            cax = divider.append_axes('right', size='5%', pad=0.05)
+            cbar = f.colorbar(im, cax=cax, orientation='vertical')
             cbar.set_ticks([0.5,1.5,2.5,3.5])
             cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
                                  'probably\nclear', 'confident\nclear'])
