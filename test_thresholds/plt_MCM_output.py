@@ -61,8 +61,9 @@ for r in range(size):
             #skip files already processed
             home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/output_plots/'
             save_path = home + time_stamp +'.pdf'
-            if os.path.getsize(save_path) > 0:
-                continue
+            if os.path.exists(save_path):
+                if os.path.getsize(save_path) > 0:
+                    continue
             with h5py.File(output_file_path, 'r') as hf_MCM_output:
                 DTT = hf_MCM_output['cloud_mask_output/DTT'][()]
                 MCM = hf_MCM_output['cloud_mask_output/final_cloud_mask'][()]
