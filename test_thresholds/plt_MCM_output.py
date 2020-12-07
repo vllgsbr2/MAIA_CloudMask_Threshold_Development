@@ -60,22 +60,24 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
 
         #plot DTT first
         if i < 7:
-            a.imshow(DTT[:,:,i])
+            im = a.imshow(DTT[:,:,i], vmin=-101, vmax=101)
             a.set_title(obs_namelist[i])
 
         #plot BRF/MOD35/MCM/SID
         if i==7:
-            a.imshow(RGB)
+            im = a.imshow(RGB, vmin=0)
             a.set_title('RGB')
         if i==8:
-            a.imshow(mod35cm)
+            im = a.imshow(mod35cm, vmin=0, vmax=3)
             a.set_title('MOD35')
         if i==9:
-            a.imshow(MCM)
+            im = a.imshow(MCM, vmin=0, vmax=3)
             a.set_title('RGB')
         if i==10:
-            a.imshow(SID)
+            im = a.imshow(SID, vmin=0)
             a.set_title('RGB')
+
+        im.cmap.set_under('r')
 
         #turn off unused axes
         if i >= 11:
