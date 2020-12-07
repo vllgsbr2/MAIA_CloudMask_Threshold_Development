@@ -132,4 +132,4 @@ for r in range(size):
             save_path = home + time_stamp +'.pdf'
             f.savefig(save_path, dpi=300, format='pdf')
             print(time_stamp)
-            # plt.show()
+            plt.show()
