@@ -60,7 +60,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
 
         #plot DTT first
         if i < 7:
-            im = a.imshow(DTT[:,:,i], vmin=-101, vmax=101)
+            im = a.imshow(DTT[:,:,i], vmin=-101, vmax=101, cmap='bwr')
             a.set_title(obs_namelist[i])
 
         #plot BRF/MOD35/MCM/SID
@@ -68,8 +68,15 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             im = a.imshow(RGB, vmin=0)
             a.set_title('RGB')
         if i==8:
-            im = a.imshow(mod35cm, vmin=0, vmax=3)
             a.set_title('MOD35')
+            cmap = ListedColormap(['white', 'green', 'blue','black'])
+            norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
+            im = a.imshow(mod35cm, vmin=0, vmax=3, cmap=cmap, norm=norm)
+            cbar = f.colorbar()
+            cbar.set_ticks([0.5,1.5,2.5,3.5])
+            cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
+                                 'probably\nclear', 'confident\nclear'])
+
         if i==9:
             im = a.imshow(MCM, vmin=0, vmax=3)
             a.set_title('RGB')
