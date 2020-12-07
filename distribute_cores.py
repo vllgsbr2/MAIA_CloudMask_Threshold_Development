@@ -33,7 +33,7 @@ def distribute_processes(size, num_processes):
     start.append(processes_per_core_list[:rank].sum())
     stop.append(start[rank] + processes_per_core_list[rank])
 
-    print(rank, start[rank], stop[rank], stop[rank]-start[rank])
+    # print(rank, start[rank], stop[rank], stop[rank]-start[rank])
 
   return start, stop
 
@@ -48,4 +48,4 @@ num_processes = 9873
 start, stop = distribute_processes(size, num_processes)
 #files_to_process = ['file1', 'file_2', 'file_3','file_n']
 #f2p = files_to_process[start[rank]:stop[rank]]
-#then call all your functions using subset of data calculated for each core 
+#then call all your functions using subset of data calculated for each core
