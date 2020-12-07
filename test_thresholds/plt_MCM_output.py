@@ -58,6 +58,11 @@ for r in range(size):
 
         for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             output_file_path = MCM_output_home + time_stamp + '/MCM_Output.h5'
+            #skip files already processed
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/output_plots/'
+            save_path = home + time_stamp +'.pdf'
+            if os.path.getsize(save_path) > 0:
+                continue
             with h5py.File(output_file_path, 'r') as hf_MCM_output:
                 DTT = hf_MCM_output['cloud_mask_output/DTT'][()]
                 MCM = hf_MCM_output['cloud_mask_output/final_cloud_mask'][()]
@@ -132,8 +137,7 @@ for r in range(size):
                     im.cmap.set_under('r')
                     im.cmap.set_over('r')
 
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/output_plots/'
-            save_path = home + time_stamp +'.pdf'
+
             f.savefig(save_path, dpi=300, format='pdf')
             print(time_stamp)
             for a in ax.flat:
