@@ -92,7 +92,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cax = divider.append_axes('right', size='5%', pad=0.05)
             cbar = f.colorbar(im, cax=cax, orientation='vertical')
             cbar.set_ticks(np.arange(0.5,14.5))
-            SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint\nwater', 'snow\nice']
+            SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
             cbar.set_ticklabels(SID_cbar_labels)
 
         #turn off unused axes
