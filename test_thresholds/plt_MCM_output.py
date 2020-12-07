@@ -113,7 +113,8 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             im.cmap.set_under('r')
             im.cmap.set_over('r')
 
-    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/'
+    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/output_plots/'
     save_path = home + time_stamp +'.pdf'
-    # f.savefig(save_path, dpi=300, format='pdf')
-    plt.show()
+    f.savefig(save_path, dpi=300, format='pdf')
+    print(time_stamp)
+    # plt.show()
