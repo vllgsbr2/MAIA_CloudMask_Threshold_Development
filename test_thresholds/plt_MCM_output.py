@@ -40,7 +40,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         R_blu = hf_MCM_output['Reflectance/band_04'][()]
 
         #if no data anywhere just goto next file
-        if np.all(RGB==-999):
+        if np.all(R_red==-999):
             continue
         RGB = np.dstack((R_red, R_grn, R_blu))
         RGB[RGB==-999] = 0
