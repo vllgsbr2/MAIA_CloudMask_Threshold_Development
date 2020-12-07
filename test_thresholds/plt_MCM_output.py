@@ -44,7 +44,6 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         if np.all(R_red==-999):
             continue
         RGB = np.dstack((R_red, R_grn, R_blu))
-        RGB = np.flip(RGB, 2)
         RGB[RGB==-999] = 0
         RGB = get_enhanced_RGB(RGB)
 
