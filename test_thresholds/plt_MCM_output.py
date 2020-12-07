@@ -41,7 +41,7 @@ for r in range(size):
         num_processes = len(test_data_JPL_paths)
         start, stop   = distribute_processes(size, num_processes)
         start, stop   = start[rank], stop[rank]
-        print(start, stop)
+        print(rank, num_processes, start, stop)
         time_stamps, test_data_JPL_paths = time_stamps[start:stop], test_data_JPL_paths[start:stop]
 
         for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
