@@ -60,7 +60,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
     top    = 0.880
     wspace = 0.060
     hspace = 0.090
-    f, ax = plt.subplots(nrows=2, ncols=6)
+    f, ax = plt.subplots(nrows=2, ncols=6, figsize=(13, 9))
     f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
                       hspace=hspace, left=left)
 
@@ -113,4 +113,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             im.cmap.set_under('r')
             im.cmap.set_over('r')
 
+    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/'
+    save_path = home + time_stamp +'.pdf'
+    # f.savefig(save_path, dpi=300, format='pdf')
     plt.show()
