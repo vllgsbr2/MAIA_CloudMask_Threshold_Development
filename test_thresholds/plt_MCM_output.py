@@ -11,6 +11,7 @@ import os
 import configparser
 from distribute_cores import distribute_processes
 import mpi4py.MPI as MPI
+matplotlib.use('Agg')
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
