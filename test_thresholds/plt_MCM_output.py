@@ -31,8 +31,8 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
     output_file_path = MCM_output_home + time_stamp + '/MCM_Output.h5'
     with h5py.File(output_file_path, 'r') as hf_MCM_output:
         DTT = hf_MCM_output['cloud_mask_output/DTT'][()]
-        MCM = hf_MCM_output['cloud_mask_output/DTT'][()]
-        SID = hf_MCM_output['cloud_mask_output/DTT'][()]
+        MCM = hf_MCM_output['cloud_mask_output/final_cloud_mask'][()]
+        SID = hf_MCM_output['Ancillary/scene_type_identifier'][()]
 
         #get RGB
         R_red = hf_MCM_output['Reflectance/band_06'][()]
@@ -46,8 +46,6 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         RGB = np.flip(RGB, 2)
         RGB[RGB==-999] = 0
         RGB = get_enhanced_RGB(RGB)
-    print(MCM.shape)
-
 
     #grab mod35 cm from input file
     with h5py.File(test_data_JPL_path, 'r') as hf_output:
