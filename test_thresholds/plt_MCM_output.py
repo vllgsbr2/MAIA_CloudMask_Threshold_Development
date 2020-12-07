@@ -86,12 +86,12 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             a.set_title('MCM')
         elif i==10:
             cmap = cm.get_cmap('ocean', 15)
-            im = a.imshow(SID, vmin=0, vmax=16, cmap=cmap)
+            im = a.imshow(SID, vmin=0, vmax=15, cmap=cmap)
             a.set_title('SID')
             divider = make_axes_locatable(a)
             cax = divider.append_axes('right', size='5%', pad=0.05)
             cbar = f.colorbar(im, cax=cax, orientation='vertical')
-            cbar.set_ticks(np.arange(0.5,14.5))
+            cbar.set_ticks(np.arange(0.5,15.5))
             SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
             cbar.set_ticklabels(SID_cbar_labels)
 
