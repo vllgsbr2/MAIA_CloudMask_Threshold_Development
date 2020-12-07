@@ -60,7 +60,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
     top    = 0.880
     wspace = 0.060
     hspace = 0.090
-    f, ax = plt.subplots(nrows=2, ncols=6, figsize=(13.5, 11))
+    f, ax = plt.subplots(nrows=2, ncols=6, figsize=(20, 10))
     f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
                       hspace=hspace, left=left)
 
