@@ -46,7 +46,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         RGB = np.flip(RGB, 2)
         RGB[RGB==-999] = 0
         RGB = get_enhanced_RGB(RGB)
-    print(RGB)
+    print(MCM.shape)
 
 
     #grab mod35 cm from input file
