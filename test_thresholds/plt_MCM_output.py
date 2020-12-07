@@ -86,7 +86,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             a.set_title('MCM')
         elif i==10:
             cmap = cm.get_cmap('ocean', 15)
-            im = a.imshow(SID, vmin=0, cmap=cmap)
+            im = a.imshow(SID, vmin=0, vmax=15, cmap=cmap)
             a.set_title('SID')
             divider = make_axes_locatable(a)
             cax = divider.append_axes('right', size='5%', pad=0.05)
