@@ -54,7 +54,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
     #plot
     #DTT_WI, DTT_NDVI, DTT_NDSI, DTT_VIS_Ref, DTT_NIR_Ref, DTT_SVI, DTT_Cirrus
     obs_namelist = ['WI', 'NDVI', 'NDSI', '0.65µm BRF', '0.86µm', 'SVI', 'Cirrus']
-    f, ax = plt.subplots(nrows=2, ncols=7)
+    f, ax = plt.subplots(nrows=2, ncols=6)
 
     for i, a in enumerate(ax.flat):
 
@@ -62,12 +62,13 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         if i < 7:
             im = a.imshow(DTT[:,:,i], vmin=-101, vmax=101, cmap='bwr')
             a.set_title(obs_namelist[i])
+            im.cmap.set_under('k')
 
         #plot BRF/MOD35/MCM/SID
-        if i==7:
+        elif i==7:
             im = a.imshow(RGB, vmin=0)
             a.set_title('RGB')
-        if i==8:
+        elif i==8:
             a.set_title('MOD35')
             cmap = ListedColormap(['white', 'green', 'blue','black'])
             norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
@@ -78,20 +79,22 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
                                  'probably\nclear', 'confident\nclear'])
 
-        if i==9:
+        elif i==9:
             im = a.imshow(MCM, vmin=0, vmax=1, cmap='binary')
             a.set_title('MCM')
-        if i==10:
+        elif i==10:
             im = a.imshow(SID, vmin=0, cmap='jet')
             a.set_title('SID')
 
-        im.cmap.set_under('r')
-
         #turn off unused axes
-        if i >= 11:
+        else:
             a.axis('off')
         #turn off ticks
         a.set_xticks([])
         a.set_yticks([])
+
+        if i>7:
+            im.cmap.set_under('r')
+            im.cmap.set_over('r')
 
     plt.show()
