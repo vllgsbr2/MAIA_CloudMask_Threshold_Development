@@ -53,7 +53,7 @@ for i in range(num_DOY):
 plt.figure(1)
 for i in range(num_DOY):
     x = hists[:,i]
-    plt.plot(bin_edges[:-1,i], x)
+    plt.bar(bin_edges[:-1,i], x)
 plt.show()
 
 # for i in range(num_DOY):
