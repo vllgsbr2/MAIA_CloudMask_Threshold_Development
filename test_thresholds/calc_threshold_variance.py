@@ -52,7 +52,7 @@ for i in range(num_DOY):
 plt.figure(1)
 for i in range(num_DOY):
     x = hists[:,i]
-    plt.plot(bin_edges[:-2,i], x)
+    plt.plot(bin_edges[:,i], x)
 plt.show()
 
 # for i in range(num_DOY):
