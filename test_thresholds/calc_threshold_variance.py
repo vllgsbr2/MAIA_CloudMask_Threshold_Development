@@ -20,7 +20,7 @@ num_DOY = 46
 num_VZA = 15
 num_RAZ = 12
 num_cosSZA = 10
-valid_thresh = np.zeros((num_cosSZA, num_VZA, num_cosSZA, num_SID, num_obs, num_DOY))
+valid_thresh = np.zeros((num_cosSZA, num_VZA, num_RAZ, num_SID, num_obs, num_DOY))
 
 #collect all thresholds in memory
 for DOY, thresh in enumerate(thresh_files):
