@@ -26,15 +26,13 @@ valid_thresh = np.zeros((num_cosSZA, num_VZA, num_RAZ, num_SID, num_obs, num_DOY
 for DOY, thresh in enumerate(thresh_files):
     with h5py.File(thresh,'r')as hf_thresh:
         TA = list(hf_thresh.keys())
-        DOY = list(hf_thresh[TA[0]].keys())
-        obs = list(hf_thresh[TA[0] + '/' + DOY[0]].keys())
+        DOY_ = list(hf_thresh[TA[0]].keys())
+        obs = list(hf_thresh[TA[0] + '/' + DOY_[0]].keys())
         for obs_x, ob in enumerate(obs):
-            obs_path = '{}/{}/{}'.format(TA[0],DOY[0],ob)
+            obs_path = '{}/{}/{}'.format(TA[0],DOY_[0],ob)
             thresh_temp = hf_thresh[obs_path][()]
-            # num_thresh = thresh_temp[thresh_temp != -999].shape
-            print(thresh_temp.shape, valid_thresh.shape)
             thresh_temp[thresh_temp == -999] = np.nan
-            valid_thresh[:,:,:,:,obs_x,DOY] = thresh_temp[:,:,:,:]
+            valid_thresh[:,:,:,:,obs_x,DOY] = thresh_temp
 
             print(obs_path)#, num_thresh)
 
