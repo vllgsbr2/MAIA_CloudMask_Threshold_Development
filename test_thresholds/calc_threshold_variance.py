@@ -41,8 +41,20 @@ for DOY, thresh in enumerate(thresh_files):
 variance_by_DOY = np.zeros(num_DOY)
 NDSI = 1
 snow = 14
-data = valid_thresh[:,:,:,snow,NDSI,:].reshape(num_cosSZA*num_VZA*num_RAZ, num_DOY)
+NDSI_thresh = valid_thresh[:,:,:,snow,NDSI,:].reshape(num_cosSZA*num_VZA*num_RAZ, num_DOY)
+num_bins = 50
+hists = np.zeros((num_bins,num_DOY))
+bin_edges = np.zeros((num_bins+1,num_DOY))
+for i in range(num_DOY):
+    bin_NDSI_thresh[:,i], bin_edges[:,i] = np.histogram(NDSI_thresh[:,i], bins=num_bins)
 
-NDSI_thresh_DOY_variance = np.nanvar(data, axis=-1)
-for i in range(46):
-    print(NDSI_thresh_DOY_variance[i])
+plt.figure(1)
+for i in range(num_DOY):
+    x = bin_NDSI_thresh[:,i]
+    plt.plot(bin_edges[:-2,i], x)
+plt.show()
+
+# for i in range(num_DOY):
+#     for j in range(i+1,num_DOY):
+#         diff = bin_NDSI_thresh[:,i] - bin_NDSI_thresh[:,j]
+#         plt.plot(diff)
