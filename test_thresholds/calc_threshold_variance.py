@@ -47,11 +47,11 @@ hists = np.zeros((num_bins,num_DOY))
 bin_edges = np.zeros((num_bins+1,num_DOY))
 for i in range(num_DOY):
     data = NDSI_thresh[:,i][NDSI_thresh[:,i] != -999]
-    bin_NDSI_thresh[:,i], bin_edges[:,i] = np.histogram(data, bins=num_bins)
+    hists[:,i], bin_edges[:,i] = np.histogram(data, bins=num_bins)
 
 plt.figure(1)
 for i in range(num_DOY):
-    x = bin_NDSI_thresh[:,i]
+    x = hists[:,i]
     plt.plot(bin_edges[:-2,i], x)
 plt.show()
 
