@@ -34,7 +34,7 @@ for DOY, thresh in enumerate(thresh_files):
             # num_thresh = thresh_temp[thresh_temp != -999].shape
             print(thresh_temp.shape, valid_thresh.shape)
             thresh_temp[thresh_temp == -999] = np.nan
-            valid_thresh[:,:,:,:,obs_x,DOY] = thresh_temp
+            valid_thresh[:,:,:,:,obs_x,DOY] = thresh_temp[:,:,:,:]
 
             print(obs_path)#, num_thresh)
 
