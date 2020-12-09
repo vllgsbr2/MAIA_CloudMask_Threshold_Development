@@ -30,9 +30,9 @@ for DOY, thresh in enumerate(thresh_files):
         obs = list(hf_thresh[TA[0] + '/' + DOY_[0]].keys())
         for obs_x, ob in enumerate(obs):
             obs_path = '{}/{}/{}'.format(TA[0],DOY_[0],ob)
-            thresh_temp = hf_thresh[obs_path][()]
-            thresh_temp[thresh_temp == -999] = np.nan
-            valid_thresh[:,:,:,:,obs_x,DOY] = thresh_temp
+            # thresh_temp = hf_thresh[obs_path][()]
+            # thresh_temp[thresh_temp == -999] = np.nan
+            valid_thresh[:,:,:,:,obs_x,DOY] = hf_thresh[obs_path][()]#thresh_temp
 
             # print(obs_path)
 
@@ -46,7 +46,8 @@ num_bins = 50
 hists = np.zeros((num_bins,num_DOY))
 bin_edges = np.zeros((num_bins+1,num_DOY))
 for i in range(num_DOY):
-    bin_NDSI_thresh[:,i], bin_edges[:,i] = np.histogram(NDSI_thresh[:,i], bins=num_bins)
+    data = NDSI_thresh[:,i][NDSI_thresh[:,i] != -999]
+    bin_NDSI_thresh[:,i], bin_edges[:,i] = np.histogram(data, bins=num_bins)
 
 plt.figure(1)
 for i in range(num_DOY):
