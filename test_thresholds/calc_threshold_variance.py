@@ -12,7 +12,7 @@ import numpy as np
 import h5py
 import os
 
-path = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
+path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/thresh_dev/thresholds/'
 thresh_files = [path+x for x in np.sort(os.listdir(path)) if x[0]=='t']
 num_SID = 15
 num_obs = 7
