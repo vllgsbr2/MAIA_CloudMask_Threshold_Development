@@ -40,15 +40,16 @@ for DOY, thresh in enumerate(thresh_files):
 #must be independent by DOY because SID bins 0-10 change meaning throughout
 variance_by_DOY = np.zeros(num_DOY)
 NDSI = 1
+Cirrus = 0
 snow = 14
-NDSI_thresh = valid_thresh[:,:,:,snow,NDSI,:].reshape(num_cosSZA*num_VZA*num_RAZ, num_DOY)
-num_bins = 10
-range_ = (0.4,1.)
+NDSI_thresh = valid_thresh[:,:,:,:,Cirrus,:].reshape(num_cosSZA*num_VZA*num_RAZ, num_DOY)
+num_bins = 20
+# range_ = (0.4,1.)
 hists = np.zeros((num_bins,num_DOY))
 bin_edges = np.zeros((num_bins+1,num_DOY))
 for i in range(num_DOY):
     data = NDSI_thresh[:,i][NDSI_thresh[:,i] != -999]
-    hists[:,i], bin_edges[:,i] = np.histogram(data, bins=num_bins, range=range_)
+    hists[:,i], bin_edges[:,i] = np.histogram(data, bins=num_bins)#, range=range_)
 
 plt.figure(1)
 for i in range(num_DOY):
