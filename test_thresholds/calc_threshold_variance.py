@@ -42,12 +42,13 @@ variance_by_DOY = np.zeros(num_DOY)
 NDSI = 1
 snow = 14
 NDSI_thresh = valid_thresh[:,:,:,snow,NDSI,:].reshape(num_cosSZA*num_VZA*num_RAZ, num_DOY)
-num_bins = 50
+num_bins = 20
+range = (0.4,1)
 hists = np.zeros((num_bins,num_DOY))
 bin_edges = np.zeros((num_bins+1,num_DOY))
 for i in range(num_DOY):
     data = NDSI_thresh[:,i][NDSI_thresh[:,i] != -999]
-    hists[:,i], bin_edges[:,i] = np.histogram(data, bins=num_bins)
+    hists[:,i], bin_edges[:,i] = np.histogram(data, bins=num_bins, range=range)
 
 plt.figure(1)
 for i in range(num_DOY):
