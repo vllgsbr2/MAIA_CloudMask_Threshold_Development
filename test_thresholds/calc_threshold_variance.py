@@ -31,11 +31,12 @@ for DOY, thresh in enumerate(thresh_files):
         for obs_x, ob in enumerate(obs):
             obs_path = '{}/{}/{}'.format(TA[0],DOY[0],ob)
             thresh_temp = hf_thresh[obs_path][()]
-            num_thresh = thresh_temp[thresh_temp != -999].shape
+            # num_thresh = thresh_temp[thresh_temp != -999].shape
+            print(thresh_temp.shape)
             thresh_temp[thresh_temp == -999] = np.nan
             valid_thresh[:,:,:,:,obs_x,DOY] = thresh_temp
 
-            print(obs_path, num_thresh)
+            print(obs_path)#, num_thresh)
 
 # #get variance along each axis independently for each obs
 # #must be independent by DOY because SID bins 0-10 change meaning throughout
