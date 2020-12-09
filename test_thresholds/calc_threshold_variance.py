@@ -43,5 +43,5 @@ NDSI = 1
 snow = 14
 data = valid_thresh[:,:,:,snow,NDSI,:].reshape(num_cosSZA*num_VZA*num_RAZ, num_DOY)
 
-NDSI_thresh_DOY_variance = np.var(data, axis=-1)
+NDSI_thresh_DOY_variance = np.nanvar(data, axis=-1)
 print(NDSI_thresh_DOY_variance)
