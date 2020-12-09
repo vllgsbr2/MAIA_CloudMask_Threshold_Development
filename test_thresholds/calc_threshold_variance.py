@@ -33,12 +33,13 @@ for DOY, thresh in enumerate(thresh_files):
             thresh_temp = hf_thresh[obs_path][()]
             num_thresh = thresh_temp[thresh_temp != -999].shape
             thresh_temp[thresh_temp == -999] = np.nan
-            valid_NDSI_thresh[:,:,:,:,:,DOY] = thresh_temp
+            valid_thresh[:,:,:,:,:,DOY] = thresh_temp
 
-            # print(obs_path, num_thresh)
+            print(obs_path, num_thresh)
 
-#get variance along each axis independently for each obs
-#must be independent by DOY because SID bins 0-10 change meaning throughout
-
-for SID_x in range(num_SID):
-    
+# #get variance along each axis independently for each obs
+# #must be independent by DOY because SID bins 0-10 change meaning throughout
+# variance_by_DOY = np.zeros(num_DOY)
+# for i in range(num_DOY):
+#     for j in range(num_DOY-i):
+#         valid_thresh[:,:,:,:,,i]
