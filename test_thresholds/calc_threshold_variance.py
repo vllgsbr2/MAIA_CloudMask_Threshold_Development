@@ -54,7 +54,8 @@ num_bins = 20
 plt.figure(1)
 for i in range(num_DOY):
     # x = hists[:,i]
-    plt.hist(x, bins=num_bins, alpha=0.5)
+    x = NDSI_thresh[:,i].flatten()
+    plt.hist(, bins=num_bins, alpha=0.5)
 plt.show()
 
 # for i in range(num_DOY):
