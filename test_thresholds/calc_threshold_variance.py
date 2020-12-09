@@ -41,5 +41,7 @@ for DOY, thresh in enumerate(thresh_files):
 variance_by_DOY = np.zeros(num_DOY)
 NDSI = 1
 snow = 14
-NDSI_thresh_DOY_variance = np.var(valid_thresh[:,:,:,snow,NDSI,:], axis=-1)
+data = valid_thresh[:,:,:,snow,NDSI,:].reshape(num_cosSZA*num_VZA*num_RAZ, num_DOY)
+
+NDSI_thresh_DOY_variance = np.var(data, axis=-1)
 print(NDSI_thresh_DOY_variance)
