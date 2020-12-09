@@ -28,12 +28,12 @@ for DOY, thresh in enumerate(thresh_files):
         TA = list(hf_thresh.keys())
         DOY = list(hf_thresh[TA[0]].keys())
         obs = list(hf_thresh[TA[0] + '/' + DOY[0]].keys())
-        for ob in obs:
+        for obs_x, ob in enumerate(obs):
             obs_path = '{}/{}/{}'.format(TA[0],DOY[0],ob)
             thresh_temp = hf_thresh[obs_path][()]
             num_thresh = thresh_temp[thresh_temp != -999].shape
             thresh_temp[thresh_temp == -999] = np.nan
-            valid_thresh[:,:,:,:,:,DOY] = thresh_temp
+            valid_thresh[:,:,:,:,obs_x,DOY] = thresh_temp
 
             print(obs_path, num_thresh)
 
