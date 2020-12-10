@@ -56,9 +56,9 @@ for i in range(num_DOY):
 
         KS_test = ks_2samp(thresh_temp_i, thresh_temp_j)
 
-        diff = 'True'
+        diff = 'approve null'
         if KS_test[1] < 0.05:
-            diff = 'False'
+            diff = 'reject null'
 
 
         result = 'KS Test {:1.5f} p-val {:1.5f} DOY {:02d} & {:02d} diff {}'.format(KS_test[0], KS_test[1], i, j, diff)
