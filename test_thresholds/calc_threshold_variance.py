@@ -38,7 +38,7 @@ for DOY, thresh in enumerate(thresh_files):
 
 #cycle through the NDSI for snow
 
-thresh_NDSI = thresh_temp[:,:,:,14,1,:]
+thresh_NDSI = valid_thresh[:,:,:,14,1,:]
 for i in range(num_DOY):
     if i==num_DOY-1:
         break
