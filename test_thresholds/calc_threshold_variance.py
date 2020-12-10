@@ -56,7 +56,7 @@ for i in range(num_DOY):
 
         KS_test = ks_2samp(thresh_temp_i, thresh_temp_j)
 
-        result = 'KS Test {} p-val {} DOY {:02d} & {:02d}'.format(KS_test[0], KS_test[1], i, j)
+        result = 'KS Test {:1.5f} p-val {:1.5f} DOY {:02d} & {:02d}'.format(KS_test[0], KS_test[1], i, j)
 
         print(result)
 
