@@ -46,6 +46,11 @@ for i in range(num_DOY):
         thresh_temp_i = thresh_NDSI[:,i].flatten()
         thresh_temp_i = thresh_temp_i[thresh_temp_i != -999]
 
+        if thresh_temp_i.size==0:
+            continue
+        if thresh_temp_j.size==0:
+            continue
+
         thresh_temp_j = thresh_NDSI[:,i].flatten()
         thresh_temp_j = thresh_temp_j[thresh_temp_j != -999]
 
