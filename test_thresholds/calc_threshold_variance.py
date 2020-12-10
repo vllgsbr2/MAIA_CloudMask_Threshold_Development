@@ -38,15 +38,15 @@ for DOY, thresh in enumerate(thresh_files):
 
 #cycle through the NDSI for snow
 
-thresh_NDSI = valid_thresh[:,:,:,:,0,:]
+thresh_NDSI = valid_thresh[:,:,:,14,1,:]
 for i in range(num_DOY):
     if i==num_DOY-1:
         break
     for j in range(i+1, num_DOY):
-        thresh_temp_i = thresh_NDSI[:,:,:,:,i].flatten()
+        thresh_temp_i = thresh_NDSI[:,:,:,i].flatten()
         thresh_temp_i = thresh_temp_i[thresh_temp_i != -999]
 
-        thresh_temp_j = thresh_NDSI[:,:,:,:,j].flatten()
+        thresh_temp_j = thresh_NDSI[:,:,:,j].flatten()
         thresh_temp_j = thresh_temp_j[thresh_temp_j != -999]
 
         if thresh_temp_i.size==0:
