@@ -139,7 +139,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             a.set_title('MCM')
 
         elif i==2:
-            a.set_title('MOD35')
+            im_mod35 = a.set_title('MOD35')
             cmap = ListedColormap(['white', 'green', 'blue','black'])
             norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
             im_mod35 = a.imshow(mod35cm, vmin=0, cmap=cmap, norm=norm)
