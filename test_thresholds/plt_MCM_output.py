@@ -175,7 +175,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         #mod35 colorbar
         # divider = make_axes_locatable(a)
         # cax = divider.append_axes('right', size='5%', pad=0.05)
-        cax = fig.add_axes([0.97, 0.98, 0.1, 0.25])
+        cax = f.add_axes([0.97, 0.98, 0.1, 0.25])
         # [left, bottom, width, height]
         # left   = 0.005
         # right  = 0.985
@@ -191,7 +191,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         #SID colorbar
         # divider = make_axes_locatable(a)
         # cax = divider.append_axes('right', size='5%', pad=0.05)
-        cax = fig.add_axes([0.97, 0.98, 0.1, 0.25])
+        cax = f.add_axes([0.97, 0.98, 0.1, 0.25])
         cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
         cbar.set_ticks(np.arange(0.5,15.5))
         SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
@@ -200,7 +200,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         #DTT
         # divider = make_axes_locatable(a)
         # cax = divider.append_axes('right', size='5%', pad=0.05)
-        cax = fig.add_axes([0.97, 0.98, 0.1, 0.25])
+        cax = f.add_axes([0.97, 0.98, 0.1, 0.25])
         cbar = f.colorbar(im_DTT, cax=cax, orientation='vertical')
         cbar.set_ticks(np.arange(0.5,15.5))
         SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
