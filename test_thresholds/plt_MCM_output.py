@@ -154,7 +154,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cmap = cm.get_cmap('ocean', 15)
             im_SID = a.imshow(SID, vmin=0, vmax=15, cmap=cmap)
             a.set_title('SID')
-            cax = f.add_axes([0.8, 0.1, 0.025, 0.25])
+            cax = f.add_axes([0.85, 0.1, 0.025, 0.25])
             cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
             cbar.set_ticks(np.arange(0.5,15.5))
             SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
@@ -166,7 +166,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             im_DTT = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
             a.set_title(obs_namelist[i-4])
             im.cmap.set_under('k')
-            cax = f.add_axes([0.85, 0.1, 0.025, 0.25])
+            cax = f.add_axes([0.95, 0.1, 0.025, 0.25])
             cbar = f.colorbar(im_DTT, cax=cax, orientation='vertical')
             # cbar.set_ticks(np.arange(0.5,15.5))
             # SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
