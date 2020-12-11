@@ -143,7 +143,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cmap = ListedColormap(['white', 'green', 'blue','black'])
             norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
             im_mod35 = a.imshow(mod35cm, vmin=0, cmap=cmap, norm=norm)
-            cax = f.add_axes([0.97, 0.01, 0.1, 0.25])
+            cax = f.add_axes([0.87, 0.01, 0.1, 0.25])
             cbar = f.colorbar(im_mod35, cax=cax, orientation='vertical')
             cbar.set_ticks([0.5,1.5,2.5,3.5])
             cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
@@ -154,7 +154,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cmap = cm.get_cmap('ocean', 15)
             im_SID = a.imshow(SID, vmin=0, vmax=15, cmap=cmap)
             a.set_title('SID')
-            cax = f.add_axes([0.97, 0.01, 0.1, 0.25])
+            cax = f.add_axes([0.87, 0.01, 0.1, 0.25])
             cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
             cbar.set_ticks(np.arange(0.5,15.5))
             SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
@@ -166,7 +166,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             im_DTT = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
             a.set_title(obs_namelist[i-4])
             im.cmap.set_under('k')
-            cax = f.add_axes([0.97, 0.01, 0.1, 0.25])
+            cax = f.add_axes([0.87, 0.1, 0.05, 0.25])
             cbar = f.colorbar(im_DTT, cax=cax, orientation='vertical')
             cbar.set_ticks(np.arange(0.5,15.5))
             SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
