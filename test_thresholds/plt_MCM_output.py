@@ -56,10 +56,41 @@ for r in range(size):
         f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
                           hspace=hspace, left=left)
 
+        thesisCaseTimestamps = ['2018362.1800',\
+                                '2017014.1805',\
+                                '2018357.1920',\
+                                '2015297.1805',\
+                                '2018355.1930',\
+                                '2014210.1830',\
+                                '2018354.1850',\
+                                '2018350.1915',\
+                                '2017008.1845',\
+                                '2015291.1845',\
+                                '2018349.1830',\
+                                '2017013.1900',\
+                                '2017011.1915',\
+                                '2014156.1910',\
+                                '2014135.1850',\
+                                '2013317.1845',\
+                                '2014133.1900',\
+                                '2014126.1855',\
+                                '2013219.1855',\
+                                '2012224.1900',\
+                                '2011207.1850',\
+                                '2011198.1855',\
+                                '2012233.1855',\
+                                '2011273.1835',\
+                                '2011262.1855',\
+                                '2011210.1920' ]
+
+
         for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
+            #just produce for cases above
+            if time_stamp not in thesisCaseTimestamps:
+                continue
             output_file_path = MCM_output_home + time_stamp + '/MCM_Output.h5'
             #skip files already processed
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/output_plots/'
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/thesisCasePlots/'
             save_path = home + time_stamp +'.pdf'
             if os.path.exists(save_path):
                 if os.path.getsize(save_path) > 0:
@@ -87,21 +118,34 @@ for r in range(size):
 
             #plot
             #DTT_WI, DTT_NDVI, DTT_NDSI, DTT_VIS_Ref, DTT_NIR_Ref, DTT_SVI, DTT_Cirrus
-            obs_namelist = ['WI', 'NDVI', 'NDSI', '0.65µm BRF', '0.86µm', 'SVI', 'Cirrus']
+            # obs_namelist = ['WI', 'NDVI', 'NDSI', '0.65µm BRF', '0.86µm BRF', 'SVI', 'Cirrus']
+            obs_namelist = ['0.65µm BRF', '0.86µm BRF', 'Cirrus', 'WI', 'SVI', 'NDVI', 'NDSI']
+            obs_idxlist  = [3, 4, 6, 0, 5, 1, 2]
+            # In your thesis, you may want to try the following layout
+            # Top row:  RGB, MCM, MOD35, SID
+            # Middle row: 0.65, 0.85, Cirrus, WI,
+            # Bottom row:  SVI, NDVI, NDSI
+            #
+            # In the caption, you need to specify the granule name and date/time.
 
             for i, a in enumerate(ax.flat):
 
                 #plot DTT first
-                if i < 7:
-                    im = a.imshow(DTT[:,:,i], vmin=-101, vmax=101, cmap='bwr')
+                if i > 3:
+                    if i==4:
+                        im = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
                     a.set_title(obs_namelist[i])
                     im.cmap.set_under('k')
 
                 #plot BRF/MOD35/MCM/SID
-                elif i==7:
+                elif i==0:
                     im = a.imshow(RGB, vmin=0)
                     a.set_title('RGB')
-                elif i==8:
+                elif i==1:
+                    im = a.imshow(MCM, vmin=0, vmax=1, cmap='binary')
+                    a.set_title('MCM')
+
+                elif i==2:
                     a.set_title('MOD35')
                     cmap = ListedColormap(['white', 'green', 'blue','black'])
                     norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
@@ -113,10 +157,7 @@ for r in range(size):
                     # cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
                     #                      'probably\nclear', 'confident\nclear'])
 
-                elif i==9:
-                    im = a.imshow(MCM, vmin=0, vmax=1, cmap='binary')
-                    a.set_title('MCM')
-                elif i==10:
+                elif i==3:
                     cmap = cm.get_cmap('ocean', 15)
                     im = a.imshow(SID, vmin=0, vmax=15, cmap=cmap)
                     a.set_title('SID')
@@ -139,8 +180,8 @@ for r in range(size):
                     im.cmap.set_over('r')
 
 
-            f.savefig(save_path, dpi=300, format='pdf')
+            # f.savefig(save_path, dpi=300, format='pdf')
             print(time_stamp)
             for a in ax.flat:
                 a.clear()
-            # plt.show()
+            plt.show()
