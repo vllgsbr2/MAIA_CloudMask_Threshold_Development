@@ -127,7 +127,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
     # Bottom row:  SVI, NDVI, NDSI
     #
     # In the caption, you need to specify the granule name and date/time.
-
+    im_mod35, im_DTT, im_SID = [],[],[]
     for i, a in enumerate(ax.flat):
 
         #plot BRF/MOD35/MCM/SID
