@@ -57,7 +57,7 @@ bottom = 0.110
 top    = 0.880
 wspace = 0.060
 hspace = 0.090
-f, ax = plt.subplots(nrows=3, ncols=4, figsize=(12, 12))
+f, ax = plt.subplots(nrows=3, ncols=4, figsize=(10, 12))
 f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
                   hspace=hspace, left=left)
 
