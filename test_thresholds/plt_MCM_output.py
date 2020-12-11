@@ -175,7 +175,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         a.set_xticks([])
         a.set_yticks([])
 
-        if i>7:
+        if i<4:
             im.cmap.set_under('r')
             im.cmap.set_over('r')
 
