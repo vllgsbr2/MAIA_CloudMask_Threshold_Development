@@ -131,10 +131,9 @@ for r in range(size):
             for i, a in enumerate(ax.flat):
 
                 #plot DTT first
-                if i > 3:
-                    if i==4:
-                        im = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
-                    a.set_title(obs_namelist[i])
+                if i > 3 and i < 11:
+                    im = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
+                    a.set_title(obs_namelist[i-4])
                     im.cmap.set_under('k')
 
                 #plot BRF/MOD35/MCM/SID
