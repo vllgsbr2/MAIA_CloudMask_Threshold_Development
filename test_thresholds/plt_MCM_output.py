@@ -45,18 +45,13 @@ test_data_JPL_paths = [MCM_input_home + x for x in test_data_JPL_paths]
 # time_stamps, test_data_JPL_paths = time_stamps[start:stop], test_data_JPL_paths[start:stop]
 
 #create figure instance
-# left   = 0.005
-# right  = 0.985
-# bottom = 0.110
-# top    = 0.880
-# wspace = 0.060
-# hspace = 0.090
 left   = 0.005
 right  = 0.985
 bottom = 0.110
 top    = 0.880
 wspace = 0.060
 hspace = 0.090
+
 f, ax = plt.subplots(nrows=3, ncols=4, figsize=(10, 12))
 f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
                   hspace=hspace, left=left)
@@ -147,28 +142,18 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             a.set_title('MOD35')
             cmap = ListedColormap(['white', 'green', 'blue','black'])
             norm = matCol.BoundaryNorm(np.arange(0,5,1), cmap.N)
-            im = a.imshow(mod35cm, vmin=0, cmap=cmap, norm=norm)
-            # divider = make_axes_locatable(a)
-            # cax = divider.append_axes('right', size='5%', pad=0.05)
-            # cbar = f.colorbar(im, cax=cax, orientation='vertical')
-            # cbar.set_ticks([0.5,1.5,2.5,3.5])
-            # cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
-            #                      'probably\nclear', 'confident\nclear'])
+            im_mod35 = a.imshow(mod35cm, vmin=0, cmap=cmap, norm=norm)
+
 
         elif i==3:
             cmap = cm.get_cmap('ocean', 15)
-            im = a.imshow(SID, vmin=0, vmax=15, cmap=cmap)
+            im_SID = a.imshow(SID, vmin=0, vmax=15, cmap=cmap)
             a.set_title('SID')
-            # divider = make_axes_locatable(a)
-            # cax = divider.append_axes('right', size='5%', pad=0.05)
-            # cbar = f.colorbar(im, cax=cax, orientation='vertical')
-            # cbar.set_ticks(np.arange(0.5,15.5))
-            # SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
-            # cbar.set_ticklabels(SID_cbar_labels)
+
 
         #plot DTT first
         elif i > 3 and i < 11:
-            im = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
+            im_DTT = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
             a.set_title(obs_namelist[i-4])
             im.cmap.set_under('k')
 
@@ -184,6 +169,43 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         if i<4:
             im.cmap.set_under('r')
             im.cmap.set_over('r')
+
+        #add colorbars for mod35/SID/DTT in last empty axis
+
+        #mod35 colorbar
+        # divider = make_axes_locatable(a)
+        # cax = divider.append_axes('right', size='5%', pad=0.05)
+        cax = fig.add_axes([0.97, 0.98, 0.1, 0.25])
+        # [left, bottom, width, height]
+        # left   = 0.005
+        # right  = 0.985
+        # bottom = 0.110
+        # top    = 0.880
+        # wspace = 0.060
+        # hspace = 0.090
+        cbar = f.colorbar(im_mod35, cax=cax, orientation='vertical')
+        cbar.set_ticks([0.5,1.5,2.5,3.5])
+        cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
+                             'probably\nclear', 'confident\nclear'])
+
+        #SID colorbar
+        # divider = make_axes_locatable(a)
+        # cax = divider.append_axes('right', size='5%', pad=0.05)
+        cax = fig.add_axes([0.97, 0.98, 0.1, 0.25])
+        cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
+        cbar.set_ticks(np.arange(0.5,15.5))
+        SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
+        cbar.set_ticklabels(SID_cbar_labels)
+
+        #DTT
+        # divider = make_axes_locatable(a)
+        # cax = divider.append_axes('right', size='5%', pad=0.05)
+        cax = fig.add_axes([0.97, 0.98, 0.1, 0.25])
+        cbar = f.colorbar(im_DTT, cax=cax, orientation='vertical')
+        cbar.set_ticks(np.arange(0.5,15.5))
+        SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
+        cbar.set_ticklabels(SID_cbar_labels)
+
 
 
     # f.savefig(save_path, dpi=300, format='pdf')
