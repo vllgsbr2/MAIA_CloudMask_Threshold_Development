@@ -167,8 +167,10 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             im.cmap.set_under('k')
 
         #turn off unused axes
-        else:
+        elif i >= 11:
             a.axis('off')
+        else:
+            pass
         #turn off ticks
         a.set_xticks([])
         a.set_yticks([])
