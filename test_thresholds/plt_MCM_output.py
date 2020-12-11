@@ -146,8 +146,8 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cax = f.add_axes([0.75, 0.1, 0.012, 0.25])
             cbar = f.colorbar(im_mod35, cax=cax, orientation='vertical')
             cbar.set_ticks([0.5,1.5,2.5,3.5])
-            cbar.set_ticklabels(['cloudy', 'uncertain\nclear', \
-                                 'probably\nclear', 'confident\nclear'])
+            cbar.set_ticklabels(['CD', 'UCR', \
+                                 'PCR', 'CR'])
 
 
         elif i==3:
@@ -157,7 +157,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             cax = f.add_axes([0.85, 0.1, 0.012, 0.25])
             cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
             cbar.set_ticks(np.arange(0.5,15.5))
-            SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
+            SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','C', 'W', 'SGW', 'SI']
             cbar.set_ticklabels(SID_cbar_labels)
 
 
