@@ -166,7 +166,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
             im_DTT = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
             a.set_title(obs_namelist[i-4])
             im.cmap.set_under('k')
-            cax = f.add_axes([0.9, 0.11, 0.012, 0.24])
+            cax = f.add_axes([0.87, 0.11, 0.012, 0.24])
             cbar = f.colorbar(im_DTT, cax=cax, orientation='vertical')
             # cbar.set_ticks(np.arange(0.5,15.5))
             # SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','coast', 'water', 'sunglint water', 'snow ice']
