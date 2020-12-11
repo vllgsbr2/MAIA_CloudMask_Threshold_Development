@@ -45,13 +45,19 @@ test_data_JPL_paths = [MCM_input_home + x for x in test_data_JPL_paths]
 # time_stamps, test_data_JPL_paths = time_stamps[start:stop], test_data_JPL_paths[start:stop]
 
 #create figure instance
+# left   = 0.005
+# right  = 0.985
+# bottom = 0.110
+# top    = 0.880
+# wspace = 0.060
+# hspace = 0.090
 left   = 0.005
 right  = 0.985
 bottom = 0.110
 top    = 0.880
 wspace = 0.060
 hspace = 0.090
-f, ax = plt.subplots(nrows=3, ncols=4, figsize=(20, 10))
+f, ax = plt.subplots(nrows=3, ncols=4, figsize=(12, 12))
 f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
                   hspace=hspace, left=left)
 
