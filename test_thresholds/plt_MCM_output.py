@@ -182,6 +182,6 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
 
     # f.savefig(save_path, dpi=300, format='pdf')
     print(time_stamp)
+    plt.show()
     for a in ax.flat:
         a.clear()
-    plt.show()
