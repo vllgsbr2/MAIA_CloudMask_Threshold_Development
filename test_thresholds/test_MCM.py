@@ -34,7 +34,7 @@ guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thr
 # threshold_filepath = guangyu_home + 'thresholds_DOY_273_to_280_bin_34.h5'
 # threshold_filepath = guangyu_home + 'OBthresholds_DOY_273_to_280_bin_34.h5'
 test_scene = 'test_JPL_data_2019276.1805.h5'
-test_scene = 'test_JPL_data_2006029.1910.h5'
+# test_scene = 'test_JPL_data_2006029.1910.h5'
 
 # test_scene = 'test_JPL_data_2019089.1825.h5'
 DOY = int(test_scene[18:-8])
