@@ -29,8 +29,8 @@ test_scene = 'test_JPL_data_2019137.1825.h5' # great scene!! would like more wat
 
 #test some Guangyu scenes
 # test_scene = 'test_JPL_data_2019276.1805.h5'
-num_Kmeans_sfc_types = 11
-# guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
+num_Kmeans_sfc_types = 17#11
+guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
 # threshold_filepath = guangyu_home + 'thresholds_DOY_273_to_280_bin_34.h5'
 # threshold_filepath = guangyu_home + 'OBthresholds_DOY_273_to_280_bin_34.h5'
 test_scene = 'test_JPL_data_2019276.1805.h5'
@@ -44,15 +44,16 @@ DOY_start = DOY_end - 7
 
 # thresh_file = 'thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin, num_Kmeans_sfc_types)
 thresh_file = 'thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin)
-
+threshold_filepath = guangyu_home + thresh_file
 # SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(num_Kmeans_sfc_types, DOY_end)
 SID_file    = 'surfaceID_LosAngeles_{:03d}.nc'.format(DOY_end)
+sfc_ID_filepath = '/data/gdi/c/gzhao1/MCM-surfaceID/SfcID/LosAngeles/' + SID_file
 
 print(test_scene, thresh_file, SID_file)
 
 test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],test_scene)
-threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], thresh_file)
-sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], SID_file)
+# threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], thresh_file)
+# sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], SID_file)
 print(threshold_filepath)
 # test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],'test_JPL_data_2003114.1845.h5')
 # threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], 'thresholds_DOY_113_to_120_bin_14.h5')
