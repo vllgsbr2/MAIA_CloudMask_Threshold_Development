@@ -90,7 +90,7 @@ scene_type_identifier,\
 T = \
              MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
                              sfc_ID_filepath, config_filepath, num_Kmeans_sfc_types)
-
+print(scene_type_identifier.max(), scene_type_identifier[scene_type_identifier!=-999].min())
 #save output
 make_output(Sun_glint_exclusion_angle,\
             Max_RDQI,\
