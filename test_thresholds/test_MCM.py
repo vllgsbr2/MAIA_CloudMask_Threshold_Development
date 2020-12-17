@@ -51,8 +51,8 @@ sfc_ID_filepath = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/Surface_IDs
 
 print(test_scene, thresh_file, SID_file)
 
-# test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],test_scene)
-threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], thresh_file)
+test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],test_scene)
+# threshold_filepath = '{}/{}/{}'.format(PTA_path, config['supporting directories']['thresh'], thresh_file)
 # sfc_ID_filepath    = '{}/{}/{}'.format(PTA_path, config['supporting directories']['Surface_IDs'], SID_file)
 print(threshold_filepath)
 # test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],'test_JPL_data_2003114.1845.h5')
