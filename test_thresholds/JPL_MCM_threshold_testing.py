@@ -895,7 +895,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     fill_val_3,\
     Min_num_of_activated_tests,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
-
+    print(sfc_ID.min(), sfc_ID.max(), 'sid min max')
     # import matplotlib.pyplot as plt
     # import matplotlib.cm as cm
     # import matplotlib.colors as matCol
