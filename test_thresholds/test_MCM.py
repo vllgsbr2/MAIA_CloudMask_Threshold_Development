@@ -47,7 +47,7 @@ thresh_file = 'thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, 
 threshold_filepath = guangyu_home + thresh_file
 # SID_file    = 'num_Kmeans_SID_{:02d}/surfaceID_LosAngeles_{:03d}.nc'.format(num_Kmeans_sfc_types, DOY_end)
 SID_file    = 'surfaceID_LosAngeles_{:03d}.nc'.format(DOY_end)
-sfc_ID_filepath = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/Surface_IDs/num_Kmeans_SID_16/' + SID_file
+sfc_ID_filepath = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/Surface_IDs/' + SID_file
 
 print(test_scene, thresh_file, SID_file)
 
