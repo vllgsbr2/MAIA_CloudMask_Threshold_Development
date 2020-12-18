@@ -20,6 +20,7 @@ SID_accur = []
 #dictionary to store SID accur for each CF
 SID_accur_by_CF = {'20':[], '40':[], '60':[], '80':[], '100':[]}
 #confusion matrix table for each num SID and each CF
+#26 SIDs, 6 CF ranges, 4 confusion matrix
 conf_matx_master = np.zeros((26,6,4))
 SID_accur_by_CF_AVG_ALL_CF = np.zeros((26))
 

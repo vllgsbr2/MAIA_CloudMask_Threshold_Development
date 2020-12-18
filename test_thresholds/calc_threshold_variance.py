@@ -38,32 +38,57 @@ for DOY, thresh in enumerate(thresh_files):
 
 #cycle through the NDSI for snow
 
-thresh_NDSI = valid_thresh[:,:,:,14,1,:]
-for i in range(num_DOY):
-    if i==num_DOY-1:
-        break
-    for j in range(i+1, num_DOY):
-        thresh_temp_i = thresh_NDSI[:,:,:,i].flatten()
-        thresh_temp_i = thresh_temp_i[thresh_temp_i != -999]
+# thresh_NDSI = valid_thresh[:,:,:,14,1,:]
+obs = ['Cirrus', 'NDSI', 'NDVI', 'NIR', 'SVI', 'Vis', 'WI']
+results = []
+for obs_x in range(7):
+    #Cirrus
+    if obs_x==0:
+        thresh_obs_x = valid_thresh[:,:,:,:,obs_x,:]
+    #NDSI
+    elif obs_x==1:
+        thresh_obs_x = valid_thresh[:,:,:,14,obs_x,:]
+    #NDVI
+    elif obs_x==2:
+        thresh_obs_x = valid_thresh[:,:,:,:13,obs_x,:]
+    #NIR
+    elif obs_x==3:
+        thresh_obs_x = valid_thresh[:,:,:,12,obs_x,:]
+    #SVI
+    elif obs_x==4:
+        thresh_obs_x = valid_thresh[:,:,:,:,obs_x,:]
+    #Vis
+    elif obs_x==5:
+        thresh_obs_x = valid_thresh[:,:,:,:12,obs_x,:]
+    #WI
+    else:
+        thresh_obs_x = valid_thresh[:,:,:,:13,obs_x,:]
 
-        thresh_temp_j = thresh_NDSI[:,:,:,j].flatten()
-        thresh_temp_j = thresh_temp_j[thresh_temp_j != -999]
+    with open('./{}_KS_test'.format(obs[obs_x]), 'w') as txt_KS_test:
+        for i in range(num_DOY):
+            if i==num_DOY-1:
+                break
+            for j in range(i+1, num_DOY):
+                thresh_temp_i = thresh_obs_x[:,:,:,i].flatten()
+                thresh_temp_i = thresh_temp_i[thresh_temp_i != -999]
 
-        if thresh_temp_i.size==0:
-            continue
-        if thresh_temp_j.size==0:
-            continue
+                thresh_temp_j = thresh_obs_x[:,:,:,j].flatten()
+                thresh_temp_j = thresh_temp_j[thresh_temp_j != -999]
 
-        KS_test = ks_2samp(thresh_temp_i, thresh_temp_j)
+                if thresh_temp_i.size==0:
+                    continue
+                if thresh_temp_j.size==0:
+                    continue
 
-        diff = 'approve null'
-        if KS_test[1] < 0.05:
-            diff = 'reject null'
+                KS_test = ks_2samp(thresh_temp_i, thresh_temp_j)
 
+                diff = 'approve null'
+                if KS_test[1] < 0.05:
+                    diff = 'reject null'
 
-        result = 'KS Test {:1.5f} p-val {:1.5f} DOY {:02d} & {:02d} diff {}'.format(KS_test[0], KS_test[1], i, j, diff)
-
-        print(result)
+                result = 'KS Test {:1.5f} p-val {:1.5f} DOY {:02d} & {:02d} diff {}'.format(KS_test[0], KS_test[1], i, j, diff)
+                results.append(result)
+                # print(result)
 
 
     # thresh_temp = hf_thresh[obs_path][()]
