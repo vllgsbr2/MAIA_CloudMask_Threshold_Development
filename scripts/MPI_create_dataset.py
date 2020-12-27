@@ -58,6 +58,11 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
     radiance_500_Aggr1km, scale_factor_rad_500m, scale_factor_ref_500m    = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
     radiance_1KM, scale_factor_rad_1km, scale_factor_ref_1km              = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
 
+    rad_or_ref              = False
+    reflectance_250_Aggr1km, scale_factor_rad_250m, scale_factor_ref_250m = prepare_data(filename_MOD_02, fieldname[1], rad_or_ref)
+    reflectance_500_Aggr1km, scale_factor_rad_500m, scale_factor_ref_500m = prepare_data(filename_MOD_02, fieldname[3], rad_or_ref)
+    reflectance_1KM, scale_factor_rad_1km, scale_factor_ref_1km           = prepare_data(filename_MOD_02, fieldname[4], rad_or_ref)
+
     #grab scale factors for MODIS bands 3,4,1,2,6,26 (MAIA bands 4,5,6,9,12,13)
     band_index = {'1':0,
                   '2':1,
@@ -162,6 +167,7 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
     #ceate structure in hdf file
     group                       = hf.create_group(group_name)
     subgroup_radiance           = group.create_group('radiance')
+    subgroup_reflectance           = group.create_group('reflectance')
     # subgroup_scale_factors      = group.create_group('scale_factors')
     subgroup_geolocation        = group.create_group('geolocation')
     subgroup_sunView_geometry   = group.create_group('sunView_geometry')
@@ -179,25 +185,31 @@ def build_data_base(filename_MOD_02, filename_MOD_03, filename_MOD_35, hf, \
     for band, index in band_index.items():
         if band=='1' or band=='2':
             crop_radiance = radiance_250_Aggr1km[index][regrid_row_idx, regrid_col_idx]
-            #crop_reflectance = reflectance_250_Aggr1km[index][regrid_row_idx, regrid_col_idx]
+            crop_reflectance = reflectance_250_Aggr1km[index][regrid_row_idx, regrid_col_idx]
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
+            crop_reflectance[fill_val_idx] = fill_val
 
         elif band=='3' or band=='4' or band=='6':
             crop_radiance = radiance_500_Aggr1km[index][regrid_row_idx, regrid_col_idx]
+            crop_reflectance = reflectance_500_Aggr1km[index][regrid_row_idx, regrid_col_idx]
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
+            crop_reflectance[fill_val_idx] = fill_val
 
         else:
             crop_radiance = radiance_1KM[index][regrid_row_idx, regrid_col_idx]
+            crop_reflectance = reflectance_1KM[index][regrid_row_idx, regrid_col_idx]
 
             #Apply fill values
             crop_radiance[fill_val_idx]    = fill_val
+            crop_reflectance[fill_val_idx] = fill_val
 
         #group_name is granule, radiance is subgroup, band_1 is dataset, then the data
         save_crop(subgroup_radiance, 'band_{}'.format(band), crop_radiance)
+        save_crop(subgroup_reflectance, 'band_{}'.format(band), crop_reflectance)
 
     #*******************************************************************************
     #Sun view geometry
