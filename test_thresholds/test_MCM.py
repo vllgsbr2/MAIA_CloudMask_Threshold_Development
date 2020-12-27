@@ -15,7 +15,7 @@ config.read(config_home_path+'/test_config.txt')
 
 PTA          = config['current PTA']['PTA']
 PTA_path     = config['PTAs'][PTA]
-
+#did it work
 #LA
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2009048.1855.HDF5'
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2010197.1845.HDF5'
