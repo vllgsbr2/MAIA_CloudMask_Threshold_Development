@@ -71,7 +71,7 @@ def make_SID_MCM_rdy(home_og, home):
         with Dataset(home + sfc_ID_path, 'r') as nc_sfc_ID:
             sfc_IDs_read_mod[:,:,i] = nc_sfc_ID.variables['surface_ID'][:,:]
 
-        im=plt.imshow(sfc_IDs_read_mod[:,:,i], cmap='jet', vmin=0, vmax=11)
+        im=plt.imshow(sfc_IDs_read_mod[:,:,i], cmap='jet', vmin=0, vmax=num_KMeans_IDs+1)
         im.cmap.set_over('k')
         im.cmap.set_under('pink')
         plt.show()
