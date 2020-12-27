@@ -71,8 +71,9 @@ def get_R(radiance, SZA, d, E_std_0b):
 
     #condition to not step on fill values when converting to BRF(R)
     valid_rad_idx = np.where(radiance >= 0.0)
-    radiance[valid_rad_idx] = ((np.pi * radiance * d**2)\
-                           / (np.cos(np.deg2rad(SZA)) * E_std_0b))[valid_rad_idx]
+    # radiance[valid_rad_idx] = ((np.pi * radiance * d**2)\
+    #                        / (np.cos(np.deg2rad(SZA)) * E_std_0b))[valid_rad_idx]
+    radiance[valid_rad_idx] = (radiance / np.cos(np.deg2rad(SZA)) )[valid_rad_idx]        
     #just assign R to the memory of radiance to highlight conversion
     R = radiance
 
