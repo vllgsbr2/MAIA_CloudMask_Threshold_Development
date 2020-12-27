@@ -23,8 +23,8 @@ for r in range(size):
 
         num_land_SID = int(sys.argv[1])
 
-        # data_home = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
-        data_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/MCM_Input/'
+        data_home = '{}/{}/'.format(PTA_path, config['supporting directories']['MCM_Input'])
+        # data_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/MCM_Input/'
         test_data_JPL_paths = os.listdir(data_home)
         time_stamps         = [x[14:26] for x in test_data_JPL_paths]
         test_data_JPL_paths = [data_home + x for x in test_data_JPL_paths]
@@ -53,7 +53,8 @@ for r in range(size):
                 DOY_start = DOY_end - 7
 
                 print('DOY {} DOY_start {} DOY_end {} DOY_bin {}'.format(DOY, DOY_start, DOY_end, DOY_bin))
-                thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
+                # thresh_home = '{}/{}'.format(PTA_path, config['supporting directories']['thresh'])
+                thresh_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds'
                 threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'\
                                      .format(thresh_home, DOY_start, DOY_end, DOY_bin)
                 # threshold_filepath = '{}/thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}_numSID_{:02d}.h5'\
