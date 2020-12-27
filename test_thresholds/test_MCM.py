@@ -8,7 +8,7 @@ from matplotlib import cm
 import matplotlib
 matplotlib.use('Agg')
 
-#
+########
 config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
 config = configparser.ConfigParser()
 config.read(config_home_path+'/test_config.txt')
