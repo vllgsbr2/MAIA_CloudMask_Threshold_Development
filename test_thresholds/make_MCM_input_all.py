@@ -17,6 +17,14 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 rad_b9             = hf_database[time_stamp + '/radiance/band_2'][()]
                 rad_b12            = hf_database[time_stamp + '/radiance/band_6'][()]
                 rad_b13            = hf_database[time_stamp + '/radiance/band_26'][()]
+
+                ref_b4             = hf_database[time_stamp + '/reflectance/band_3'][()]
+                ref_b5             = hf_database[time_stamp + '/reflectance/band_4'][()]
+                ref_b6             = hf_database[time_stamp + '/reflectance/band_1'][()]
+                ref_b9             = hf_database[time_stamp + '/reflectance/band_2'][()]
+                ref_b12            = hf_database[time_stamp + '/reflectance/band_6'][()]
+                ref_b13            = hf_database[time_stamp + '/reflectance/band_26'][()]
+
                 E_std0b            = hf_database[time_stamp + '/band_weighted_solar_irradiance'][()]
                 lat                = hf_database[time_stamp + '/geolocation/lat'][()]
                 lon                = hf_database[time_stamp + '/geolocation/lon'][()]
@@ -42,6 +50,7 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 #create structure in hdf file
                 ARP                = hf.create_group('Anicillary_Radiometric_Product')
                 ARP_rad            = ARP.create_group('Radiance')
+                ARP_ref            = ARP.create_group('Reflectance')
                 ARP_RDQI           = ARP.create_group('Radiometric_Data_Quality_Indicator')
                 ARP_SVG            = ARP.create_group('Sun_View_Geometry')
                 ARP_earth_sun_dist = ARP.create_group('Earth_Sun_distance')
@@ -98,6 +107,13 @@ def make_JPL_data_from_MODIS(database_file, output_path, TA):
                 ARP_rad.create_dataset('rad_band_9' , data=rad_b9 , dtype='f', compression='gzip')
                 ARP_rad.create_dataset('rad_band_12', data=rad_b12, dtype='f', compression='gzip')
                 ARP_rad.create_dataset('rad_band_13', data=rad_b13, dtype='f', compression='gzip')
+
+                ARP_ref.create_dataset('ref_band_4' , data=ref_b4 , dtype='f', compression='gzip')
+                ARP_ref.create_dataset('ref_band_5' , data=ref_b5 , dtype='f', compression='gzip')
+                ARP_ref.create_dataset('ref_band_6' , data=ref_b6 , dtype='f', compression='gzip')
+                ARP_ref.create_dataset('ref_band_9' , data=ref_b9 , dtype='f', compression='gzip')
+                ARP_ref.create_dataset('ref_band_12', data=ref_b12, dtype='f', compression='gzip')
+                ARP_ref.create_dataset('ref_band_13', data=ref_b13, dtype='f', compression='gzip')
 
                 ARP_RDQI.create_dataset('RDQI_band_4' , data=RDQI_b4 , dtype='i4', compression='gzip')
                 ARP_RDQI.create_dataset('RDQI_band_5' , data=RDQI_b5 , dtype='i4', compression='gzip')

@@ -9,12 +9,20 @@ def get_JPL_data(test_data_JPL_path):
     JPL_file = h5py.File(test_data_JPL_path, 'r')
 
     #retrieve radiances
-    rad_band_4  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_4']
-    rad_band_5  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_5']
-    rad_band_6  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_6']
-    rad_band_9  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_9']
-    rad_band_12 = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_12']
-    rad_band_13 = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_13']
+    # rad_band_4  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_4']
+    # rad_band_5  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_5']
+    # rad_band_6  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_6']
+    # rad_band_9  = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_9']
+    # rad_band_12 = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_12']
+    # rad_band_13 = JPL_file['Anicillary_Radiometric_Product/Radiance/rad_band_13']
+
+    #temporarlily use ref as rad. in main code just divide by cosSZA for brf
+    rad_band_4  = JPL_file['Anicillary_Radiometric_Product/Reflectance/ref_band_4']
+    rad_band_5  = JPL_file['Anicillary_Radiometric_Product/Reflectance/ref_band_5']
+    rad_band_6  = JPL_file['Anicillary_Radiometric_Product/Reflectance/ref_band_6']
+    rad_band_9  = JPL_file['Anicillary_Radiometric_Product/Reflectance/ref_band_9']
+    rad_band_12 = JPL_file['Anicillary_Radiometric_Product/Reflectance/ref_band_12']
+    rad_band_13 = JPL_file['Anicillary_Radiometric_Product/Reflectance/ref_band_13']
 
     #retrieve radiance quality flag 'RDQI'
     RDQI_b4  = JPL_file['Anicillary_Radiometric_Product/Radiometric_Data_Quality_Indicator/RDQI_band_4']
