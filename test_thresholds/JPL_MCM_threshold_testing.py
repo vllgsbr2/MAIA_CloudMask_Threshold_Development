@@ -73,7 +73,7 @@ def get_R(radiance, SZA, d, E_std_0b):
     valid_rad_idx = np.where(radiance >= 0.0)
     # radiance[valid_rad_idx] = ((np.pi * radiance * d**2)\
     #                        / (np.cos(np.deg2rad(SZA)) * E_std_0b))[valid_rad_idx]
-    radiance[valid_rad_idx] = (radiance / np.cos(np.deg2rad(SZA)) )[valid_rad_idx]        
+    radiance[valid_rad_idx] = (radiance / np.cos(np.deg2rad(SZA)) )[valid_rad_idx]
     #just assign R to the memory of radiance to highlight conversion
     R = radiance
 
@@ -509,10 +509,10 @@ def get_test_determination(observable_level_parameter, observable_data,\
             OLP[invalid_SID_idx] = 0
 
             path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(TA, DOY, observable_name)
-            print(path)
+            # print(path)
             database = hf_thresholds[path][()]
-            print(database.shape)
-            print(database[database != -999].size)
+            # print(database.shape)
+            # print(database[database != -999].size)
 
             thresholds = np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
 
@@ -896,7 +896,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     fill_val_3,\
     Min_num_of_activated_tests,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
-    print(sfc_ID.min(), sfc_ID.max(), 'sid min max')
+    # print(sfc_ID.min(), sfc_ID.max(), 'sid min max')
     # import matplotlib.pyplot as plt
     # import matplotlib.cm as cm
     # import matplotlib.colors as matCol
@@ -1063,7 +1063,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     final_cloud_mask = get_cm_confidence(DTT, activation_values,\
                              Min_num_of_activated_tests, fill_val_2, fill_val_3)
 
-    print('finished: ' , time.time() - start_time)
+    # print('finished: ' , time.time() - start_time)
 
 
 
