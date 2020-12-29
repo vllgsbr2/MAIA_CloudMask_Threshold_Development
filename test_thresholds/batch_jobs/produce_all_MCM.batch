@@ -10,4 +10,4 @@
 #SBATCH --error='slurm_produce_all_MCM.err'
 
 cd /data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development/test_thresholds/
-mpirun -n 200 python produce_all_MCM.py 17
+mpirun -n 200 python produce_all_MCM.py 16
