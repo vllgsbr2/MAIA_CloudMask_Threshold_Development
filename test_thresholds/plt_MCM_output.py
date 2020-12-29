@@ -29,11 +29,11 @@ PTA          = config['current PTA']['PTA']
 PTA_path     = config['PTAs'][PTA]
 
 #grab output files
-MCM_output_home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/MCM_Output/Guangyu_output_dec_1_2020/'
+MCM_output_home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/MCM_Output/numKmeansSID_16/'
 time_stamps     = np.sort(os.listdir(MCM_output_home))
 
 #grab input files
-MCM_input_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/MCM_Input/'
+MCM_input_home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/MCM_Input/'
 test_data_JPL_paths = os.listdir(MCM_input_home)
 time_stamps         = [x[14:26] for x in test_data_JPL_paths]
 test_data_JPL_paths = [MCM_input_home + x for x in test_data_JPL_paths]
@@ -156,18 +156,18 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
 
         elif i==3:
             cmap = cm.get_cmap('ocean', 15)
-            im_SID = a.imshow(SID, vmin=0, vmax=15, cmap=cmap)
+            im_SID = a.imshow(SID, vmin=0, vmax=20, cmap=cmap)
             a.set_title('SID')
             cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
             cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
-            cbar.set_ticks(np.arange(0.5,15.5))
+            cbar.set_ticks(np.arange(0.5,20.5))
             SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','C', 'W', 'SGW', 'SI']
             cbar.set_ticklabels(SID_cbar_labels)
             im_SID.cmap.set_under('r')
 
 
         #plot DTT first
-        elif i > 3 and i < 11:
+        elif i > 3 and i < 20:
             im_DTT = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
             a.set_title(obs_namelist[i-4])
             im.cmap.set_under('k')
@@ -185,8 +185,8 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         a.set_xticks([])
         a.set_yticks([])
 
-    f.savefig(save_path, dpi=300, format='pdf')
+    # f.savefig(save_path, dpi=300, format='pdf')
     print(time_stamp)
-    # plt.show()
+    plt.show()
     for a in ax.flat:
         a.clear()
