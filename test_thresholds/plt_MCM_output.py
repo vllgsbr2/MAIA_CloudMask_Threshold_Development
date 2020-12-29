@@ -155,7 +155,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
 
 
         elif i==3:
-            cmap = cm.get_cmap('ocean', 15)
+            cmap = cm.get_cmap('ocean', 20)
             im_SID = a.imshow(SID, vmin=0, vmax=20, cmap=cmap)
             a.set_title('SID')
             cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
@@ -167,7 +167,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
 
 
         #plot DTT first
-        elif i > 3 and i < 20:
+        elif i > 3 and i < 11:
             im_DTT = a.imshow(DTT[:,:,obs_idxlist[i-4]], vmin=-101, vmax=101, cmap='bwr')
             a.set_title(obs_namelist[i-4])
             im.cmap.set_under('k')
