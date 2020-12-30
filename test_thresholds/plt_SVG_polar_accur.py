@@ -67,7 +67,7 @@ weighted_accuracy_SVG = data[dataset_names[0]]*100
 # print(accuracy_SVG.shape, num_smaples_SVG.shape)
 
 #-- Plot... ------------------------------------------------
-fig, ax = plt.subplots(3,2, subplot_kw=dict(projection='polar'))
+fig, ax = plt.subplots(3,2, subplot_kw=dict(projection='polar'), figsize=(6, 12))
 
 
 for i, a in enumerate(ax.flat):
@@ -83,7 +83,7 @@ for i, a in enumerate(ax.flat):
     a.set_thetamax(180)
     a.grid()
 
-cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
+cax = fig.add_axes([0.92, 0.23, 0.02, 0.5])#l,b,w,h
 cbar = fig.colorbar(im, cax=cax, ticks=np.arange(0,105,5))
 
 plt.show()
