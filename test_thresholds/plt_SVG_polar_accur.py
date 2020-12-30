@@ -47,7 +47,7 @@ filepath = scene_accur_path
 
 #-- Generate Data -----------------------------------------
 # Using linspace so that the endpoint of 360 is included...
-azimuths = np.radians(np.linspace(0, 192, 12))
+azimuths = np.radians(np.linspace(0, 180, 12))
 zeniths = np.arange(0, 75, 5)
 
 r, theta = np.meshgrid(zeniths, azimuths)
@@ -76,7 +76,7 @@ for i, a in enumerate(ax.flat):
     SZA2 = np.rad2deg(np.arccos((i+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
     a.set_rticks(np.arange(0,75,5))
-    a.set_thetamax(192)
+    a.set_thetamax(180)
 
 
 cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
