@@ -51,7 +51,7 @@ filepath = group_accur_path
 
 #-- Generate Data -----------------------------------------
 # Using linspace so that the endpoint of 360 is included...
-azimuths = np.radians(np.linspace(0, 180, 15))
+azimuths = np.radians(np.arange(0,192, 12))
 zeniths  = np.arange(0, 75, 5)
 
 r, theta = np.meshgrid(zeniths, azimuths)
