@@ -74,7 +74,7 @@ for i, a in enumerate(ax.flat):
     cmap = cm.get_cmap('plasma', 20)
     a.set_thetagrids(np.arange(0,192,12))
 
-    im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i,:,:],\
+    im = a.contourf(theta, r, weighted_accuracy_SVG[i,:,:],\
                       cmap=cmap, vmin=0, vmax=100)
     SZA1 = np.rad2deg(np.arccos(i/10))
     SZA2 = np.rad2deg(np.arccos((i+1)/10))
