@@ -79,7 +79,9 @@ for i, a in enumerate(ax.flat):
     SZA1 = np.rad2deg(np.arccos((i+4)/10))
     SZA2 = np.rad2deg(np.arccos(((i+4)+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
-    a.set_yticks(np.arange(0,75,5))
+    # a.set_rticks(np.arange(0,75,5))
+    a.set_yticks(np.arange(0,80,10))
+    a.set_yticklabels(np.arange(0,80,10))
     a.set_thetamax(180)
     a.grid()
 
