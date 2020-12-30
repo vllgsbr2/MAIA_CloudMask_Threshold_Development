@@ -17,9 +17,9 @@ group_accur_path = group_accur_home + '/' + 'group_ID_accuracy.h5'
 filepath = group_accur_path
 
 
-s_list = np.zeros((10,12,15))
-num_samples_list=np.zeros((10,12,15))
-
+# s_list = np.zeros((10,12,15))
+# num_samples_list=np.zeros((10,12,15))
+weighted_accuracy = np.zeros((10,12,15))
 with h5py.File(filepath, 'r') as hf:
     bins = list(hf.keys())
 
@@ -38,7 +38,7 @@ with h5py.File(filepath, 'r') as hf:
                     # print(hf[bin_ID+'/accuracy'][()])
                     num_samples.append(hf[bin_ID+'/num_samples'][()])
                 accuracy, num_samples = np.array(accuracy), np.array(num_samples)
-                weighted_accuracy = np.sum(accuracy*num_samples) / num_samples
+                weighted_accuracy[SZA, RAA, VZA] = np.sum(accuracy*num_samples) / num_samples
         print('SZA bin: ', SZA)
                 # s_temp = np.array(accuracy)
                 # num_samples_temp = np.array(num_samples)
