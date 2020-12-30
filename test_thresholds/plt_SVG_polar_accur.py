@@ -85,6 +85,6 @@ for i, a in enumerate(ax.flat):
 
 
 cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
-fig.colorbar(im, cax=cax)
+fig.colorbar(im, cax=cax, ticks=np.arange(5,105,5))
 
 plt.show()
