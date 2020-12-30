@@ -67,31 +67,23 @@ weighted_accuracy_SVG = data[dataset_names[0]]*100
 # print(accuracy_SVG.shape, num_smaples_SVG.shape)
 
 #-- Plot... ------------------------------------------------
-fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'))
+fig, ax = plt.subplots(3,2, subplot_kw=dict(projection='polar'))
 
 
 for i, a in enumerate(ax.flat):
-    if i<4:
-        a.axis('off')
-    else:
-        cmap = cm.get_cmap('plasma', 20)
-        a.set_thetagrids(np.arange(0,195,15))
+    cmap = cm.get_cmap('plasma', 20)
+    a.set_thetagrids(np.arange(0,195,15))
 
-        im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i,:,:],\
-                          cmap=cmap, vmin=0, vmax=100)
-        SZA1 = np.rad2deg(np.arccos(i/10))
-        SZA2 = np.rad2deg(np.arccos((i+1)/10))
-        a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
-        a.set_rticks(np.arange(0,75,5))
-        a.set_thetamax(180)
-        a.grid()
-
-
-
+    im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i+4,:,:],\
+                      cmap=cmap, vmin=0, vmax=100)
+    SZA1 = np.rad2deg(np.arccos((i+3)/10))
+    SZA2 = np.rad2deg(np.arccos(((i+3)+1)/10))
+    a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
+    a.set_rticks(np.arange(0,75,5))
+    a.set_thetamax(180)
+    a.grid()
 
 cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
 cbar = fig.colorbar(im, cax=cax, ticks=np.arange(0,105,5))
-# cbar.set_ticks=np.arange(2.5,100,5)
-# cbar.set_ticklabels=np.arange(5,105,5)
 
 plt.show()
