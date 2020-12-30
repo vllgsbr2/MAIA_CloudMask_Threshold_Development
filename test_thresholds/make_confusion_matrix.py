@@ -41,7 +41,7 @@ def scene_confusion_matrix(MOD_CM_path, MAIA_CM_path, DOY_bin, conf_matx_scene_p
                 true         = np.where((MAIA_CM == 0) & (MOD_CM == 0))
                 #both return clear
                 false        = np.where((MAIA_CM == 1) & (MOD_CM != 0))
-                #MAIA clear MOD cloudy 
+                #MAIA clear MOD cloudy
                 false_clear  = np.where((MAIA_CM == 1) & (MOD_CM == 0))
                 #MAIA cloudy MOD clear
                 false_cloudy = np.where((MAIA_CM == 0) & (MOD_CM != 0))
@@ -96,7 +96,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
 
     #read in thresholds
     obs_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI', 'Cirrus']
-    thresholds = np.empty((7,10,15,12,15))
+    thresholds = np.empty((7,10,15,12,20))
     for i, obs_ in enumerate(obs_names):
         path = 'TA_bin_{:02d}/DOY_bin_{:02d}/{}'.format(Target_Area_X, DOY_bin, obs_)
         thresholds[i] = hf_thresh[path][()]
@@ -122,20 +122,28 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
 
             #calculate distance to threshold NDVI in the current group
             #NDVI is 1; only perform over non water
-            if OLP[i,3] != 12:
-                NDVI = obs[:,1]
-                T    = thresholds[1, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3]]
-                #put 0.001 instead of zero to avoid divide by zero error
-                if T==0:
-                    T = 1e-3
-                DTT_NDVI = (T - np.abs(NDVI)) / T
+            # if OLP[i,3] != water:
+            # NDVI = obs[:,1]
+            # T    = thresholds[1, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3]]
+            # #put 0.001 instead of zero to avoid divide by zero error
+            # if T==0:
+            #     T = 1e-3
+            # DTT_NDVI = (T - np.abs(NDVI)) / T
+
+            NDxI = obs[:,1:3]
+            T    = thresholds[1:3, OLP[i,0], OLP[i,1], OLP[i,2], OLP[i,3]]
+            #put 0.001 instead of zero to avoid divide by zero error
+            T[T==0] = 1e-3
+            DTT_NDxI = np.zeros((num_points, 2))
+            DTT_NDxI[:,0] = (T[0] - np.abs(NDxI[:,0])) / T[0]
+            DTT_NDxI[:,1] = (T[1] - np.abs(NDxI[:,1])) / T[1]
 
             #see if any obs trigger cloudy
             #assume clear (i.e. 1), cloudy is 0
             cloud_mask_MAIA = np.ones((num_points))
 
             #[WI_0, NDVI_1, NDSI_2, VIS_3, NIR_4, SVI_5, Cirrus_6]
-            #water = 12 / sunglint over water = 13/ snow =14 / land = 0-11
+            #water = n / sunglint over water = n+1/ snow =n+2 / land = 0-n-1
             olp_temp = OLP[i,:]
             thresh_temp = thresholds[:, olp_temp[0], olp_temp[1], olp_temp[2], olp_temp[3]]
             for j in range(7):
@@ -145,16 +153,18 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
                         cloud_mask_MAIA[k] = 0
                     #DTT for NDxI. Must exceed 0
                     #NDVI everything but snow
-                    elif j==1 and olp_temp[3] != snow:
-                        #over non water use original DTT
-                        if olp_temp[3] != 12 and DTT_NDVI[k] >= 0:
-                            cloud_mask_MAIA[k] = 0
-                        #over water obs just needs to exceed the thresh
-                        elif thresh_temp[j] <= obs[k,j] and olp_temp[3] == 12:
-                            cloud_mask_MAIA[k] = 0
+                    elif j==1 and olp_temp[3] != snow and DTT_NDxI[k,0] >= 0:
+                        cloud_mask_MAIA[k] = 0
+                        # #over non water use original DTT
+                        # if olp_temp[3] != water and DTT_NDVI[k] >= 0:
+                        #     cloud_mask_MAIA[k] = 0
+                        # #over water obs just needs to exceed the thresh
+                        # elif thresh_temp[j] <= obs[k,j] and olp_temp[3] == water:
+                        #     cloud_mask_MAIA[k] = 0
 
                     #NDSI only over snow; just like whiteness test
-                    elif j==2 and olp_temp[3] == snow and thresh_temp[j] >= obs[k,j]:
+                    # elif j==2 and olp_temp[3] == snow and thresh_temp[j] >= obs[k,j]:
+                    elif j==2 and olp_temp[3] == snow and and DTT_NDxI[k,1] >= 0:
                         cloud_mask_MAIA[k] = 0
                     #VIS, NIR, Cirrus. Must exceed thresh
                     #VIS applied only over land
@@ -234,8 +244,8 @@ if __name__ == '__main__':
             PTA_path      = config['PTAs'][PTA]
             Target_Area_X = int(config['Target Area Integer'][PTA])
 
-            calc_scene  = True
-            group_accur = False
+            calc_scene  = False
+            group_accur = True
             num_Kmeans_SID = int(sys.argv[1])
 
             DOY_bin = rank
@@ -257,13 +267,15 @@ if __name__ == '__main__':
             if group_accur:
                 #bin confusion matrix ******************************************
                 grouped_path   = PTA_path + '/' + config['supporting directories']['combined_group']
-                thresh_path    = PTA_path + '/' + config['supporting directories']['thresh']
+                grouped_path   = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/grouped_obs_and_CMs'
+                # thresh_path    = PTA_path + '/' + config['supporting directories']['thresh']
+                thresh_path    = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds'
                 conf_matx_path = PTA_path + '/' + config['supporting directories']['conf_matx_group']
 
-                grouped_files   = [grouped_path   + '/' + x for x in np.sort(os.listdir(grouped_path))]
-                thresh_files    = [thresh_path    + '/' + x for x in np.sort(os.listdir(thresh_path))]
+                grouped_files   = [grouped_path + '/' + x for x in np.sort(os.listdir(grouped_path))]
+                thresh_files    = [thresh_path  + '/' + x for x in np.sort(os.listdir(thresh_path))]
 
-                conf_matx_filepath  = '{}/conf_matx_group_DOY_bin_{:02d}.h5'.format(conf_matx_path, DOY_bin)
+                conf_matx_filepath  = '{}/numKmeansSID_{:02d}/conf_matx_group_DOY_bin_{:02d}.h5'.format(conf_matx_path, num_Kmeans_SID, DOY_bin)
 
                 num_land_sfc_types = num_Kmeans_SID+1 #plus one for coast
 
