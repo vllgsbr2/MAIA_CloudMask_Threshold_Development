@@ -79,6 +79,7 @@ for i, a in enumerate(ax.flat):
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
     a.set_rticks(np.arange(0,75,5))
     a.set_thetamax(180)
+    a.grid()
 
 
 cax = fig.add_axes([0.95, 0.23, 0.02, 0.5])#l,b,w,h
