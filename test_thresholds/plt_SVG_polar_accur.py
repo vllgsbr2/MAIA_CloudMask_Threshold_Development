@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import configparser
 import h5py
 # 'scene_Accuracy_DOY_bin_{:02d}'.format(DOY_bin)
@@ -70,10 +71,11 @@ fig, ax = plt.subplots(2,5, subplot_kw=dict(projection='polar'))
 
 
 for i, a in enumerate(ax.flat):
+    cmap = cm.get_cmap('plasma', 20)
     a.set_thetagrids(np.arange(0,192,12))
 
     im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i,:,:],\
-                      cmap='plasma', vmin=0, vmax=100)
+                      cmap=cmap, vmin=0, vmax=100)
     SZA1 = np.rad2deg(np.arccos(i/10))
     SZA2 = np.rad2deg(np.arccos((i+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
