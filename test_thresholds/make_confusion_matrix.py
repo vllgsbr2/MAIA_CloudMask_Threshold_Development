@@ -164,7 +164,7 @@ def group_confusion_matrix(hf_group, hf_thresh, hf_confmatx, num_land_sfc_types,
 
                     #NDSI only over snow; just like whiteness test
                     # elif j==2 and olp_temp[3] == snow and thresh_temp[j] >= obs[k,j]:
-                    elif j==2 and olp_temp[3] == snow and and DTT_NDxI[k,1] >= 0:
+                    elif j==2 and olp_temp[3] == snow  and DTT_NDxI[k,1] >= 0:
                         cloud_mask_MAIA[k] = 0
                     #VIS, NIR, Cirrus. Must exceed thresh
                     #VIS applied only over land
