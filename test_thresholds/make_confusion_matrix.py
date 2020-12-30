@@ -273,7 +273,7 @@ if __name__ == '__main__':
                 conf_matx_path = PTA_path + '/' + config['supporting directories']['conf_matx_group']
 
                 grouped_files   = [grouped_path + '/' + x for x in np.sort(os.listdir(grouped_path))]
-                thresh_files    = [thresh_path  + '/' + x for x in np.sort(os.listdir(thresh_path))]
+                thresh_files    = [thresh_path  + '/' + x for x in np.sort(os.listdir(thresh_path)) if x[0]=='t']
 
                 conf_matx_filepath  = '{}/numKmeansSID_{:02d}/conf_matx_group_DOY_bin_{:02d}.h5'.format(conf_matx_path, num_Kmeans_SID, DOY_bin)
 
