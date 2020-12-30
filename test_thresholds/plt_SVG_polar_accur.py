@@ -67,7 +67,7 @@ weighted_accuracy_SVG = data[dataset_names[0]]*100
 # print(accuracy_SVG.shape, num_smaples_SVG.shape)
 
 #-- Plot... ------------------------------------------------
-fig, ax = plt.subplots(3,2, subplot_kw=dict(projection='polar'), figsize=(6, 12))
+fig, ax = plt.subplots(3,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
 
 
 for i, a in enumerate(ax.flat):
@@ -76,8 +76,8 @@ for i, a in enumerate(ax.flat):
 
     im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i+4,:,:],\
                       cmap=cmap, vmin=0, vmax=100)
-    SZA1 = np.rad2deg(np.arccos((i+3)/10))
-    SZA2 = np.rad2deg(np.arccos(((i+3)+1)/10))
+    SZA1 = np.rad2deg(np.arccos((i+4)/10))
+    SZA2 = np.rad2deg(np.arccos(((i+4)+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
     a.set_rticks(np.arange(0,75,5))
     a.set_thetamax(180)
