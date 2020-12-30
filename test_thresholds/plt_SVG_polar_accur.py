@@ -72,7 +72,7 @@ fig, ax = plt.subplots(2,5, subplot_kw=dict(projection='polar'))
 
 for i, a in enumerate(ax.flat):
     cmap = cm.get_cmap('plasma', 20)
-    a.set_thetagrids(np.arange(0,192,12))
+    a.set_thetagrids(np.arange(0,195,15))
 
     im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i,:,:],\
                       cmap=cmap, vmin=0, vmax=100)
