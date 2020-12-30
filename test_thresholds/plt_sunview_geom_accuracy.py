@@ -54,8 +54,8 @@ if __name__ == '__main__':
     for r in range(size):
         if rank==r:
 
-            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/LA_PTA_MODIS_Data/try2_database'
+            home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/conf_matx_group/numKmeansSID_16'
             DOY_bin = r
-            conf_matx_path = '{}/conf_matx_scene_all_DOY/conf_matx_scene_DOY_bin_{:02d}.HDF5'.format(home, DOY_bin)
+            conf_matx_path = '{}/conf_matx_group_DOY_bin_{:02d}.h5'.format(home, DOY_bin)
             result_path = '{}/{}'.format(home, 'scene_accuracy')
             accuracy_by_sunViewGeometry(conf_matx_path, DOY_bin, result_path)
