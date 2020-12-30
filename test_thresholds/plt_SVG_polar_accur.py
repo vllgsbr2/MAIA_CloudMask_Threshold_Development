@@ -38,7 +38,7 @@ with h5py.File(filepath, 'r') as hf:
                     # print(hf[bin_ID+'/accuracy'][()])
                     num_samples.append(hf[bin_ID+'/num_samples'][()])
                 accuracy, num_samples = np.array(accuracy), np.array(num_samples)
-                weighted_accuracy[SZA, RAA, VZA] = np.sum(accuracy*num_samples) / num_samples
+                weighted_accuracy[SZA, RAA, VZA] = np.sum(accuracy*num_samples) / np.sum(num_samples)
         print('SZA bin: ', SZA)
                 # s_temp = np.array(accuracy)
                 # num_samples_temp = np.array(num_samples)
