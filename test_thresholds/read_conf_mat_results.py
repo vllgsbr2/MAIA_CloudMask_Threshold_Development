@@ -11,6 +11,6 @@ for DOY_bin in range(46):
     grouped_path = home + 'conf_matx_group_DOY_bin_{:02d}.h5'.format(DOY_bin)
     with h5py.File(grouped_path, 'r') as hf_group:
         group_keys = list(hf_group.keys())
-    print(group_keys[0])
+    print(group_keys[-1])
     print(len(group_keys))
     print(data.shape)
