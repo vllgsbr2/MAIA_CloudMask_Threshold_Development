@@ -189,7 +189,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
     # VZA_bin    = -1
     # RAA_bin    = -1
     # SID_bin    = -1
-
+    plt.rcParams['font.size'] = 16
     f, ax = plt.subplots(ncols=4, nrows=2, figsize=(25,13))
 
     #collect thresholds for each obs
@@ -243,7 +243,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
 
     #only 7 obs so lets turn 8th axis off
     ax[1,3].axis('off')
-    plt.rcParams['font.size'] = 16
+
     # home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
     # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
     # plt.legend()
