@@ -236,7 +236,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
         x1, x2 = temp_thresh.min(), temp_thresh.max()
         num_bins = int((x2 - x1) / bin_width) + 1
 
-        a.rcParams['font.size'] = 16
+        plt.rcParams['font.size'] = 16
         a.hist(temp_thresh, bins=num_bins)#, rwidth=0.9)
         a.set_xlabel('{} Thresholds\n bin width: {}'.format(obs, bin_width))
         a.set_title('{}'.format(obs))
