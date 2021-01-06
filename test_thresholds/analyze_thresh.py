@@ -195,9 +195,9 @@ def plot_thresh_hist_all_bins(num_land_SID):
     #collect thresholds for each obs
     binned_thresholds = []
 
-    water =num_land_SID+1
-    glint=num_land_SID+2
-    snow=num_land_SID+3
+    water =num_land_SID
+    glint=num_land_SID+1
+    snow=num_land_SID+2
     #parameter to inspect SID brighter than x
     darkest_land = 0
     print(master_thresh.shape)
