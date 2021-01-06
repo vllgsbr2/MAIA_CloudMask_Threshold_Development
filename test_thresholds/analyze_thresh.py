@@ -149,6 +149,32 @@ def check_thresh(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
 
 
 def plot_thresh_hist_all_bins(num_land_SID):
+    def check_thresh_(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
+        '''
+        which_thresh {str} -- choose from WI,NDVI,NDSI,VIS_Ref,NIR_Ref,SVI,Cirrus
+        flatten_or_nah {bool} -- True filter values and flatten; False replace w/nan
+        by_SFC_ID_or_nah {bool} -- True shows thresh applied by sfcID; False all thresh
+        '''
+        thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
+                       'SVI':5, 'Cirrus':6}
+
+        thresh_path    = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
+        thresh_files    = [thresh_path + x for x in np.sort(os.listdir(thresh_path)) if x[0]=='t']
+        fill_val = -999
+
+        thresh = []
+        for thresh_file in thresh_files:
+            with h5py.File(thresh_file, 'r') as hf_thresh:
+                DOY = list(hf_thresh['TA_bin_00'].keys())[0]
+                obs = list(hf_thresh['TA_bin_00/' + DOY].keys())
+
+                thresh_path = '{}/{}/{}'.format('TA_bin_00', DOY, which_thresh)
+                current_thresh = hf_thresh[thresh_path][()]
+
+                thresh.append(current_thresh)
+        thresh = np.array(thresh)
+        return thresh #thresh (DOY, cos(SZA), VZA, RAZ, SID)
+
     import matplotlib.pyplot as plt
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
@@ -157,7 +183,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
     master_thresh = []
     for i, obs in enumerate(thresh_dict):
         print(i,obs)
-        master_thresh.append(check_thresh(obs))
+        master_thresh.append(check_thresh_(obs))
     master_thresh = np.array(master_thresh)
     # cosSZA_bin = -1
     # VZA_bin    = -1
@@ -663,7 +689,7 @@ if __name__ == '__main__':
     # check_sunglint_flag_in_database()
     # check_sunglint_flag_in_grouped_cm_and_obs()
     # make_obs_hist_by_group('SVI')
-    num_land_SID=11
+    num_land_SID=17
     plot_thresh_hist_all_bins(num_land_SID)
 
 
