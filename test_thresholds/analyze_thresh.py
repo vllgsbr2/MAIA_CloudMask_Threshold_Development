@@ -191,6 +191,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
     # SID_bin    = -1
 
     f, ax = plt.subplots(ncols=4, nrows=2, figsize=(25,13))
+    plt.rcParams['font.size'] = 16
 
     #collect thresholds for each obs
     binned_thresholds = []
@@ -236,7 +237,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
         x1, x2 = temp_thresh.min(), temp_thresh.max()
         num_bins = int((x2 - x1) / bin_width) + 1
 
-        a.hist(temp_thresh, bins=num_bins)
+        a.hist(temp_thresh, bins=num_bins, rwidth=0.95)
         a.set_xlabel('{} Thresholds\n bin width: {}'.format(obs, bin_width))
         a.set_title('{}'.format(obs))
 
