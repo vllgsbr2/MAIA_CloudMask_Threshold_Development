@@ -541,6 +541,7 @@ def plot_thresh_vs_sfcID():
             return 100*(y-x)/np.abs(x)
 
         sfcID_thresh_percent_change = np.zeros((20))
+        sfcID_thresh_percent_change[0] = np.nan
         for sfcID_j in range(1,20):
             x = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
             y = np.mean(boxplot_thresh_obs_i[sfcID_j])
