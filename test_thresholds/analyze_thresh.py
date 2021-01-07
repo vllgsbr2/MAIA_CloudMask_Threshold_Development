@@ -557,6 +557,7 @@ def plot_thresh_vs_sfcID():
 
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_xlabel('Surface ID')
+        a.set_ylabel('Thresholds')
         a.set_xticks(np.arange(1,21))
         a.set_xticklabels([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,'coast','water','glint','snow'], rotation=45, fontsize=16)
         a.set_title(obs)
@@ -565,7 +566,8 @@ def plot_thresh_vs_sfcID():
 
         a_twin = a.twinx()
         a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
-        ymin,ymax = -100,100
+        a_twin.set_ylabel('% Change from Previous Surface Type')
+        # ymin,ymax = -100,100
         # print(a_twin)
         # mpl.rcParams['xtick.labelsize'] = 16
         # mpl.rcParams['ytick.labelsize'] = 16
