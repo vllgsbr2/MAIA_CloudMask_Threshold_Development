@@ -501,7 +501,7 @@ def plot_thresh_vs_sfcID():
 
         #eliminate fill vals while keeping a vector for each VZA bin
         boxplot_thresh_obs_i = []
-        for sfcID_j in range(15):
+        for sfcID_j in range(20):
             thresh_obs_i_sfcID_j = thresh_obs_i[sfcID_j, :]
             filtered_thresh_obs_i_sfcID_j = thresh_obs_i_sfcID_j[thresh_obs_i_sfcID_j > fill_val+2]
             boxplot_thresh_obs_i.append(filtered_thresh_obs_i_sfcID_j)
@@ -514,6 +514,8 @@ def plot_thresh_vs_sfcID():
 
         #a.set_ylim([ymin,ymax])
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
+        a.set_xticks(np.arange(20))
+        a.set_xticklabels(np.arange(20))
         a.set_title(obs)
 
         #plot percent change from one sfc ID to next
