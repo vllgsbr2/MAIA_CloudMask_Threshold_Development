@@ -545,19 +545,19 @@ def plot_thresh_vs_sfcID():
             '''
             return 100*(y-x)/np.abs(x)
 
-        # sfcID_thresh_percent_change = np.zeros((15))
-        # for sfcID_j in range(1,15):
-        #     x = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
-        #     y = np.mean(boxplot_thresh_obs_i[sfcID_j])
-        #
-        #     p_change_temp = percent_change(x, y)
-        #     # if
-        #
-        #     sfcID_thresh_percent_change[sfcID_j] = p_change_temp
-        #     sfcID_thresh_percent_change[np.abs(sfcID_thresh_percent_change) > 100] = 100
-        #
-        # a_twin = a.twinx()
-        # a_twin = a_twin.plot(np.arange(15), sfcID_thresh_percent_change)#, vmax=100)
+        sfcID_thresh_percent_change = np.zeros((20))
+        for sfcID_j in range(20):
+            x = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
+            y = np.mean(boxplot_thresh_obs_i[sfcID_j])
+
+            p_change_temp = percent_change(x, y)
+            # if
+
+            sfcID_thresh_percent_change[sfcID_j] = p_change_temp
+            sfcID_thresh_percent_change[np.abs(sfcID_thresh_percent_change) > 100] = 100
+
+        a_twin = a.twinx()
+        a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change)#, vmax=100)
 
         #add axis for number of samples
         # a_twin  = a.twinx()
