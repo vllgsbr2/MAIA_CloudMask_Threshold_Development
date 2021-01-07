@@ -26,7 +26,7 @@ num_samples_list=[]
 with h5py.File(filepath, 'r') as hf:
     bins = list(hf.keys())
 
-    for j in range(15):
+    for j in range(20):
         accuracy =[]
         num_samples=[]
         for i, bin_ID in enumerate(bins):
@@ -41,7 +41,7 @@ with h5py.File(filepath, 'r') as hf:
         s_list.append(np.nanmean(s_temp)*100)
         num_samples_list.append(np.nansum(np.array(num_samples)))
 # print(s_list)
-x = np.arange(0,15)
+x = np.arange(20)
 # plt.scatter(x, s_list)
 # plt.plot(x, s_list, label='accuracy')
 # plt.scatter(x, num_samples_list)
@@ -57,15 +57,15 @@ x = np.arange(0,15)
 font = {'family': 'serif',
         'color':  'darkred',
         'weight': 'normal',
-        'size': 18,
+        'size': 16,
         }
-plt.rcParams['font.size'] = 18
+plt.rcParams['font.size'] = 16
 
 fig, ax = plt.subplots()
 
 fig.suptitle('Accuracy by Surface Type LA PTA')
 
-x_ticks = [0,1,2,3,4,5,6,7,8,9,10,'coast','water', 'glint\nwater','snow']
+x_ticks = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,'coast','water', 'glint','snow']
 
 color = 'tab:pink'
 ax.set_xlabel('Surface Type')
