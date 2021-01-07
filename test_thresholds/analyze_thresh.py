@@ -443,7 +443,7 @@ def plot_thresh_vs_VZA():
     plt.show()
 
 def plot_thresh_vs_sfcID():
-    plt.rcParams['font.size'] = 16
+
     def check_thresh_(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
         '''
         which_thresh {str} -- choose from WI,NDVI,NDSI,VIS_Ref,NIR_Ref,SVI,Cirrus
@@ -471,6 +471,7 @@ def plot_thresh_vs_sfcID():
         return thresh #thresh (DOY, cos(SZA), VZA, RAZ, SID)
 
     import matplotlib.pyplot as plt
+    plt.rcParams['font.size'] = 16
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
