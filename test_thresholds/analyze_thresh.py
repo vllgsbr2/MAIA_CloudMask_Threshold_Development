@@ -558,13 +558,14 @@ def plot_thresh_vs_sfcID():
         a.set_xticklabels([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,'water','glint','snow'], rotation=45, fontsize=16)
         a.set_title(obs)
         import matplotlib as mpl
-        mpl.rcParams['xtick.labelsize'] = 16
-        mpl.rcParams['ytick.labelsize'] = 16
+
 
         a_twin = a.twinx()
         a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
         ymin,ymax = -100,100
         print(a_twin)
+        mpl.rcParams['xtick.labelsize'] = 16
+        mpl.rcParams['ytick.labelsize'] = 16
         # a_twin[0].set_ylim(ymin,ymax)
 
         #add axis for number of samples
