@@ -512,6 +512,25 @@ def plot_thresh_vs_sfcID():
         else:
             ymin,ymax = range_ndxi[0], range_ndxi[1]
 
+        darkest_land = 0
+        glint = 18
+        snow  = 19
+        water = 17
+        boxplot_thresh_obs_i = np.array(boxplot_thresh_obs_i)
+
+        if obs == 'WI':
+            boxplot_thresh_obs_i[[glint, snow]] = np.nan
+        elif obs == 'NDVI':
+            boxplot_thresh_obs_i[snow] = np.nan
+        elif obs == 'NDSI':
+            boxplot_thresh_obs_i[boxplot_thresh_obs_i<snow] = np.nan
+        elif obs == 'VIS_Ref':
+            boxplot_thresh_obs_i[boxplot_thresh_obs_i >= water] = np.nan
+        elif obs == 'NIR_Ref':
+            boxplot_thresh_obs_i[boxplot_thresh_obs_i != water] = np.nan
+        else:
+            pass
+
         #a.set_ylim([ymin,ymax])
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_xticks(np.arange(1,21))
