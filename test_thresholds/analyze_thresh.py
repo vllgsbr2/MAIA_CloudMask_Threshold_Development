@@ -471,7 +471,7 @@ def plot_thresh_vs_sfcID():
         return thresh #thresh (DOY, cos(SZA), VZA, RAZ, SID)
 
     import matplotlib.pyplot as plt
-    plt.rcParams['font.size'] = 16
+    plt.rcParams['font.size'] = 14
     #make histograms of thresholds
     thresh_dict = {'WI':0, 'NDVI':1, 'NDSI':2, 'VIS_Ref':3, 'NIR_Ref':4,\
                    'SVI':5, 'Cirrus':6}
@@ -556,8 +556,9 @@ def plot_thresh_vs_sfcID():
             # sfcID_thresh_percent_change[sfcID_thresh_percent_change > 100] = 100
 
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
+        a.set_xlabel('Surface ID')
         a.set_xticks(np.arange(1,21))
-        a.set_xticklabels([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,'water','glint','snow'], rotation=45, fontsize=16)
+        a.set_xticklabels([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,'coast','water','glint','snow'], rotation=45, fontsize=16)
         a.set_title(obs)
         # import matplotlib as mpl
 
@@ -565,7 +566,7 @@ def plot_thresh_vs_sfcID():
         a_twin = a.twinx()
         a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
         ymin,ymax = -100,100
-        print(a_twin)
+        # print(a_twin)
         # mpl.rcParams['xtick.labelsize'] = 16
         # mpl.rcParams['ytick.labelsize'] = 16
         # a_twin[0].set_ylim(ymin,ymax)
