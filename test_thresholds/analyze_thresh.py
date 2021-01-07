@@ -531,12 +531,7 @@ def plot_thresh_vs_sfcID():
         else:
             pass
 
-        #a.set_ylim([ymin,ymax])
-        plt.rcParams['font.size'] = 16
-        a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
-        a.set_xticks(np.arange(1,21))
-        a.set_xticklabels([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,'water','glint','snow'], rotation=45)
-        a.set_title(obs)
+
 
         #plot percent change from one sfc ID to next
         def percent_change(x, y):
@@ -556,6 +551,11 @@ def plot_thresh_vs_sfcID():
             sfcID_thresh_percent_change[sfcID_j] = p_change_temp
             sfcID_thresh_percent_change[np.abs(sfcID_thresh_percent_change) > 100] = 100
         plt.rcParams['font.size'] = 16
+        a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
+        a.set_xticks(np.arange(1,21))
+        a.set_xticklabels([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,'water','glint','snow'], rotation=45)
+        a.set_title(obs)
+
         a_twin = a.twinx()
         a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
 
