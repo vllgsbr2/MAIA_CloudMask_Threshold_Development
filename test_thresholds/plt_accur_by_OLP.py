@@ -38,8 +38,11 @@ with h5py.File(filepath, 'r') as hf:
         s_temp = np.array(accuracy)
         num_samples_temp = np.array(num_samples)
         # s_temp = s_temp[s_temp>=0]
-        s_list.append(np.nanmean(s_temp)*100)
+        avg_weighted_accur = (s_temp*num_samples)/num_samples
+        s_list.append(avg_weighted_accur*100)
         num_samples_list.append(np.nansum(np.array(num_samples)))
+
+print(len(s_list))
 # print(s_list)
 x = np.arange(20)
 # plt.scatter(x, s_list)
