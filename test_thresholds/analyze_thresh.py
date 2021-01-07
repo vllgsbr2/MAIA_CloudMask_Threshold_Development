@@ -541,7 +541,7 @@ def plot_thresh_vs_sfcID():
             return 100*(y-x)/np.abs(x)
 
         sfcID_thresh_percent_change = np.zeros((20))
-        for sfcID_j in range(20):
+        for sfcID_j in range(1,20):
             x = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
             y = np.mean(boxplot_thresh_obs_i[sfcID_j])
 
@@ -549,7 +549,7 @@ def plot_thresh_vs_sfcID():
             # if
 
             sfcID_thresh_percent_change[sfcID_j] = p_change_temp
-            sfcID_thresh_percent_change[np.abs(sfcID_thresh_percent_change) > 100] = 100
+            # sfcID_thresh_percent_change[sfcID_thresh_percent_change > 100] = 100
         plt.rcParams['font.size'] = 16
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_xticks(np.arange(1,21))
