@@ -558,6 +558,7 @@ def plot_thresh_vs_sfcID():
 
         a_twin = a.twinx()
         a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
+        ymin,ymax = -100,100
         a_twin.set_ylim([ymin,ymax])
 
         #add axis for number of samples
