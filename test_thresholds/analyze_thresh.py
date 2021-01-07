@@ -514,7 +514,7 @@ def plot_thresh_vs_sfcID():
 
         #a.set_ylim([ymin,ymax])
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
-        a.set_xticks(np.arange(20))
+        a.set_xticks(np.arange(1,21))
         a.set_xticklabels(np.arange(20))
         a.set_title(obs)
 
