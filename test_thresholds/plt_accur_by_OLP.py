@@ -16,6 +16,7 @@ PTA_path      = config['PTAs'][PTA]
 Target_Area_X = int(config['Target Area Integer'][PTA])
 
 scene_accur_home = PTA_path + '/' + config['supporting directories']['group_accuracy']
+scene_accur_home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/group_accuracy'
 scene_accur_path = scene_accur_home + '/' + 'group_ID_accuracy.h5'
 filepath = scene_accur_path
 plt.rcParams['font.size'] = 16
