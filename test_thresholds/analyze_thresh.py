@@ -559,6 +559,7 @@ def plot_thresh_vs_sfcID():
         a.set_title(obs)
         import matplotlib as mpl
         mpl.rcParams['xtick.labelsize'] = 16
+        mpl.rcParams['ytick.labelsize'] = 16
 
         a_twin = a.twinx()
         a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
