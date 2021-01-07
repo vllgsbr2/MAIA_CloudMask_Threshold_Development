@@ -532,6 +532,7 @@ def plot_thresh_vs_sfcID():
             pass
 
         #a.set_ylim([ymin,ymax])
+        plt.rcParams['font.size'] = 16
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
         a.set_xticks(np.arange(1,21))
         a.set_xticklabels([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,'water','glint','snow'], rotation=45)
