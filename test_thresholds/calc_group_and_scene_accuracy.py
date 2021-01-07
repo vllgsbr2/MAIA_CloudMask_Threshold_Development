@@ -167,12 +167,12 @@ if __name__ == '__main__':
     group_accuracy_dir  = '{}/{}'.format(PTA_path, group_accuracy_dir)
     #where to find group confusion matricies
     conf_matx_group_dir = config['supporting directories']['conf_matx_group']
-    conf_matx_group_dir = '{}/{}'.format(PTA_path, conf_matx_group_dir)
+    conf_matx_group_dir = '{}/{}/numKmeansSID_16/'.format(PTA_path, conf_matx_group_dir)
 
     #define file to save accur in
     group_accuracy_save_file = '{}/{}'.format(group_accuracy_dir, 'group_ID_accuracy.h5')
     # list all conf matx files
-    conf_matx_group_files    = [conf_matx_group_dir + '/' + x for x in os.listdir(conf_matx_group_dir)]
+    conf_matx_group_files    = [conf_matx_group_dir + x for x in os.listdir(conf_matx_group_dir)]
 
     with h5py.File(group_accuracy_save_file, 'w') as hf_group_accur:
         for i in range(46):
