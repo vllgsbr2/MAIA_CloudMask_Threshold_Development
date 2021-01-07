@@ -217,7 +217,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
             bin_width = 0.02
         elif obs == 'NDSI':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,snow])
-            bin_width = 0.02
+            bin_width = 0.03
         elif obs == 'VIS_Ref':
             temp_thresh = np.copy(master_thresh[i,:,:,:,:,darkest_land:water])
             bin_width = 0.01
