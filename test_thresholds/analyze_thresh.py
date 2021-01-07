@@ -443,6 +443,7 @@ def plot_thresh_vs_VZA():
     plt.show()
 
 def plot_thresh_vs_sfcID():
+    plt.rcParams['font.size'] = 16
     def check_thresh_(which_thresh, flatten_or_nah=True, by_SFC_ID_or_nah=True):
         '''
         which_thresh {str} -- choose from WI,NDVI,NDSI,VIS_Ref,NIR_Ref,SVI,Cirrus
@@ -486,7 +487,7 @@ def plot_thresh_vs_sfcID():
                                          (range_ndxi[1]  - range_ndxi[0] ))
 
     f, ax = plt.subplots(ncols=4, nrows=2)
-    plt.rcParams['font.size'] = 16
+
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         #make a deep copy because to not modify it
         thresh_obs_i  = np.copy(thresholds[i])
@@ -557,15 +558,15 @@ def plot_thresh_vs_sfcID():
         a.set_xticks(np.arange(1,21))
         a.set_xticklabels([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,'water','glint','snow'], rotation=45, fontsize=16)
         a.set_title(obs)
-        import matplotlib as mpl
+        # import matplotlib as mpl
 
 
         a_twin = a.twinx()
         a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
         ymin,ymax = -100,100
         print(a_twin)
-        mpl.rcParams['xtick.labelsize'] = 16
-        mpl.rcParams['ytick.labelsize'] = 16
+        # mpl.rcParams['xtick.labelsize'] = 16
+        # mpl.rcParams['ytick.labelsize'] = 16
         # a_twin[0].set_ylim(ymin,ymax)
 
         #add axis for number of samples
