@@ -555,9 +555,9 @@ def plot_thresh_vs_sfcID():
 
             sfcID_thresh_percent_change[sfcID_j] = p_change_temp
             sfcID_thresh_percent_change[np.abs(sfcID_thresh_percent_change) > 100] = 100
-
+        plt.rcParams['font.size'] = 16
         a_twin = a.twinx()
-        a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change)#, vmax=100)
+        a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
 
         #add axis for number of samples
         # a_twin  = a.twinx()
