@@ -521,13 +521,13 @@ def plot_thresh_vs_sfcID():
         if obs == 'WI':
             boxplot_thresh_obs_i[[glint, snow]] = np.nan
         elif obs == 'NDVI':
-            boxplot_thresh_obs_i[snow] = np.nan
+            boxplot_thresh_obs_i[[snow]] = np.nan
         elif obs == 'NDSI':
-            boxplot_thresh_obs_i[boxplot_thresh_obs_i<snow] = np.nan
+            boxplot_thresh_obs_i[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,water,glint]] = np.nan
         elif obs == 'VIS_Ref':
-            boxplot_thresh_obs_i[boxplot_thresh_obs_i >= water] = np.nan
+            boxplot_thresh_obs_i[[water,glint,snow]] = np.nan
         elif obs == 'NIR_Ref':
-            boxplot_thresh_obs_i[boxplot_thresh_obs_i != water] = np.nan
+            boxplot_thresh_obs_i[[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,glint,snow]] = np.nan
         else:
             pass
 
