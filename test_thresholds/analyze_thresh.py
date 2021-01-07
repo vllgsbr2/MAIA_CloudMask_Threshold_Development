@@ -541,12 +541,13 @@ def plot_thresh_vs_sfcID():
             return 100*(y-x)/np.abs(x)
 
         sfcID_thresh_percent_change = np.zeros((20))
-        for sfcID_j in range(1,water):
+        for sfcID_j in range(1,20):
             x = np.mean(boxplot_thresh_obs_i[sfcID_j - 1])
             y = np.mean(boxplot_thresh_obs_i[sfcID_j])
 
             p_change_temp = percent_change(x, y)
-            # if
+            if sfcID_j >=water:
+                p_change_temp = np.nan
 
             sfcID_thresh_percent_change[sfcID_j] = p_change_temp
             # sfcID_thresh_percent_change[sfcID_thresh_percent_change > 100] = 100
@@ -557,7 +558,7 @@ def plot_thresh_vs_sfcID():
         a.set_title(obs)
 
         a_twin = a.twinx()
-        a_twin = a_twin.plot(np.arange(1,water), sfcID_thresh_percent_change, color='r')#, vmax=100)
+        a_twin = a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
         ymin,ymax = -100,100
         print(a_twin)
         # a_twin[0].set_ylim(ymin,ymax)
