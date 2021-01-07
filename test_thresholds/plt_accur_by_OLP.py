@@ -38,7 +38,7 @@ with h5py.File(filepath, 'r') as hf:
         s_temp = np.array(accuracy)
         num_samples_temp = np.array(num_samples)
         # s_temp = s_temp[s_temp>=0]
-        avg_weighted_accur = np.sum(s_temp*num_samples_temp)/num_samples_temp.sum())
+        avg_weighted_accur = np.sum(s_temp*num_samples_temp)/num_samples_temp.sum()
         s_list.append(avg_weighted_accur*100)
         num_samples_list.append(num_samples_temp.sum())
 print(s_list)
