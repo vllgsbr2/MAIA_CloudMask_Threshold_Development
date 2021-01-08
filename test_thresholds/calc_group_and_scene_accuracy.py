@@ -192,8 +192,8 @@ if __name__ == '__main__':
                     num_samples_temp = hf_group_accur[group+'/num_samples'][()]
 
                     total_num_samples = (num_samples_temp + accur_num_samples[1])
-                    hf_group_accur[group+'/accuracy'][:]    = (accuracy_temp*accur_num_samples[0]) / total_num_samples
-                    hf_group_accur[group+'/num_samples'][:] = total_num_samples
+                    hf_group_accur[group+'/accuracy']    = (accuracy_temp*accur_num_samples[0]) / total_num_samples
+                    hf_group_accur[group+'/num_samples'] = total_num_samples
 
 
             print('Group DOY: {} done'.format(i))
