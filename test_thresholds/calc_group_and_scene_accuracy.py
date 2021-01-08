@@ -190,12 +190,10 @@ if __name__ == '__main__':
                     print(group, accur_num_samples[1])
                     accuracy_temp = hf_group_accur[group+'/accuracy'][()]
                     num_samples_temp = hf_group_accur[group+'/num_samples'][()]
-                    print(accuracy_temp)#.shape)
-                    print(num_samples_temp)#.shape)
-                    print(accur_num_samples[0])#.shape)
-                    print(accur_num_samples[1])#.shape)
-                    hf_group_accur[group+'/accuracy'][:,:] = np.concatenate((accuracy_temp, accur_num_samples[0]))
-                    hf_group_accur[group+'/num_samples'][:,:] = np.concatenate((num_samples_temp, accur_num_samples[1]))
+
+                    total_num_samples = (num_samples_temp + accur_num_samples[1])
+                    hf_group_accur[group+'/accuracy'][:,:]    = (accuracy_temp*accur_num_samples[0]) / total_num_samples
+                    hf_group_accur[group+'/num_samples'][:,:] = total_num_samples
 
 
             print('Group DOY: {} done'.format(i))
