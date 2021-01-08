@@ -177,7 +177,7 @@ if __name__ == '__main__':
     with h5py.File(group_accuracy_save_file, 'w') as hf_group_accur:
         for i in range(46):
             accuracy_of_groups = group_conf_matx_accur(conf_matx_group_files[i])
-            i=34
+            
             for group, accur_num_samples in accuracy_of_groups.items():
                 group = '{}{:02d}'.format(group[:-2],i)
                 print(group, accur_num_samples[1])
