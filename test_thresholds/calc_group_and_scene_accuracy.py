@@ -177,7 +177,7 @@ if __name__ == '__main__':
     conf_matx_group_files    = [conf_matx_group_dir + x for x in os.listdir(conf_matx_group_dir)]
 
     with h5py.File(group_accuracy_save_file, 'w') as hf_group_accur:
-        for i in range(34,36):
+        for i in range(46):
             accuracy_of_groups = group_conf_matx_accur(conf_matx_group_files[i])
 
             for group, accur_num_samples in accuracy_of_groups.items():
@@ -189,7 +189,7 @@ if __name__ == '__main__':
                     hf_group_accur[group].create_dataset('num_samples', data=accur_num_samples[1], dtype='int')
                 #
                 else:
-                    print(group, accur_num_samples[1])
+                    # print(group, accur_num_samples[1])
                     accuracy_temp = hf_group_accur[group+'/accuracy'][()]
                     num_samples_temp = hf_group_accur[group+'/num_samples'][()]
 
@@ -197,8 +197,8 @@ if __name__ == '__main__':
                     if total_num_samples == 0:
                         continue
                     weighted_avg      = (accuracy_temp*num_samples_temp + accur_num_samples[0]*accur_num_samples[1]) / total_num_samples
-                    print(total_num_samples)
-                    print(weighted_avg)
+                    # print(total_num_samples)
+                    # print(weighted_avg)
                     hf_group_accur[group+'/accuracy'][...]    = weighted_avg
                     hf_group_accur[group+'/num_samples'][...] = total_num_samples
 
