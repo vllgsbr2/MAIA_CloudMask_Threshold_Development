@@ -91,7 +91,7 @@ weighted_accuracy_SVG = data[dataset_names[0]]*100
 #
 # plt.show()
 
-fig, a = plt.subplots(2,1, subplot_kw=dict(projection='polar'), figsize=(10, 12))
+fig, ax = plt.subplots(2,1, subplot_kw=dict(projection='polar'), figsize=(10, 12))
 
 
 for i, a in enumerate(ax.flat):
