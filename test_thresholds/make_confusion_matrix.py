@@ -266,7 +266,7 @@ if __name__ == '__main__':
 
             if group_accur:
                 #bin confusion matrix ******************************************
-                grouped_path   = PTA_path + '/' + config['supporting directories']['combined_group']
+                # grouped_path   = PTA_path + '/' + config['supporting directories']['combined_group']
                 grouped_path   = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/grouped_obs_and_CMs'
                 # thresh_path    = PTA_path + '/' + config['supporting directories']['thresh']
                 thresh_path    = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds'
