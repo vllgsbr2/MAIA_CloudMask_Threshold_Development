@@ -197,6 +197,7 @@ if __name__ == '__main__':
                     weighted_avg      = (accuracy_temp*num_samples_temp + accur_num_samples[0]*accur_num_samples[1]) / total_num_samples
                     print(total_num_samples)
                     print(weighted_avg)
+                    print(list(hf_group_accur[group].keys()))
                     hf_group_accur[group+'/accuracy']    = weighted_avg
                     hf_group_accur[group+'/num_samples'] = total_num_samples
 
