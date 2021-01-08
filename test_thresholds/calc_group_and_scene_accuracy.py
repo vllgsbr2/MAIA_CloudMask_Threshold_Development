@@ -181,12 +181,12 @@ if __name__ == '__main__':
             for group, accur_num_samples in accuracy_of_groups.items():
                 group = '{}{:02d}'.format(group[:-2],i)
 
-                try:
+                if group+'/accuracy' in list(hf_group_accur[group].keys()):
                     hf_group_accur.create_group(group)
                     hf_group_accur[group].create_dataset('accuracy', data=accur_num_samples[0])
                     hf_group_accur[group].create_dataset('num_samples', data=accur_num_samples[1], dtype='int')
                 #
-                except:
+                else:
                     print(group, accur_num_samples[1])
                     accuracy_temp = hf_group_accur[group+'/accuracy'][()]
                     num_samples_temp = hf_group_accur[group+'/num_samples'][()]
@@ -197,7 +197,6 @@ if __name__ == '__main__':
                     weighted_avg      = (accuracy_temp*num_samples_temp + accur_num_samples[0]*accur_num_samples[1]) / total_num_samples
                     print(total_num_samples)
                     print(weighted_avg)
-                    print(list(hf_group_accur[group].keys()))
                     hf_group_accur[group+'/accuracy']    = weighted_avg
                     hf_group_accur[group+'/num_samples'] = total_num_samples
 
