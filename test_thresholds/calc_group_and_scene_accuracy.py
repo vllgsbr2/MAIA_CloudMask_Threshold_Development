@@ -193,7 +193,7 @@ if __name__ == '__main__':
                     print(accuracy_temp)#.shape)
                     print(num_samples_temp)#.shape)
                     print(accur_num_samples[0])#.shape)
-                    print(accur_num_samples[1].)#shape)
+                    print(accur_num_samples[1])#.shape)
                     hf_group_accur[group+'/accuracy'][:,:] = np.concatenate((accuracy_temp, accur_num_samples[0]))
                     hf_group_accur[group+'/num_samples'][:,:] = np.concatenate((num_samples_temp, accur_num_samples[1]))
 
