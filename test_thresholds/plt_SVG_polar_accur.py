@@ -91,7 +91,7 @@ weighted_accuracy_SVG = data[dataset_names[0]]*100
 #
 # plt.show()
 
-fig, ax = plt.subplots(3,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
+fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
 
 
 for i, a in enumerate(ax.flat):
@@ -103,7 +103,7 @@ for i, a in enumerate(ax.flat):
     SZA1 = np.rad2deg(np.arccos((i)/10))
     SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
-    a.set_rticks(np.arange(0,80,10))
+    a.set_rticks([])
     a.grid()
     # a.set_yticks(np.arange(0,75,5))
     # a.set_yticklabels(np.arange(0,75,5), rotation=45)
