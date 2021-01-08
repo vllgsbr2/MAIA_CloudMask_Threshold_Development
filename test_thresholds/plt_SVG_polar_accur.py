@@ -110,7 +110,7 @@ for i, a in enumerate(ax.flat):
     a.set_thetamax(180)
 
 
-cax = fig.add_axes([0.92, 0.23, 0.02, 0.5])#l,b,w,h
-cbar = fig.colorbar(im, cax=cax, ticks=np.arange(0,105,5))
+# cax = fig.add_axes([0.92, 0.23, 0.02, 0.5])#l,b,w,h
+# cbar = fig.colorbar(im, cax=cax, ticks=np.arange(0,105,5))
 
 plt.show()
