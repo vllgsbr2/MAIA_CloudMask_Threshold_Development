@@ -103,14 +103,14 @@ for i, a in enumerate(ax.flat):
     SZA1 = np.rad2deg(np.arccos((i)/10))
     SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
-    # a.set_rticks(np.arange(0,75,5))
+    a.set_rticks(np.arange(0,80,10))
     a.grid()
     # a.set_yticks(np.arange(0,75,5))
     # a.set_yticklabels(np.arange(0,75,5), rotation=45)
     a.set_thetamax(180)
 
 
-# cax = fig.add_axes([0.92, 0.23, 0.02, 0.5])#l,b,w,h
-# cbar = fig.colorbar(im, cax=cax, ticks=np.arange(0,105,5))
+cax = fig.add_axes([0.92, 0.23, 0.02, 0.5])#l,b,w,h
+cbar = fig.colorbar(im, cax=cax, ticks=np.arange(0,105,5))
 
 plt.show()
