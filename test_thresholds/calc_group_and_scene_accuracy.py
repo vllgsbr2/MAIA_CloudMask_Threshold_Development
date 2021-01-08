@@ -192,10 +192,10 @@ if __name__ == '__main__':
                     num_samples_temp = hf_group_accur[group+'/num_samples'][()]
 
                     total_num_samples = (num_samples_temp + accur_num_samples[1])
-                    weighted_avg      = (accuracy_temp*num_samples_temp + accur_num_samples[0]*accur_num_samples[1]) / total_num_samples
-                    print(total_num_samples)
                     if total_num_samples == 0:
                         continue
+                    weighted_avg      = (accuracy_temp*num_samples_temp + accur_num_samples[0]*accur_num_samples[1]) / total_num_samples
+                    print(total_num_samples)
                     print(weighted_avg)
                     hf_group_accur[group+'/accuracy']    = weighted_avg
                     hf_group_accur[group+'/num_samples'] = total_num_samples
