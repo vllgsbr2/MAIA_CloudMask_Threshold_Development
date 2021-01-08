@@ -179,7 +179,8 @@ if __name__ == '__main__':
             accuracy_of_groups = group_conf_matx_accur(conf_matx_group_files[i])
 
             for group, accur_num_samples in accuracy_of_groups.items():
-                hf_group_accur.create_group('{}_DOY_{:02d}'.format(group,i))
+                group = '{}_DOY_{:02d}'.format(group,i)
+                hf_group_accur.create_group(group)
                 hf_group_accur[group].create_dataset('accuracy', data=accur_num_samples[0])
                 hf_group_accur[group].create_dataset('num_samples', data=accur_num_samples[1], dtype='int')
                 print(group)
