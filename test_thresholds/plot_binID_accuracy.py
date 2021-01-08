@@ -62,7 +62,7 @@ with h5py.File(thresh_path, 'r') as hf_thresh:
 
     fig, ax = plt.subplots()
 
-    fig.suptitle('Zonal Mean of Mean Meridional Specific Humidity Flux')
+    # fig.suptitle('Zonal Mean of Mean Meridional Specific Humidity Flux')
 
     color = 'tab:pink'
     ax.set_xlabel('bin ID')
@@ -78,4 +78,3 @@ with h5py.File(thresh_path, 'r') as hf_thresh:
     ax1.tick_params(axis='y', labelcolor=color)
 
     plt.show()
-

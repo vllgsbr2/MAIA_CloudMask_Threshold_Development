@@ -74,7 +74,7 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
 # plt.ylabel('% Accuracy')
 
 composit_accuracy = np.mean(scene_accurs, axis=2)
-plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap='plasma')
+plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
 plt.title('Composite Accuracy for years 2004/2010/2018')
 plt.colorbar()
 
