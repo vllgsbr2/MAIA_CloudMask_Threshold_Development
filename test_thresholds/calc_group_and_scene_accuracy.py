@@ -92,6 +92,8 @@ def group_conf_matx_accur(conf_matx_path):
             num_correct    = np.sum(conf_matx_temp[:2])
             num_total      = np.sum(conf_matx_temp)
             #store accuracy and num of total samples
+            if num_total == 0:
+                continue
             accuracy_of_groups[group] = np.array([num_correct/num_total, num_total])
 
     return accuracy_of_groups
@@ -181,7 +183,7 @@ if __name__ == '__main__':
             for group, accur_num_samples in accuracy_of_groups.items():
                 group = '{}{:02d}'.format(group[:-2],i)
 
-                if group+'/accuracy' in list(hf_group_accur[group].keys()):
+                if group+'/accuracy' not in list(hf_group_accur[group].keys()):
                     hf_group_accur.create_group(group)
                     hf_group_accur[group].create_dataset('accuracy', data=accur_num_samples[0])
                     hf_group_accur[group].create_dataset('num_samples', data=accur_num_samples[1], dtype='int')
