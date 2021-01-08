@@ -88,6 +88,7 @@ ax1 = ax.twinx()  # instantiate a second axes that shares the same x-axis
 color = 'tab:cyan'
 ax1.set_ylabel('number of samples', color=color)  # we already handled the x-label with ax1
 ax1.semilogy(x, num_samples_list, color=color)
+ax1.set_yticks([10**9, 10**10, 10**11, 10**12, 10**13])
 # ax1.set_ylim(0, 10**12)
 ax1.tick_params(axis='y', labelcolor=color)
 
