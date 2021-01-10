@@ -487,7 +487,7 @@ def plot_thresh_vs_sfcID():
     num_bins_other = int(num_bins_ndxi * (range_other[1] - range_other[0]) / \
                                          (range_ndxi[1]  - range_ndxi[0] ))
 
-    f, ax = plt.subplots(ncols=4, nrows=2)
+    f, ax = plt.subplots(ncols=3, nrows=3)
 
     for i, (a, obs) in enumerate(zip(ax.flat, thresh_dict)):
         #make a deep copy because to not modify it
