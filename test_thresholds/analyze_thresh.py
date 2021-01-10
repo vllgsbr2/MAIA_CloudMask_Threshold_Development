@@ -556,7 +556,7 @@ def plot_thresh_vs_sfcID():
             # sfcID_thresh_percent_change[sfcID_thresh_percent_change > 100] = 100
 
         a.boxplot(boxplot_thresh_obs_i, notch=False, sym='')
-        if i==0 or i==4:
+        if i==0 or i==3 or i==6:
             a.set_ylabel('Thresholds')
         if i==4 or i==5 or i==6:
             a.set_xlabel('Surface ID')
