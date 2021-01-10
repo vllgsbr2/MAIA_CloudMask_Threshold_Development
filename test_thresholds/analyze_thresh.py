@@ -584,7 +584,8 @@ def plot_thresh_vs_sfcID():
         #color the axis' points by accuracy between 0% & 100% and add colorbar
 
     #only 7 obs so lets turn 8th axis off
-    ax[1,3].axis('off')
+    ax[2,1].axis('off')
+    ax[2,2].axis('off')
 
     plt.show()
 
