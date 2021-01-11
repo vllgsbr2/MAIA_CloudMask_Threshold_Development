@@ -242,8 +242,8 @@ def plot_thresh_hist_all_bins(num_land_SID):
         a.set_title('{}'.format(obs))
 
     #only 7 obs so lets turn 8th axis off
-        if i>6:
-            a.axis('off')
+    ax[2,1].axis('off')
+    ax[2,2].axis('off')
 
     # home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
     # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
