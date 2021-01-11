@@ -77,8 +77,8 @@ composit_accuracy = np.mean(scene_accurs, axis=2)
 plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
 plt.xticks([])
 plt.yticks([])
-plt.title('Composite Accuracy for years 2004/2010/2018')
-plt.colorbar()
+plt.title('Composite Accuracy LA PTA 2002-2019')
+plt.colorbar(ticks=np.arange(0,105,5))
 
 
 plt.show()
