@@ -44,7 +44,7 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
         scene_num_samples[:,:,i] = np.nansum(hf_scene_accur[DOY_bin+'/num_samples'][()], axis=2)
 scene_accurs[scene_accurs == -999] = np.nan
 scene_num_samples[scene_num_samples == -999] = np.nan
-weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)
+weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100
 
 #         image = ax.imshow(scene_accurs[:,:,i], cmap=cmap, vmin=0, vmax=100)
 #         DOY = (i + 1)*8
