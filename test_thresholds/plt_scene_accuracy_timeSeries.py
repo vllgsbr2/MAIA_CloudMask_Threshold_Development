@@ -19,6 +19,7 @@ scene_accur_home = PTA_path + '/' + config['supporting directories']['scene_accu
 scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
 
 scene_accurs = np.zeros((400,300,46))
+scene_num_samples = np.zeros((400,300,46))
 
 # plt.style.use('dark_background')
 # fig, ax=plt.subplots(figsize=(10,10))
@@ -39,7 +40,11 @@ plt.rcParams['font.size'] = 16
 with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
     DOY_bins = list(hf_scene_accur.keys())
     for i, DOY_bin in enumerate(DOY_bins):
-        scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]*100
+        scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
+        scene_num_samples[:,:,i] = hf_scene_accur[DOY_bin+'/num_samples'][()]
+scene_accurs[scene_accurs == -999] = np.nan
+scene_num_samples[scene_num_samples == -999] = np.nan
+weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)
 
 #         image = ax.imshow(scene_accurs[:,:,i], cmap=cmap, vmin=0, vmax=100)
 #         DOY = (i + 1)*8
@@ -73,7 +78,7 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
 # plt.xlabel('Julian Day of Year')
 # plt.ylabel('% Accuracy')
 
-composit_accuracy = np.mean(scene_accurs, axis=2)
+composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
 plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
 plt.xticks([])
 plt.yticks([])
