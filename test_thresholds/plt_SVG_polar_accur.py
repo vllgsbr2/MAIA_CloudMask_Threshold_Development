@@ -111,6 +111,7 @@ for i, a in enumerate(ax.flat):
     vza_labels = [x if x%10==0 else '' for x in vza_angles]
     a.set_yticklabels(vza_labels)
     a.set_thetamax(180)
+    a.yaxis.grid(True, which='major')
 
 
 # cax = fig.add_axes([0.92, 0.23, 0.02, 0.5])#l,b,w,h
