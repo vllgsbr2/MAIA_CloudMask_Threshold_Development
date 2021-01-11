@@ -190,7 +190,7 @@ def plot_thresh_hist_all_bins(num_land_SID):
     # RAA_bin    = -1
     # SID_bin    = -1
     plt.rcParams['font.size'] = 16
-    f, ax = plt.subplots(ncols=4, nrows=2, figsize=(25,13))
+    f, ax = plt.subplots(ncols=3, nrows=3, figsize=(25,13))
 
     #collect thresholds for each obs
     binned_thresholds = []
@@ -242,7 +242,8 @@ def plot_thresh_hist_all_bins(num_land_SID):
         a.set_title('{}'.format(obs))
 
     #only 7 obs so lets turn 8th axis off
-    ax[1,3].axis('off')
+        if i>6:
+            a.axis('off')
 
     # home = '/data/keeling/a/vllgsbr2/c/histogram_images_threshold_analysis'
     # plt.savefig('{}/thresh_hist_DOY_bin_{:02d}.pdf'.format(home, DOY_bin), format='pdf')
@@ -586,7 +587,7 @@ def plot_thresh_vs_sfcID():
     #only 7 obs so lets turn 8th axis off
     ax[2,1].axis('off')
     ax[2,2].axis('off')
-    plt.tight_layout()
+    # plt.tight_layout()
 
     plt.show()
 
@@ -757,9 +758,9 @@ if __name__ == '__main__':
     # check_sunglint_flag_in_grouped_cm_and_obs()
     # make_obs_hist_by_group('SVI')
     num_land_SID=17
-    # plot_thresh_hist_all_bins(num_land_SID)
+    plot_thresh_hist_all_bins(num_land_SID)
 
-    plot_thresh_vs_sfcID()
+    # plot_thresh_vs_sfcID()
 
 
 
