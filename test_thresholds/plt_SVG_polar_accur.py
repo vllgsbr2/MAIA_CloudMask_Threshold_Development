@@ -105,8 +105,11 @@ for i, a in enumerate(ax.flat):
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
     # a.set_rticks(np.arange(0,80,10))
     a.grid()
-    a.set_yticks(np.arange(0,75,5))
-    a.set_yticklabels(['']*15)
+    vza_angles = np.arange(0,75,5)
+    a.set_yticks(vza_angles)
+    # vza_labels = ['']*15
+    vza_labels = [x for x in vza_angles if x%10==0 else '']
+    a.set_yticklabels(vza_labels)
     a.set_thetamax(180)
 
 
