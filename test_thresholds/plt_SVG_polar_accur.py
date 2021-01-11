@@ -108,7 +108,7 @@ for i, a in enumerate(ax.flat):
     vza_angles = np.arange(0,75,5)
     a.set_yticks(vza_angles)
     # vza_labels = ['']*15
-    vza_labels = [for x in vza_angles if x%10==0 x else '']
+    vza_labels = [x if x%10==0 else '' for x in vza_angles]
     a.set_yticklabels(vza_labels)
     a.set_thetamax(180)
 
