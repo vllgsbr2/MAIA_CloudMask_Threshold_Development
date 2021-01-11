@@ -146,7 +146,7 @@ def plot_accur_by_DOY():
     color = 'tab:cyan'
     ax1.set_ylabel('number of samples', color=color)  # we already handled the x-label with ax1
     ax1.semilogy(x, num_samples_list, color=color)
-    yticks = np.arange(1,11)*10**11
+    # yticks = np.arange(1,11)*10**11
     # ax1.set_yticks(yticks)
     # ax1.set_yticklabels(yticks, style='sci')
 
