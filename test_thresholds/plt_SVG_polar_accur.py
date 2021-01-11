@@ -109,7 +109,7 @@ for i, a in enumerate(ax.flat):
     a.set_yticks(vza_angles)
     # vza_labels = ['']*15
     vza_labels = [x if x%10==0 else '' for x in vza_angles]
-    a.set_yticklabels(vza_labels)
+    a.set_yticklabels(vza_labels, rotation=45)
     a.set_thetamax(180)
     a.yaxis.grid(True, which='major')
 
