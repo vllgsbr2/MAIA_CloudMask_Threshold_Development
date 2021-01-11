@@ -26,14 +26,14 @@ scene_accurs = np.zeros((400,300,46))
 plt.rcParams['font.size'] = 16
 # container = []
 
-#get sfc IDs
-from netCDF4 import Dataset
-filepath_SID = PTA_path + '/' + config['supporting directories']['Surface_IDs']
-filepath_SID = [filepath_SID +'/'+ x for x in os.listdir(filepath_SID) if x[0]=='s']
-SID = np.zeros((400,300,46))
-for i in range(46):
-    with Dataset(filepath_SID[i],'r') as nc_sfcID:
-        SID[:,:,i] = nc_sfcID.variables['surface_ID'][:,:]
+# #get sfc IDs
+# from netCDF4 import Dataset
+# filepath_SID = PTA_path + '/' + config['supporting directories']['Surface_IDs']
+# filepath_SID = [filepath_SID +'/'+ x for x in os.listdir(filepath_SID) if x[0]=='s']
+# SID = np.zeros((400,300,46))
+# for i in range(46):
+#     with Dataset(filepath_SID[i],'r') as nc_sfcID:
+#         SID[:,:,i] = nc_sfcID.variables['surface_ID'][:,:]
 
 
 with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
