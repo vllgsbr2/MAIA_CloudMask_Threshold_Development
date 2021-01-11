@@ -568,7 +568,7 @@ def plot_thresh_vs_sfcID():
 
         a_twin = a.twinx()
         a_twin.plot(np.arange(1,21), sfcID_thresh_percent_change, color='r')#, vmax=100)
-        if i==3 or i==6:
+        if i==2 or i==5 or i==6:
             a_twin.set_ylabel('% Change from Previous Surface Type')
         # ymin,ymax = -100,100
         # print(a_twin)
@@ -586,6 +586,7 @@ def plot_thresh_vs_sfcID():
     #only 7 obs so lets turn 8th axis off
     ax[2,1].axis('off')
     ax[2,2].axis('off')
+    plt.tight_layout()
 
     plt.show()
 
