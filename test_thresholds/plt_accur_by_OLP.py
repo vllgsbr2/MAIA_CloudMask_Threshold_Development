@@ -138,7 +138,7 @@ def plot_accur_by_DOY():
     ax.scatter(x, s_list, color=color)
     ax.plot(x, s_list, color=color)
     ax.tick_params(axis='y', labelcolor=color)
-    ax.set_yticks(np.arange(40,105,5))
+    ax.set_yticks(np.arange(85,105,5))
     ax.grid()
 
     ax1 = ax.twinx()  # instantiate a second axes that shares the same x-axis
