@@ -152,3 +152,5 @@ def plot_accur_by_DOY():
     ax1.tick_params(axis='y', labelcolor=color)
 
     plt.show()
+
+plot_accur_by_DOY()
