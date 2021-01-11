@@ -150,7 +150,7 @@ def plot_accur_by_DOY():
     # ax1.set_yticks(yticks)
     # ax1.set_yticklabels(yticks, style='sci')
 
-    # ax1.set_ylim(10**11, 10**12)
+    ax1.set_ylim(10**11, 10**12)
     ax1.tick_params(axis='y', labelcolor=color)
 
     plt.show()
