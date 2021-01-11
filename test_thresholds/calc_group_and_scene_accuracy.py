@@ -1,5 +1,5 @@
 
-def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID)#, CF_bin):
+def scene_conf_matx_accur(conf_matx_path, SID, numKmeansSID):#, CF_bin):
     '''
     calculate accuracy using confusion matrix files for a scene
     '''
