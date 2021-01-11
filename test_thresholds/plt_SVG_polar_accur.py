@@ -104,14 +104,13 @@ for i, a in enumerate(ax.flat):
     SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
     # a.set_rticks(np.arange(0,80,10))
-    a.grid()
+    a.grid(which='both')
     vza_angles = np.arange(0,75,5)
     a.set_yticks(vza_angles)
     # vza_labels = ['']*15
     vza_labels = [x if x%10==0 else '' for x in vza_angles]
-    a.set_yticklabels(vza_labels, rotation=45)
+    a.set_yticklabels(vza_labels)
     a.set_thetamax(180)
-    a.yaxis.grid(True, which='major')
 
 
 # cax = fig.add_axes([0.92, 0.23, 0.02, 0.5])#l,b,w,h
