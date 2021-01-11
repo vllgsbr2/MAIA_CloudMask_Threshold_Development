@@ -162,7 +162,8 @@ if __name__ == '__main__':
     # sys.exit()
     numKmeansSID = 16
     # for CF_bin in CF_bins:
-    scene_accuracy_save_file = '{}/numKmeansSID_{:02d}/scene_ID_accuracy_CF_{:02d}_{:02d}_percent.h5'.format(scene_accuracy_dir, numKmeansSID, CF_bin-20, CF_bin)
+    # scene_accuracy_save_file = '{}/numKmeansSID_{:02d}/scene_ID_accuracy_CF_{:02d}_{:02d}_percent.h5'.format(scene_accuracy_dir, numKmeansSID, CF_bin-20, CF_bin)
+    scene_accuracy_save_file = '{}/numKmeansSID_{:02d}/scene_ID_accuracy.h5'.format(scene_accuracy_dir, numKmeansSID)
     total_conf_matx = np.array([0.,0.,0.,0.])
     with h5py.File(scene_accuracy_save_file, 'w') as hf_scene_accur:
         for i in range(46):
