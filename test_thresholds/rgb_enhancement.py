@@ -49,16 +49,17 @@ def bytescale(data, cmin=None, cmax=None, high=255, low=0):
            [52, 34, 28]], dtype=uint8)
 
     """
-    if data.dtype == np.uint8:
-        return data
+
+    # if data.dtype == np.uint8:
+    #     return data
 
     if high < low:
         raise ValueError("`high` should be larger than `low`.")
 
     if cmin is None:
-        cmin = data.min()
+        cmin = data.nanmin()
     if cmax is None:
-        cmax = data.max()
+        cmax = data.nanmax()
 
     cscale = cmax - cmin
     if cscale < 0:
@@ -70,17 +71,17 @@ def bytescale(data, cmin=None, cmax=None, high=255, low=0):
     bytedata = (data * 1.0 - cmin) * scale + 0.4999
     bytedata[bytedata > high] = high
     bytedata[bytedata < 0] = 0
-    return np.cast[np.uint8](bytedata) + np.cast[np.uint8](low)
+    return (bytedata) + (low)
 
 def get_enhanced_RGB(RGB):
     def scale_image(image):
         along_track = image.shape[0]
         cross_track = image.shape[1]
 
-        x = np.array([0,  30,  60, 120, 190, 255], dtype=np.uint8)
-        y = np.array([0, 110, 160, 210, 240, 255], dtype=np.uint8)
+        x = np.array([0,  30,  60, 120, 190, 255])
+        y = np.array([0, 110, 160, 210, 240, 255])
 
-        scaled = np.zeros((along_track, cross_track), dtype=np.uint8)
+        scaled = np.zeros((along_track, cross_track))
         for i in range(len(x)-1):
             x1 = x[i]
             x2 = x[i+1]
@@ -89,7 +90,7 @@ def get_enhanced_RGB(RGB):
             m = (y2 - y1) / float(x2 - x1)
             b = y2 - (m *x2)
             mask = ((image >= x1) & (image < x2))
-            scaled = scaled + mask * np.asarray(m * image + b, dtype=np.uint8)
+            scaled = scaled + mask * np.asarray(m * image + b)
 
         mask = image >= x2
         scaled = scaled + (mask * 255)
@@ -99,7 +100,7 @@ def get_enhanced_RGB(RGB):
     # case = ['/home/javi/MODIS_Training/BRF_RGB_Toronto.npz',
     #         '/home/javi/MODIS_Training/BRF_RGB_Aerosol.npz' ]
     # rgb = np.load(case[1])['arr_0'][:]
-    enhanced_RGB = np.zeros_like(RGB, dtype=np.uint8)
+    enhanced_RGB = np.zeros_like(RGB)
     for i in range(3):
         enhanced_RGB[:, :, i] = scale_image(bytescale(RGB[:, :, i]))
 
