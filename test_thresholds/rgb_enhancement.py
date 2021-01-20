@@ -57,9 +57,9 @@ def bytescale(data, cmin=None, cmax=None, high=255, low=0):
         raise ValueError("`high` should be larger than `low`.")
 
     if cmin is None:
-        cmin = data.nanmin()
+        cmin = np.nanmin(data)
     if cmax is None:
-        cmax = data.nanmax()
+        cmax = np.nanmax(data)
 
     cscale = cmax - cmin
     if cscale < 0:
