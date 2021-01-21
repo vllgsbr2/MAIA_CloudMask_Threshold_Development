@@ -56,32 +56,34 @@ f, ax = plt.subplots(nrows=3, ncols=4, figsize=(10, 12))
 f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
                   hspace=hspace, left=left)
 
-thesisCaseTimestamps = ['2018362.1800',\
-                        '2017014.1805',\
-                        '2018357.1920',\
-                        '2015297.1805',\
-                        '2018355.1930',\
-                        '2014210.1830',\
-                        '2018354.1850',\
-                        '2018350.1915',\
-                        '2017008.1845',\
-                        '2015291.1845',\
-                        '2018349.1830',\
-                        '2017013.1900',\
-                        '2017011.1915',\
-                        '2014156.1910',\
-                        '2014135.1850',\
-                        '2013317.1845',\
-                        '2014133.1900',\
-                        '2014126.1855',\
-                        '2013219.1855',\
-                        '2012224.1900',\
-                        '2011207.1850',\
-                        '2011198.1855',\
-                        '2012233.1855',\
-                        '2011273.1835',\
-                        '2011262.1855',\
-                        '2011210.1920' ]
+# thesisCaseTimestamps = ['2018362.1800',\
+#                         '2017014.1805',\
+#                         '2018357.1920',\
+#                         '2015297.1805',\
+#                         '2018355.1930',\
+#                         '2014210.1830',\
+#                         '2018354.1850',\
+#                         '2018350.1915',\
+#                         '2017008.1845',\
+#                         '2015291.1845',\
+#                         '2018349.1830',\
+#                         '2017013.1900',\
+#                         '2017011.1915',\
+#                         '2014156.1910',\
+#                         '2014135.1850',\
+#                         '2013317.1845',\
+#                         '2014133.1900',\
+#                         '2014126.1855',\
+#                         '2013219.1855',\
+#                         '2012224.1900',\
+#                         '2011207.1850',\
+#                         '2011198.1855',\
+#                         '2012233.1855',\
+#                         '2011273.1835',\
+#                         '2011262.1855',\
+#                         '2011210.1920' ]
+
+thesisCaseTimestamps = ['2017.1920','2011210.1920']
 
 
 for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
@@ -157,6 +159,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         elif i==3:
             cmap = cm.get_cmap('ocean', 21)
             im_SID = a.imshow(SID, vmin=0, vmax=21, cmap=cmap)
+            print(SID.max())
             a.set_title('SID')
             cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
             cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
@@ -185,7 +188,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         a.set_xticks([])
         a.set_yticks([])
 
-    f.savefig(save_path, dpi=300, format='pdf')
+    f.savefig(save_path+'.png', dpi=300, format='png')
     print(time_stamp)
     # plt.show()
     for a in ax.flat:
