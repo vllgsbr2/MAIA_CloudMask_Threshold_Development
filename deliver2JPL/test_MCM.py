@@ -1,4 +1,4 @@
-from JPL_MCM_threshold_testing import MCM_wrapper
+from JPL_MCM import MCM_wrapper
 from MCM_output import make_output
 from rgb_enhancement import *
 import h5py
