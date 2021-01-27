@@ -84,8 +84,8 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath, DOY):
     with h5py.File(sfc_ID_filepath, 'r') as sfc_ID_file:
         DOY_bin = np.digitize(DOY, np.arange(8,376,8), right=True)
         DOY_end = (DOY_bin+1)*8
-        DOY_SID_Key = DOY_end + 1
-        path = '{:03d}/sfcid'.format(DOY_SID_Key)
+        DOY_start = DOY_end - 7
+        path = '{:03d}/sfcid'.format(DOY_start)
         sfc_ID = sfc_ID_file[path][()]
 
     #read config file
