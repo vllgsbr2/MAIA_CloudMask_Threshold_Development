@@ -87,6 +87,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath, DOY):
         DOY_end = (DOY_bin+1)*8
         DOY_SID_Key = DOY_end - 1
         path = '{:03d}'.format(DOY_SID_Key)
+        print(path)
         sfc_ID = sfc_ID_file[path]
 
     #read config file
