@@ -805,11 +805,11 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     #match sfc_ID categories to threshold dataset
     sfc_IDs_mod = np.copy(sfc_IDs)
     #set sfcID [2, N] to [0, N-2]
-    sfc_IDs_mod[sfc_IDs >=2]  = sfc_IDs_mod[sfc_IDs >=2] - 2
+    sfc_IDs_mod[sfc_ID >=2]  = sfc_IDs_mod[sfc_ID >=2] - 2
     #set coastline to num_land_sfc_types
-    sfc_IDs_mod[sfc_IDs == 1] = num_land_sfc_types
+    sfc_IDs_mod[sfc_ID == 1] = num_land_sfc_types
     #set water (0) to num_land_sfc_types + 1
-    sfc_IDs_mod[sfc_IDs == 0] = num_land_sfc_types + 1
+    sfc_IDs_mod[sfc_ID == 0] = num_land_sfc_types + 1
     sfc_ID = sfc_IDs_mod
     #now put data through algorithm flow****************************************
 
