@@ -803,7 +803,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath, int(DOY))
 
     #match sfc_ID categories to threshold dataset
-    sfc_IDs_mod = np.copy(sfc_IDs)
+    sfc_IDs_mod = np.copy(sfc_ID)
     #set sfcID [2, N] to [0, N-2]
     sfc_IDs_mod[sfc_ID >=2]  = sfc_IDs_mod[sfc_ID >=2] - 2
     #set coastline to num_land_sfc_types
