@@ -800,7 +800,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     fill_val_2,\
     fill_val_3,\
     Min_num_of_activated_tests,\
-    activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath)
+    activation_values = get_UIUC_data(sfc_ID_filepath, config_filepath, int(DOY))
 
     #now put data through algorithm flow****************************************
 

@@ -70,7 +70,7 @@ def get_JPL_data(test_data_JPL_path):
 #retrieve UIUC ancillary datasets**************************************
 #thresholds, surface ID , and configuration file are provided by us
 
-def get_UIUC_data(sfc_ID_filepath, config_filepath):
+def get_UIUC_data(sfc_ID_filepath, config_filepath, DOY):
     '''
     sfc_ID_filepath {str} -- path to surface ID for a particular PTA and DOY bin
     config_filepath {str} -- path to configuration file
@@ -81,10 +81,6 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     #each test has the above array that can be indexed for the threshold
 
     #land Surface ID
-    #0-11 inclusive for each land surface type; 12/13/14 water/glint/snow
-    with Dataset(sfc_ID_filepath, 'r', format='NETCDF4') as sfc_ID_file:
-        sfc_ID = sfc_ID_file.variables['surface_ID'][:]
-        # print(sfc_ID_filepath[-20:])
     with h5py.File(sfc_ID_filepath, 'r') as sfc_ID_file:
         print(list(sfc_ID_file).keys())
 
