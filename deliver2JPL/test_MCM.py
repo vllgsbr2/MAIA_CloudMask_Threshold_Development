@@ -3,7 +3,6 @@ from MCM_output import make_output
 from rgb_enhancement import *
 import h5py
 import numpy as np
-import configparser
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import matplotlib
@@ -11,34 +10,20 @@ import matplotlib.colors as matCol
 from matplotlib.colors import ListedColormap
 matplotlib.use('Agg')
 
-########
-config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
-config = configparser.ConfigParser()
-config.read(config_home_path+'/test_config.txt')
+num_Kmeans_sfc_types = 16
 
-PTA          = config['current PTA']['PTA']
-PTA_path     = config['PTAs'][PTA]
+Target_Area_X      = 0
+config_filepath    = './config.csv'
+PTA = 'LosAngeles'
 
-num_Kmeans_sfc_types = 16#11
+test_data_JPL_path = '../JPL_Data/test_JPL_data_2018188.1930.h5'
+thresh_filepath    = '../UIUC_Data/MCM_Thresholds_LosAngeles_V0.h5'
+sfc_ID_filepath    = '../UIUC_Data/SfcID_LosAngeles_V0.h5'
 
-test_scene = 'test_JPL_data_2018188.1930.h5'
 DOY = int(test_scene[18:-8])
 DOY_bin = np.digitize(DOY, np.arange(8,376,8), right=True)
 DOY_end = (DOY_bin+1)*8
 DOY_start = DOY_end - 7
-
-thresh_file = 'thresholds_DOY_{:03d}_to_{:03d}_bin_{:02d}.h5'.format(DOY_start, DOY_end, DOY_bin)
-threshold_filepath = guangyu_home + thresh_file
-SID_file    = 'surfaceID_LosAngeles_{:03d}.nc'.format(DOY_end)
-sfc_ID_filepath = '{}/{}/'.format(PTA_path, config['supporting directories']['Surface_IDs']) + SID_file
-print(test_scene, thresh_file, SID_file)
-
-test_data_JPL_path = '{}/{}/{}'.format(PTA_path, config['supporting directories']['MCM_Input'],test_scene)
-print(threshold_filepath)
-
-Target_Area_X      = int(config['Target Area Integer'][PTA])
-
-config_filepath    = './config.csv'
 
 #run MCM
 Sun_glint_exclusion_angle,\
