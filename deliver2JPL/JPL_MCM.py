@@ -416,13 +416,13 @@ def get_test_determination(observable_level_parameter, observable_data,\
     snow      = num_land_sfc_types + 2
 
     #apply fill values according to input observable and surface type
-    if observable_name == 'VIS_Ref':
+    if observable_name == 'visRef':
         #where water or snow/ice occur this test is not applied
         observable_data[(scene_type_identifier >= water)     & \
                         ((observable_data != fill_val_2)     & \
                          (observable_data != fill_val_3)) ]  = fill_val_1
 
-    elif observable_name == 'NIR_Ref':
+    elif observable_name == 'nirRef':
         #where land/sunglint/snow_ice occur this test is not applied
         observable_data[(scene_type_identifier != water)     & \
                         ( (observable_data != fill_val_2)    & \
@@ -479,7 +479,7 @@ def get_test_determination(observable_level_parameter, observable_data,\
             DOY_start = DOY_end - 7
 
             path = '{:03d}/{}'.format(DOY_start, observable_name)
-            print(list(hf_thresholds['041'].keys()))
+            print(list(hf_thresholds[path].keys()))
             database = hf_thresholds[path][()]
 
             thresholds = np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
@@ -857,8 +857,8 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
     #get test determination*****************************************************
     #combine observables into one array along third dimesnion
     observables = np.dstack((WI, NDVI, NDSI, VIS_Ref, NIR_Ref, SVI, Cirrus))
-    observable_names = ['WI', 'NDVI', 'NDSI', 'VIS_Ref', 'NIR_Ref', 'SVI',\
-                        'Cirrus']
+    observable_names = ['WI', 'NDVI', 'NDSI', 'visRef', 'nirRef', 'SVI',\
+                        'cirrus']
 
     observable_data = np.empty(np.shape(observables))
     T = np.empty(np.shape(observables))
