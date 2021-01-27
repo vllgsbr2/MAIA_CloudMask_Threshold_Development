@@ -16,9 +16,9 @@ Target_Area_X      = 0
 config_filepath    = './config.csv'
 PTA = 'LosAngeles'
 
-test_data_JPL_path = '../JPL_Data/test_JPL_data_2018188.1930.h5'
-thresh_filepath    = '../UIUC_Data/MCM_Thresholds_LosAngeles_V0.h5'
-sfc_ID_filepath    = '../UIUC_Data/SfcID_LosAngeles_V0.h5'
+test_data_JPL_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/deliver2JPL/JPL_Data/test_JPL_data_2018188.1930.h5'
+thresh_filepath    = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/deliver2JPL/UIUC_Data/MCM_Thresholds_LosAngeles_V0.h5'
+sfc_ID_filepath    = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/deliver2JPL/UIUC_Data/SfcID_LosAngeles_V0.h5'
 
 DOY = int(test_scene[18:-8])
 DOY_bin = np.digitize(DOY, np.arange(8,376,8), right=True)
