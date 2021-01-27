@@ -86,7 +86,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath, DOY):
         print(DOY)
         DOY_bin = np.digitize(DOY, np.arange(8,376,8), right=True)
         DOY_end = (DOY_bin+1)*8
-        DOY_SID_Key = DOY_end - 1
+        DOY_SID_Key = DOY_end + 1
         path = '{:03d}'.format(DOY_SID_Key)
         print(path)
         sfc_ID = sfc_ID_file[path]
