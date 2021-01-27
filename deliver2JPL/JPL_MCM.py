@@ -849,7 +849,7 @@ def MCM_wrapper(test_data_JPL_path, Target_Area_X, threshold_filepath,\
 
     observable_level_parameter = get_observable_level_parameter(SZA[:],\
                 VZA[:], SAA[:], VAA[:], Target_Area,\
-                snow_ice_mask[:], sfc_ID[:], DOY, sun_glint_mask[:], num_land_sfc_types_plus_coast)
+                snow_ice_mask[:], sfc_ID, DOY, sun_glint_mask[:], num_land_sfc_types_plus_coast)
 
     #get test determination*****************************************************
     #combine observables into one array along third dimesnion
