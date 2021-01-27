@@ -85,6 +85,8 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     with Dataset(sfc_ID_filepath, 'r', format='NETCDF4') as sfc_ID_file:
         sfc_ID = sfc_ID_file.variables['surface_ID'][:]
         # print(sfc_ID_filepath[-20:])
+    with h5py.File(sfc_ID_filepath, 'r') as sfc_ID_file:
+        print(list(sfc_ID_file).keys())
 
     #read config file
     config_data = pd.read_csv(config_filepath, skiprows=3, header=0)
