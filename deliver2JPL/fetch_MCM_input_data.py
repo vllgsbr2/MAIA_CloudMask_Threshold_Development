@@ -82,7 +82,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath, DOY):
 
     #land Surface ID
     with h5py.File(sfc_ID_filepath, 'r') as sfc_ID_file:
-        print(list(sfc_ID_file).keys())
+        print(list(sfc_ID_file.keys()))
 
     #read config file
     config_data = pd.read_csv(config_filepath, skiprows=3, header=0)
