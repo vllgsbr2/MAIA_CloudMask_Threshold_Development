@@ -479,7 +479,6 @@ def get_test_determination(observable_level_parameter, observable_data,\
             DOY_start = DOY_end - 7
 
             path = '{:03d}/{}'.format(DOY_start, observable_name)
-            print(list(hf_thresholds[path].keys()))
             database = hf_thresholds[path][()]
 
             thresholds = np.array([database[olp[0], olp[1], olp[2], olp[4]] for olp in OLP])
