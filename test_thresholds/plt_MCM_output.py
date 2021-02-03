@@ -83,7 +83,10 @@ f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
 #                         '2011262.1855',\
 #                         '2011210.1920' ]
 
-thesisCaseTimestamps = ['2009244.1830']
+# thesisCaseTimestamps = ['2009244.1830']
+
+thesisCaseTimestamps = ['2015291.1845', '2018349.1830',\
+                        '2014133.1900', '2017350.1850']
 
 
 for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
