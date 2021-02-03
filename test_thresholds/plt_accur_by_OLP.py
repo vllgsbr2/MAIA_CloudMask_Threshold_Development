@@ -121,7 +121,7 @@ def plot_accur_by_DOY():
             'weight': 'normal',
             'size': 16,
             }
-    plt.rcParams['font.size'] = 16
+    plt.rcParams['font.size'] = 18
 
     fig, ax = plt.subplots()
 
