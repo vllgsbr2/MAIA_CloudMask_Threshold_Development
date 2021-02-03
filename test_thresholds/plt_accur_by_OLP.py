@@ -147,7 +147,7 @@ def plot_accur_by_DOY():
     ax1.set_ylabel('number of samples', color=color)  # we already handled the x-label with ax1
     ax1.semilogy(x, num_samples_list, color=color, linewidth=3)
     # yticks = np.arange(1,11)*10**11
-    ax1.set_yticks([10**11,10**12])
+    ax1.set_yticks([10**11,'','','','','','','','' 10**12])
     # ax1.set_yticklabels(yticks, style='sci')
 
     ax1.set_ylim(10**11, 10**12)
