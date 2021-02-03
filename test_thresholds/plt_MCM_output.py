@@ -157,14 +157,14 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
 
 
         elif i==3:
-            cmap = cm.get_cmap('ocean', 21)
-            im_SID = a.imshow(SID, vmin=0, vmax=21, cmap=cmap)
+            cmap = cm.get_cmap('ocean', 20)
+            im_SID = a.imshow(SID, vmin=0, vmax=20, cmap=cmap)
             print(SID.max())
             a.set_title('SID')
             cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
             cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
-            cbar.set_ticks(np.arange(0.5,21.5))
-            SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','C', 'W', 'SGW', 'SI']
+            cbar.set_ticks(np.arange(0.5,20.5))
+            SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C', 'W', 'SGW', 'SI']
             cbar.set_ticklabels(SID_cbar_labels)
             im_SID.cmap.set_under('r')
 
