@@ -54,7 +54,7 @@ def plot_accur_by_SID():
             'weight': 'normal',
             'size': 16,
             }
-    plt.rcParams['font.size'] = 16
+    plt.rcParams['font.size'] = 18
 
     fig, ax = plt.subplots()
 
@@ -158,4 +158,5 @@ def plot_accur_by_DOY():
 
     plt.show()
 
-plot_accur_by_DOY()
+# plot_accur_by_DOY()
+plot_accur_by_SID()
