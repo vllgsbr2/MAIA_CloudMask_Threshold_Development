@@ -193,8 +193,8 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
         a.set_xticks([])
         a.set_yticks([])
 
-    # f.savefig(save_path+'.png', dpi=300, format='png')
+    f.savefig(save_path+'.png', dpi=300, format='png')
     print(time_stamp)
-    plt.show()
+    # plt.show()
     for a in ax.flat:
         a.clear()
