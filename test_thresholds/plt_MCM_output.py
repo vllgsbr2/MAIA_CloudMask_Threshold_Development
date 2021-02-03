@@ -109,7 +109,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
     output_file_path = MCM_output_home + time_stamp + '/MCM_Output.h5'
     # #skip files already processed
     home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/thesisCasePlots/'
-    save_path = home + time_stamp +'.pdf'
+    save_path = home + time_stamp
     # if os.path.exists(save_path):
     #     if os.path.getsize(save_path) > 0:
     #         continue
