@@ -3,6 +3,7 @@ import numpy as np
 from rgb_enhancement import get_enhanced_RGB
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import matplotlib.colors as mpl_c
 import matplotlib
 import matplotlib.colors as matCol
 from matplotlib.colors import ListedColormap
@@ -88,6 +89,16 @@ f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
 thesisCaseTimestamps = ['2015291.1845', '2018349.1830',\
                         '2014133.1900', '2017350.1850']
 
+#make new cmap 0-15 cmap continuous/ C red/W blue/SGW yellow/SI white
+ocean = cm.get_cmap('ocean', 20)
+newcolors = ocean(np.linspace(0, 1, 20))
+newcolors[16, :] = mpl_c.to_rgba('red')
+newcolors[17, :] = mpl_c.to_rgba('cyan')
+newcolors[18, :] = mpl_c.to_rgba('yellow')
+newcolors[19, :] = mpl_c.to_rgba('white')
+newcmp = ListedColormap(newcolors)
+
+
 
 for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
     #just produce for cases above
@@ -162,7 +173,7 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
 
 
         elif i==3:
-            cmap = cm.get_cmap('ocean', 20)
+            cmap = newcmp#cm.get_cmap('ocean', 20)
             im_SID = a.imshow(SID, vmin=0, vmax=20, cmap=cmap)
             print(SID.max())
             a.set_title('SID')
