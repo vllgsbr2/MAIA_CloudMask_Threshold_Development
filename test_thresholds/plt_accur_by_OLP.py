@@ -136,21 +136,21 @@ def plot_accur_by_DOY():
     ax.set_xticks(x)
     ax.set_xticklabels(x_ticks, rotation=45)
     ax.scatter(x, s_list, color=color)
-    ax.plot(x, s_list, color=color)
+    ax.plot(x, s_list, color=color, linewidth=3)
     ax.tick_params(axis='y', labelcolor=color)
-    ax.set_yticks(np.arange(87,101,1))
+    ax.set_yticks(np.arange(87,98,1))
     ax.grid()
 
     ax1 = ax.twinx()  # instantiate a second axes that shares the same x-axis
 
     color = 'tab:cyan'
     ax1.set_ylabel('number of samples', color=color)  # we already handled the x-label with ax1
-    ax1.semilogy(x, num_samples_list, color=color)
+    ax1.semilogy(x, num_samples_list, color=color, linewidth=3)
     # yticks = np.arange(1,11)*10**11
     # ax1.set_yticks(yticks)
     # ax1.set_yticklabels(yticks, style='sci')
 
-    ax1.set_ylim(10**11, 10**12)
+    # ax1.set_ylim(10**11, 10**12)
     ax1.tick_params(axis='y', labelcolor=color)
 
     plt.show()
