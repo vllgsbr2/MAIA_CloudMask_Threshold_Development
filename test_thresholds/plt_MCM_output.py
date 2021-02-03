@@ -87,7 +87,7 @@ f.subplots_adjust(bottom=bottom, right=right, top=top, wspace=wspace,\
 # thesisCaseTimestamps = ['2009244.1830']
 
 thesisCaseTimestamps = ['2015291.1845', '2018349.1830',\
-                        '2014133.1900', '2017350.1850']
+                        '2014133.1900', '2017350.1805']
 
 #make new cmap 0-15 cmap continuous/ C red/W blue/SGW yellow/SI white
 ocean = cm.get_cmap('ocean', 20)
