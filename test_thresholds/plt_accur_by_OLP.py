@@ -69,7 +69,7 @@ def plot_accur_by_SID():
     ax.set_xticks(x)
     ax.set_xticklabels(x_ticks)
     ax.scatter(x, s_list, color=color)
-    ax.plot(x, s_list, color=color)
+    ax.plot(x, s_list, color=color, linewidth=3)
     ax.tick_params(axis='y', labelcolor=color)
     ax.set_yticks(np.arange(40,105,5))
     ax.grid()
@@ -78,7 +78,7 @@ def plot_accur_by_SID():
 
     color = 'tab:cyan'
     ax1.set_ylabel('number of samples', color=color)  # we already handled the x-label with ax1
-    ax1.semilogy(x, num_samples_list, color=color)
+    ax1.semilogy(x, num_samples_list, color=color, linewidth=3)
     ax1.set_yticks([10**9, 10**10, 10**11, 10**12, 10**13])
 
     # ax1.set_ylim(0, 10**12)
