@@ -93,15 +93,15 @@ for time_stamp, test_data_JPL_path in zip(time_stamps, test_data_JPL_paths):
     #just produce for cases above
     if time_stamp not in thesisCaseTimestamps:
         continue
-    else:
-        print(time_stamp)
+    # else:
+    #     print(time_stamp)
     output_file_path = MCM_output_home + time_stamp + '/MCM_Output.h5'
-    #skip files already processed
-    home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/thesisCasePlots/'
-    save_path = home + time_stamp +'.pdf'
-    if os.path.exists(save_path):
-        if os.path.getsize(save_path) > 0:
-            continue
+    # #skip files already processed
+    # home = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/results/thesisCasePlots/'
+    # save_path = home + time_stamp +'.pdf'
+    # if os.path.exists(save_path):
+    #     if os.path.getsize(save_path) > 0:
+    #         continue
     with h5py.File(output_file_path, 'r') as hf_MCM_output:
         DTT = hf_MCM_output['cloud_mask_output/DTT'][()]
         MCM = hf_MCM_output['cloud_mask_output/final_cloud_mask'][()]
