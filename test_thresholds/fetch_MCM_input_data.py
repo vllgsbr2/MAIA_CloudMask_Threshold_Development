@@ -120,7 +120,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
 
     cmap = newcmp#cm.get_cmap('ocean', 20)
     im_SID = a.imshow(sfc_ID, vmin=0, vmax=18, cmap=cmap)
-    a.set_title('KLID\nValid DOY {:03d} - {:03d}'.format(185,192))
+    a.set_title('KLID\nValid DOY {:03d} - {:03d}'.format(361,365))
     # cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
     # cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
     # cbar = f.colorbar(im=im_SID, ax=a)
