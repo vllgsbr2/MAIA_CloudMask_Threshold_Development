@@ -106,10 +106,10 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     import sys
 
     #make new cmap 0-15 cmap continuous/ C red/W blue/SGW yellow/SI white
-    ocean = cm.get_cmap('ocean', 17)
-    newcolors = ocean(np.linspace(0, 1, 17))
+    ocean = cm.get_cmap('ocean', 18)
+    newcolors = ocean(np.linspace(0, 1, 18))
     newcolors[16, :] = mpl_c.to_rgba('red')
-    # newcolors[16, :] = mpl_c.to_rgba('cyan')
+    newcolors[17, :] = mpl_c.to_rgba('cyan')
     # newcolors[18, :] = mpl_c.to_rgba('yellow')
     # newcolors[19, :] = mpl_c.to_rgba('white')
     newcmp = ListedColormap(newcolors)
@@ -123,6 +123,8 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
     # cbar = f.colorbar(im=im_SID, ax=a)
     cbar.set_ticks(np.arange(0.5,17.5))
+    a.set_xticks([])
+    a.set_yticks([])
 
     SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C']
     cbar.set_ticklabels(SID_cbar_labels)
