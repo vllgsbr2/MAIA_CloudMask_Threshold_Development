@@ -117,12 +117,12 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     f, a = plt.subplots(nrows=1,ncols=1)
 
     cmap = newcmp#cm.get_cmap('ocean', 20)
-    im_SID = a[0,0].imshow(sfc_ID, vmin=0, vmax=20, cmap=cmap)
-    a[0,0].set_title('KLID\nVlaid DOY {:03d} - {:03d}'.format())
+    im_SID = a[0].imshow(sfc_ID, vmin=0, vmax=20, cmap=cmap)
+    a[0].set_title('KLID\nVlaid DOY {:03d} - {:03d}'.format())
     # cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
     # cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
     # cbar.set_ticks(np.arange(0.5,20.5))
-    bar = a[0,0].colorbar(ticks=np.arange(0.5,20.5))
+    bar = a[0].colorbar(ticks=np.arange(0.5,20.5))
     SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C', 'W', 'SGW', 'SI']
     cbar.set_ticklabels(SID_cbar_labels)
     im_SID.cmap.set_under('r')
