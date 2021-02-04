@@ -121,7 +121,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     a.set_title('KLID\nVlaid DOY {:03d} - {:03d}'.format(185,192))
     # cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
     # cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
-    cbar = f.colorbar(im=im_SID)
+    cbar = f.colorbar(im=im_SID, ax=a)
     cbar.set_ticks(np.arange(0.5,17.5))
 
     SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C']
