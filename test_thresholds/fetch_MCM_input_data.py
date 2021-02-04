@@ -126,7 +126,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     a.set_xticks([])
     a.set_yticks([])
 
-    SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C']
+    SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C','W']
     cbar.set_ticklabels(SID_cbar_labels)
     im_SID.cmap.set_under('r')
 
