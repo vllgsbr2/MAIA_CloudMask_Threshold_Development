@@ -130,7 +130,7 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
 
     divider = make_axes_locatable(a)
     cax = divider.append_axes('right', size='5%', pad=0.05)
-    f.colorbar(im_SID, cax=cax, orientation='vertical')
+    cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
     cbar.set_ticks(np.arange(0.5,18.5))
 
     SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C','W']
