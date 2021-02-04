@@ -99,6 +99,37 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
         sfc_ID = sfc_ID_file.variables['surface_ID'][:]
         # print(sfc_ID_filepath[-20:])
 
+    import matplotlib.pyplot as plt
+    import matplotlib.cm as cm
+    import matplotlib.colors as mpl_c
+    from matplotlib.colors import ListedColormap
+    import sys
+
+    #make new cmap 0-15 cmap continuous/ C red/W blue/SGW yellow/SI white
+    ocean = cm.get_cmap('ocean', 20)
+    newcolors = ocean(np.linspace(0, 1, 20))
+    newcolors[16, :] = mpl_c.to_rgba('red')
+    newcolors[17, :] = mpl_c.to_rgba('cyan')
+    newcolors[18, :] = mpl_c.to_rgba('yellow')
+    newcolors[19, :] = mpl_c.to_rgba('white')
+    newcmp = ListedColormap(newcolors)
+
+    f, a = plt.subplots(111)
+
+    cmap = newcmp#cm.get_cmap('ocean', 20)
+    im_SID = a.imshow(sfc_ID, vmin=0, vmax=20, cmap=cmap)
+    a.set_title('KLID\nVlaid DOY {:03d} - {:03d}'.format())
+    # cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
+    # cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
+    # cbar.set_ticks(np.arange(0.5,20.5))
+    bar = a.colorbar(ticks=np.arange(0.5,20.5))
+    SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C', 'W', 'SGW', 'SI']
+    cbar.set_ticklabels(SID_cbar_labels)
+    im_SID.cmap.set_under('r')
+
+    plt.show()
+    sys.exit()
+
     #read config file
     config_data = pd.read_csv(config_filepath, skiprows=3, header=0)
     Sun_glint_exclusion_angle  = float(config_data['Sun-glint exclusion angle'])
