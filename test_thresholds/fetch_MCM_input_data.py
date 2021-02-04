@@ -106,23 +106,23 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     import sys
 
     #make new cmap 0-15 cmap continuous/ C red/W blue/SGW yellow/SI white
-    ocean = cm.get_cmap('ocean', 20)
-    newcolors = ocean(np.linspace(0, 1, 20))
-    newcolors[16, :] = mpl_c.to_rgba('red')
-    newcolors[17, :] = mpl_c.to_rgba('cyan')
-    newcolors[18, :] = mpl_c.to_rgba('yellow')
-    newcolors[19, :] = mpl_c.to_rgba('white')
+    ocean = cm.get_cmap('ocean', 17)
+    newcolors = ocean(np.linspace(0, 1, 17))
+    newcolors[15, :] = mpl_c.to_rgba('red')
+    newcolors[16, :] = mpl_c.to_rgba('cyan')
+    # newcolors[18, :] = mpl_c.to_rgba('yellow')
+    # newcolors[19, :] = mpl_c.to_rgba('white')
     newcmp = ListedColormap(newcolors)
 
     f, a = plt.subplots(nrows=1,ncols=1)
 
     cmap = newcmp#cm.get_cmap('ocean', 20)
-    im_SID = a.imshow(sfc_ID, vmin=0, vmax=18, cmap=cmap)
+    im_SID = a.imshow(sfc_ID, vmin=0, vmax=17, cmap=cmap)
     a.set_title('KLID\nVlaid DOY {:03d} - {:03d}'.format(185,192))
     cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
     cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
     # cbar = f.colorbar(im=im_SID, ax=a)
-    cbar.set_ticks(np.arange(0.5,18.5))
+    cbar.set_ticks(np.arange(0.5,17.5))
 
     SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','C']
     cbar.set_ticklabels(SID_cbar_labels)
