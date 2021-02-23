@@ -106,39 +106,39 @@ def get_UIUC_data(sfc_ID_filepath, config_filepath):
     from mpl_toolkits.axes_grid1 import make_axes_locatable
     import sys
 
-    #make new cmap 0-15 cmap continuous/ C red/W blue/SGW yellow/SI white
-    ocean = cm.get_cmap('ocean', 18)
-    newcolors = ocean(np.linspace(0, 1, 18))
-    newcolors[16, :] = mpl_c.to_rgba('red')
-    newcolors[17, :] = mpl_c.to_rgba('cyan')
+    # #make new cmap 0-15 cmap continuous/ C red/W blue/SGW yellow/SI white
+    # ocean = cm.get_cmap('ocean', 18)
+    # newcolors = ocean(np.linspace(0, 1, 18))
+    # newcolors[16, :] = mpl_c.to_rgba('red')
+    # newcolors[17, :] = mpl_c.to_rgba('cyan')
     # newcolors[18, :] = mpl_c.to_rgba('yellow')
     # newcolors[19, :] = mpl_c.to_rgba('white')
-    newcmp = ListedColormap(newcolors)
-
-    f, a = plt.subplots(nrows=1,ncols=1)
-    plt.rcParams['font.size'] = 18
-
-    cmap = newcmp#cm.get_cmap('ocean', 20)
-    im_SID = a.imshow(sfc_ID, vmin=0, vmax=18, cmap=cmap)
-    a.set_title('KLID\nValid DOY {:03d} - {:03d}'.format(361,365))
-    # cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
+    # newcmp = ListedColormap(newcolors)
+    #
+    # f, a = plt.subplots(nrows=1,ncols=1)
+    # plt.rcParams['font.size'] = 18
+    #
+    # cmap = newcmp#cm.get_cmap('ocean', 20)
+    # im_SID = a.imshow(sfc_ID, vmin=0, vmax=18, cmap=cmap)
+    # a.set_title('KLID\nValid DOY {:03d} - {:03d}'.format(361,365))
+    # # cax = f.add_axes([0.83, 0.11, 0.012, 0.24])
+    # # cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
+    # # cbar = f.colorbar(im=im_SID, ax=a)
+    #
+    # a.set_xticks([])
+    # a.set_yticks([])
+    #
+    # divider = make_axes_locatable(a)
+    # cax = divider.append_axes('right', size='5%', pad=0.05)
     # cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
-    # cbar = f.colorbar(im=im_SID, ax=a)
+    # cbar.set_ticks(np.arange(0.5,18.5))
+    #
+    # SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water']
+    # cbar.set_ticklabels(SID_cbar_labels)
+    # im_SID.cmap.set_under('r')
 
-    a.set_xticks([])
-    a.set_yticks([])
-
-    divider = make_axes_locatable(a)
-    cax = divider.append_axes('right', size='5%', pad=0.05)
-    cbar = f.colorbar(im_SID, cax=cax, orientation='vertical')
-    cbar.set_ticks(np.arange(0.5,18.5))
-
-    SID_cbar_labels = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water']
-    cbar.set_ticklabels(SID_cbar_labels)
-    im_SID.cmap.set_under('r')
-
-    plt.show()
-    sys.exit()
+    # plt.show()
+    # sys.exit()
 
     #read config file
     config_data = pd.read_csv(config_filepath, skiprows=3, header=0)
