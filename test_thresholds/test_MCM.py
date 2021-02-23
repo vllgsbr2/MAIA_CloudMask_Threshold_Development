@@ -28,9 +28,9 @@ PTA_path     = config['PTAs'][PTA]
 # test_scene = 'test_JPL_data_2018365.1830.h5' #this is it!!
 
 #test some Guangyu scenes
-test_scene = 'test_JPL_data_2019276.1805.h5'
+# test_scene = 'test_JPL_data_2019276.1805.h5'
 # test_scene = 'test_JPL_data_2014067.1915.h5'
-# test_scene = 'test_JPL_data_2014084.1820.h5'
+test_scene = 'test_JPL_data_2014084.1820.h5'
 num_Kmeans_sfc_types = 16#11
 guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
 # threshold_filepath = guangyu_home + 'thresholds_DOY_273_to_280_bin_34.h5'
