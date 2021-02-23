@@ -20,7 +20,7 @@ PTA_path     = config['PTAs'][PTA]
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2009048.1855.HDF5'
 # test_data_JPL_path = home + 'JPL_data_all_timestamps/test_JPL_data_2010197.1845.HDF5'
 # test_scene = 'test_JPL_data_2019120.1920.h5' # ok general case
-test_scene = 'test_JPL_data_2018002.1850.h5' # cirrus event
+# test_scene = 'test_JPL_data_2018002.1850.h5' # cirrus event
 # test_scene = 'test_JPL_data_2019148.1805.h5' # ok general case
 # test_scene = 'test_JPL_data_2019139.1815.h5' #good scene just cut off
 # test_scene = 'test_JPL_data_2019137.1825.h5' # great scene!! would like more water clouds
@@ -29,6 +29,8 @@ test_scene = 'test_JPL_data_2018002.1850.h5' # cirrus event
 
 #test some Guangyu scenes
 # test_scene = 'test_JPL_data_2019276.1805.h5'
+test_scene = 'test_JPL_data_2014067.1915.h5'
+# test_scene = 'test_JPL_data_2014084.1820.h5'
 num_Kmeans_sfc_types = 16#11
 guangyu_home = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
 # threshold_filepath = guangyu_home + 'thresholds_DOY_273_to_280_bin_34.h5'
