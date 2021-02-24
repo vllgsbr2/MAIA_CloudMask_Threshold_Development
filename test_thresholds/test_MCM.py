@@ -152,7 +152,7 @@ DTT_WI, DTT_NDVI, DTT_NDSI, DTT_VIS_Ref, DTT_NIR_Ref, DTT_SVI, DTT_Cirrus =\
                                                 DTT[:,:,6]
 #plotting*******************************************************************
 print('Commence Plotting Output')
-plt.rcParams['font.size'] = 18
+plt.rcParams['font.size'] = 16
 plt.figure(6)
 
 im_scene_ID = plt.imshow(scene_type_identifier, vmin=0)
@@ -220,7 +220,7 @@ cbar4 = f0.colorbar(im4, ax=ax0[1,0],fraction=0.046, pad=0.04)#)#, ticks = np.ar
 cbar5 = f0.colorbar(im5, ax=ax0[1,1],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,SVI.max()+0.1,0.05))
 cbar6 = f0.colorbar(im6, ax=ax0[1,2],fraction=0.046, pad=0.04)#)#, ticks = np.arange(0,1.2,0.2))
 
-font_size = 10 # Adjust as appropriate.
+font_size = 16 # Adjust as appropriate.
 cbar0.ax.tick_params(labelsize=font_size)
 cbar1.ax.tick_params(labelsize=font_size)
 cbar2.ax.tick_params(labelsize=font_size)
