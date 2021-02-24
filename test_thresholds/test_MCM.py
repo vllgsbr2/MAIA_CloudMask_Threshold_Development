@@ -141,7 +141,7 @@ RGB = get_enhanced_RGB(RGB)
 plt.rcParams['font.size'] = 16
 f0, ax0 = plt.subplots(ncols=4, nrows=2,sharex=True, sharey=True)
 cmap='binary'
-
+Cirrus[Cirrus<0]=0
 im0 = ax0[0,0].imshow(WI     , cmap=cmap     , vmin=0, vmax = 0.6 )
 im1 = ax0[0,1].imshow(NDVI   , cmap='PRGn'   , vmin=-0.4, vmax=0.4)
 im2 = ax0[0,2].imshow(NDSI   , cmap='PRGn'   , vmin=-0.8 , vmax=0.8)
