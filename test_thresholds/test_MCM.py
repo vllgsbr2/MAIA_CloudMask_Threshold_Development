@@ -200,7 +200,7 @@ im2 = ax0[0,2].imshow(NDSI   , cmap='PRGn'   , vmin=-0.5 , vmax=0.5)
 im3 = ax0[0,3].imshow(VIS_Ref, cmap=cmap+'_r', vmin=0, vmax=0.8   )#, vmax=VIS_Ref.max())
 im4 = ax0[1,0].imshow(NIR_Ref, cmap=cmap+'_r', vmin=0, vmax=0.8  )#, vmax=NIR_Ref.max())
 im5 = ax0[1,1].imshow(SVI    , cmap=cmap+'_r', vmin=0, vmax=0.25)#, vmax=SVI.max())
-im6 = ax0[1,2].imshow(Cirrus+1e-20 , cmap=cmap+'_r', vmin=0, vmax=0.2, norm=matplotlib.colors.LogNorm()   )#, vmax=1)
+im6 = ax0[1,2].imshow(Cirrus, cmap=cmap+'_r', vmin=1e-20, vmax=0.2, norm=matplotlib.colors.LogNorm()   )#, vmax=1)
 
 ax0[1,3].imshow(RGB)
 
