@@ -189,7 +189,7 @@ for a in ax0.flat:
     a.set_xticks([])
     a.set_yticks([])
     a.axis('off')
-
+plt.show()
 sys.exit()
 #################
 
