@@ -193,7 +193,7 @@ ax1[1].set_title('BRF RGB')
 
 #observables
 f0, ax0 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
-cmap='bone'
+cmap='binary'
 im0 = ax0[0,0].imshow(WI     , cmap=cmap+'_r', vmin=0, vmax = 0.6 )
 im1 = ax0[0,1].imshow(NDVI   , cmap='PRGn'   , vmin=-0.4, vmax=0.4)
 im2 = ax0[0,2].imshow(NDSI   , cmap='PRGn'   , vmin=-0.5 , vmax=0.5)
