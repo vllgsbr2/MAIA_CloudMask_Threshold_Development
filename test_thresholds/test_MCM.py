@@ -139,7 +139,7 @@ RGB = np.flip(BRFs[:,:,:3], 2)
 RGB[RGB==-999] = 0
 RGB = get_enhanced_RGB(RGB)
 
-f0, ax0 = plt.subplots(ncols=4, nrows=2, figsize=(l,w),sharex=True, sharey=True)
+f0, ax0 = plt.subplots(ncols=4, nrows=2,sharex=True, sharey=True)
 cmap='binary'
 im0 = ax0[0,0].imshow(WI     , cmap=cmap     , vmin=0, vmax = 0.6 )
 im1 = ax0[0,1].imshow(NDVI   , cmap='PRGn'   , vmin=-0.4, vmax=0.4)
