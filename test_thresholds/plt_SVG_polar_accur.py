@@ -71,7 +71,7 @@ num_samples[num_samples<=0] = np.nan
 # print(num_samples)
 #plot
 
-x = np.correlate(weighted_accuracy_SVG.flat, num_samples.flat)
+x = np.correlate(weighted_accuracy_SVG[not np.isnan(weighted_accuracy_SVG)], num_samples[not np.isnan(weighted_accuracy_SVG)])
 print(x)
 # import matplotlib.colors as colors
 # fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
