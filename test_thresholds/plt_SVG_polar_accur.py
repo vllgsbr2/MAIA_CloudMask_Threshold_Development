@@ -18,35 +18,35 @@ group_accur_path = group_accur_home + '/' + 'group_ID_accuracy.h5'
 filepath = group_accur_path
 
 
-s_list = np.zeros((10,12,15))
-num_samples_list=np.zeros((10,12,15))
-weighted_accuracy = np.zeros((10,12,15))
-with h5py.File(filepath, 'r') as hf:
-    bins = list(hf.keys())
-
-    for SZA in range(10):
-        for RAA in range(12):
-            for VZA in range(15):
-                #place to store for each bin
-                accuracy =[]
-                num_samples=[]
-                #find group names of bin combo in for loop step
-                bin_IDs = [x for x in bins if x[:40]=='confusion_matrix_cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}'.format(SZA,VZA,RAA)]
-                #cycle through all the unque SVG bins (DOY and SID may change ofcourse)
-                for i, bin_ID in enumerate(bin_IDs):
-                    # print(SZA,VZA,RAA,bin_ID)
-                    accuracy.append(hf[bin_ID+'/accuracy'][()])
-                    # print(hf[bin_ID+'/accuracy'][()])
-                    num_samples.append(hf[bin_ID+'/num_samples'][()])
-                accuracy, num_samples = np.array(accuracy), np.array(num_samples)
-                weighted_accuracy[SZA, RAA, VZA] = np.sum(accuracy*num_samples) / np.sum(num_samples)
-        print('SZA bin: ', SZA)
-                # s_temp = np.array(accuracy)
-                # num_samples_temp = np.array(num_samples)
-                # # s_temp = s_temp[s_temp>=0]
-                # s_list[SZA,RAA,VZA] = np.nanmean(s_temp)*100
-                # num_samples_list[SZA,RAA,VZA] = np.nansum(np.array(num_samples))
-np.savez('./SVG_accur_data.npz', weighted_accuracy=weighted_accuracy, num_smaples=num_samples)
+# s_list = np.zeros((10,12,15))
+# num_samples_list=np.zeros((10,12,15))
+# weighted_accuracy = np.zeros((10,12,15))
+# with h5py.File(filepath, 'r') as hf:
+#     bins = list(hf.keys())
+#
+#     for SZA in range(10):
+#         for RAA in range(12):
+#             for VZA in range(15):
+#                 #place to store for each bin
+#                 accuracy =[]
+#                 num_samples=[]
+#                 #find group names of bin combo in for loop step
+#                 bin_IDs = [x for x in bins if x[:40]=='confusion_matrix_cosSZA_{:02d}_VZA_{:02d}_RAZ_{:02d}'.format(SZA,VZA,RAA)]
+#                 #cycle through all the unque SVG bins (DOY and SID may change ofcourse)
+#                 for i, bin_ID in enumerate(bin_IDs):
+#                     # print(SZA,VZA,RAA,bin_ID)
+#                     accuracy.append(hf[bin_ID+'/accuracy'][()])
+#                     # print(hf[bin_ID+'/accuracy'][()])
+#                     num_samples.append(hf[bin_ID+'/num_samples'][()])
+#                 accuracy, num_samples = np.array(accuracy), np.array(num_samples)
+#                 weighted_accuracy[SZA, RAA, VZA] = np.sum(accuracy*num_samples) / np.sum(num_samples)
+#         print('SZA bin: ', SZA)
+#                 # s_temp = np.array(accuracy)
+#                 # num_samples_temp = np.array(num_samples)
+#                 # # s_temp = s_temp[s_temp>=0]
+#                 # s_list[SZA,RAA,VZA] = np.nanmean(s_temp)*100
+#                 # num_samples_list[SZA,RAA,VZA] = np.nansum(np.array(num_samples))
+# np.savez('./SVG_accur_data.npz', weighted_accuracy=weighted_accuracy, num_smaples=num_samples)
 
 
 #-- Generate Data -----------------------------------------
@@ -62,6 +62,8 @@ dataset_names = data.files
 
 weighted_accuracy_SVG = data[dataset_names[0]]*100
 num_samples = data[dataset_names[1]]
+
+print(num_samples.shape)
 #plot
 fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
 
