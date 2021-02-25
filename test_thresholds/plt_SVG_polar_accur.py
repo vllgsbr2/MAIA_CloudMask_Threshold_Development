@@ -65,9 +65,12 @@ dataset_names = data.files
 weighted_accuracy_SVG = data[dataset_names[0]]*100
 num_samples = data[dataset_names[1]]
 num_samples[num_samples<=0] = np.nan
-num_samples = np.log(num_samples)
+# num_samples = np.log(num_samples)
 # print(num_samples)
 #plot
+
+import matplotlib.colors as colors
+import matplotlib.cbook as cbook
 fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
 
 for i, a in enumerate(ax.flat):
@@ -77,9 +80,9 @@ for i, a in enumerate(ax.flat):
 
     # im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i,:,:],\
     #                   cmap=cmap, vmin=0, vmax=100)
-
-    im = a.pcolormesh(theta, r, num_samples[i,:,:],\
-                      cmap='jet')
+    Z = num_samples[i,:,:]
+    im = a.pcolormesh(theta, r, Z, cmap='jet',\
+                norm=colors.LogNorm(vmin=Z.min(), vmax=Z.max()))
 
     SZA1 = np.rad2deg(np.arccos((i)/10))
     SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
