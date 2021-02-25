@@ -69,10 +69,14 @@ num_samples = data[dataset_names[1]]
 weighted_accuracy_SVG = weighted_accuracy_SVG[num_samples>0]
 num_samples = num_samples[num_samples>0]
 
+weighted_accuracy_SVG = weighted_accuracy_SVG[num_samples<10**8]
+num_samples = num_samples[num_samples<10**8]
+
 # num_samples = np.log(num_samples)
 # print(num_samples)
 #plot
 from scipy.stats.stats import pearsonr
+
 x = pearsonr(weighted_accuracy_SVG, np.log(num_samples))
 print(x)
 # import matplotlib.colors as colors
