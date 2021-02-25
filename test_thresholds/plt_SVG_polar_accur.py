@@ -65,6 +65,7 @@ dataset_names = data.files
 weighted_accuracy_SVG = data[dataset_names[0]]*100
 num_samples = data[dataset_names[1]]
 num_samples[num_samples<=0] = np.nan
+weighted_accuracy_SVG[num_samples<=0] = np.nan
 # num_samples = np.log(num_samples)
 # print(num_samples)
 #plot
