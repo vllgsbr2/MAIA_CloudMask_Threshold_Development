@@ -46,7 +46,7 @@ filepath = group_accur_path
 #                 # # s_temp = s_temp[s_temp>=0]
 #                 # s_list[SZA,RAA,VZA] = np.nanmean(s_temp)*100
 #                 # num_samples_list[SZA,RAA,VZA] = np.nansum(np.array(num_samples))
-# np.savez('./SVG_accur_data.npz', weighted_accuracy=weighted_accuracy, num_smaples=num_samples)
+# np.savez('./SVG_accur_data.npz', weighted_accuracy=weighted_accuracy, num_samples=num_samples)
 
 
 #-- Generate Data -----------------------------------------
@@ -63,7 +63,7 @@ dataset_names = data.files
 weighted_accuracy_SVG = data[dataset_names[0]]*100
 num_samples = data[dataset_names[1]]
 
-print(num_samples.shape)
+print(num_samples)
 #plot
 fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
 
