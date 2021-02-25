@@ -72,8 +72,8 @@ num_samples = num_samples[num_samples>0]
 # num_samples = np.log(num_samples)
 # print(num_samples)
 #plot
-
-x = np.corrcoef(weighted_accuracy_SVG, num_samples)
+from scipy.stats.stats import pearsonr
+x = pearsonr(weighted_accuracy_SVG, np.log(num_samples))
 print(x)
 # import matplotlib.colors as colors
 # fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
