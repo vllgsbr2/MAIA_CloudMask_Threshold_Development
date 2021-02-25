@@ -82,7 +82,7 @@ for i, a in enumerate(ax.flat):
     #                   cmap=cmap, vmin=0, vmax=100)
     Z = num_samples[i,:,:]
     im = a.pcolormesh(theta, r, Z, cmap='nipy_spectral',\
-                norm=colors.SymLogNorm(vmin=1, vmax=10**12))
+                norm=colors.SymLogNorm(vmin=1, vmax=10**12, linthresh=10**8))
 
     SZA1 = np.rad2deg(np.arccos((i)/10))
     SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
