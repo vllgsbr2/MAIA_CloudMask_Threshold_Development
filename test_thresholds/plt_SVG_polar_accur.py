@@ -65,7 +65,7 @@ dataset_names = data.files
 weighted_accuracy_SVG = data[dataset_names[0]]*100
 num_samples = data[dataset_names[1]]
 
-print(num_samples)
+# print(num_samples)
 #plot
 fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
 
