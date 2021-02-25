@@ -70,7 +70,6 @@ num_samples[num_samples<=0] = np.nan
 #plot
 
 import matplotlib.colors as colors
-import matplotlib.cbook as cbook
 fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
 
 for i, a in enumerate(ax.flat):
@@ -97,8 +96,8 @@ for i, a in enumerate(ax.flat):
     a.set_thetamax(180)
 
 
-cax = fig.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
-cbar = fig.colorbar(im, cax=cax)#, ticks=[10**0, 10**1, 10**2, 10**3, 10**4, 10**5,10**6, 10**7, 10**8, 10**9, 10**10, 10**11, 10**12])
+# cax = fig.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
+# cbar = fig.colorbar(im, cax=cax)#, ticks=[10**0, 10**1, 10**2, 10**3, 10**4, 10**5,10**6, 10**7, 10**8, 10**9, 10**10, 10**11, 10**12])
 
 plt.show()
 
