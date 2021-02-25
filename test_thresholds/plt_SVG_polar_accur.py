@@ -81,7 +81,7 @@ for i, a in enumerate(ax.flat):
     # im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i,:,:],\
     #                   cmap=cmap, vmin=0, vmax=100)
     Z = num_samples[i,:,:]
-    im = a.pcolormesh(theta, r, Z, cmap='jet',\
+    im = a.pcolormesh(theta, r, Z, cmap='nipy_spectral',\
                 norm=colors.LogNorm(vmin=1, vmax=np.nanmax(Z)))
 
     SZA1 = np.rad2deg(np.arccos((i)/10))
