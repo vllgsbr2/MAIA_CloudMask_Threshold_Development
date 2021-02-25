@@ -69,37 +69,39 @@ num_samples[num_samples<=0] = np.nan
 # print(num_samples)
 #plot
 
-import matplotlib.colors as colors
-fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
+np.correlate(weighted_accuracy_SVG.flat, num_samples.flat)
 
-for i, a in enumerate(ax.flat):
-    cmap = cm.get_cmap('plasma', 20)
-
-    a.set_thetagrids(np.arange(0,195,15))
-
-    # im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i,:,:],\
-    #                   cmap=cmap, vmin=0, vmax=100)
-    Z = num_samples[i,:,:]
-    im = a.pcolormesh(theta, r, Z, cmap='nipy_spectral',\
-                norm=colors.LogNorm(vmin=1, vmax=10**12))
-
-    SZA1 = np.rad2deg(np.arccos((i)/10))
-    SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
-    a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
-    # a.set_rticks(np.arange(0,80,10))
-    a.grid(which='both')
-    vza_angles = np.arange(0,75,5)
-    a.set_yticks(vza_angles)
-    # vza_labels = ['']*15
-    vza_labels = [x if x%10==0 else '' for x in vza_angles]
-    a.set_yticklabels(vza_labels)
-    a.set_thetamax(180)
-
-
-# cax = fig.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
-# cbar = fig.colorbar(im, cax=cax)#, ticks=[10**0, 10**1, 10**2, 10**3, 10**4, 10**5,10**6, 10**7, 10**8, 10**9, 10**10, 10**11, 10**12])
-
-plt.show()
+# import matplotlib.colors as colors
+# fig, ax = plt.subplots(5,2, subplot_kw=dict(projection='polar'), figsize=(10, 12))
+#
+# for i, a in enumerate(ax.flat):
+#     cmap = cm.get_cmap('plasma', 20)
+#
+#     a.set_thetagrids(np.arange(0,195,15))
+#
+#     # im = a.pcolormesh(theta, r, weighted_accuracy_SVG[i,:,:],\
+#     #                   cmap=cmap, vmin=0, vmax=100)
+#     Z = num_samples[i,:,:]
+#     im = a.pcolormesh(theta, r, Z, cmap='nipy_spectral',\
+#                 norm=colors.LogNorm(vmin=1, vmax=10**12))
+#
+#     SZA1 = np.rad2deg(np.arccos((i)/10))
+#     SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
+#     a.set_title('SZA {:2.2f} - {:2.2f} [deg]'.format(SZA1, SZA2))
+#     # a.set_rticks(np.arange(0,80,10))
+#     a.grid(which='both')
+#     vza_angles = np.arange(0,75,5)
+#     a.set_yticks(vza_angles)
+#     # vza_labels = ['']*15
+#     vza_labels = [x if x%10==0 else '' for x in vza_angles]
+#     a.set_yticklabels(vza_labels)
+#     a.set_thetamax(180)
+#
+#
+# # cax = fig.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
+# # cbar = fig.colorbar(im, cax=cax)#, ticks=[10**0, 10**1, 10**2, 10**3, 10**4, 10**5,10**6, 10**7, 10**8, 10**9, 10**10, 10**11, 10**12])
+#
+# plt.show()
 
 
 
