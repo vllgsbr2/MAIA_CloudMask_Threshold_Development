@@ -82,7 +82,7 @@ for i, a in enumerate(ax.flat):
     #                   cmap=cmap, vmin=0, vmax=100)
     Z = num_samples[i,:,:]
     im = a.pcolormesh(theta, r, Z, cmap='nipy_spectral',\
-                norm=colors.SymLogNorm(vmin=1, vmax=10**12, linthresh=10**3))
+                norm=colors.LogNorm(vmin=1, vmax=10**12))
 
     SZA1 = np.rad2deg(np.arccos((i)/10))
     SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
@@ -98,7 +98,7 @@ for i, a in enumerate(ax.flat):
 
 
 cax = fig.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
-cbar = fig.colorbar(im, cax=cax, ticks=[10**0, 10**1, 10**2, 10**3, 10**4, 10**5,10**6, 10**7, 10**8, 10**9, 10**10, 10**11, 10**12])
+cbar = fig.colorbar(im, cax=cax)#, ticks=[10**0, 10**1, 10**2, 10**3, 10**4, 10**5,10**6, 10**7, 10**8, 10**9, 10**10, 10**11, 10**12])
 
 plt.show()
 
