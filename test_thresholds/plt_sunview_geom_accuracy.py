@@ -36,7 +36,7 @@ def accuracy_by_sunViewGeometry(conf_matx_path, DOY_bin, result_path):
 
         #write MCM_accuracy and num_samples to disk
         total_sum[np.isnan(total_sum)]=0
-        np.savez('{}/bin_accuracy_DOY_bin_{:02d}.npz'.format(result_path, DOY_bin),\
+        np.savez('{}/bin_accuracy_DOY_bin_{:02d}_with_numSamples.npz'.format(result_path, DOY_bin),\
                   MCM_accuracy=accuracy_total, num_samples=total_sum)
 
 if __name__ == '__main__':
