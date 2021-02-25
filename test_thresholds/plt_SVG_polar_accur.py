@@ -82,7 +82,7 @@ for i, a in enumerate(ax.flat):
     #                   cmap=cmap, vmin=0, vmax=100)
     Z = num_samples[i,:,:]
     im = a.pcolormesh(theta, r, Z, cmap='jet',\
-                norm=colors.LogNorm(vmin=Z.min(), vmax=Z.max()))
+                norm=colors.LogNorm(vmin=Z.min()+1, vmax=Z.max()))
 
     SZA1 = np.rad2deg(np.arccos((i)/10))
     SZA2 = np.rad2deg(np.arccos(((i)+1)/10))
