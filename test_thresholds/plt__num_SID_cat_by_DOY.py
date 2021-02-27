@@ -19,8 +19,8 @@ DOY_sfcID = np.zeros((18,46))
 for i in range(46):
     with Dataset(filepath_SID[i],'r') as nc_sfcID:
         SID[:,:,i] = nc_sfcID.variables['surface_ID'][:,:]
-        print( np.unique(SID[:,:,i]))
-    DOY_sfcID[:,i] = np.unique(SID[:,:,i], return_counts=True)
+        idx, x=np.unique(SID[:,:,i], return_counts=True)
+    DOY_sfcID[idx,i] = x
     print(i)
 
 
