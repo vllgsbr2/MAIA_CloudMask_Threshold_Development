@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot
 from netCDF4 import Dataset
 import configparser
+import os
 
 config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
 config = configparser.ConfigParser()
