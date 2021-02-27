@@ -54,21 +54,32 @@ filepath_output = PTA_path + '/' + config['supporting directories']['MCM_Output'
 timestamps      = os.listdir(filepath_output)
 
 
-DOY_sfcID = np.zeros((20,46))
-for r in range(46):
-    DOY_bin = r
-    DOY_end         = (DOY_bin+1)*8
-    DOY_start       = DOY_end - 7
-
-    timestamps_      = [x for x in timestamps if DOY_start<int(x[4:7])<=DOY_end]
-    filepath_output_ = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps_]
-
-    for l, f in enumerate(filepath_output_):
-        with h5py.File(f, 'r') as hf_output:
-            SID = hf_output['Ancillary/scene_type_identifier'][()]
-            idx, x=np.unique(SID[SID>=0], return_counts=True)
-            idx=idx.astype(np.int)
-        DOY_sfcID[idx,DOY_bin] += x
-        print(timestamps_[l])
+# DOY_sfcID = np.zeros((20,46))
+# for r in range(46):
+#     DOY_bin = r
+#     DOY_end         = (DOY_bin+1)*8
+#     DOY_start       = DOY_end - 7
+#
+#     timestamps_      = [x for x in timestamps if DOY_start<int(x[4:7])<=DOY_end]
+#     filepath_output_ = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps_]
+#
+#     for l, f in enumerate(filepath_output_):
+#         with h5py.File(f, 'r') as hf_output:
+#             SID = hf_output['Ancillary/scene_type_identifier'][()]
+#             idx, x=np.unique(SID[SID>=0], return_counts=True)
+#             idx=idx.astype(np.int)
+#         DOY_sfcID[idx,DOY_bin] += x
+#         print(timestamps_[l])
 
 np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
+
+data = np.load('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz')
+dataset_names = data.files
+
+DOY_sfcID = data[dataset_names[0]]
+
+plt.imshow(DOY_sfcID, cmap='jet')
+plt.colorbar()
+plt.xticks(np.arange(46), np.arange(8,376,8))
+plt.yticks(np.arange(18))
+plt.show()
