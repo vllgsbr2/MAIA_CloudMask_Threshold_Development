@@ -21,10 +21,10 @@ for i in range(46):
         SID[:,:,i] = nc_sfcID.variables['surface_ID'][:,:]
         idx, x=np.unique(SID[:,:,i], return_counts=True)
         idx=idx.astype(np.int)
-        print(idx)
     DOY_sfcID[idx,i] = x
     print(i)
 
 
 plt.imshow(DOY_sfcID, cmap='jet')
+plt.colorbar()
 plt.show()
