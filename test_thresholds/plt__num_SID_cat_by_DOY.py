@@ -64,6 +64,6 @@ for f in filepath_output:
         idx, x=np.unique(SID[SID>=0], return_counts=True)
         idx=idx.astype(np.int)
     DOY_sfcID[idx] += x
-    print('hi')
+    print(DOY_sfcID)
 
 np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_{:03d}.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
