@@ -71,7 +71,7 @@ timestamps      = os.listdir(filepath_output)
 #         DOY_sfcID[idx,DOY_bin] += x
 #         print(timestamps_[l])
 
-np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
+# np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
 
 data = np.load('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz')
 dataset_names = data.files
