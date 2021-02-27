@@ -54,7 +54,7 @@ filepath_output = PTA_path + '/' + config['supporting directories']['MCM_Output'
 timestamps      = os.listdir(filepath_output)
 
 
-DOY_sfcID = np.zeros(20,46)
+DOY_sfcID = np.zeros((20,46))
 for r in range(46):
     DOY_bin = r
     DOY_end         = (DOY_bin+1)*8
