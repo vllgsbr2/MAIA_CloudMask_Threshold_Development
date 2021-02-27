@@ -22,9 +22,9 @@ for i in range(46):
         idx, x=np.unique(SID[:,:,i], return_counts=True)
         idx=idx.astype(np.int)
     DOY_sfcID[idx,i] = x
-
+print(DOY_sfcID.shape)
 plt.imshow(DOY_sfcID, cmap='jet')
 plt.colorbar()
-plt.yticks(np.arange(8,376,8))
-plt.xticks(np.arange(18))
+plt.xticks(np.arange(8,376,8))
+plt.yticks(np.arange(18))
 plt.show()
