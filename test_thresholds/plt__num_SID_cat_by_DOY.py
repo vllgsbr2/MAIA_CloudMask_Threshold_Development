@@ -30,7 +30,7 @@ import h5py
 # plt.yticks(np.arange(18))
 # plt.show()
 
-import mpi4py.MPI as MPI
+# import mpi4py.MPI as MPI
 import configparser
 
 # comm = MPI.COMM_WORLD
