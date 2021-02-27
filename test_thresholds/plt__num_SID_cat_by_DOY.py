@@ -40,30 +40,31 @@ import configparser
 # for r in range(size):
 #     if rank==r:
 #         DOY_bin = r
-DOY_bin = 0
-#count SGW and SI over all data from output file
-config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
-config = configparser.ConfigParser()
-config.read(config_home_path+'/test_config.txt')
+for r in range(46):
+    DOY_bin = 0
+    #count SGW and SI over all data from output file
+    config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+    config = configparser.ConfigParser()
+    config.read(config_home_path+'/test_config.txt')
 
-PTA          = config['current PTA']['PTA']
-PTA_path     = config['PTAs'][PTA]
+    PTA          = config['current PTA']['PTA']
+    PTA_path     = config['PTAs'][PTA]
 
-#get output files
-filepath_output = PTA_path + '/' + config['supporting directories']['MCM_Output']+'/numKmeansSID_16'
-timestamps      = os.listdir(filepath_output)
-DOY_end         = (DOY_bin+1)*8
-DOY_start       = DOY_end - 7
-timestamps      = [x for x in timestamps if DOY_start<int(x[4:7])<=DOY_end]
-filepath_output = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps]
+    #get output files
+    filepath_output = PTA_path + '/' + config['supporting directories']['MCM_Output']+'/numKmeansSID_16'
+    timestamps      = os.listdir(filepath_output)
+    DOY_end         = (DOY_bin+1)*8
+    DOY_start       = DOY_end - 7
+    timestamps      = [x for x in timestamps if DOY_start<int(x[4:7])<=DOY_end]
+    filepath_output = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps]
 
-DOY_sfcID = np.zeros(20)
-for f in filepath_output:
-    with h5py.File(f, 'r') as hf_output:
-        SID = hf_output['Ancillary/scene_type_identifier'][()]
-        idx, x=np.unique(SID[SID>=0], return_counts=True)
-        idx=idx.astype(np.int)
-    DOY_sfcID[idx] += x
-    print(DOY_sfcID)
+    DOY_sfcID = np.zeros(20)
+    for f in filepath_output:
+        with h5py.File(f, 'r') as hf_output:
+            SID = hf_output['Ancillary/scene_type_identifier'][()]
+            idx, x=np.unique(SID[SID>=0], return_counts=True)
+            idx=idx.astype(np.int)
+        DOY_sfcID[idx] += x
+        print(DOY_sfcID)
 
-np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_{:03d}.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
+    np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_{:03d}.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
