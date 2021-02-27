@@ -77,8 +77,8 @@ data = np.load('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz')
 dataset_names = data.files
 
 DOY_sfcID = data[dataset_names[0]]
-
-plt.imshow(DOY_sfcID, cmap='jet')
+import matplotlib.colors as colors
+plt.imshow(DOY_sfcID, cmap='jet', norm=colors.LogNorm(vmin=1, vmax=DOY_sfcID.max()))
 plt.colorbar()
 plt.xticks(np.arange(46), np.arange(8,376,8))
 plt.yticks(np.arange(20), ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'])
