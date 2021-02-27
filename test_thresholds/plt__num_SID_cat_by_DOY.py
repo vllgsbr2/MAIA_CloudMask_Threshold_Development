@@ -25,6 +25,7 @@ for i in range(46):
 print(DOY_sfcID.shape)
 plt.imshow(DOY_sfcID, cmap='jet')
 plt.colorbar()
-plt.xticks(np.arange(8,376,8))
+plt.xticks(np.arange(46))
+plt.xticklabels(np.arange(8,376,8))
 plt.yticks(np.arange(18))
 plt.show()
