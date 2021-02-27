@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot
+import matplotlib.pyplot as plt
 from netCDF4 import Dataset
 import configparser
 import os
@@ -20,7 +20,7 @@ for i in range(46):
     with Dataset(filepath_SID[i],'r') as nc_sfcID:
         SID[:,:,i] = nc_sfcID.variables['surface_ID'][:,:]
     DOY_sfcID[:,i] = np.unique(SID[:,:,i])
-    print('i')
+    print(i)
 
 
 plt.imshow(DOY_sfcID, cmap='jet')
