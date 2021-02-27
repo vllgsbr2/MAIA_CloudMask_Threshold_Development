@@ -22,8 +22,6 @@ for i in range(46):
         idx, x=np.unique(SID[:,:,i], return_counts=True)
         idx=idx.astype(np.int)
     DOY_sfcID[idx,i] = x
-    print(i)
-
 
 plt.imshow(DOY_sfcID, cmap='jet')
 plt.colorbar()
