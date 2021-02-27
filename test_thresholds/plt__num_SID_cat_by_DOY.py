@@ -1,7 +1,14 @@
 import numpy as np
 import matplotlib.pyplot
 from netCDF4 import Dataset
+import configparser
 
+config_home_path = '/data/keeling/a/vllgsbr2/c/MAIA_thresh_dev/MAIA_CloudMask_Threshold_Development'
+config = configparser.ConfigParser()
+config.read(config_home_path+'/test_config.txt')
+
+PTA          = config['current PTA']['PTA']
+PTA_path     = config['PTAs'][PTA]
 
 #get sfc IDs
 filepath_SID = PTA_path + '/' + config['supporting directories']['Surface_IDs']
