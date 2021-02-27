@@ -20,6 +20,7 @@ for i in range(46):
     with Dataset(filepath_SID[i],'r') as nc_sfcID:
         SID[:,:,i] = nc_sfcID.variables['surface_ID'][:,:]
         idx, x=np.unique(SID[:,:,i], return_counts=True)
+        print(idx)
     DOY_sfcID[idx,i] = x
     print(i)
 
