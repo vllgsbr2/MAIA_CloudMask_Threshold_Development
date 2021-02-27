@@ -52,7 +52,7 @@ PTA_path     = config['PTAs'][PTA]
 #get output files
 filepath_output = PTA_path + '/' + config['supporting directories']['MCM_Output']+'/numKmeansSID_16'
 timestamps      = os.listdir(filepath_output)
-DOY_end         = DOY_bin*8
+DOY_end         = (DOY_bin+1)*8
 DOY_start       = DOY_end - 7
 timestamps      = [x fox in timestamps if DOY_start<int(x[4:7])<=DOY_end]
 filepath_output = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps]
@@ -64,5 +64,6 @@ for f in filepath_output:
         idx, x=np.unique(SID[SID>=0], return_counts=True)
         idx=idx.astype(np.int)
     DOY_sfcID[idx] += x
+    print('hi')
 
 np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_{:03d}.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
