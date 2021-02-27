@@ -52,12 +52,13 @@ PTA_path     = config['PTAs'][PTA]
 #get output files
 filepath_output = PTA_path + '/' + config['supporting directories']['MCM_Output']+'/numKmeansSID_16'
 timestamps      = os.listdir(filepath_output)
-DOY_end         = (DOY_bin+1)*8
-DOY_start       = DOY_end - 7
+
 
 DOY_sfcID = np.zeros(20,46)
 for r in range(46):
     DOY_bin = r
+    DOY_end         = (DOY_bin+1)*8
+    DOY_start       = DOY_end - 7
 
     timestamps_      = [x for x in timestamps if DOY_start<int(x[4:7])<=DOY_end]
     filepath_output_ = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps_]
