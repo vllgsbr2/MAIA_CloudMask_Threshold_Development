@@ -87,12 +87,12 @@ for i, a in enumerate(ax.flat):
         a.set_xticks(np.arange(46))
         a.set_xticklabels(np.arange(8,376,8), rotation=45)
     else:
-        a.set_xticklabels([])
+        a.set_xticks([])
     if i==0 or i==3 or i==6 or i==9 or i==12 or i==15:
         a.set_yticks(np.arange(20))
         a.set_yticklabels(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'], rotation=45)
     else:
-        a.set_yticklabels([])
+        a.set_yticks([])
     a.set_ylabel(2002+i)
 
 cax = f.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
