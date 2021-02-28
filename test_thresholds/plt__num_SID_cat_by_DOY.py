@@ -87,7 +87,7 @@ for i, a in enumerate(ax.flat):
     a.set_xticklabels(np.arange(8,376,8))
     a.set_yticks(np.arange(20))
     a.set_yticklabels(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'])
-    a.set_title(2002+yr)
+    a.set_title(2002+i)
 
 cax = f.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
 cbar = f.colorbar(im, cax=cax)
