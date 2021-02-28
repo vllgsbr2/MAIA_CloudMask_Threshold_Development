@@ -79,23 +79,30 @@ dataset_names = data.files
 
 DOY_sfcID = data[dataset_names[0]]
 import matplotlib.colors as colors
-f, ax = plt.subplots(nrows=6, ncols=3)
+# f, ax = plt.subplots(nrows=6, ncols=3)
+#
+# for i, a in enumerate(ax.flat):
+#     im=a.imshow(DOY_sfcID[:,:,i], cmap='jet', vmin=0, vmax=DOY_sfcID.max())#, norm=colors.LogNorm(vmin=1, vmax=10**7))
+#     if i>=15:
+#         a.set_xticks(np.arange(46))
+#         a.set_xticklabels(np.arange(8,376,8), rotation=45)
+#     else:
+#         a.set_xticks([])
+#     if i==0 or i==3 or i==6 or i==9 or i==12 or i==15:
+#         a.set_yticks(np.arange(20))
+#         a.set_yticklabels(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'], rotation=45)
+#     else:
+#         a.set_yticks([])
+#     a.set_ylabel(2002+i)
+#
+# cax = f.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
+# cbar = f.colorbar(im, cax=cax)
 
-for i, a in enumerate(ax.flat):
-    im=a.imshow(DOY_sfcID[:,:,i], cmap='jet', vmin=0, vmax=DOY_sfcID.max())#, norm=colors.LogNorm(vmin=1, vmax=10**7))
-    if i>=15:
-        a.set_xticks(np.arange(46))
-        a.set_xticklabels(np.arange(8,376,8), rotation=45)
-    else:
-        a.set_xticks([])
-    if i==0 or i==3 or i==6 or i==9 or i==12 or i==15:
-        a.set_yticks(np.arange(20))
-        a.set_yticklabels(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'], rotation=45)
-    else:
-        a.set_yticks([])
-    a.set_ylabel(2002+i)
-
-cax = f.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
-cbar = f.colorbar(im, cax=cax)
+DOY_sfcID_single = np.sum(DOY_sfcID, axis=2)
+DOY_sfcID_single = DOY_sfcID_single[-2:,:]
+DOY = np.arange(46)
+plt.plot(DOY, DOY_sfcID_single[0,:], label='sun-glint')
+plt.plot(DOY, DOY_sfcID_single[1,:], label='snow-ice')
+plt.legend()
 
 plt.show()
