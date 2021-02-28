@@ -54,25 +54,25 @@ filepath_output = PTA_path + '/' + config['supporting directories']['MCM_Output'
 timestamps      = os.listdir(filepath_output)
 
 
-DOY_sfcID = np.zeros((20,46,18))
-for yr in range(2002,2020):
-    for r in range(46):
-        DOY_bin = r
-        DOY_end         = (DOY_bin+1)*8
-        DOY_start       = DOY_end - 7
-
-        timestamps_      = [x for x in timestamps if (DOY_start<int(x[4:7])<=DOY_end and int(x[:4])==yr)]
-        filepath_output_ = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps_]
-
-        for l, f in enumerate(filepath_output_):
-            with h5py.File(f, 'r') as hf_output:
-                SID = hf_output['Ancillary/scene_type_identifier'][()]
-                idx, x=np.unique(SID[SID>=0], return_counts=True)
-                idx=idx.astype(np.int)
-            DOY_sfcID[idx ,DOY_bin, yr-2002] += x
-            print(timestamps_[l])
-
-np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_yr_by_yr.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
+# DOY_sfcID = np.zeros((20,46,18))
+# for yr in range(2002,2020):
+#     for r in range(46):
+#         DOY_bin = r
+#         DOY_end         = (DOY_bin+1)*8
+#         DOY_start       = DOY_end - 7
+#
+#         timestamps_      = [x for x in timestamps if (DOY_start<int(x[4:7])<=DOY_end and int(x[:4])==yr)]
+#         filepath_output_ = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps_]
+#
+#         for l, f in enumerate(filepath_output_):
+#             with h5py.File(f, 'r') as hf_output:
+#                 SID = hf_output['Ancillary/scene_type_identifier'][()]
+#                 idx, x=np.unique(SID[SID>=0], return_counts=True)
+#                 idx=idx.astype(np.int)
+#             DOY_sfcID[idx ,DOY_bin, yr-2002] += x
+#             print(timestamps_[l])
+#
+# np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_yr_by_yr.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
 
 data = np.load('/data/keeling/a/vllgsbr2/c/DOY_sfcID_yr_by_yr.npz')
 dataset_names = data.files
