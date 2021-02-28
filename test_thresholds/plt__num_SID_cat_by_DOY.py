@@ -54,32 +54,42 @@ filepath_output = PTA_path + '/' + config['supporting directories']['MCM_Output'
 timestamps      = os.listdir(filepath_output)
 
 
-# DOY_sfcID = np.zeros((20,46))
-# for r in range(46):
-#     DOY_bin = r
-#     DOY_end         = (DOY_bin+1)*8
-#     DOY_start       = DOY_end - 7
-#
-#     timestamps_      = [x for x in timestamps if DOY_start<int(x[4:7])<=DOY_end]
-#     filepath_output_ = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps_]
-#
-#     for l, f in enumerate(filepath_output_):
-#         with h5py.File(f, 'r') as hf_output:
-#             SID = hf_output['Ancillary/scene_type_identifier'][()]
-#             idx, x=np.unique(SID[SID>=0], return_counts=True)
-#             idx=idx.astype(np.int)
-#         DOY_sfcID[idx,DOY_bin] += x
-#         print(timestamps_[l])
+DOY_sfcID = np.zeros((20,46,18))
+for yr in range(18):
+    for r in range(46):
+        DOY_bin = r
+        DOY_end         = (DOY_bin+1)*8
+        DOY_start       = DOY_end - 7
 
-# np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
+        timestamps_      = [x for x in timestamps if (DOY_start<int(x[4:7])<=DOY_end) and (int(x[:4])==yr)]
+        filepath_output_ = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps_]
+
+        for l, f in enumerate(filepath_output_):
+            with h5py.File(f, 'r') as hf_output:
+                SID = hf_output['Ancillary/scene_type_identifier'][()]
+                idx, x=np.unique(SID[SID>=0], return_counts=True)
+                idx=idx.astype(np.int)
+            DOY_sfcID[idx ,DOY_bin, yr] += x
+            print(timestamps_[l])
+
+np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_yr_by_yr.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
 
 data = np.load('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz')
 dataset_names = data.files
 
 DOY_sfcID = data[dataset_names[0]]
 import matplotlib.colors as colors
-plt.imshow(DOY_sfcID, cmap='jet')#, norm=colors.LogNorm(vmin=1, vmax=10**7))
-plt.colorbar()
-plt.xticks(np.arange(46), np.arange(8,376,8))
-plt.yticks(np.arange(20), ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'])
+f, ax = plt.subplots(nrows=6, ncols=3)
+
+for i, a in enumerate(ax.flat):
+    im=a.imshow(DOY_sfcID[:,:,i], cmap='jet', vmin=0, vmax=DOY_sfcID.max())#, norm=colors.LogNorm(vmin=1, vmax=10**7))
+    a.set_xticks(np.arange(46))
+    a.set_xticklabels(np.arange(8,376,8))
+    a.set_yticks(np.arange(20))
+    a.set_yticklabels(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'])
+    a.set_title(2002+yr)
+
+cax = f.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
+cbar = f.colorbar(im, cax=cax)
+
 plt.show()
