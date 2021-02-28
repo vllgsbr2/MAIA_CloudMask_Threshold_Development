@@ -55,13 +55,13 @@ timestamps      = os.listdir(filepath_output)
 
 
 DOY_sfcID = np.zeros((20,46,18))
-for yr in range(18):
+for yr in range(2002,2020):
     for r in range(46):
         DOY_bin = r
         DOY_end         = (DOY_bin+1)*8
         DOY_start       = DOY_end - 7
 
-        timestamps_      = [x for x in timestamps if (DOY_start<int(x[4:7])<=DOY_end) and (int(x[:4])==yr)]
+        timestamps_      = [x for x in timestamps if (DOY_start<int(x[4:7])<=DOY_end and int(x[:4])==yr)]
         filepath_output_ = [filepath_output+'/'+x+'/MCM_Output.h5' for x in timestamps_]
 
         for l, f in enumerate(filepath_output_):
