@@ -74,7 +74,7 @@ for yr in range(2002,2020):
 
 np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_yr_by_yr.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
 
-data = np.load('/data/keeling/a/vllgsbr2/c/DOY_sfcID.npz')
+data = np.load('/data/keeling/a/vllgsbr2/c/DOY_sfcID_yr_by_yr.npz')
 dataset_names = data.files
 
 DOY_sfcID = data[dataset_names[0]]
