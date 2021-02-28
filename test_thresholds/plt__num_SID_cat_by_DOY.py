@@ -69,7 +69,7 @@ for yr in range(2002,2020):
                 SID = hf_output['Ancillary/scene_type_identifier'][()]
                 idx, x=np.unique(SID[SID>=0], return_counts=True)
                 idx=idx.astype(np.int)
-            DOY_sfcID[idx ,DOY_bin, yr] += x
+            DOY_sfcID[idx ,DOY_bin, yr-2002] += x
             print(timestamps_[l])
 
 np.savez('/data/keeling/a/vllgsbr2/c/DOY_sfcID_yr_by_yr.npz'.format(DOY_bin), DOY_sfcID=DOY_sfcID)
