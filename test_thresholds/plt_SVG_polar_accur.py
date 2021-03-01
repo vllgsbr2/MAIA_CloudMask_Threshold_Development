@@ -73,8 +73,9 @@ num_samples = num_samples[num_samples>0]
 # num_samples = num_samples[num_samples<10**8]
 
 # num_samples = np.log(num_samples)
+import matplotlib.colors as colors
 plt.style.use('dark_background')
-plt.scatter(num_samples, weighted_accuracy_SVG, s=0.5, cmap='jet',c=num_samples)
+plt.scatter(num_samples, weighted_accuracy_SVG, s=0.5, cmap='jet',c=num_samples, norm=colors.LogNorm(vmin=1, vmax=10**12))
 plt.xscale('log')
 plt.xlabel('number of samples [log scale]')
 plt.ylabel('Accuracy %')
