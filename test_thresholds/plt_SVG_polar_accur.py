@@ -76,6 +76,8 @@ num_samples = num_samples[num_samples>0]
 plt.style.use('dark_background')
 plt.scatter(num_samples, weighted_accuracy_SVG, s=0.5, cmap='jet',c=num_samples)
 plt.xscale('log')
+plt.xlabel('number of samples [log scale]')
+plt.ylabel('Accuracy %')
 plt.show()
 # print(num_samples)
 #plot
