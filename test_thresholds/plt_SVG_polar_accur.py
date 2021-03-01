@@ -73,6 +73,7 @@ num_samples = num_samples[num_samples>0]
 # num_samples = num_samples[num_samples<10**8]
 
 num_samples = np.log(num_samples)
+plt.style.use('dark_background')
 plt.scatter(num_samples, weighted_accuracy_SVG, s=0.1, cmap='jet',c=num_samples)
 plt.show()
 # print(num_samples)
