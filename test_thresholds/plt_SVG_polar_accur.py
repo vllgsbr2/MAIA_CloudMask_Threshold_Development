@@ -72,7 +72,7 @@ num_samples = num_samples[num_samples>0]
 # weighted_accuracy_SVG = weighted_accuracy_SVG[num_samples<10**8]
 # num_samples = num_samples[num_samples<10**8]
 
-num_samples = np.log(num_samples)
+# num_samples = np.log(num_samples)
 plt.scatter(num_samples, weighted_accuracy_SVG)
 plt.show()
 # print(num_samples)
