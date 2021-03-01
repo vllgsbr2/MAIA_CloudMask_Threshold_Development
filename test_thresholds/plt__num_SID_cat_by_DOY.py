@@ -103,6 +103,7 @@ DOY_sfcID_single = DOY_sfcID_single[-2:,:]
 DOY = np.arange(46)
 plt.plot(DOY, DOY_sfcID_single[0,:], label='sun-glint')
 plt.plot(DOY, DOY_sfcID_single[1,:], label='snow-ice')
+plt.plot(DOY, DOY_sfcID_single[1,:], label='% SID 5-15 / SID 0-4')
 plt.xticks(DOY, np.arange(8,376,8))
 plt.legend()
 

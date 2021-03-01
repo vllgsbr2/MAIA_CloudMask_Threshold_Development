@@ -69,10 +69,12 @@ num_samples = data[dataset_names[1]]
 weighted_accuracy_SVG = weighted_accuracy_SVG[num_samples>0]
 num_samples = num_samples[num_samples>0]
 
-weighted_accuracy_SVG = weighted_accuracy_SVG[num_samples<10**8]
-num_samples = num_samples[num_samples<10**8]
+# weighted_accuracy_SVG = weighted_accuracy_SVG[num_samples<10**8]
+# num_samples = num_samples[num_samples<10**8]
 
-# num_samples = np.log(num_samples)
+num_samples = np.log(num_samples)
+plt.scatter(num_samples.flat(), weighted_accuracy_SVG.flat())
+plt.show()
 # print(num_samples)
 #plot
 from scipy.stats.stats import pearsonr
