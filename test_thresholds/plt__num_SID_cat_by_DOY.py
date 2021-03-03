@@ -116,6 +116,7 @@ ax.set_xticklabels(np.arange(8,376,8))
 ax_twin.set_ylabel('[%]')
 ax.set_ylabel('raw count')
 ax.set_xlabel('DOY bins [Julian Calendar]')
-plt.legend()
+ax.legend()
+ax_twin.legend()
 
 plt.show()
