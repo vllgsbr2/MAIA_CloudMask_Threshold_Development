@@ -118,7 +118,7 @@ ax.set_ylabel('raw count')
 ax.set_xlabel('DOY bins [Julian Calendar]')
 bad_DOYs = [24,48,88,120,160,232,288,344]
 for i in bad_DOYs:
-    ax.axvline(i, linestyle='dashed', color="grey")
+    ax.axvline((i/8)-1, linestyle='dashed', color="grey")
 ax.legend()
 ax_twin.legend()
 
