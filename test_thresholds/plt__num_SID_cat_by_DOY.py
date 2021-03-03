@@ -99,32 +99,28 @@ import matplotlib.colors as colors
 # cbar = f.colorbar(im, cax=cax)
 
 DOY_sfcID_single = np.sum(DOY_sfcID, axis=2)
-# DOY_sfcID_single_snowglint = DOY_sfcID_single[-2:,:]
-# DOY_sfcID_single_dark = np.sum(DOY_sfcID_single[:11,:], axis=0)
-
-DOY_sfcID_single_snow  = DOY_sfcID_single[-1,:]/np.sum(DOY_sfcID_single, axis=0)
-DOY_sfcID_single_glint = DOY_sfcID_single[-2,:]/np.sum(DOY_sfcID_single, axis=0)
-
-DOY_sfcID_single_light = np.sum(DOY_sfcID_single[11:15,:], axis=0)
-light_SID_percent_over_time = 100*DOY_sfcID_single_light/np.sum(DOY_sfcID_single, axis=0)
-
-combined = 100*np.sum(DOY_sfcID_single[11:,:], axis=0) / np.sum(DOY_sfcID_single, axis=0)
-
+DOY_sfcID_single_snowglint = DOY_sfcID_single[-2:,:]
+DOY_sfcID_single_dark = np.sum(DOY_sfcID_single[:11,:], axis=0)
+DOY_sfcID_single_light = np.sum(DOY_sfcID_single[11:,:], axis=0)
+light_SID_percent_over_time = 100*DOY_sfcID_single_light/(DOY_sfcID_single_dark+DOY_sfcID_single_light)
+# for i in range()
 DOY = np.arange(46)
 f,ax = plt.subplots(nrows=1,ncols=1)
 fontsize=18
 plt.rcParams['font.size'] = fontsize
-ax.plot(DOY, DOY_sfcID_single_glint, label='sun-glint', linewidth=3)
-ax.plot(DOY, DOY_sfcID_single_snow, label='snow-ice', linewidth=3)
-ax.plot(DOY, light_SID_percent_over_time, label='SID 11-15', color='g', linewidth=3)
-ax.plot(DOY, combined, label='combined', color='k', linewidth=3)
+ax.plot(DOY, DOY_sfcID_single_snowglint[0,:], label='sun-glint', linewidth=3)
+ax.plot(DOY, DOY_sfcID_single_snowglint[1,:], label='snow-ice', linewidth=3)
+ax_twin = ax.twinx()
+ax_twin.plot(DOY, light_SID_percent_over_time, label='% SID 11-15', color='g', linewidth=3)
 ax.set_xticks(DOY)
 ax.set_xticklabels(np.arange(8,376,8), rotation=45, fontsize=fontsize)
-ax.set_ylabel('[%]', fontsize=fontsize)
+ax_twin.set_ylabel('SID 11-15 [%]', fontsize=fontsize)
+ax.set_ylabel('raw count', fontsize=fontsize)
 ax.set_xlabel('DOY bins [Julian Calendar]', fontsize=fontsize)
 bad_DOYs = [24,48,88,120,160,232,288,344]
 for i in bad_DOYs:
     ax.axvline((i/8)-1, linestyle='dashed', color="grey")
 ax.legend()
+ax_twin.legend()
 
 plt.show()
