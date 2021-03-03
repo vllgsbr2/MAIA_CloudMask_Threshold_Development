@@ -99,11 +99,15 @@ import matplotlib.colors as colors
 # cbar = f.colorbar(im, cax=cax)
 
 DOY_sfcID_single = np.sum(DOY_sfcID, axis=2)
-DOY_sfcID_single = DOY_sfcID_single[-2:,:]
+DOY_sfcID_single_snowglint = DOY_sfcID_single[-2:,:]
+DOY_sfcID_single_dark = np.sum(DOY_sfcID_single[:5,:], axis=0)
+DOY_sfcID_single_light = np.sum(DOY_sfcID_single[5:,:], axis=0)
+light_SID_percent_over_time = DOY_sfcID_single_light/(DOY_sfcID_single_dark+DOY_sfcID_single_light)
+# for i in range()
 DOY = np.arange(46)
-plt.plot(DOY, DOY_sfcID_single[0,:], label='sun-glint')
-plt.plot(DOY, DOY_sfcID_single[1,:], label='snow-ice')
-plt.plot(DOY, DOY_sfcID_single[1,:], label='% SID 5-15 / SID 0-4')
+plt.plot(DOY, DOY_sfcID_single_snowglint[0,:], label='sun-glint')
+plt.plot(DOY, DOY_sfcID_single_snowglint[1,:], label='snow-ice')
+plt.plot(DOY, light_SID_percent_over_time, label='% SID 5-15 / SID 0-4')
 plt.xticks(DOY, np.arange(8,376,8))
 plt.legend()
 
