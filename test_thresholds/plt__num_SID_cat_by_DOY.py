@@ -106,13 +106,13 @@ light_SID_percent_over_time = 100*DOY_sfcID_single_light/(DOY_sfcID_single_dark+
 # for i in range()
 DOY = np.arange(46)
 f,ax = plt.subplots(nrows=1,ncols=1)
-
+plt.rcParams['font.size'] = 18
 ax.plot(DOY, DOY_sfcID_single_snowglint[0,:], label='sun-glint', linewidth=3)
 ax.plot(DOY, DOY_sfcID_single_snowglint[1,:], label='snow-ice', linewidth=3)
 ax_twin = ax.twinx()
-ax_twin.plot(DOY, light_SID_percent_over_time, label='% SID 11-15 / SID 0-10', color='g', linewidth=3)
+ax_twin.plot(DOY, light_SID_percent_over_time, label='% SID 11-15', color='g', linewidth=3)
 ax.set_xticks(DOY)
-ax.set_xticklabels(np.arange(8,376,8))
+ax.set_xticklabels(np.arange(8,376,8), rotation=45)
 ax_twin.set_ylabel('[%]')
 ax.set_ylabel('raw count')
 ax.set_xlabel('DOY bins [Julian Calendar]')
