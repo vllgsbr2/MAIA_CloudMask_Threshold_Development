@@ -107,15 +107,18 @@ light_SID_percent_over_time = 100*DOY_sfcID_single_light/(DOY_sfcID_single_dark+
 DOY = np.arange(46)
 f,ax = plt.subplots(nrows=1,ncols=1)
 
-ax.plot(DOY, DOY_sfcID_single_snowglint[0,:], label='sun-glint')
-ax.plot(DOY, DOY_sfcID_single_snowglint[1,:], label='snow-ice')
+ax.plot(DOY, DOY_sfcID_single_snowglint[0,:], label='sun-glint', linewidth=3)
+ax.plot(DOY, DOY_sfcID_single_snowglint[1,:], label='snow-ice', linewidth=3)
 ax_twin = ax.twinx()
-ax_twin.plot(DOY, light_SID_percent_over_time, label='% SID 11-15 / SID 0-10', color='g')
+ax_twin.plot(DOY, light_SID_percent_over_time, label='% SID 11-15 / SID 0-10', color='g', linewidth=3)
 ax.set_xticks(DOY)
 ax.set_xticklabels(np.arange(8,376,8))
 ax_twin.set_ylabel('[%]')
 ax.set_ylabel('raw count')
 ax.set_xlabel('DOY bins [Julian Calendar]')
+bad_DOYs = [24,48,88,120,160,232,288,344]
+for i in bad_DOYs:
+    ax.axvline(i, linestyle='dashed', color="grey")
 ax.legend()
 ax_twin.legend()
 
