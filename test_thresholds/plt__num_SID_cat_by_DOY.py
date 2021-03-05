@@ -79,48 +79,53 @@ dataset_names = data.files
 
 DOY_sfcID = data[dataset_names[0]]
 import matplotlib.colors as colors
-# f, ax = plt.subplots(nrows=6, ncols=3)
-#
-# for i, a in enumerate(ax.flat):
-#     im=a.imshow(DOY_sfcID[:,:,i], cmap='jet', vmin=0, vmax=DOY_sfcID.max())#, norm=colors.LogNorm(vmin=1, vmax=10**7))
-#     if i>=15:
-#         a.set_xticks(np.arange(46))
-#         a.set_xticklabels(np.arange(8,376,8), rotation=45)
-#     else:
-#         a.set_xticks([])
-#     if i==0 or i==3 or i==6 or i==9 or i==12 or i==15:
-#         a.set_yticks(np.arange(20))
-#         a.set_yticklabels(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'], rotation=45)
-#     else:
-#         a.set_yticks([])
-#     a.set_ylabel(2002+i)
-#
-# cax = f.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
-# cbar = f.colorbar(im, cax=cax)
+f, ax = plt.subplots(nrows=6, ncols=3)
 
-DOY_sfcID_single = np.sum(DOY_sfcID, axis=2)
-DOY_sfcID_single_snowglint = DOY_sfcID_single[-2:,:]
-DOY_sfcID_single_dark = np.sum(DOY_sfcID_single[:11,:], axis=0)
-DOY_sfcID_single_light = np.sum(DOY_sfcID_single[11:,:], axis=0)
-light_SID_percent_over_time = 100*DOY_sfcID_single_light/(DOY_sfcID_single_dark+DOY_sfcID_single_light)
-# for i in range()
-DOY = np.arange(46)
-f,ax = plt.subplots(nrows=1,ncols=1)
-fontsize=18
-plt.rcParams['font.size'] = fontsize
-ax.plot(DOY, DOY_sfcID_single_snowglint[0,:], label='sun-glint', linewidth=3)
-ax.plot(DOY, DOY_sfcID_single_snowglint[1,:], label='snow-ice', linewidth=3)
-ax_twin = ax.twinx()
-ax_twin.plot(DOY, light_SID_percent_over_time, label='% SID 11-15', color='g', linewidth=3)
-ax.set_xticks(DOY)
-ax.set_xticklabels(np.arange(8,376,8), rotation=45, fontsize=fontsize)
-ax_twin.set_ylabel('SID 11-15 [%]', fontsize=fontsize)
-ax.set_ylabel('raw count', fontsize=fontsize)
-ax.set_xlabel('DOY bins [Julian Calendar]', fontsize=fontsize)
-bad_DOYs = [24,48,88,120,160,232,288,344]
-for i in bad_DOYs:
-    ax.axvline((i/8)-1, linestyle='dashed', color="grey")
-ax.legend()
-ax_twin.legend()
+for i, a in enumerate(ax.flat):
+    im=a.imshow(DOY_sfcID[:,:,i], cmap='jet', vmin=0, vmax=DOY_sfcID.max())#, norm=colors.LogNorm(vmin=1, vmax=10**7))
+    if i>=15:
+        a.set_xticks(np.arange(46))
+        a.set_xticklabels(np.arange(8,376,8), rotation=45)
+    else:
+        a.set_xticks([])
+    if i==0 or i==3 or i==6 or i==9 or i==12 or i==15:
+        a.set_yticks(np.arange(20))
+        a.set_yticklabels(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','Coast','Water','Sun-Glint','Snow'], rotation=45)
+    else:
+        a.set_yticks([])
+    a.set_ylabel(2002+i)
 
-plt.show()
+cax = f.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
+cbar = f.colorbar(im, cax=cax)
+
+# DOY_sfcID_single = np.sum(DOY_sfcID, axis=2)
+# # DOY_sfcID_single_snowglint = DOY_sfcID_single[-2:,:]
+# # DOY_sfcID_single_dark = np.sum(DOY_sfcID_single[:11,:], axis=0)
+#
+# DOY_sfcID_single_snow  = DOY_sfcID_single[-1,:]/np.sum(DOY_sfcID_single, axis=0)
+# DOY_sfcID_single_glint = DOY_sfcID_single[-2,:]/np.sum(DOY_sfcID_single, axis=0)
+#
+# DOY_sfcID_single_light = np.sum(DOY_sfcID_single[11:15,:], axis=0)
+# light_SID_percent_over_time = 100*DOY_sfcID_single_light/np.sum(DOY_sfcID_single, axis=0)
+#
+# combined = 100*np.sum(DOY_sfcID_single[11:,:], axis=0) / np.sum(DOY_sfcID_single, axis=0)
+#
+# DOY = np.arange(46)
+# f,ax = plt.subplots(nrows=1,ncols=1)
+# fontsize=18
+# plt.rcParams['font.size'] = fontsize
+# ax.plot(DOY, DOY_sfcID_single_glint, label='sun-glint', linewidth=3)
+# ax.plot(DOY, DOY_sfcID_single_snow, label='snow-ice', linewidth=3)
+# ax_twin.plot(DOY, light_SID_percent_over_time, label='SID 11-15', color='g', linewidth=3)
+# ax.plot(DOY, combined, label='combined', color='k', linewidth=3)
+# ax.set_xticks(DOY)
+# ax.set_xticklabels(np.arange(8,376,8), rotation=45, fontsize=fontsize)
+# ax.set_ylabel('snow-ice and sun-glint[% total SID occurence]', fontsize=fontsize)
+# ax_twin.set_ylabel('SID 11-15 [% total SID occurance]')
+# ax.set_xlabel('DOY bins [Julian Calendar]', fontsize=fontsize)
+# bad_DOYs = [24,48,88,120,160,232,288,344]
+# for i in bad_DOYs:
+#     ax.axvline((i/8)-1, linestyle='dashed', color="grey")
+# ax.legend()
+#
+# plt.show()
