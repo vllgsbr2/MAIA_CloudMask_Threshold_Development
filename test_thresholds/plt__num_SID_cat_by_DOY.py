@@ -97,7 +97,7 @@ for i, a in enumerate(ax.flat):
 
 cax = f.add_axes([0.92, 0.23, 0.01, 0.5])#l,b,w,h
 cbar = f.colorbar(im, cax=cax)
-
+plt.show()
 # DOY_sfcID_single = np.sum(DOY_sfcID, axis=2)
 # # DOY_sfcID_single_snowglint = DOY_sfcID_single[-2:,:]
 # # DOY_sfcID_single_dark = np.sum(DOY_sfcID_single[:11,:], axis=0)
