@@ -86,11 +86,18 @@ for obs_x in range(7):
                 diff = 'approve null'
                 if KS_test[1] < 0.05:
                     diff = 'reject null'
+                    results.append(0)
+                else:
+                    results.append(1)
 
                 result = 'KS Test {:1.5f} p-val {:1.5f} DOY {:02d} & {:02d} diff {}'.format(KS_test[0], KS_test[1], i, j, diff)
-                results.append(result)
-                print(result)
+                # results.append(result)
+                # print(result)
+    results = np.array(results)
+    print(results.sum()/results.size)
     break
+
+
 
     # thresh_temp = hf_thresh[obs_path][()]
     # thresh_temp[thresh_temp == -999] = np.nan
