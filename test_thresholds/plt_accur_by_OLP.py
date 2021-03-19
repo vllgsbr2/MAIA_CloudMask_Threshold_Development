@@ -169,7 +169,7 @@ misclassification_rate = [4.28032, 4.22119, 4.25736, 4.24123, 4.24668
 
 land_SID_num = np.arange(2, 28)
 plt.rcParams['font.size'] = 18
-plt.plot(land_SID_num, misclassification_rate, linewidth=2)
+plt.plot(land_SID_num, misclassification_rate, linewidth=3)
 plt.title('Number of Land SIDs vs Misclassification Rate of MCM')
 plt.xlabel('Number of Land SIDs')
 plt.ylabel('Misclassification Rate of MCM [%]')
