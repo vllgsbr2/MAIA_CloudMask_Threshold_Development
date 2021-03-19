@@ -88,7 +88,7 @@ for obs_x in range(7):
 
                 result = 'KS Test {:1.5f} p-val {:1.5f} DOY {:02d} & {:02d} diff {}'.format(KS_test[0], KS_test[1], i, j, diff)
                 results.append(result)
-                # print(result)
+                print(result)
 
 
     # thresh_temp = hf_thresh[obs_path][()]
