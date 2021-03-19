@@ -168,7 +168,7 @@ misclassification_rate = [4.28032, 4.22119, 4.25736, 4.24123, 4.24668
 , 4.0923, 4.15592, 4.20591, 4.17576, 4.10631, 4.16351, 4.12163, 4.18819]
 
 land_SID_num = np.arange(2, 28)
-
+plt.rcParams['font.size'] = 18
 plt.plot(land_SID_num, misclassification_rate)
 plt.title('Number of Land SIDs vs Misclassification Rate of MCM')
 plt.xlabel('Number of Land SIDs')
@@ -176,6 +176,5 @@ plt.ylabel('Misclassification Rate of MCM [%]')
 plt.xticks(land_SID_num)
 plt.yticks(np.arange(4.05,4.40,0.05))
 plt.axvline(x=16, color='r', linestyle='dashed')
-plt.rcParams['font.size'] = 18
 plt.grid()
 plt.show()
