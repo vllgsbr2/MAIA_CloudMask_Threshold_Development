@@ -58,7 +58,7 @@ with h5py.File(thresh_path, 'r') as hf_thresh:
             'weight': 'normal',
             'size': 18,
             }
-    plt.rcParams['font.size'] = 18
+    plt.rcParams['font.size'] = 22
 
     fig, ax = plt.subplots()
 
