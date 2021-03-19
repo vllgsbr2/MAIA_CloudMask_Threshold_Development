@@ -13,9 +13,9 @@ import numpy as np
 import h5py
 import os
 
-path = '/data/keeling/a/vllgsbr2/c/old_MAIA_Threshold_dev/PTAs/LosAngeles/thresh_dev/thresholds/'
+path = '/data/gdi/c/gzhao1/MCM-thresholds/PTAs/LosAngeles/thresh_dev/thresholds/'
 thresh_files = [path+x for x in np.sort(os.listdir(path)) if x[0]=='t']
-num_SID = 15
+num_SID = 20
 num_obs = 7
 num_DOY = 46
 num_VZA = 15
@@ -42,27 +42,28 @@ for DOY, thresh in enumerate(thresh_files):
 obs = ['Cirrus', 'NDSI', 'NDVI', 'NIR', 'SVI', 'Vis', 'WI']
 results = []
 for obs_x in range(7):
+    obs_x=1
     #Cirrus
     if obs_x==0:
         thresh_obs_x = valid_thresh[:,:,:,:,obs_x,:]
     #NDSI
     elif obs_x==1:
-        thresh_obs_x = valid_thresh[:,:,:,14,obs_x,:]
+        thresh_obs_x = valid_thresh[:,:,:,19,obs_x,:]
     #NDVI
     elif obs_x==2:
-        thresh_obs_x = valid_thresh[:,:,:,:13,obs_x,:]
+        thresh_obs_x = valid_thresh[:,:,:,:19,obs_x,:]
     #NIR
     elif obs_x==3:
-        thresh_obs_x = valid_thresh[:,:,:,12,obs_x,:]
+        thresh_obs_x = valid_thresh[:,:,:,17,obs_x,:]
     #SVI
     elif obs_x==4:
         thresh_obs_x = valid_thresh[:,:,:,:,obs_x,:]
     #Vis
     elif obs_x==5:
-        thresh_obs_x = valid_thresh[:,:,:,:12,obs_x,:]
+        thresh_obs_x = valid_thresh[:,:,:,:17,obs_x,:]
     #WI
     else:
-        thresh_obs_x = valid_thresh[:,:,:,:13,obs_x,:]
+        thresh_obs_x = valid_thresh[:,:,:,:18,obs_x,:]
 
     with open('./{}_KS_test'.format(obs[obs_x]), 'w') as txt_KS_test:
         for i in range(num_DOY):
@@ -89,7 +90,7 @@ for obs_x in range(7):
                 result = 'KS Test {:1.5f} p-val {:1.5f} DOY {:02d} & {:02d} diff {}'.format(KS_test[0], KS_test[1], i, j, diff)
                 results.append(result)
                 print(result)
-
+    break
 
     # thresh_temp = hf_thresh[obs_path][()]
     # thresh_temp[thresh_temp == -999] = np.nan
