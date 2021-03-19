@@ -50,7 +50,7 @@ for numKmeansSID in range(4,30):
 
 
 plt.figure(2)
-plt.rcParams['font.size'] = 16
+plt.rcParams['font.size'] = 19
 x_axis = np.arange(4,30)
 colors = ['red', 'yellow', 'green', 'blue', 'purple']
 
