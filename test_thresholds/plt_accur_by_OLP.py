@@ -39,7 +39,7 @@ def plot_accur_by_SID():
                     num_samples.append(hf[bin_ID+'/num_samples'][()])
             s_temp = np.array(accuracy)
             num_samples_temp = np.array(num_samples)
-            # s_temp = s_temp[s_temp>=0]
+            # s_temp = s_temp[s_temp,=0]
             avg_weighted_accur = np.nansum(s_temp*num_samples_temp)/np.nansum(num_samples_temp)
             s_list.append(avg_weighted_accur*100)
             num_samples_list.append(np.nansum(num_samples_temp))
@@ -106,7 +106,7 @@ def plot_accur_by_DOY():
                     num_samples.append(hf[bin_ID+'/num_samples'][()])
             s_temp = np.array(accuracy)
             num_samples_temp = np.array(num_samples)
-            # s_temp = s_temp[s_temp>=0]
+            # s_temp = s_temp[s_temp,=0]
             avg_weighted_accur = np.nansum(s_temp*num_samples_temp)/np.nansum(num_samples_temp)
             s_list.append(avg_weighted_accur*100)
             num_samples_list.append(np.nansum(num_samples_temp))
@@ -159,4 +159,19 @@ def plot_accur_by_DOY():
     plt.show()
 
 # plot_accur_by_DOY()
-plot_accur_by_SID()
+# plot_accur_by_SID()
+
+
+misclassification_rate = [4.28032, 4.22119, 4.25736, 4.24123, 4.24668
+, 4.30127, 4.26763, 4.24847, 4.32929, 4.38177, 4.29056, 4.34193
+, 4.15843, 4.17693, 4.08655, 4.10475, 4.11453, 4.11675
+, 4.0923, 4.15592, 4.20591, 4.17576, 4.10631, 4.16351, 4.12163, 4.18819]
+
+land_SID_num = np.arange(3, 29)
+
+plt.plot(land_SID_num, misclassification_rate)
+plt.title('Number of Land SIDs vs Misclassification Rate of MCM')
+plt.xlabel('Number of Land SIDs')
+plt.ylabel('Misclassification Rate of MCM [%]')
+plt.grid()
+plt.show()
