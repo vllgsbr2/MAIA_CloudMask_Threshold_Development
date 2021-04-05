@@ -71,7 +71,7 @@ weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nan
 
 
 composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
-plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 100))
+plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap='plasma')#cm.get_cmap('plasma', 100))
 plt.xticks([])
 plt.yticks([])
 plt.title('Composite Accuracy LA PTA 2002-2019')
