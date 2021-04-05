@@ -38,32 +38,32 @@ scene_num_samples[scene_num_samples == -999] = np.nan
 # {'DJF': [42.0, 6.0], 'MAM': [7.0, 18.0], 'JJA': [19.0, 29.0], 'SON': [30.0, 41.0]}
 
 # DOY_to_season_dict = {'DJF': [42, 6], 'MAM': [7, 18], 'JJA': [19, 29], 'SON': [30, 41]}
-DOY_to_season_dict = {'DJF': [0, 11], 'MAM': [11, 23], 'JJA': [23, 34], 'SON': [34, 45]}
-
-#roll the two arrays so they start at DJF and end with SON
-#this is so the data can be crunched w/continuous slicing
-scene_accurs_rolled      = np.roll(scene_accurs, 4)
-scene_num_samples_rolled = np.roll(scene_num_samples, 4)
-
-for i, key in enumerate(DOY_to_season_dict):
-    start, end = DOY_to_season_dict[key]
-    weighted_scene_accurs_by_season[:,:,i] = np.nansum(scene_accurs_rolled[:,:,start:end]*\
-                                             scene_num_samples_rolled[:,:,start:end], axis=2)/\
-                                             np.nansum(scene_num_samples_rolled[:,:,start:end], axis=2)*100
-
-f, ax = plt.subplots(nrows=2,ncols=2)
-for i, a in enumerate(ax.flat):
-    a.imshow(weighted_scene_accurs_by_season[:,:,i], vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
-    a.set_xticks([])
-    a.set_yticks([])
-    a.set_title(list(DOY_to_season_dict.keys())[i])
-
-# f, ax = plt.subplots(nrows=6, ncols=8)
+# DOY_to_season_dict = {'DJF': [0, 11], 'MAM': [11, 23], 'JJA': [23, 34], 'SON': [34, 45]}
+#
+# #roll the two arrays so they start at DJF and end with SON
+# #this is so the data can be crunched w/continuous slicing
+# scene_accurs_rolled      = np.roll(scene_accurs, 4)
+# scene_num_samples_rolled = np.roll(scene_num_samples, 4)
+#
+# for i, key in enumerate(DOY_to_season_dict):
+#     start, end = DOY_to_season_dict[key]
+#     weighted_scene_accurs_by_season[:,:,i] = np.nansum(scene_accurs_rolled[:,:,start:end]*\
+#                                              scene_num_samples_rolled[:,:,start:end], axis=2)/\
+#                                              np.nansum(scene_num_samples_rolled[:,:,start:end], axis=2)*100
+#
+# f, ax = plt.subplots(nrows=2,ncols=2)
 # for i, a in enumerate(ax.flat):
-#     if i<=45:
-#         a.imshow(scene_accurs[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+#     a.imshow(weighted_scene_accurs_by_season[:,:,i], vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
 #     a.set_xticks([])
 #     a.set_yticks([])
+#     a.set_title(list(DOY_to_season_dict.keys())[i])
+
+f, ax = plt.subplots(nrows=6, ncols=8)
+for i, a in enumerate(ax.flat):
+    if i<=45:
+        a.imshow(scene_accurs[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+    a.set_xticks([])
+    a.set_yticks([])
 
 
 # composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
