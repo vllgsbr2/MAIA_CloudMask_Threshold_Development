@@ -42,8 +42,6 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
     for i, DOY_bin in enumerate(DOY_bins):
         scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
         scene_num_samples[:,:,i] = np.nansum(hf_scene_accur[DOY_bin+'/num_samples'][()], axis=2)
-        if i==0:
-            break
 scene_accurs[scene_accurs == -999] = np.nan
 scene_num_samples[scene_num_samples == -999] = np.nan
 weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100
@@ -80,13 +78,20 @@ weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nan
 # plt.xlabel('Julian Day of Year')
 # plt.ylabel('% Accuracy')
 
-composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
-plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
-plt.xticks([])
-plt.yticks([])
-plt.title('Composite Accuracy LA PTA 2002-2019')
-plt.colorbar(ticks=np.arange(0,105,5))
-plt.rcParams['font.size'] = 18
+f, ax = plt.subplots(nrows=6, ncols=8)
+for a in ax.flat:
+    a.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+    a.set_xticks([])
+    a.set_yticks([])
+
+
+# composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
+# plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+# plt.xticks([])
+# plt.yticks([])
+# plt.title('Composite Accuracy LA PTA 2002-2019')
+# plt.colorbar(ticks=np.arange(0,105,5))
+# plt.rcParams['font.size'] = 18
 
 
 plt.show()
