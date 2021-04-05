@@ -20,11 +20,87 @@ scene_accur_path = scene_accur_home + '/' + 'scene_ID_accuracy.h5'
 
 scene_accurs = np.zeros((400,300,46))
 scene_num_samples = np.zeros((400,300,46))
+weighted_scene_accurs_by_season = np.zeros((400,300,4))
+
+with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
+    DOY_bins = list(hf_scene_accur.keys())
+    for i, DOY_bin in enumerate(DOY_bins):
+        scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
+        scene_num_samples[:,:,i] = np.nansum(hf_scene_accur[DOY_bin+'/num_samples'][()], axis=2)
+scene_accurs[scene_accurs == -999] = np.nan
+scene_num_samples[scene_num_samples == -999] = np.nan
+# weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100
+
+#divide by season
+# DJF/MAM/JJA/SON
+# 344-56/64-152/160-240/248-336
+# {'DJF':[344/8-1,56/8-1], 'MAM':[64/8-1,152/8-1], 'JJA':[160/8-1,240/8-1], 'SON':[248/8-1,336/8-1]}
+# {'DJF': [42.0, 6.0], 'MAM': [7.0, 18.0], 'JJA': [19.0, 29.0], 'SON': [30.0, 41.0]}
+
+DOY_to_season_dict = {'DJF': [42, 6], 'MAM': [7, 18], 'JJA': [19, 29], 'SON': [30, 41]}
+for key in DOY_to_season_dict:
+    start, end = DOY_to_season_dict[key]
+    weighted_scene_accurs_by_season[:,:,i] = np.nansum(scene_accurs[:,:,start:end]*scene_num_samples[:,:,start:end], axis=2)/\
+                                             np.nansum(scene_num_samples[:,:,start:end], axis=2)*100
+
+f, ax = plt.subplots(nrows=2,ncols=2)
+for i, a in enumerate(ax.flat):
+    a.imshow(weighted_scene_accurs_by_season[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+    a.set_xticks([])
+    a.set_yticks([])
+    a.set_title(list(DOY_to_season_dict.keys())[i])
+
+# f, ax = plt.subplots(nrows=6, ncols=8)
+# for i, a in enumerate(ax.flat):
+#     if i<=45:
+#         a.imshow(scene_accurs[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+#     a.set_xticks([])
+#     a.set_yticks([])
+
+
+# composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
+# plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+# plt.xticks([])
+# plt.yticks([])
+# plt.title('Composite Accuracy LA PTA 2002-2019')
+# plt.colorbar(ticks=np.arange(0,105,5))
+# plt.rcParams['font.size'] = 18
+
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # plt.style.use('dark_background')
 # fig, ax=plt.subplots(figsize=(10,10))
 # cmap = cm.get_cmap('plasma', 20)
-plt.rcParams['font.size'] = 16
 # container = []
 
 # #get sfc IDs
@@ -35,16 +111,6 @@ plt.rcParams['font.size'] = 16
 # for i in range(46):
 #     with Dataset(filepath_SID[i],'r') as nc_sfcID:
 #         SID[:,:,i] = nc_sfcID.variables['surface_ID'][:,:]
-
-
-with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
-    DOY_bins = list(hf_scene_accur.keys())
-    for i, DOY_bin in enumerate(DOY_bins):
-        scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
-        scene_num_samples[:,:,i] = np.nansum(hf_scene_accur[DOY_bin+'/num_samples'][()], axis=2)
-scene_accurs[scene_accurs == -999] = np.nan
-scene_num_samples[scene_num_samples == -999] = np.nan
-weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100
 
 #         image = ax.imshow(scene_accurs[:,:,i], cmap=cmap, vmin=0, vmax=100)
 #         DOY = (i + 1)*8
@@ -77,22 +143,3 @@ weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nan
 # plt.ylim([85,100])
 # plt.xlabel('Julian Day of Year')
 # plt.ylabel('% Accuracy')
-
-f, ax = plt.subplots(nrows=6, ncols=8)
-for i, a in enumerate(ax.flat):
-    if i<=45:
-        a.imshow(scene_accurs[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
-    a.set_xticks([])
-    a.set_yticks([])
-
-
-# composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
-# plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
-# plt.xticks([])
-# plt.yticks([])
-# plt.title('Composite Accuracy LA PTA 2002-2019')
-# plt.colorbar(ticks=np.arange(0,105,5))
-# plt.rcParams['font.size'] = 18
-
-
-plt.show()
