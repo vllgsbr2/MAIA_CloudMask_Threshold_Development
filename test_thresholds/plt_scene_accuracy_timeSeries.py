@@ -29,7 +29,7 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
         scene_num_samples[:,:,i] = np.nansum(hf_scene_accur[DOY_bin+'/num_samples'][()], axis=2)
 scene_accurs[scene_accurs == -999] = np.nan
 scene_num_samples[scene_num_samples == -999] = np.nan
-# weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100
+weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100
 
 #divide by season
 # DJF/MAM/JJA/SON
@@ -37,27 +37,27 @@ scene_num_samples[scene_num_samples == -999] = np.nan
 # {'DJF':[344/8-1,56/8-1], 'MAM':[64/8-1,152/8-1], 'JJA':[160/8-1,240/8-1], 'SON':[248/8-1,336/8-1]}
 # {'DJF': [42.0, 6.0], 'MAM': [7.0, 18.0], 'JJA': [19.0, 29.0], 'SON': [30.0, 41.0]}
 
-DOY_to_season_dict = {'DJF': [42, 6], 'MAM': [7, 18], 'JJA': [19, 29], 'SON': [30, 41]}
-DOY_to_season_dict = {'DJF': [0, 11], 'MAM': [11, 23], 'JJA': [23, 34], 'SON': [34, 45]}
-
-#roll the two arrays so they start at DJF and end with SON
-#this is so the data can be crunched w/continuous slicing
-scene_accurs_rolled      = np.roll(scene_accurs, 4)
-scene_num_samples_rolled = np.roll(scene_num_samples, 4)
-
-for i, key in enumerate(DOY_to_season_dict):
-    start, end = DOY_to_season_dict[key]
-    weighted_scene_accurs_by_season[:,:,i] = np.nansum(scene_accurs_rolled[:,:,start:end]*\
-                                             scene_num_samples_rolled[:,:,start:end], axis=2)/\
-                                             np.nansum(scene_num_samples_rolled[:,:,start:end], axis=2)*100
-
-f, ax = plt.subplots(nrows=2,ncols=2)
-plt.rcParams['font.size'] = 18
-for i, a in enumerate(ax.flat):
-    a.imshow(weighted_scene_accurs_by_season[:,:,i], vmin=0,vmax=100,cmap='plasma')#cm.get_cmap('plasma', 20))
-    a.set_xticks([])
-    a.set_yticks([])
-    a.set_title(list(DOY_to_season_dict.keys())[i])
+# DOY_to_season_dict = {'DJF': [42, 6], 'MAM': [7, 18], 'JJA': [19, 29], 'SON': [30, 41]}
+# DOY_to_season_dict = {'DJF': [0, 11], 'MAM': [11, 23], 'JJA': [23, 34], 'SON': [34, 45]}
+#
+# #roll the two arrays so they start at DJF and end with SON
+# #this is so the data can be crunched w/continuous slicing
+# scene_accurs_rolled      = np.roll(scene_accurs, 4)
+# scene_num_samples_rolled = np.roll(scene_num_samples, 4)
+#
+# for i, key in enumerate(DOY_to_season_dict):
+#     start, end = DOY_to_season_dict[key]
+#     weighted_scene_accurs_by_season[:,:,i] = np.nansum(scene_accurs_rolled[:,:,start:end]*\
+#                                              scene_num_samples_rolled[:,:,start:end], axis=2)/\
+#                                              np.nansum(scene_num_samples_rolled[:,:,start:end], axis=2)*100
+#
+# f, ax = plt.subplots(nrows=2,ncols=2)
+# plt.rcParams['font.size'] = 18
+# for i, a in enumerate(ax.flat):
+#     a.imshow(weighted_scene_accurs_by_season[:,:,i], vmin=0,vmax=100,cmap='plasma')#cm.get_cmap('plasma', 20))
+#     a.set_xticks([])
+#     a.set_yticks([])
+#     a.set_title(list(DOY_to_season_dict.keys())[i])
 
 # f, ax = plt.subplots(nrows=6, ncols=8)
 # for i, a in enumerate(ax.flat):
@@ -71,13 +71,13 @@ for i, a in enumerate(ax.flat):
 
 
 
-# composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
-# plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap='plasma')#cm.get_cmap('plasma', 100))
-# plt.xticks([])
-# plt.yticks([])
-# plt.title('Composite Accuracy LA PTA 2002-2019')
-# plt.colorbar(ticks=np.arange(0,105,5))
-# plt.rcParams['font.size'] = 18
+composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
+plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap='plasma')#cm.get_cmap('plasma', 100))
+plt.xticks([])
+plt.yticks([])
+plt.title('Composite Accuracy LA PTA 2002-2019')
+plt.colorbar(ticks=np.arange(0,105,5))
+plt.rcParams['font.size'] = 18
 
 
 plt.show()
