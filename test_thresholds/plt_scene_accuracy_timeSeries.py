@@ -42,6 +42,8 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
     for i, DOY_bin in enumerate(DOY_bins):
         scene_accurs[:,:,i] = hf_scene_accur[DOY_bin+'/MCM_accuracy'][()]
         scene_num_samples[:,:,i] = np.nansum(hf_scene_accur[DOY_bin+'/num_samples'][()], axis=2)
+        if i==0:
+            break
 scene_accurs[scene_accurs == -999] = np.nan
 scene_num_samples[scene_num_samples == -999] = np.nan
 weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100

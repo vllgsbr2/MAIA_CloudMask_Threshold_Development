@@ -292,8 +292,9 @@ if __name__ == '__main__':
             config = configparser.ConfigParser()
             config.read(config_home_path+'/test_config.txt')
 
+            home     = config['home']
             PTA      = config['current PTA']['PTA']
-            PTA_path = config['PTAs'][PTA]
+            PTA_path = home + config['PTAs'][PTA]
 
             if PTA == 'LosAngeles':
                 MODXX      = config['supporting directories']['MODXX']
@@ -340,7 +341,7 @@ if __name__ == '__main__':
                          'EV_1KM_RefSB']
 
             #grab target lat/lon from Guangyu h5 files (new JPL grids)
-            PTA_grid_file_path = config['PTA lat/lon grid files'][PTA]
+            PTA_grid_file_path = home + config['PTA lat/lon grid files'][PTA]
 
             with h5py.File(PTA_grid_file_path, 'r') as hf_latlon:
                 target_lat = hf_latlon['Geolocation/Latitude'][()].astype(np.float64)
@@ -361,9 +362,9 @@ if __name__ == '__main__':
             # hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
             hf_path = '{}/{}_PTA_database_rank_{:02d}.hdf5'.format(database_loc, PTA, rank)
             #diagnostic file path
-            output_path = '{}/Database_Diagnostics/diagnostics_{:02d}.txt'.format(PTA_path, rank)
+            # output_path = '{}/Database_Diagnostics/diagnostics_{:02d}.txt'.format(PTA_path, rank)
 
-            with h5py.File(hf_path, 'w') as hf, open(output_path, 'w') as output:
+            with h5py.File(hf_path, 'w') as hf:#, open(output_path, 'w') as output:
                 i=1
 
                 for MOD02, MOD03, MOD35, time_MOD02\
@@ -379,10 +380,10 @@ if __name__ == '__main__':
                                     target_lon)
 
 
-                        output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
+                        # output.write('{:0>5d}, {}, {}'.format(i, time_MOD02, 'added to database\n'))
                         print(i, time_MOD02, '\n')
                     except Exception as e:
 
-                        output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, 'corrupt\n'))
+                        # output.write('{:0>5d}, {}, {}, {}'.format(i, time_MOD02, e, 'corrupt\n'))
                         print(i, time_MOD02, 'corrupt\n')
                     i+=1
