@@ -62,8 +62,12 @@ f, ax = plt.subplots(nrows=6, ncols=8)
 for i, a in enumerate(ax.flat):
     if i<=45:
         a.imshow(scene_accurs[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+        de = (i+1)*8
+        ds = de-7
+        a.set_title(ds, de)
     a.set_xticks([])
     a.set_yticks([])
+
 
 
 # composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
