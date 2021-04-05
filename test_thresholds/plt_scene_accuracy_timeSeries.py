@@ -64,7 +64,7 @@ for i, a in enumerate(ax.flat):
         a.imshow(scene_accurs[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
         de = (i+1)*8
         ds = de-7
-        a.set_title(ds, de)
+        a.set_title('{:03d}-{:03d}'.format(ds, de))
     a.set_xticks([])
     a.set_yticks([])
 
