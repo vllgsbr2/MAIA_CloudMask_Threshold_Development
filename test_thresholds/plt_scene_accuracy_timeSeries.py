@@ -45,7 +45,7 @@ for i, key in enumerate(DOY_to_season_dict):
 
 f, ax = plt.subplots(nrows=2,ncols=2)
 for i, a in enumerate(ax.flat):
-    a.imshow(weighted_scene_accurs_by_season[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+    a.imshow(weighted_scene_accurs_by_season[:,:,i], vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
     a.set_xticks([])
     a.set_yticks([])
     a.set_title(list(DOY_to_season_dict.keys())[i])
