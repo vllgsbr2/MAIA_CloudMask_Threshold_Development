@@ -37,11 +37,19 @@ scene_num_samples[scene_num_samples == -999] = np.nan
 # {'DJF':[344/8-1,56/8-1], 'MAM':[64/8-1,152/8-1], 'JJA':[160/8-1,240/8-1], 'SON':[248/8-1,336/8-1]}
 # {'DJF': [42.0, 6.0], 'MAM': [7.0, 18.0], 'JJA': [19.0, 29.0], 'SON': [30.0, 41.0]}
 
-DOY_to_season_dict = {'DJF': [[42,43,44,45,46], [0,1,2,3,4,5,6]], 'MAM': [7, 18], 'JJA': [19, 29], 'SON': [30, 41]}
+# DOY_to_season_dict = {'DJF': [42, 6], 'MAM': [7, 18], 'JJA': [19, 29], 'SON': [30, 41]}
+DOY_to_season_dict = {'DJF': [0, 11], 'MAM': [11, 23], 'JJA': [23, 34], 'SON': [34, 45]}
+
+#roll the two arrays so they start at DJF and end with SON
+#this is so the data can be crunched w/continuous slicing
+scene_accurs_rolled      = np.roll(scene_accurs, 4)
+scene_num_samples_rolled = np.roll(scene_num_samples, 4)
+
 for i, key in enumerate(DOY_to_season_dict):
     start, end = DOY_to_season_dict[key]
-    weighted_scene_accurs_by_season[:,:,i] = np.nansum(scene_accurs[:,:,start:end]*scene_num_samples[:,:,start:end], axis=2)/\
-                                             np.nansum(scene_num_samples[:,:,start:end], axis=2)*100
+    weighted_scene_accurs_by_season[:,:,i] = np.nansum(scene_accurs_rolled[:,:,start:end]*\
+                                             scene_num_samples_rolled[:,:,start:end], axis=2)/\
+                                             np.nansum(scene_num_samples_rolled[:,:,start:end], axis=2)*100
 
 f, ax = plt.subplots(nrows=2,ncols=2)
 for i, a in enumerate(ax.flat):
