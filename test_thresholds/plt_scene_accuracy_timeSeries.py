@@ -52,6 +52,7 @@ for i, key in enumerate(DOY_to_season_dict):
                                              np.nansum(scene_num_samples_rolled[:,:,start:end], axis=2)*100
 
 f, ax = plt.subplots(nrows=2,ncols=2)
+plt.rcParams['font.size'] = 18
 for i, a in enumerate(ax.flat):
     a.imshow(weighted_scene_accurs_by_season[:,:,i], vmin=0,vmax=100,cmap='plasma')#cm.get_cmap('plasma', 20))
     a.set_xticks([])
