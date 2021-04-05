@@ -75,7 +75,7 @@ plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap='plasma')#cm.get_cmap('plasma
 plt.xticks([])
 plt.yticks([])
 plt.title('Composite Accuracy LA PTA 2002-2019')
-plt.colorbar()#ticks=np.arange(0,105,5))
+plt.colorbar(ticks=np.arange(0,105,5))
 plt.rcParams['font.size'] = 18
 
 
