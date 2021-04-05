@@ -79,8 +79,8 @@ weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nan
 # plt.ylabel('% Accuracy')
 
 f, ax = plt.subplots(nrows=6, ncols=8)
-for a in ax.flat:
-    a.imshow(weighted_scene_accurs, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+for i, a in enumerate(ax.flat):
+    a.imshow(scene_accurs[:,:,i], vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
     a.set_xticks([])
     a.set_yticks([])
 
