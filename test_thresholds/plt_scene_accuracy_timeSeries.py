@@ -29,7 +29,7 @@ with h5py.File(scene_accur_path, 'r') as hf_scene_accur:
         scene_num_samples[:,:,i] = np.nansum(hf_scene_accur[DOY_bin+'/num_samples'][()], axis=2)
 scene_accurs[scene_accurs == -999] = np.nan
 scene_num_samples[scene_num_samples == -999] = np.nan
-# weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100
+weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nansum(scene_num_samples, axis=2)*100
 
 #divide by season
 # DJF/MAM/JJA/SON
@@ -58,25 +58,25 @@ scene_num_samples[scene_num_samples == -999] = np.nan
 #     a.set_yticks([])
 #     a.set_title(list(DOY_to_season_dict.keys())[i])
 
-f, ax = plt.subplots(nrows=6, ncols=8)
-for i, a in enumerate(ax.flat):
-    if i<=45:
-        a.imshow(scene_accurs[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
-        de = (i+1)*8
-        ds = de-7
-        a.set_title('{:03d}-{:03d}'.format(ds, de))
-    a.set_xticks([])
-    a.set_yticks([])
+# f, ax = plt.subplots(nrows=6, ncols=8)
+# for i, a in enumerate(ax.flat):
+#     if i<=45:
+#         a.imshow(scene_accurs[:,:,i]*100, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
+#         de = (i+1)*8
+#         ds = de-7
+#         a.set_title('{:03d}-{:03d}'.format(ds, de))
+#     a.set_xticks([])
+#     a.set_yticks([])
 
 
 
-# composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
-# plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
-# plt.xticks([])
-# plt.yticks([])
-# plt.title('Composite Accuracy LA PTA 2002-2019')
-# plt.colorbar(ticks=np.arange(0,105,5))
-# plt.rcParams['font.size'] = 18
+composit_accuracy = weighted_scene_accurs#np.mean(scene_accurs, axis=2)
+plt.imshow(composit_accuracy, vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 100))
+plt.xticks([])
+plt.yticks([])
+plt.title('Composite Accuracy LA PTA 2002-2019')
+plt.colorbar()#ticks=np.arange(0,105,5))
+plt.rcParams['font.size'] = 18
 
 
 plt.show()
