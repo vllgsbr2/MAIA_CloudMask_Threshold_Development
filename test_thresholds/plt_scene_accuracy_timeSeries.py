@@ -77,7 +77,7 @@ weighted_scene_accurs = np.nansum(scene_accurs*scene_num_samples, axis=2)/np.nan
 # plt.ylim([85,100])
 # plt.xlabel('Julian Day of Year')
 # plt.ylabel('% Accuracy')
-
+print(scene_accurs.shape)
 f, ax = plt.subplots(nrows=6, ncols=8)
 for i, a in enumerate(ax.flat):
     a.imshow(scene_accurs[:,:,i], vmin=0,vmax=100,cmap=cm.get_cmap('plasma', 20))
